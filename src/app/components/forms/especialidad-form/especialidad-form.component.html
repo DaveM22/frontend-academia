@@ -1,0 +1,28 @@
+
+<p-card [header]="title">
+
+    <ng-template pTemplate="content">
+        
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <div class="flex overflow-hidden justify-content-center">
+                <div class="col-12 lg:col-4">
+                    <div class="field">
+                        <label for="descripcion">Descripcion</label>
+                        <input id="descripcion" pInputText formControlName="descripcion" type="text" class="w-full">
+                        @if(form.get('descripcion')?.invalid && form.get('descripcion')?.dirty){
+                        <small class="p-error block">
+                            El campo descripcion es requerido
+                        </small>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex align-items-center justify-content-center font-bold text-white border-round m-2">
+                <button type="submit" pButton label="Guardar" icon="pi pi-check" class="p-button-success mr-2"></button>
+                <p-button label="Cancelar" severity="danger" icon="pi pi-times" (onClick)="redirectEspecialidades()"></p-button>
+            </div>
+        </form>
+    </ng-template>
+</p-card>
+

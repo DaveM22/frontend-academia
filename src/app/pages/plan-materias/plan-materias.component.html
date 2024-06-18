@@ -1,0 +1,47 @@
+@if (error$ | async)
+{
+<p-messages severity="error">
+    <ng-template pTemplate>
+
+        <div class="ml-2">{{(errorMessage$ | async)}}</div>
+    </ng-template>
+</p-messages>
+
+}
+
+<p-table [value]="materias" [loading]="(loading$ | async)" responsiveLayout="stack" [breakpoint]="'960px'">
+
+    
+    <ng-template pTemplate="caption">
+        <div class="flex align-items-center justify-content-between">
+            Materias del plan: {{header}}
+            <p-button label="Nueva materia" severity="primary" (onClick)="redirectMateriaNuevo()"></p-button>
+        </div>
+
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Materia</th>
+            <th>Horas semanales</th>
+            <th>Horas totales</th>
+            <th class="text-center">Acciones</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-materia>
+        <tr>
+            <td><span class="p-column-title">Materia</span>{{materia.descripcion}}</td>
+            <td><span class="p-column-title">Horas semanales</span>{{materia.hsSemanales}}</td>
+            <td><span class="p-column-title">Horas totales</span>{{materia.hsTotales}}</td>
+            <td><span class="p-column-title">Acciones</span>
+                <div class="flex gap-2 justify-content-center">
+                    <p-button size="small" label="Editar" severity="primary" class="mr-20" (onClick)="redirectMateriaEditar(materia._id)" />
+                </div>
+                <!--                 <div class="flex gap-2 justify-content-center">
+                        <p-button size="small" label="Materias"></p-button>
+                        <p-button size="small" label="Editar" severity="primary" class="mr-20" />
+                        <p-button size="small" label="Borrar" severity="danger"  (onClick)="showModal(plan)"/>
+                    </div> -->
+            </td>
+        </tr>
+    </ng-template>
+</p-table>

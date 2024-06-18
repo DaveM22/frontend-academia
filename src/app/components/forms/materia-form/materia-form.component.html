@@ -1,0 +1,44 @@
+<p-card [header]="title">
+    <ng-template pTemplate="content">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <div class="flex overflow-hidden justify-content-center">
+                <div class="col-12 lg:col-4">
+                    <div class="field">
+                        <label for="descripcion">Descripcion</label>
+                        <input id="firstname1" pInputText formControlName="descripcion" type="text"
+                            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+                        @if(form.get('descripcion')?.invalid && form.get('descripcion')?.dirty){
+                        <small class="p-error block">
+                            El campo descripcion es requerido
+                        </small>
+                        }
+                    </div>
+
+                    <div class="field">
+                        <label for="hsSemanales">Horas semanales</label>
+                        <p-inputNumber inputId="integeronly" formControlName="hsSemanales" class="w-full"  />
+                        @if(form.get('hsSemanales')?.invalid && form.get('hsSemanales')?.dirty){
+                        <small class="p-error block">
+                            El campo descripcion es requerido
+                        </small>
+                        }
+                    </div>
+                    <div class="field">
+                        <label for="hsTotales">Horas totales</label>
+                        <p-inputNumber inputId="integeronly" formControlName="hsTotales" class="w-full"  />
+
+                        @if(form.get('hsTotales')?.invalid && form.get('hsTotales')?.dirty){
+                        <small class="p-error block">
+                            El campo descripcion es requerido
+                        </small>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="flex align-items-center justify-content-center font-bold text-white border-round m-2">
+                <button type="submit" pButton label="Guardar" icon="pi pi-check" class="p-button-success mr-2"></button>
+                <p-button label="Cancelar" severity="danger" (onClick)="redirectPlanMaterias()"></p-button>
+            </div>
+        </form>
+    </ng-template>
+</p-card>
