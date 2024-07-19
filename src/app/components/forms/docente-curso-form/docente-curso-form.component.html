@@ -1,0 +1,51 @@
+<p-card [header]="title" styleClass="h-full">
+
+    <ng-template pTemplate="content">
+        
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <div class="flex overflow-hidden justify-content-center">
+                <div class="col-12 lg:col-4">
+                    <div class="field">
+                        <label>Curso:</label>
+                        <div class="field grid">
+                            <div class="col-12 sm:col-12 lg:col-7">
+                                <input type="text" pInputText class="w-full sm:w-full" formControlName="curso" />
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label>Profesor:</label>
+                        <div class="field grid">
+                            <div class="col-12 sm:col-12 lg:col-7">
+                                <input type="text" pInputText placeholder="Seleccione un profesor" class="w-full sm:w-full"
+                                    formControlName="profesor" />
+                            </div>
+
+                            <div class="col-12 sm:col-12 lg:col-5">
+                                <p-button label="Seleccionar profesor" severity="primary"
+                                    styleClass="w-full mt-2 sm:w-full align-items-center lg:w-full sm:mt-2 lg:mt-0 "
+                                    ></p-button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label>Cargo:</label>
+                        <div class="field grid">
+                            <div class="col-12 sm:col-12 lg:col-7">
+                                <p-dropdown formControlName="cargo" appendTo="body" [options]="cargos"  
+                                placeholder="Seleccionar cargo" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+
+            <div class="flex align-items-center justify-content-center font-bold text-white border-round m-2">
+                <button type="submit" pButton label="Guardar" icon="pi pi-check" class="p-button-success mr-2"></button>
+                <p-button label="Cancelar" severity="danger" icon="pi pi-times" (onClick)="redirectDocenteCursos()"></p-button>
+            </div>
+        </form>
+    </ng-template>
+</p-card>

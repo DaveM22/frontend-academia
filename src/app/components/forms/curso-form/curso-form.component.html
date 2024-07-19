@@ -1,0 +1,108 @@
+<p-card [header]="title">
+    <ng-template pTemplate="content">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <div class="flex justify-content-center">
+                <div class="col-12 lg:col-5">
+                    <div class="field">
+                        <label for="descripcion">Descripcion:</label>
+                        <input id="firstname1" pInputText formControlName="descripcion" type="text" class="w-full">
+                        @if(form.get('descripcion')?.invalid && form.get('descripcion')?.dirty){
+                        <small class="p-error block">
+                            El campo descripcion es requerido
+                        </small>
+                        }
+                    </div>
+
+                    <div class="formgrid grid">
+                        <div class="field col">
+                            <label for="anioCalendario">Año calendario:</label>
+                            <p-inputNumber inputId="integeronly" formControlName="anioCalendario" class="w-full" styleClass="w-full" />
+                            @if(form.get('anioCalendario')?.invalid && form.get('anioCalendario')?.dirty){
+                            <small class="p-error block">
+                                El campo Año Calendario es requerido
+                            </small>
+                            }
+                        </div>
+                        <div class="field col">
+                            <label for="anioCalendario">Cupo:</label>
+                            <p-inputNumber inputId="integeronly" formControlName="cupo" class="w-full" styleClass="w-full" />
+                            @if(form.get('cupo')?.invalid && form.get('cupo')?.dirty){
+                            <small class="p-error block">
+                                El campo cupo es requerido
+                            </small>
+                            }
+                        </div>
+                    </div>
+        
+   
+                    <div class="field">
+                        <label>Plan:</label>
+                        <div class="field grid">
+                            <div class="col-12 sm:col-12 lg:col-7">
+                                <input type="text" pInputText placeholder="Seleccione un plan" class="w-full sm:w-full"
+                                    formControlName="plan" />
+                            </div>
+
+                            <div class="col-12 sm:col-12 lg:col-5">
+                                <p-button label="Seleccionar plan" severity="primary"
+                                    styleClass="w-full mt-2 sm:w-full align-items-center lg:w-full sm:mt-2 lg:mt-0 "
+                                    (onClick)="toggleModalPlanes()"></p-button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label>Materia:</label>
+                        <div class="field grid">
+                            <div class="col-12 sm:col-12 lg:col-7">
+                                <input type="text" pInputText placeholder="Seleccione una materia"
+                                    class="w-full sm:w-full" formControlName="materia" />
+                            </div>
+
+                            <div class="col-12 sm:col-12 lg:col-5">
+                                <p-button label="Seleccionar materia" [disabled]="!(planSelected$ | async)"
+                                    severity="primary"
+                                    styleClass="w-full mt-2 sm:w-full align-items-center lg:w-full sm:mt-2 lg:mt-0 "
+                                    (onClick)=" toggleModalMaterias()"></p-button>
+                            </div>
+
+                        </div>
+                        @if (!(planSelected$ | async)) {
+                            <small id="descripcion-help">
+                                Debe seleccionar un plan para seleccionar una materia
+                            </small>
+                        }
+                    </div>
+                    <div class="field">
+                        <label>Comisión:</label>
+                        <div class="field grid">
+                            <div class="col-12 sm:col-12 lg:col-7">
+                                <input type="text" pInputText placeholder="Seleccione una comisión"
+                                    class="w-full sm:w-full" formControlName="comision" />
+                            </div>
+
+                            <div class="col-12 sm:col-12 lg:col-5">
+                                <p-button label="Seleccionar comisión" [disabled]="!(planSelected$ | async)"
+                                    severity="primary"
+                                    styleClass="w-full mt-2 sm:w-full align-items-center lg:w-full sm:mt-2 lg:mt-0 "
+                                    (onClick)="toggleModalComisiones()"></p-button>
+                            </div>
+                        </div>
+                        @if (!(planSelected$ | async)) {
+                            <small id="descripcion-help">
+                                Debe seleccionar un plan para seleccionar una comisión
+                            </small>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="flex align-items-center justify-content-center font-bold text-white border-round m-2">
+                <button type="submit" pButton label="Guardar" icon="pi pi-check" class="p-button-success mr-2"></button>
+                <p-button label="Cancelar" severity="danger" (onClick)="redirectCursos()"></p-button>
+            </div>
+        </form>
+    </ng-template>
+</p-card>
+
+<app-planes-modal></app-planes-modal>
+<app-materias-modal></app-materias-modal>
+<app-comisiones-modal></app-comisiones-modal>

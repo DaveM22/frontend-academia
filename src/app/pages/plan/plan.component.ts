@@ -12,11 +12,16 @@ import { Router } from '@angular/router';
 import { Especialidad } from '../../entities/especialidad';
 import { EspecialidadState } from '../../store/states/api/especialidad.state';
 import { GetEspecialidadAction } from '../../store/actions/api/especialidad.action';
+import { PanelModule } from 'primeng/panel';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { InputTextModule } from 'primeng/inputtext';
+import { PlanFilter } from '../../entities/filter';
 
 @Component({
   selector: 'app-plan',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, MessagesModule],
+  imports: [CommonModule, TableModule, ButtonModule, MessagesModule, PanelModule, IconFieldModule, InputIconModule, InputTextModule],
   templateUrl: './plan.component.html',
   styleUrl: './plan.component.scss'
 })
@@ -37,8 +42,9 @@ export class PlanComponent implements OnInit {
 
   ngOnInit(): void {
     this.planes$.subscribe(x => this.planes = x);
-
-    this.store.dispatch(new GetPlanAction());
+    let filter = new PlanFilter();
+    filter.mostrarEspecialidad = true
+    this.store.dispatch(new GetPlanAction(filter));
   }
 
 

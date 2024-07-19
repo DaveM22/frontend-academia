@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Action, Select, Selector, State, StateContext } from "@ngxs/store";
 import { PlanModelState } from "../../modelstate/api/plan.modelstate";
-import { GetByIdPlanAction, GetPlanAction, GetPlanByIdWithMateriasAction, PostPlanAction, PutPlanAction } from "../../actions/api/planes.action";
+import { ClearPlanes, GetByIdPlanAction, GetByIdPlanForCursoAction, GetPlanAction, GetPlanByIdWithMateriasAction, GetPlanesByEspecialidad, PostPlanAction, PutPlanAction } from "../../actions/api/planes.action";
 import { lastValueFrom } from "rxjs";
 import { PlanService } from "../../../services/plan.service";
 import { ErrorStateHandler } from "../../../util/ErrorStateHandler";
@@ -55,7 +55,7 @@ export class PlanState{
     async getPlanAction(ctx: StateContext<PlanModelState>, action: GetPlanAction){
       ctx.patchState({loading:true, error:false})
       try{
-        const response = await lastValueFrom(this.service.getPlanes());
+        const response = await lastValueFrom(this.service.getPlanes(action.filter));
         ctx.patchState({
             planes:[...response],
             loading:false,
@@ -69,6 +69,13 @@ export class PlanState{
         ctx.patchState({loading:false})
       }
 
+    }
+
+    @Action(ClearPlanes)
+    clearPlanes(ctx: StateContext<PlanModelState>, action: ClearPlanes){
+      ctx.patchState({
+        planes:[]
+      })
     }
 
     @Action(PostPlanAction)
@@ -109,7 +116,7 @@ export class PlanState{
     async getByIdPlanAction(ctx: StateContext<PlanModelState>, action: GetByIdPlanAction){
       ctx.patchState({loading:true, error:false});
       try{
-        const response = await lastValueFrom(this.service.getPlanById(action.id));
+        const response = await lastValueFrom(this.service.getPlanById(action.id, action.filter));
         ctx.dispatch(new AsignSelectedPlan(response));
         ctx.patchState({
             error:false
@@ -122,6 +129,26 @@ export class PlanState{
         ctx.patchState({loading:false})
       }
     }
+
+    @Action(GetByIdPlanForCursoAction)
+    async getByIdPlanForCursoAction(ctx: StateContext<PlanModelState>, action: GetByIdPlanForCursoAction){
+      ctx.patchState({loading:true, error:false});
+      try{
+        const response = await lastValueFrom(this.service.getPlanByIdForCurso(action.id));
+        ctx.dispatch(new AsignSelectedPlan(response));
+        ctx.patchState({
+            error:false
+        })
+      }
+      catch(error:any){
+        ErrorStateHandler.handleError(error, ctx);
+      }
+      finally{
+        ctx.patchState({loading:false})
+      }
+    }
+
+    
 
     @Action(GetPlanByIdWithMateriasAction)
     async getPlanByIdWithMaterias(ctx: StateContext<PlanModelState>, action:GetPlanByIdWithMateriasAction){
@@ -140,5 +167,23 @@ export class PlanState{
         ctx.patchState({loading:false})
       }
 
+    }
+
+    @Action(GetPlanesByEspecialidad)
+    async getPlanesByEspecialidad(ctx: StateContext<PlanModelState>, action: GetPlanesByEspecialidad){
+      ctx.patchState({loading:true, error:false});
+      try{
+        const response = await lastValueFrom(this.service.getPlanesByEspecialidad(action.idEspecialidad));
+        ctx.patchState({
+            planes: response,
+            error:false
+        })
+      }
+      catch(error:any){
+        ErrorStateHandler.handleError(error, ctx);
+      }
+      finally{
+        ctx.patchState({loading:false})
+      }
     }
 }

@@ -1,0 +1,10 @@
+<p-dropdown 
+    [options]="(planes$ | async)!" 
+    [(ngModel)]="plan"
+    [checkmark]="true" 
+    optionLabel="descripcion" 
+    [showClear]="true" 
+    [disabled]="disable"
+    placeholder="Seleccione un plan"
+    (onChange)="onChangeEspecialidad()"
+    (onClear)="onClear()" />

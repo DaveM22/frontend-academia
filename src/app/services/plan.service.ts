@@ -1,9 +1,10 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Plan } from '../entities/plan';
 import { PlanDto } from '../dtos/plan.dto';
 import { environment } from '../../enviroment';
+import { PlanFilter } from '../entities/filter';
 
 @Injectable({
   providedIn: 'root'
@@ -15,12 +16,25 @@ export class PlanService {
   }
 
   
-  public getPlanes() : Observable<Plan[]>{
-    return this.http.get<Plan[]>(`${environment.apiUrl}/plan`);
+  public getPlanes(filter:PlanFilter) : Observable<Plan[]>{
+    let params = new HttpParams();
+    params = params.set('mostrarEspecialidad', filter.mostrarEspecialidad)
+    if(filter.especialidadId !== ''){
+      params = params.set('especialidadId', filter.especialidadId)
+    }
+    return this.http.get<Plan[]>(`${environment.apiUrl}/planes`, { params: params});
   }
 
-  public getPlanById(idplan:string){
-    return this.http.get<Plan>(`${environment.apiUrl}/plan/${idplan}`);
+  public getPlanById(idplan:string, filter:PlanFilter){
+    return this.http.get<Plan>(`${environment.apiUrl}/plan/${idplan}?incluirMaterias=${filter.incluirMaterias}`);
+  }
+
+  public getPlanesByEspecialidad(idEspecialidad:string) {
+    return this.http.get<Plan[]>(`${environment.apiUrl}/plan/especialidad/${idEspecialidad}`);
+  }
+
+  public getPlanByIdForCurso(idplan:string) : Observable<Plan>{
+    return this.http.get<Plan>(`${environment.apiUrl}/plan/${idplan}/materias/comisiones`);
   }
 
   public getPlanByIdMaterias(idplan:string) : Observable<Plan>{

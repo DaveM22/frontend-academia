@@ -1,0 +1,29 @@
+<p-dialog header="Seleccionar materia" [resizable]="false" [modal]="true" [maximizable]="true" appendTo="body"
+    [visible]="(showModal$ | async)!" [style]="{width: '95%'}" [contentStyle]="{height: '75vh'}">
+    <p-table #table [value]="materias" [scrollable]="true" scrollHeight="flex"
+        styleClass="p-datatable-gridlines p-datatable-striped" responsiveLayout="stack">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>
+                    Materia
+                </th>
+                <th class="text-center">
+                    Acciones
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-materia>
+            <tr>
+                <td style="width:45%"><span class="p-column-title">Materia</span>{{materia.descripcion}}</td>
+                <td style="width:10%" class="text-center" style="width:20%"><span
+                        class="p-column-title">Acciones</span><p-button size="small" label="Seleccionar"
+                        severity="primary" (onClick)="selectMateria(materia)"></p-button></td>
+            </tr>
+        </ng-template>
+    </p-table>
+    <ng-template pTemplate="footer">
+        <button type="button" pButton icon="pi pi-times" (click)="toggleOffModal()" label="Salir"
+            class="p-button-danger">
+        </button>
+    </ng-template>
+</p-dialog>

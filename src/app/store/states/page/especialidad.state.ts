@@ -1,9 +1,9 @@
 import { Action, Selector, State, StateContext } from "@ngxs/store";
-import { EspecialidadModelState } from "../../modelstate/pages/especialidad.modelstate";
+import { EspecialidadPageModelState } from "../../modelstate/pages/especialidad.modelstate";
 import { Injectable, booleanAttribute } from "@angular/core";
 import { AsignSelectedEspecialidad, ClearSelectedEspecialidad, ShowModalDelete } from "../../actions/pages/especialidad.action";
 
-@State<EspecialidadModelState>({
+@State<EspecialidadPageModelState>({
     name: 'especialidadesPage',
     defaults:{
         showModalDelete:false,
@@ -15,32 +15,32 @@ import { AsignSelectedEspecialidad, ClearSelectedEspecialidad, ShowModalDelete }
   export class EspecialidadPageState{
 
     @Selector()
-    static getShowModalDelete(state: EspecialidadModelState){
+    static getShowModalDelete(state: EspecialidadPageModelState){
         return state.showModalDelete;
     }
 
     @Selector()
-    static getEspecialidadSelected(state: EspecialidadModelState){
+    static getEspecialidadSelected(state: EspecialidadPageModelState){
         return state.especialidadSelected;
     }
 
 
     @Action(ShowModalDelete)
-    showModalDelete(ctx:StateContext<EspecialidadModelState>, action: ShowModalDelete){
+    showModalDelete(ctx:StateContext<EspecialidadPageModelState>, action: ShowModalDelete){
         return ctx.patchState({
             showModalDelete:action.show
         })
     }
 
     @Action(AsignSelectedEspecialidad)
-    asignEspecialidad(ctx:StateContext<EspecialidadModelState>, action:AsignSelectedEspecialidad){
+    asignEspecialidad(ctx:StateContext<EspecialidadPageModelState>, action:AsignSelectedEspecialidad){
         return ctx.patchState({
             especialidadSelected: action.especialidad!
         })
     }
 
     @Action(ClearSelectedEspecialidad)
-    clearEspecialidad(ctx:StateContext<EspecialidadModelState>, action:ClearSelectedEspecialidad){
+    clearEspecialidad(ctx:StateContext<EspecialidadPageModelState>, action:ClearSelectedEspecialidad){
         return ctx.patchState({
             especialidadSelected: null
         })

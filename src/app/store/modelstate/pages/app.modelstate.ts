@@ -1,4 +1,19 @@
+import { Comision } from "../../../entities/comision";
+import { Curso } from "../../../entities/curso";
+import { Especialidad } from "../../../entities/especialidad";
+import { Materia } from "../../../entities/materia";
+import { Plan } from "../../../entities/plan";
 
 export interface AppModelState{
-    toggle:boolean
+    toggle:boolean,
+    selectedEspecialidadFilter:Especialidad | null,
+    selectedPlanFilter:Plan | null,
+    selectedPlanInModal:Plan | null,
+    selectedMateriaInModal:Materia | null,
+    selectedComisionInModal:Comision | null,
+    selectedCursoInModal:Curso | null,
+    showPlanModal:boolean,
+    showMateriaModal:boolean,
+    showComisionModal:boolean,
+    showCursoModal:boolean
 }

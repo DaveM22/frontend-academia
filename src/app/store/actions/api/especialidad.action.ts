@@ -23,4 +23,3 @@ export class GetByIdEspecialidadAction{
     static type = "[Especialidad API] Get by id especialidad";
     constructor(public id:string){}
 }
-

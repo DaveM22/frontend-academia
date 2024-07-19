@@ -10,7 +10,7 @@ import { ButtonModule } from 'primeng/button';
 import { MateriaPageState } from '../../../store/states/page/materia.page.state';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { PostPlanAction } from '../../../store/actions/api/planes.action';
-import { PUtMateriaAction, PostMateriaAction } from '../../../store/actions/api/materia.action';
+import { PutMateriaAction, PostMateriaAction } from '../../../store/actions/api/materia.action';
 import { ClearMateriaAction } from '../../../store/actions/pages/materia.action';
 
 @Component({
@@ -47,7 +47,7 @@ export class MateriaFormComponent {
       this.store.dispatch(new PostMateriaAction(this.materia!)).subscribe(x =>this.router.navigate([`/planes/${this.planId}/materias`]));
     }
     else{
-      this.store.dispatch(new PUtMateriaAction(this.materia!)).subscribe(x =>this.router.navigate([`/planes/${this.planId}/materias`]));
+      this.store.dispatch(new PutMateriaAction(this.materia!)).subscribe(x =>this.router.navigate([`/planes/${this.planId}/materias`]));
       this.store.dispatch(new ClearMateriaAction);
     }
     this.form.reset(); 

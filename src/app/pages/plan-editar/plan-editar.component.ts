@@ -7,6 +7,7 @@ import { Store } from '@ngxs/store';
 import { GetByIdPlanAction } from '../../store/actions/api/planes.action';
 import { CommonModule } from '@angular/common';
 import { PlanFormComponent } from '../../components/forms/plan-form/plan-form.component';
+import { PlanFilter } from '../../entities/filter';
 
 @Component({
   selector: 'app-plan-editar',
@@ -28,7 +29,9 @@ export class PlanEditarComponent {
     this.plan$.subscribe(x => {
       this.plan = x!;
     })
-    this.store.dispatch(new GetByIdPlanAction(this.router.snapshot.params['id']));
+    const filter = new PlanFilter();
+    filter.incluirMaterias = false
+    this.store.dispatch(new GetByIdPlanAction(this.router.snapshot.params['id'], filter));
   }
 
 }

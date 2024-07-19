@@ -6,10 +6,12 @@ import { TableModule } from 'primeng/table';
 import { Observable } from 'rxjs';
 import { PlanState } from '../../store/states/api/plan.state';
 import { Plan } from '../../entities/plan';
-import { GetPlanByIdWithMateriasAction } from '../../store/actions/api/planes.action';
+import { GetByIdPlanAction, GetPlanByIdWithMateriasAction } from '../../store/actions/api/planes.action';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Materia } from '../../entities/materia';
 import { ButtonModule } from 'primeng/button';
+import { PlanFilter } from '../../entities/filter';
+import { PlanPageState } from '../../store/states/page/plan.page.state';
 
 @Component({
   selector: 'app-plan-materias',
@@ -22,7 +24,7 @@ export class PlanMateriasComponent implements OnInit {
   error$:Observable<boolean> = this.store.select(PlanState.getError);
   errorMessage$:Observable<string> = this.store.select(PlanState.getErrorMessage);
   loading$:Observable<boolean> = this.store.select(PlanState.getLoading);
-  planSelected$:Observable<Plan | null> = this.store.select(PlanState.getPlanSelected);
+  planSelected$:Observable<Plan | null> = this.store.select(PlanPageState.getPlanSelected);
   plan!:Plan;
   materias:Materia[]=[]
   header!:string;
@@ -32,7 +34,9 @@ export class PlanMateriasComponent implements OnInit {
   }
   ngOnInit(): void {
     this.id = this.activadedRoute.snapshot.params['id'];
-    this.store.dispatch(new GetPlanByIdWithMateriasAction(this.id));
+    const filter = new PlanFilter();
+    filter.incluirMaterias = true;
+    this.store.dispatch(new GetByIdPlanAction(this.id, filter));
     this.planSelected$.subscribe(x => {
       if(x !== null){
         this.plan = x;

@@ -1,0 +1,10 @@
+<p-dropdown 
+    [options]="(especialiades$ | async)!" 
+    [(ngModel)]="especialidad"
+    [checkmark]="true" 
+    [loading]="(loading$ | async)"
+    optionLabel="descripcion" 
+    [showClear]="true" 
+    placeholder="Seleccione una especialidad"
+    (onChange)="onChangeEspecialidad()"
+    (onClear)="onClear()" />

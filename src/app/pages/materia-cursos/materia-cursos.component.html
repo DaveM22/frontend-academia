@@ -1,0 +1,36 @@
+<p-table #dt2 [value]="(cursos$ | async)!" styleClass="p-datatable-gridlines p-datatable-striped"
+    responsiveLayout="stack" styleClass="h-full pt-0" [breakpoint]="'960px'" [paginator]="true" [scrollable]="true"
+    [rows]="5" scrollHeight="48vh" [globalFilterFields]="['nombre', 'apellido', 'direccion', 'email', 'legajo']">
+    <ng-template pTemplate="caption">
+        <div class="grid">
+            <div
+                class="col-12 flex flex-column sm:flex-column md:flex-row lg:flex-row align-items-center lg:justify-content-between justify-content-center">
+                <h1> Seleccione un curso </h1>
+                <p-iconField iconPosition="left" class="mb-4 lg:mb-0">
+                    <p-inputIcon>
+                        <i class="pi pi-search"></i>
+                    </p-inputIcon>
+                    <input pInputText type="text" (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
+                        placeholder="Buscar curso" />
+                </p-iconField>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Curso</th>
+            <th class="text-center">Acciones</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-curso>
+        <tr>
+            <td><span class="p-column-title">Curso</span>{{curso.descripcion}}</td>
+            <td><span class="p-column-title">Acciones</span>
+                <div class="flex gap-2 justify-content-center">
+                    <p-button size="small" label="Ver Docentes"
+                        (onClick)="redirectDocentesCursos(curso._id)"></p-button>
+                </div>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>

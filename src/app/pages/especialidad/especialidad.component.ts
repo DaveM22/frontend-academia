@@ -10,13 +10,17 @@ import { ButtonModule } from 'primeng/button';
 import { EspecialidadBorrarComponent } from '../especialidad-borrar/especialidad-borrar.component';
 import { ShowModalDelete } from '../../store/actions/pages/especialidad.action';
 import { MessagesModule } from 'primeng/messages';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { PanelModule } from 'primeng/panel';
 import { ToastModule } from 'primeng/toast';
+import { InputTextModule } from 'primeng/inputtext';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { AsignarEspecialidadId } from '../../store/actions/pages/navigate.action';
 @Component({
   selector: 'app-especialidad',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, EspecialidadBorrarComponent, MessagesModule, PanelModule, ToastModule],
+  imports: [RouterModule,CommonModule, TableModule, ButtonModule, EspecialidadBorrarComponent, MessagesModule, PanelModule, ToastModule, IconFieldModule, InputTextModule, InputIconModule],
   templateUrl: './especialidad.component.html',
   styleUrl: './especialidad.component.scss'
 })
@@ -50,11 +54,12 @@ export class EspecialidadComponent implements OnInit {
   }
 
   redirectNewEspecialidad(){
-    this.router.navigate(["/especialidades/nuevo"]);
+    this.router.navigate(["especialidades/nuevo"]);
   }
 
   redirectEditEspecialidad(id:string){
-    this.router.navigate(["/especialidades/editar/" + id])
+    this.store.dispatch(new AsignarEspecialidadId(id))
+    this.router.navigate(["especialidades/editar"])
   }
 
   especialidades!: Especialidad[];

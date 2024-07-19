@@ -1,11 +1,18 @@
+import { MateriaFilter } from "../../../entities/filter";
 import { Materia } from "../../../entities/materia";
+
+export class GetMateriasAction{
+    static type = "[Materia API] Get list materias";
+    constructor(public filter:MateriaFilter){}
+}
+
 
 export class PostMateriaAction {
     static type = "[Materia API] Post materia";
     constructor(public materia:Materia){}
 }
 
-export class PUtMateriaAction {
+export class PutMateriaAction {
     static type = "[Materia API] Put materia";
     constructor(public materia:Materia){}
 }

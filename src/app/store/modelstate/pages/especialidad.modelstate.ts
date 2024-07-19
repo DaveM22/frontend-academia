@@ -1,6 +1,6 @@
 import { Especialidad } from "../../../entities/especialidad"
 
-export interface EspecialidadModelState{
+export interface EspecialidadPageModelState{
     showModalDelete:boolean
     especialidadSelected:Especialidad | null
 

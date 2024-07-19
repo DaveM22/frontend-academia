@@ -1,8 +1,10 @@
 import { PlanDto } from "../../../dtos/plan.dto";
+import { PlanFilter } from "../../../entities/filter";
 import { Plan } from "../../../entities/plan";
 
 export class GetPlanAction{
     static type = "[Plan API] List planes";
+    constructor(public filter:PlanFilter){}
 }
 
 export class GetPlanByIdWithMateriasAction {
@@ -27,6 +29,20 @@ export class DeletePlanAction{
 
 export class GetByIdPlanAction{
     static type = "[Plan API] Get by id plan";
+    constructor(public id:string, public filter:PlanFilter){}
+}
+
+export class GetByIdPlanForCursoAction{
+    static type = "[Plan API] Get by id plan with materias and comisiones";
     constructor(public id:string){}
+}
+
+export class GetPlanesByEspecialidad{
+    static type = "[Plan API] Get planes by especialidad";
+    constructor(public idEspecialidad:string){}
+}
+
+export class ClearPlanes{
+    static type = "[Plan API] Clear planes locally";
 }
 

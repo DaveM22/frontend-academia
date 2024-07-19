@@ -25,11 +25,9 @@ export class EspecialidadFormComponent implements OnInit {
   @Input() especialidad!:Especialidad;
   @Input() title!:string;
 
-
   constructor(private store:Store, private router:Router, private messageService:MessageService){}
 
   ngOnInit(): void {
-
     this.form = new FormGroup({
       _id: new FormControl(null),
       descripcion: new FormControl('', [Validators.required])
@@ -37,12 +35,11 @@ export class EspecialidadFormComponent implements OnInit {
     this.form.patchValue(this.store.selectSnapshot(EspecialidadPageState.getEspecialidadSelected)!);
   }
 
-
   public onSubmit(){
     this.especialidad = this.form.value
     if(this.form.value._id === null){
       this.store.dispatch(new PostEspecialidadAction(this.especialidad)).subscribe(() => {
-        this.router.navigate(["/especialidades"])
+        this.router.navigate(["/especialidades/lista"])
 
       });
 
@@ -60,7 +57,7 @@ export class EspecialidadFormComponent implements OnInit {
 
   public redirectEspecialidades(){
     this.store.dispatch(new ClearSelectedEspecialidad);
-    this.router.navigate(["/especialidades"]);
+    this.router.navigate(["/especialidades/lista"]);
   }
 
 }

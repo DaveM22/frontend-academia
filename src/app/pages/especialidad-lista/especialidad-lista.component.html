@@ -1,0 +1,70 @@
+@if (error$ | async)
+{
+<p-messages severity="error">
+    <ng-template pTemplate>
+
+        <div class="ml-2">{{(errorMessage$ | async)}}</div>
+    </ng-template>
+</p-messages>
+
+}
+
+<p-table #dt2 [value]="(especialidades$ | async)!" [loading]="(loading$ | async)"
+    styleClass="p-datatable-gridlines p-datatable-striped" responsiveLayout="stack" styleClass="h-full pt-0"
+    [breakpoint]="'960px'" [paginator]="true" [scrollable]="true" [rows]="5" scrollHeight="48vh"
+    [globalFilterFields]="['descripcion']">
+    <ng-template pTemplate="caption">
+        <div class="grid">
+            <div class="col-12 flex flex-column sm:flex-column md:flex-row lg:flex-row align-items-center lg:justify-content-between justify-content-center">
+                <h1> Especialidades </h1>
+                <p-iconField iconPosition="left" class="mb-4 lg:mb-0">
+                    <p-inputIcon>
+                        <i class="pi pi-search"></i>
+                    </p-inputIcon>
+                    <input 
+                        pInputText 
+                        type="text" 
+                        (input)="dt2.filterGlobal($any($event.target).value, 'contains')" 
+                        placeholder="Buscar especialidad" />
+                </p-iconField>
+                <p-button label="Nueva especialidad" severity="primary" (onClick)="redirectNewEspecialidad()"></p-button>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Especialidad</th>
+            <th class="text-center">Acciones</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-especialidad>
+        <tr>
+            <td style="width:85%"><span class="p-column-title">Especialidad</span>{{especialidad.descripcion}}
+            </td>
+            <td style="width:15%"><span class="p-column-title">Acciones</span>
+                <div class="flex gap-2 justify-content-center">
+                    <p-button size="small" label="Editar" severity="primary" class="mr-20"
+                        (onClick)="redirectEditEspecialidad(especialidad._id)" />
+                    <p-button size="small" label="Borrar" severity="danger" (onClick)="showModal(especialidad)" />
+                </div>
+            </td>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+        @if ((especialidades$ | async)!.length === 0) {
+            <tr>
+                <td class="text-center" colspan="2">No se han registrado especialidades</td>
+            </tr>
+        }
+        @else {
+            <tr>
+                <td class="text-center" colspan="2">No se encontraron especialidades con el filtro aplicado</td>
+            </tr>
+        }
+    </ng-template>
+</p-table>
+
+
+<!-- 
+<especialidad-borrar-modal [especialidad]="especialidad"></especialidad-borrar-modal> -->

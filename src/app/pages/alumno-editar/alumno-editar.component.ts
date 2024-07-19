@@ -1,0 +1,33 @@
+import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Alumno } from '../../entities/alumno';
+import { PersonaState } from '../../store/states/api/persona.state';
+import { PersonaPageState } from '../../store/states/page/persona.state';
+import { ActivatedRoute } from '@angular/router';
+import { Store } from '@ngxs/store';
+import { GetAlumnoByIdAction } from '../../store/actions/api/persona.action';
+import { PersonaFormComponent } from '../../components/forms/persona-form/persona-form.component';
+import { CommonModule } from '@angular/common';
+import { AlumnoFilter } from '../../entities/filter';
+
+@Component({
+  selector: 'app-alumno-editar',
+  standalone: true,
+  imports: [PersonaFormComponent, CommonModule],
+  templateUrl: './alumno-editar.component.html',
+  styleUrl: './alumno-editar.component.scss'
+})
+export class AlumnoEditarComponent {
+  alumno$:Observable<Alumno | null> = this.store.select(PersonaPageState.getAlumnoSelected);
+
+  constructor(private store:Store, private router:ActivatedRoute){
+    
+  }
+
+
+  ngOnInit(): void {
+    let filter = new AlumnoFilter();
+    filter.incluirInscripciones = false;
+    this.store.dispatch(new GetAlumnoByIdAction(this.router.snapshot.params['id'], filter));
+  }
+}
