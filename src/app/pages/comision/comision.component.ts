@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Comision } from '../../entities/comision';
 import { Store } from '@ngxs/store';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { ComisionState } from '../../store/states/api/comision.state';
 import { GetComision as GetComisionAction } from '../../store/actions/api/comision.action';
 import { ButtonModule } from 'primeng/button';
@@ -16,7 +16,7 @@ import { ComisionFilter } from '../../entities/filter';
 @Component({
   selector: 'app-comision',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, MessagesModule, PanelModule, ToastModule],
+  imports: [CommonModule, PanelModule, RouterModule],
   templateUrl: './comision.component.html',
   styleUrl: './comision.component.scss'
 })

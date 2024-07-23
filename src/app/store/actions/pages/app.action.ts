@@ -3,10 +3,16 @@ import { Curso } from "../../../entities/curso";
 import { Especialidad } from "../../../entities/especialidad";
 import { Materia } from "../../../entities/materia";
 import { Plan } from "../../../entities/plan";
+import { Profesor } from "../../../entities/profesor";
 
 export class ToggleMenuAction {
     static type = "[Page] Toggle button";
     constructor(public toggle: boolean) { }
+}
+
+export class ShowDocenteModal{
+    static type = "[Page] Show docente modal";
+    constructor(public show:boolean){}
 }
 
 export class ShowPlanModal {
@@ -51,6 +57,16 @@ export class SelectedPlanFilter {
 
 export class ClearSelectedPlanFilter {
     static type = "[Page] Clear Plan selected";
+}
+
+export class SelectedDocenteInModal{
+    static type = "[Page] Docente selected";
+    constructor(public docente:Profesor){}
+}
+
+export class ClearDocenteInModal{
+    static type = "[Page] Docente selected";
+    constructor(public docente:Profesor){}
 }
 
 export class SelectedPlanInModal {

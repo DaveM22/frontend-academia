@@ -1,16 +1,45 @@
-<div class="">
-    <navbar></navbar>
+<div id="navbar">
+
+        <navbar></navbar>
+
+</div>
+<div id="main">
+    <div class="col-12 flex flex-row gap-1" style="height: 98%;">
+        <div class="col-12 sm:col-12 md:col-12 lg:col-2 hidden lg:block">
+            <sidebar></sidebar>
+         </div>
+         <div class="col-12 sm:col-12 md:col-12 lg:col-10" >
+            <router-outlet></router-outlet>
+         </div> 
+    </div>
+</div>
+
+<!-- <div style="height: 94%;">
+    <div class="h-auto">
+        <navbar></navbar>
+    </div>
+    <div class="col-12 flex flex-row gap-1" style="height: 100%;">
+        <div class="col-12 sm:col-12 md:col-12 lg:col-2 hidden lg:block">
+            <sidebar></sidebar>
+         </div>
+         <div class="col-12 sm:col-12 md:col-12 lg:col-10" style="height: 100%;" >
+
+         </div> 
+
+    </div>
+</div> -->
+<!--     
     <div class="grid" style="height: 88vh;">
 
    
         <div class="col-12 sm:col-12 md:col-12 lg:col-2 hidden lg:block app-height">
             <sidebar></sidebar>
          </div>
-         <div class="overflow-y-scroll col-12 sm:col-12 md:col-12 lg:col-10" >
+         <div class="overflow-y-scroll col-12 sm:col-12 md:col-12 lg:col-10 app-height" >
             <router-outlet></router-outlet>
          </div>
-    </div>
-</div>
+    </div> -->
+
 
 
 

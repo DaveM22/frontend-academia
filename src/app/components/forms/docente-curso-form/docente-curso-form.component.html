@@ -24,6 +24,7 @@
 
                             <div class="col-12 sm:col-12 lg:col-5">
                                 <p-button label="Seleccionar profesor" severity="primary"
+                                (onClick)="modalProfesores()"
                                     styleClass="w-full mt-2 sm:w-full align-items-center lg:w-full sm:mt-2 lg:mt-0 "
                                     ></p-button>
                             </div>
@@ -49,3 +50,7 @@
         </form>
     </ng-template>
 </p-card>
+
+@if((curso$ | async)){
+    <app-docente-modal  [cursoId]="curso._id" [planId]="curso!.materia!.plan"></app-docente-modal>
+}

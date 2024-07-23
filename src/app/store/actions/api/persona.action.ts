@@ -1,5 +1,5 @@
 import { Alumno } from "../../../entities/alumno";
-import { AlumnoFilter } from "../../../entities/filter";
+import { AlumnoFilter, DocenteFilter } from "../../../entities/filter";
 import { PersonaDto } from "../../../entities/persona";
 
 export class GetAlumnosAction{
@@ -8,6 +8,7 @@ export class GetAlumnosAction{
 
 export class GetProfesoresAction{
     static type = "[Persona API] List profesores";
+    constructor(public filter:DocenteFilter){}
 }
 
 export class GetAlumnoByIdAction{

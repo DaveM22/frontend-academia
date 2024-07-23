@@ -1,0 +1,33 @@
+<p-dialog header="Seleccionar profesor" [resizable]="false" [modal]="true" [maximizable]="true" appendTo="body"
+    [visible]="(showModal$ | async)!" [style]="{width: '95%'}" [contentStyle]="{height: '75vh'}">
+    <p-table #table [value]="(profesores | async)!" [scrollable]="true" scrollHeight="flex"
+        styleClass="p-datatable-gridlines p-datatable-striped" responsiveLayout="stack">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Legajo</th>
+                <th>
+                    Apellido
+                </th>
+                <th>Nombre</th>
+                <th class="text-center">
+                    Acciones
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-profesor>
+            <tr>
+                <td style="width:45%"><span class="p-column-title">Legajo</span>{{profesor.legajo}}</td>
+                <td style="width:45%"><span class="p-column-title">Apellido</span>{{profesor.apellido}}</td>
+                <td style="width:45%"><span class="p-column-title">Nombre</span>{{profesor.nombre}}</td>
+                <td style="width:10%" class="text-center" style="width:20%"><span
+                        class="p-column-title">Acciones</span><p-button size="small" label="Seleccionar"
+                        severity="primary" (onClick)="selectProfesor(profesor)"></p-button></td>
+            </tr>
+        </ng-template>
+    </p-table>
+    <ng-template pTemplate="footer">
+        <button type="button" pButton icon="pi pi-times" (click)="toggleOffModal()" label="Salir"
+            class="p-button-danger">
+        </button>
+    </ng-template>
+</p-dialog>

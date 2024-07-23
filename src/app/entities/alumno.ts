@@ -3,6 +3,10 @@ import { AlumnoInscripcion } from "./alumno-inscripcion";
 import { Persona, PersonaDto } from "./persona";
 
 export class Alumno extends Persona {
+   constructor(){
+      super();
+      this.tipoPersona = TipoPersonaEnum.ALUMNO
+   }
    public inscripciones:AlumnoInscripcion[] = []
 }
 

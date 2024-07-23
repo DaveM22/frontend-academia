@@ -7,3 +7,10 @@ export class DocenteCurso {
     public docente:Profesor | null = null
     public cargo:string = '';
 }
+
+export class DocenteCursoDto {
+    public _id:string = '';
+    public cursoId:string = '';
+    public profesorId:string = '';
+    public cargo:string = '';
+}

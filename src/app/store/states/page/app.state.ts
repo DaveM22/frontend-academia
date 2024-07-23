@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { AppModelState } from "../../modelstate/pages/app.modelstate";
-import { ClearSelectedComisionInModal, ClearSelectedCursoInModal, ClearSelectedEspecialidadFilter, ClearSelectedMateriaInModal, ClearSelectedPlanFilter, ClearSelectedPlanInModal, SelectedComisionInModal, SelectedCursoInModal, SelectedEspecialidadFilter, SelectedMateriaForCurso as SelectedMateriaInModal, SelectedPlanFilter, SelectedPlanInModal, ShowComisionesModal, ShowCursoModal, ShowMateriaModal, ShowPlanModal, ToggleMenuAction } from "../../actions/pages/app.action";
+import { ClearDocenteInModal, ClearSelectedComisionInModal, ClearSelectedCursoInModal, ClearSelectedEspecialidadFilter, ClearSelectedMateriaInModal, ClearSelectedPlanFilter, ClearSelectedPlanInModal, SelectedComisionInModal, SelectedCursoInModal, SelectedDocenteInModal, SelectedEspecialidadFilter, SelectedMateriaForCurso as SelectedMateriaInModal, SelectedPlanFilter, SelectedPlanInModal, ShowComisionesModal, ShowCursoModal, ShowDocenteModal, ShowMateriaModal, ShowPlanModal, ToggleMenuAction } from "../../actions/pages/app.action";
 import { ClearSelectedCursoAction } from "../../actions/pages/curso.action";
 
 @State<AppModelState>({
@@ -14,10 +14,12 @@ import { ClearSelectedCursoAction } from "../../actions/pages/curso.action";
         selectedComisionInModal: null,
         selectedCursoInModal: null,
         selectedPlanFilter:null,
+        selectedProfesorInModal:null,
         showPlanModal: false,
         showMateriaModal: false,
         showComisionModal: false,
-        showCursoModal: false
+        showCursoModal: false,
+        showProfesorModal:false
     }
 })
 
@@ -43,6 +45,12 @@ export class AppPageState {
     static getSelectedPlanInModal(state: AppModelState) {
         return state.selectedPlanInModal;
     }
+
+    @Selector()
+    static getSelectedDocenteInModal(state: AppModelState) {
+        return state.selectedProfesorInModal;
+    }
+    
 
     @Selector()
     static getSelectedMateriaInModal(state:AppModelState){
@@ -78,6 +86,11 @@ export class AppPageState {
     @Selector()
     static getShowModalCursos(state: AppModelState) {
         return state.showCursoModal;
+    }
+
+    @Selector()
+    static getShowModalDocentes(state: AppModelState) {
+        return state.showProfesorModal;
     }
 
     @Action(ToggleMenuAction)
@@ -198,6 +211,27 @@ export class AppPageState {
     showCursosModal(ctx: StateContext<AppModelState>, action: ShowCursoModal) {
         ctx.patchState({
             showCursoModal:action.show
+        })
+    }
+
+    @Action(ShowDocenteModal)
+    showDocenteModal(ctx: StateContext<AppModelState>, action: ShowDocenteModal) {
+        ctx.patchState({
+            showProfesorModal:action.show
+        })
+    }
+
+    @Action(SelectedDocenteInModal)
+    selectedDocenteInModal(ctx: StateContext<AppModelState>, action: SelectedDocenteInModal){
+        ctx.patchState({
+            selectedProfesorInModal: action.docente
+        })
+    }
+
+    @Action(ClearDocenteInModal)
+    clearDocenteInModal(ctx: StateContext<AppModelState>, action: ClearDocenteInModal){
+        ctx.patchState({
+            selectedProfesorInModal:null
         })
     }
 

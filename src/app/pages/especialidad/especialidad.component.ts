@@ -20,48 +20,11 @@ import { AsignarEspecialidadId } from '../../store/actions/pages/navigate.action
 @Component({
   selector: 'app-especialidad',
   standalone: true,
-  imports: [RouterModule,CommonModule, TableModule, ButtonModule, EspecialidadBorrarComponent, MessagesModule, PanelModule, ToastModule, IconFieldModule, InputTextModule, InputIconModule],
+  imports: [RouterModule,CommonModule, PanelModule],
   templateUrl: './especialidad.component.html',
   styleUrl: './especialidad.component.scss'
 })
-export class EspecialidadComponent implements OnInit {
-
-  public especialidades$: Observable<Especialidad[]> = this.store.select(EspecialidadState.getEspecialidades)
-
-  public loading$:Observable<boolean> = this.store.select(EspecialidadState.getLoading);
-
-  public error$:Observable<boolean> = this.store.select(EspecialidadState.getError);
-
-  public errorMessage$:Observable<string> = this.store.select(EspecialidadState.getErrorMessage);
-
-  public especialidad!:Especialidad;
-  constructor(private store:Store, private router:Router){
-    
-  }
+export class EspecialidadComponent  {
 
 
-  ngOnInit(): void {
-    this.store.dispatch(new GetEspecialidadAction());
-    this.especialidades$.subscribe(x => {
-
-    })
-  }
-
-
-  showModal(esp:Especialidad){
-    this.especialidad = esp;
-    this.store.dispatch(new ShowModalDelete(true));
-  }
-
-  redirectNewEspecialidad(){
-    this.router.navigate(["especialidades/nuevo"]);
-  }
-
-  redirectEditEspecialidad(id:string){
-    this.store.dispatch(new AsignarEspecialidadId(id))
-    this.router.navigate(["especialidades/editar"])
-  }
-
-  especialidades!: Especialidad[];
-  title = 'academia';
 }

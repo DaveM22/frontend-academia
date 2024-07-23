@@ -11,7 +11,7 @@
                         <input id="descripcion" pInputText formControlName="descripcion" type="text" class="w-full">
                         @if(form.get('descripcion')?.invalid && form.get('descripcion')?.dirty){
                         <small class="p-error block">
-                            El campo descripcion es requerido
+                            El campo descripción es requerido
                         </small>
                         }
                     </div>
@@ -19,7 +19,7 @@
             </div>
 
             <div class="flex align-items-center justify-content-center font-bold text-white border-round m-2">
-                <button type="submit" pButton label="Guardar" icon="pi pi-check" class="p-button-success mr-2"></button>
+                <button type="submit" pButton label="Guardar" icon="pi pi-check" class="p-button-success mr-2" [disabled]="form.invalid"></button>
                 <p-button label="Cancelar" severity="danger" icon="pi pi-times" (onClick)="redirectEspecialidades()"></p-button>
             </div>
         </form>

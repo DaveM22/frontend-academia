@@ -61,7 +61,7 @@ export class PlanFormComponent implements OnInit {
 
   public redirectPlanes(){
     this.store.dispatch(new ClearSelectedPlan);
-    this.router.navigate(["/planes"]);
+    this.router.navigate(["/planes/lista"]);
   }
 
 }

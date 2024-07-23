@@ -3,5 +3,5 @@ export class Materia {
     public descripcion:string = '';
     public hsSemanales = 0;
     public hsTotales = 0;
-    public planId:string = '';
+    public plan:string = '';
 }

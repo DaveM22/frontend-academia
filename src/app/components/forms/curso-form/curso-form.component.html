@@ -1,17 +1,7 @@
-<p-card [header]="title">
-    <ng-template pTemplate="content">
+
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
-            <div class="flex justify-content-center">
+            <div class="flex h-full justify-content-center form-height">
                 <div class="col-12 lg:col-5">
-                    <div class="field">
-                        <label for="descripcion">Descripcion:</label>
-                        <input id="firstname1" pInputText formControlName="descripcion" type="text" class="w-full">
-                        @if(form.get('descripcion')?.invalid && form.get('descripcion')?.dirty){
-                        <small class="p-error block">
-                            El campo descripcion es requerido
-                        </small>
-                        }
-                    </div>
 
                     <div class="formgrid grid">
                         <div class="field col">
@@ -33,6 +23,20 @@
                             }
                         </div>
                     </div>
+
+
+
+                    <div class="field">
+                        <label for="descripcion">Descripcion:</label>
+                        <input id="firstname1" pInputText formControlName="descripcion" type="text" class="w-full">
+                        @if(form.get('descripcion')?.invalid && form.get('descripcion')?.dirty){
+                        <small class="p-error block">
+                            El campo descripcion es requerido
+                        </small>
+                        }
+                    </div>
+
+       
         
    
                     <div class="field">
@@ -100,8 +104,7 @@
                 <p-button label="Cancelar" severity="danger" (onClick)="redirectCursos()"></p-button>
             </div>
         </form>
-    </ng-template>
-</p-card>
+
 
 <app-planes-modal></app-planes-modal>
 <app-materias-modal></app-materias-modal>

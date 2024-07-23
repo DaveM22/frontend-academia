@@ -9,6 +9,7 @@ import { GetAlumnoByIdAction } from '../../store/actions/api/persona.action';
 import { PersonaFormComponent } from '../../components/forms/persona-form/persona-form.component';
 import { CommonModule } from '@angular/common';
 import { AlumnoFilter } from '../../entities/filter';
+import { Persona } from '../../entities/persona';
 
 @Component({
   selector: 'app-alumno-editar',
@@ -18,16 +19,14 @@ import { AlumnoFilter } from '../../entities/filter';
   styleUrl: './alumno-editar.component.scss'
 })
 export class AlumnoEditarComponent {
-  alumno$:Observable<Alumno | null> = this.store.select(PersonaPageState.getAlumnoSelected);
+  alumno$:Observable<Persona | null> = this.store.select(PersonaPageState.getPersonaSelected);
 
-  constructor(private store:Store, private router:ActivatedRoute){
-    
-  }
-
+  constructor(private store:Store, private router:ActivatedRoute){}
 
   ngOnInit(): void {
     let filter = new AlumnoFilter();
     filter.incluirInscripciones = false;
     this.store.dispatch(new GetAlumnoByIdAction(this.router.snapshot.params['id'], filter));
   }
+  
 }

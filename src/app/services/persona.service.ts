@@ -4,7 +4,7 @@ import { Alumno } from '../entities/alumno';
 import { environment } from '../../enviroment';
 import { Profesor } from '../entities/profesor';
 import { Persona, PersonaDto } from '../entities/persona';
-import { AlumnoFilter } from '../entities/filter';
+import { AlumnoFilter, DocenteFilter } from '../entities/filter';
 
 @Injectable({
   providedIn: 'root'
@@ -17,8 +17,15 @@ export class PersonaService {
     return this.http.get<Alumno[]>(`${environment.apiUrl}/personas/alumnos`);
   }
 
-  getProfesores(){
-    return this.http.get<Profesor[]>(`${environment.apiUrl}/personas/profesores`);
+  getProfesores(filters:DocenteFilter){
+    let params = new HttpParams();
+    if(filters.cursoId){
+      params = params.set('cursoId', filters.cursoId);
+    }
+    if(filters.planId){
+      params = params.set('planId', filters.planId);
+    }
+    return this.http.get<Profesor[]>(`${environment.apiUrl}/personas/profesores`, {params:params});
   }
 
   getByIdAlumno(id:string, filter:AlumnoFilter){

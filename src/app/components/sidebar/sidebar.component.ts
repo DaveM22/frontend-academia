@@ -20,12 +20,12 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit(): void {
     this.items = [
-      { label: 'Alumnos' , icon:'pi pi pi-user', command: () => this.router.navigate(["/personas/alumnos"])},
-      { label: 'Profesores' , icon:'pi pi pi-user', command: () => this.router.navigate(["/personas/profesores"])},
+      { label: 'Alumnos' , icon:'pi pi pi-user', command: () => this.router.navigate(["/personas/alumnos/lista"])},
+      { label: 'Profesores' , icon:'pi pi pi-user', command: () => this.router.navigate(["/personas/profesores/lista"])},
       { label: 'Especialidades', icon: 'pi pi-cog', command: () => this.router.navigate(["/especialidades/lista"]) },
-      { label: 'Planes y materias', icon: 'pi pi-cog', command: () => this.router.navigate(["/planes"]) },
-      { label: 'Comisiones' , icon:'pi pi-cog', command: () => this.router.navigate(["/comisiones"])},
-      { label: 'Cursos' , icon:'pi pi-cog', command: () => this.router.navigate(["/cursos"])},
+      { label: 'Planes y materias', icon: 'pi pi-cog', command: () => this.router.navigate(["/planes/lista"]) },
+      { label: 'Comisiones' , icon:'pi pi-cog', command: () => this.router.navigate(["/comisiones/lista"])},
+      { label: 'Cursos' , icon:'pi pi-cog', command: () => this.router.navigate(["/cursos/lista"])},
       { label: 'Inscripciones de alumnos' , icon:'pi pi-cog', command: () => this.router.navigate(["/inscripciones-alumnos"])},
       { label: 'Profesores en cursos' , icon:'pi pi-cog', command: () => this.router.navigate(["/asignacion-docentes/seleccionar-materia"])},
       { label: 'Usuarios' , icon:'pi pi-cog', command: () => this.router.navigate(["/comisiones"])}

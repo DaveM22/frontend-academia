@@ -31,3 +31,8 @@ export class MateriaFilter{
 export class DocenteCursoFilter{
     cursoId:string = '';
 }
+
+export class DocenteFilter{
+    planId:string=''
+    cursoId:string=''
+}

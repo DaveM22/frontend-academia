@@ -13,16 +13,18 @@ import { ButtonModule } from 'primeng/button';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
-import { MessagesModule } from 'primeng/messages';
+import { Messages, MessagesModule } from 'primeng/messages';
+import { ToolbarModule } from 'primeng/toolbar';
 import { TableModule } from 'primeng/table';
 import { EspecialidadFilterComponent } from '../../components/filters/especialidad-filter/especialidad-filter.component';
 import { PlanFilterComponent } from '../../components/filters/plan-filter/plan-filter.component';
 import { Route, Router } from '@angular/router';
+import { FieldsetModule } from 'primeng/fieldset';
 
 @Component({
   selector: 'app-materias-asignacion',
   standalone: true,
-  imports: [CommonModule,EspecialidadFilterComponent,PlanFilterComponent, TableModule, ButtonModule, IconFieldModule, InputIconModule, MessagesModule, InputTextModule],
+  imports: [CommonModule,ToolbarModule,MessagesModule,EspecialidadFilterComponent,PlanFilterComponent, TableModule, ButtonModule, IconFieldModule, InputIconModule, MessagesModule, InputTextModule],
   templateUrl: './materias-asignacion.component.html',
   styleUrl: './materias-asignacion.component.scss'
 })
@@ -32,12 +34,13 @@ export class MateriasAsignacionComponent {
   planSelected$:Observable<Especialidad | null> = this.store.select(AppPageState.getSelectedPlanInFilter);
   materias$:Observable<Materia[]> = this.store.select(MateriaState.getMaterias);
   disablePlanDropDown:boolean = true;
-
+  messages: Messages[] | undefined;
 
 
   constructor(private store:Store, private route:Router){}
 
   ngOnInit(): void {
+
     this.especialidadSelected$.subscribe(x => {
       if(x !== null){
         this.disablePlanDropDown = false;

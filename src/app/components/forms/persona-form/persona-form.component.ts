@@ -5,7 +5,7 @@ import { Alumno, AlumnoDto } from '../../../entities/alumno';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { PersonaPageState } from '../../../store/states/page/persona.state';
-import { PersonaDto } from '../../../entities/persona';
+import { Persona, PersonaDto } from '../../../entities/persona';
 import { PostAlumnoAction, PostProfesorAction, PutAlumnoAction, PutProfesorAction } from '../../../store/actions/api/persona.action';
 import { InputTextModule } from 'primeng/inputtext';
 import { CardModule } from 'primeng/card';
@@ -35,8 +35,10 @@ export class PersonaFormComponent {
   @Input() title!: string;
   tipoPersona!: TipoPersonaEnum
   planSelected$: Observable<Plan | null> = this.store.select(AppPageState.getSelectedPlanInModal);
+  personaSelected$:Observable<Persona | null> = this.store.select(PersonaPageState.getPersonaSelected);
   form!: FormGroup;
-  persona!: PersonaDto;
+  persona!: Persona;
+  personaDto!: PersonaDto;
 
   constructor(private store: Store, private router: Router, private messageService: MessageService, private datePipe:DatePipe) { }
 
@@ -53,24 +55,30 @@ export class PersonaFormComponent {
       planId: new FormControl('', [Validators.required])
 
     });
-    this.pathValues();
+
     this.planSelected$.subscribe(x => {
       if (x !== null) {
         this.form.patchValue({ 'plan': x.descripcion, 'planId': x._id });
+      }
+    })
+    this.personaSelected$.subscribe(x => {
+      if(x !== null){
+        this.persona = x;
+        this.pathValues();
       }
     })
   }
 
   public onSubmit() {
     if (this.tipoPersona === TipoPersonaEnum.ALUMNO) {
-      this.persona = new AlumnoDto();
-      this.persona = this.form.value
-      this.submitAlumno(this.persona);
+      this.personaDto = new AlumnoDto();
+      this.personaDto = this.form.value
+      this.submitAlumno(this.personaDto);
     }
     else {
-      this.persona = new ProfesorDto();
-      this.persona = this.form.value;
-      this.submitProfesor(this.persona);
+      this.personaDto = new ProfesorDto();
+      this.personaDto = this.form.value;
+      this.submitProfesor(this.personaDto);
     }
   }
 
@@ -90,7 +98,7 @@ export class PersonaFormComponent {
 
   public submitProfesor(profesor: PersonaDto) {
     if (this.form.value._id === null) {
-      this.store.dispatch(new PostProfesorAction(this.persona)).subscribe(() => {
+      this.store.dispatch(new PostProfesorAction(this.personaDto)).subscribe(() => {
         this.router.navigate(["/personas/profesores"])
       });
     }
@@ -104,11 +112,12 @@ export class PersonaFormComponent {
 
   public redirectPersona() {
     this.store.dispatch(new ClearSelectedPersona);
+    console.log(this.tipoPersona);
     if (this.tipoPersona === TipoPersonaEnum.ALUMNO) {
-      this.router.navigate(["/personas/alumnos"])
+      this.router.navigate(["/personas/alumnos/lista"])
     }
     else {
-      this.router.navigate(["/personas/profesores"])
+      this.router.navigate(["/personas/profesores/lista"])
     }
 
   }
@@ -118,12 +127,11 @@ export class PersonaFormComponent {
   }
 
   pathValues() {
-    let persona = this.store.selectSnapshot(PersonaPageState.getPersonaSelected)!
-    this.tipoPersona = persona.tipoPersona;
-    if (persona._id !== "") {
-      this.form.patchValue(persona);
-      this.form.patchValue({'fechaNacimiento':this.datePipe.transform(persona.fechaNacimiento, 'dd/MM/yyyy')})
-      this.form.patchValue({ 'plan': persona.plan.descripcion, 'planId': persona.plan._id });
+    this.tipoPersona = this.persona.tipoPersona;
+    if (this.persona._id !== "") {
+      this.form.patchValue(this.persona);
+      this.form.patchValue({'fechaNacimiento':this.datePipe.transform(this.persona.fechaNacimiento, 'dd/MM/yyyy')})
+      this.form.patchValue({ 'plan': this.persona.plan.descripcion, 'planId': this.persona.plan._id });
     }
   }
 

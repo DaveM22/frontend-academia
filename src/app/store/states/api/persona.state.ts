@@ -72,7 +72,7 @@ export class PersonaState {
     async GetAlumnoByIdAction(ctx: StateContext<PersonaModelState>, action:GetAlumnoByIdAction){
         try {
             const response = await lastValueFrom(this.service.getByIdAlumno(action.id, action.filter));
-            ctx.dispatch(new AsignSelectedAlumno(response));
+            ctx.dispatch(new AsignSelectedPersona(response));
         }
         catch (error) {
             ctx.patchState({
@@ -97,7 +97,7 @@ export class PersonaState {
     @Action(GetProfesoresAction)
     async getProfesores(ctx: StateContext<PersonaModelState>, action: GetProfesoresAction) {
         try {
-            const response = await lastValueFrom(this.service.getProfesores());
+            const response = await lastValueFrom(this.service.getProfesores(action.filter));
             ctx.patchState({
                 profesores: response
             })

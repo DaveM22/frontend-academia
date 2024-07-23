@@ -38,8 +38,8 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit() {
     this.itemsSideBar = [
-      { label: 'Especialidades', icon: 'pi pi-plus', command: () => this.router.navigate(["/especialidades"]) },
-      { label: 'Planes', icon: 'pi pi-search', command: () => this.router.navigate(["/planes"]) }
+      { label: 'Especialidades', icon: 'pi pi-plus', command: () => this.redirect("/especialidades/lista") },
+      { label: 'Planes', icon: 'pi pi-search', command: () => this.redirect("/planes/lista") }
     ];
       this.toggle$.subscribe( x => this.toggle = x);
       this.items = [
@@ -52,12 +52,15 @@ export class NavbarComponent implements OnInit {
     }
 
     toggleAction(){
-      console.log('asd')
       this.store.dispatch(new ToggleMenuAction(!this.toggle));
     }
 
     onHide(){
-      console.log('asd22')
+      this.store.dispatch(new ToggleMenuAction(false));
+    }
+
+    redirect(url:string){
+      this.router.navigate([url])
       this.store.dispatch(new ToggleMenuAction(false));
     }
 }

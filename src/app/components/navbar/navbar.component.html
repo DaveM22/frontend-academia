@@ -3,9 +3,14 @@
 
     </p-menubar>
 </div> -->
- <div class="bg-primary font-bold text-left p-2 lg:p-4 border-round mb-3 static">
-    <p-button icon="pi pi-bars" class="lg:hidden" (onClick)="toggleAction()"   ></p-button>
-    <p-sidebar [(visible)]="toggle" (onHide)="onHide()" closeOnEscape="false">
-        <sidebar></sidebar>
-    </p-sidebar>
+ <div class="flex align-items-center bg-primary justify-content-between font-bold text-left lg:p-1 border-round m-3 static h-full">
+    <p-button icon="pi pi-bars" (onClick)="toggleAction()"   ></p-button>
+    <div>
+        <p-button icon="pi pi-user" label="Ingresar" ></p-button>
+    </div>
+
  </div>
+
+ <p-sidebar [(visible)]="toggle" (onHide)="onHide()" closeOnEscape="true">
+    <sidebar></sidebar>
+</p-sidebar>

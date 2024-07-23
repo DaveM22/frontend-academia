@@ -9,14 +9,14 @@ import { Observable } from 'rxjs';
 import { Curso } from '../../entities/curso';
 import { CursoState } from '../../store/states/api/curso.state';
 import { Store } from '@ngxs/store';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { GetCursoAction } from '../../store/actions/api/curso.action';
 import { CursoFilter } from '../../entities/filter';
 
 @Component({
   selector: 'app-curso',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, MessagesModule, PanelModule, ToastModule],
+  imports: [CommonModule, PanelModule, RouterModule],
   templateUrl: './curso.component.html',
   styleUrl: './curso.component.scss'
 })

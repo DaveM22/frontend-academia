@@ -26,19 +26,19 @@ export class PlanService {
   }
 
   public getPlanById(idplan:string, filter:PlanFilter){
-    return this.http.get<Plan>(`${environment.apiUrl}/plan/${idplan}?incluirMaterias=${filter.incluirMaterias}`);
+    return this.http.get<Plan>(`${environment.apiUrl}/planes/${idplan}?incluirMaterias=${filter.incluirMaterias}`);
   }
 
   public getPlanesByEspecialidad(idEspecialidad:string) {
-    return this.http.get<Plan[]>(`${environment.apiUrl}/plan/especialidad/${idEspecialidad}`);
+    return this.http.get<Plan[]>(`${environment.apiUrl}/planes/especialidad/${idEspecialidad}`);
   }
 
   public getPlanByIdForCurso(idplan:string) : Observable<Plan>{
-    return this.http.get<Plan>(`${environment.apiUrl}/plan/${idplan}/materias/comisiones`);
+    return this.http.get<Plan>(`${environment.apiUrl}/planes/${idplan}/materias/comisiones`);
   }
 
   public getPlanByIdMaterias(idplan:string) : Observable<Plan>{
-    return this.http.get<Plan>(`${environment.apiUrl}/plan/${idplan}/materias`);
+    return this.http.get<Plan>(`${environment.apiUrl}/planes/${idplan}/materias`);
   }
 
   public postPlan(plan:PlanDto){

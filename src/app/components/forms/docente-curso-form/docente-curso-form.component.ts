@@ -7,17 +7,23 @@ import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
 import { Cargo } from '../../../entities/enums';
 import { DropdownModule } from 'primeng/dropdown';
-import { KeyValuePipe } from '@angular/common';
+import { CommonModule, KeyValuePipe } from '@angular/common';
 import { Observable } from 'rxjs';
 import { Curso } from '../../../entities/curso';
 import { CursoPageState } from '../../../store/states/page/curso.state';
 import { GetByIdCursoAction } from '../../../store/actions/api/curso.action';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { DocenteModalComponent } from '../../modals/docente-modal/docente-modal.component';
+import { ShowDocenteModal } from '../../../store/actions/pages/app.action';
+import { Profesor } from '../../../entities/profesor';
+import { AppPageState } from '../../../store/states/page/app.state';
+import { DocenteCurso, DocenteCursoDto } from '../../../entities/docente-curso';
+import { PostDocenteCursoAction } from '../../../store/actions/api/docente-curso.action';
 
 @Component({
   selector: 'app-docente-curso-form',
   standalone: true,
-  imports: [ReactiveFormsModule, KeyValuePipe, InputTextModule, CardModule, ButtonModule, RippleModule, DropdownModule],
+  imports: [ReactiveFormsModule,DocenteModalComponent,CommonModule, KeyValuePipe, InputTextModule, CardModule, ButtonModule, RippleModule, DropdownModule],
   templateUrl: './docente-curso-form.component.html',
   styleUrl: './docente-curso-form.component.scss'
 })
@@ -25,12 +31,14 @@ export class DocenteCursoFormComponent implements OnInit {
   @Input() title!:string;
   @Input() cursoId!:string;
   curso$:Observable<Curso | null> = this.store.select(CursoPageState.getCursoSelected);
+  docenteModal$:Observable<Profesor | null> = this.store.select(AppPageState.getSelectedDocenteInModal);
   curso!:Curso;
   form!:FormGroup
+  docenteCursoDto!:DocenteCursoDto
 
   cargos!:string[];
 
-  constructor(private store:Store){}
+  constructor(private store:Store, private router:Router){}
 
   ngOnInit(): void {
     this.store.dispatch(new GetByIdCursoAction(this.cursoId));
@@ -47,7 +55,13 @@ export class DocenteCursoFormComponent implements OnInit {
     this.curso$.subscribe(x => {
       if(x !== null){
         this.curso = x;
-        this.form.patchValue({'curso':this.curso.descripcion})
+        this.form.patchValue({'curso':this.curso.descripcion, 'cursoId':this.curso._id})
+      }
+    })
+
+    this.docenteModal$.subscribe(x => {
+      if(x !== null){
+        this.form.patchValue({'profesor':`${x.apellido} ${x.nombre}`, 'profesorId':x._id})
       }
     })
 
@@ -56,11 +70,19 @@ export class DocenteCursoFormComponent implements OnInit {
   
   }
 
+  modalProfesores(){
+      
+      this.store.dispatch(new ShowDocenteModal(true));
+  }
+
   redirectDocenteCursos(){
 
   }
 
   onSubmit(){
-
+    this.docenteCursoDto = this.form.value;
+    this.store.dispatch(new PostDocenteCursoAction(this.docenteCursoDto)).subscribe(() => {
+      this.router.navigate([`asignacion-docentes/${this.curso.materia?._id}/${this.curso._id}/docentes`])
+    });
   }
 }

@@ -95,7 +95,7 @@ export class CursoFormComponent {
 
   public redirectCursos() {
     this.store.dispatch(new ClearSelectedCursoAction);
-    this.router.navigate(["/cursos"]);
+    this.router.navigate(["/cursos/lista"]);
   }
 
   toggleModalPlanes() {

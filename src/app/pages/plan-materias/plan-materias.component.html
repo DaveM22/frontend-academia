@@ -13,8 +13,11 @@
 
     
     <ng-template pTemplate="caption">
+        <div class="flex align-items-center justify-content-center pb-4">
+           <h1> Materias del plan: {{header}}</h1>
+        </div>
         <div class="flex align-items-center justify-content-between">
-            Materias del plan: {{header}}
+            <p-button label="Volver a planes" severity="primary" (onClick)="redirectPlanes()"></p-button>
             <p-button label="Nueva materia" severity="primary" (onClick)="redirectMateriaNuevo()"></p-button>
         </div>
 

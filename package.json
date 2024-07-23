@@ -18,6 +18,7 @@
     "@angular/platform-browser": "^18.0.0",
     "@angular/platform-browser-dynamic": "^18.0.0",
     "@angular/router": "^18.0.0",
+    "@auth0/auth0-angular": "^2.2.3",
     "@ngxs/devtools-plugin": "^18.0.0-dev.master-f4c2c19",
     "@ngxs/logger-plugin": "^18.0.0",
     "@ngxs/store": "^18.0.0",

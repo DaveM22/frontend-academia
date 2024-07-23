@@ -55,4 +55,8 @@ export class PlanMateriasComponent implements OnInit {
     this.router.navigate([`/planes/${this.id}/materias/editar/${materiaId}`]);
   }
 
+  redirectPlanes(){
+    this.router.navigate(['/planes/lista']);
+  }
+
 }

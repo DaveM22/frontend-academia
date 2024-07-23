@@ -1,6 +1,60 @@
+$sm:576px !default;
+$md:992px !default;
+$lg:1400px !default;
+$xl:2200px !default;
+
+$breakpoints: (
+    'sm': $sm,
+    'md': $md,
+    'lg': $lg,
+    'xl': $xl
+) !default;
 @import "primeicons/primeicons.css";
 @import "primeng/resources/themes/soho-dark/theme.css";
 @import "primeng/resources/primeng.css";
-@import "../node_modules/primeflex/primeflex.css";
+@import "../node_modules/primeflex/primeflex.scss";
 
+
+
+
+
+
+
+.content {
+
+    .p-panel-header {
+        height: 10%;
+    }
+
+    .p-panel-content {
+        height: 95%;
+    }
+
+    .p-toggleable-content.ng-trigger.ng-trigger-panelContent {
+        height: 95% !important;
+    }
+
+ /*    @media (width > 920px) {
+         .p-panel-content {
+            height: 90%;
+        }
+    } */
+
+
+}
+#navbar{
+    height: 7vh;
+}
+
+#main{
+    height: 90vh;
+}
+
+@media (width < 1400px) {
+    .p-panel-content {
+        height: fit-content !important;
+    }
+}
+/*  */
+/*  */
 

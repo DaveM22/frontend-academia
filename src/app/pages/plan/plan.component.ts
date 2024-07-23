@@ -8,7 +8,7 @@ import { Plan } from '../../entities/plan';
 import { GetPlanAction, GetPlanByIdWithMateriasAction } from '../../store/actions/api/planes.action';
 import { PlanState } from '../../store/states/api/plan.state';
 import { Store } from '@ngxs/store';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { Especialidad } from '../../entities/especialidad';
 import { EspecialidadState } from '../../store/states/api/especialidad.state';
 import { GetEspecialidadAction } from '../../store/actions/api/especialidad.action';
@@ -21,7 +21,7 @@ import { PlanFilter } from '../../entities/filter';
 @Component({
   selector: 'app-plan',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, MessagesModule, PanelModule, IconFieldModule, InputIconModule, InputTextModule],
+  imports: [CommonModule, RouterModule, PanelModule],
   templateUrl: './plan.component.html',
   styleUrl: './plan.component.scss'
 })
