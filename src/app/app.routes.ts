@@ -36,6 +36,10 @@ import { AlumnoListaComponent } from './pages/alumno-lista/alumno-lista.componen
 import { CursoListaComponent } from './pages/curso-lista/curso-lista.component';
 import { ComisionListaComponent } from './pages/comision-lista/comision-lista.component';
 import { ProfesorListaComponent } from './pages/profesor-lista/profesor-lista.component';
+import { LoginComponent } from './pages/login/login.component';
+import { AuthGuard, authGuardFn } from '@auth0/auth0-angular';
+import { CallbackComponent } from './pages/callback/callback.component';
+import { adminGuard } from './admin.guard';
 
 export const routes: Routes = [
     {
@@ -49,7 +53,12 @@ export const routes: Routes = [
                     { path: 'lista', pathMatch: 'full', component: EspecialidadListaComponent },
                     { path: 'nuevo', pathMatch: 'full', component: EspecialidadNuevoComponent },
                     { path: 'editar/:id', pathMatch: 'full', component: EspecialidadEditarComponent }
-                ]
+                ],
+                canActivate:[AuthGuard, adminGuard],
+                data:{
+                    role:'Administrador'
+                }
+
             },
             {
                 path: 'planes',
@@ -122,7 +131,12 @@ export const routes: Routes = [
         ]
     },
     {
-        path:'login'
+        path:'login',
+        component:LoginComponent
+    },
+    {
+        path:'callback',
+        component:CallbackComponent
     }
 
 

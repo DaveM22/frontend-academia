@@ -6,7 +6,13 @@
  <div class="flex align-items-center bg-primary justify-content-between font-bold text-left lg:p-1 border-round m-3 static h-full">
     <p-button icon="pi pi-bars" (onClick)="toggleAction()"   ></p-button>
     <div>
-        <p-button icon="pi pi-user" label="Ingresar" ></p-button>
+        @if ((this.auth.isAuthenticated$ | async)) {
+            <p-button icon="pi pi-user" label="Salir" (onClick)="logout()"></p-button>
+
+        }
+        @else {
+            <p-button icon="pi pi-user" label="Ingresar" (onClick)="login()" ></p-button>
+        }
     </div>
 
  </div>
