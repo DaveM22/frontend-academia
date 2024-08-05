@@ -1,12 +1,14 @@
 import { Injectable } from "@angular/core";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { AppModelState } from "../../modelstate/pages/app.modelstate";
-import { ClearDocenteInModal, ClearSelectedComisionInModal, ClearSelectedCursoInModal, ClearSelectedEspecialidadFilter, ClearSelectedMateriaInModal, ClearSelectedPlanFilter, ClearSelectedPlanInModal, SelectedComisionInModal, SelectedCursoInModal, SelectedDocenteInModal, SelectedEspecialidadFilter, SelectedMateriaForCurso as SelectedMateriaInModal, SelectedPlanFilter, SelectedPlanInModal, ShowComisionesModal, ShowCursoModal, ShowDocenteModal, ShowMateriaModal, ShowPlanModal, ToggleMenuAction } from "../../actions/pages/app.action";
+import { ClearDocenteInModal, ClearSelectedComisionInModal, ClearSelectedCursoInModal, ClearSelectedEspecialidadFilter, ClearSelectedMateriaInModal, ClearSelectedPlanFilter, ClearSelectedPlanInModal, SelectedComisionInModal, SelectedCursoInModal, SelectedDocenteInModal, SelectedEspecialidadFilter, SelectedMateriaForCurso as SelectedMateriaInModal, SelectedPlanFilter, SelectedPlanInModal, SetPersonaId, ShowComisionesModal, ShowCursoModal, ShowDocenteModal, ShowMateriaModal, ShowModalConfirmationAction, ShowPlanModal, ToggleMenuAction } from "../../actions/pages/app.action";
 import { ClearSelectedCursoAction } from "../../actions/pages/curso.action";
 
 @State<AppModelState>({
     name: 'appPage',
     defaults: {
+        showModalConfirmation:false,
+        personId:'',
         toggle: false,
         selectedEspecialidadFilter: null,
         selectedPlanInModal: null,
@@ -91,6 +93,30 @@ export class AppPageState {
     @Selector()
     static getShowModalDocentes(state: AppModelState) {
         return state.showProfesorModal;
+    }
+
+    @Selector()
+    static getPersonId(state: AppModelState){
+        return state.personId;
+    }
+
+    @Selector()
+    static showModalConfirmation(state:AppModelState){
+        return state.showModalConfirmation;
+    }
+
+    @Action(ShowModalConfirmationAction)
+    showModalDelete(ctx: StateContext<AppModelState>, action: ShowModalConfirmationAction){
+        ctx.patchState({
+            showModalConfirmation:action.show
+        })
+    }
+
+    @Action(SetPersonaId)
+    setPersonaId(ctx: StateContext<AppModelState>, action: SetPersonaId){
+        ctx.patchState({
+            personId: action.personId
+        })
     }
 
     @Action(ToggleMenuAction)

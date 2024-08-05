@@ -1,0 +1,46 @@
+
+<p-card [header]="title" styleClass="h-full">
+
+    <ng-template pTemplate="content">
+        
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <div class="flex overflow-hidden justify-content-center">
+                <div class="col-12 lg:col-4">
+                    <div class="field">
+                        <label for="nombreUsuario">Usuario</label>
+                        <input id="nombreUsuario" pInputText formControlName="nombreUsuario" type="text" class="w-full">
+                        @if(form.get('nombreUsuario')?.invalid && form.get('nombreUsuario')?.dirty){
+                        <small class="p-error block">
+                            El campo Usuario es requerido
+                        </small>
+                        }
+                    </div>
+                    <div class="field">
+                        <label for="nombreYapellido">Nombre y apellido</label>
+                        <input id="nombreYapellido" pInputText formControlName="nombreYapellido" type="text" class="w-full">
+                        @if(form.get('descripcion')?.invalid && form.get('nombreYapellido')?.dirty){
+                        <small class="p-error block">
+                            El campo Nombre y Apellido es requerido
+                        </small>
+                        }
+                    </div>
+                    <div class="field">
+                        <label for="nombreYapellido">Clave</label>
+                        <p-password formControlName="value" [feedback]="false" class="w-full" styleClass="w-full" />
+                        @if(form.get('descripcion')?.invalid && form.get('clave')?.dirty){
+                        <small class="p-error block">
+                            El campo clave es requerido
+                        </small>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex align-items-center justify-content-center font-bold text-white border-round m-2">
+                <button type="submit" pButton label="Guardar" icon="pi pi-check" class="p-button-success mr-2" [disabled]="form.invalid"></button>
+                <p-button label="Cancelar" severity="danger" icon="pi pi-times" (onClick)="redirectEspecialidades()"></p-button>
+            </div>
+        </form>
+    </ng-template>
+</p-card>
+

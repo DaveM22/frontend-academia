@@ -25,6 +25,7 @@ export class AlumnoFilter{
 }
 
 export class MateriaFilter{
+    alumnnoId:string = '';
     planId:string = '';
 }
 

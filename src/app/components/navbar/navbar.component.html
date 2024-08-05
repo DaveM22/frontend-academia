@@ -7,14 +7,23 @@
     <p-button icon="pi pi-bars" (onClick)="toggleAction()"   ></p-button>
     <div>
         @if ((this.auth.isAuthenticated$ | async)) {
-            <p-button icon="pi pi-user" label="Salir" (onClick)="logout()"></p-button>
+
+            <button  pRipple class="relative overflow-hidden w-full p-link flex align-items-center p-2 pl-3 text-color hover:surface-200 border-noround" (click)="menu.toggle($event)">
+                <p-avatar image="https://cdn.auth0.com/avatars/um.png" class="mr-2" shape="circle" />
+                <span class="inline-flex flex-column">
+                    <span class="font-bold">{{name}}</span>
+                    <span class="text-sm">{{rol}}</span>
+                </span>
+            </button>
+            <p-menu #menu [model]="logItems" [popup]="true" />
+<!-- 
+            <p-button icon="pi pi-user" label="Salir" (onClick)="logout()"></p-button> -->
 
         }
         @else {
             <p-button icon="pi pi-user" label="Ingresar" (onClick)="login()" ></p-button>
         }
     </div>
-
  </div>
 
  <p-sidebar [(visible)]="toggle" (onHide)="onHide()" closeOnEscape="true">

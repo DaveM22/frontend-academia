@@ -1,0 +1,58 @@
+<!-- @if (error$ | async)
+{
+<p-messages severity="error">
+    <ng-template pTemplate>
+
+        <div class="ml-2">{{(errorMessage$ | async)}}</div>
+    </ng-template>
+</p-messages>
+
+} -->
+
+<div class="content" style="height: 100%;">
+    <p-panel styleClass="h-full">
+        <ng-template pTemplate="header">
+            <div class="flex flex-wrap w-full pt-3 pb-3 align-items-center justify-content-center">
+                <h1 class="text-center"> Estado de catedras inscriptas </h1>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="content">
+            <p-table #dt2 [value]="inscripciones" responsiveLayout="stack" [breakpoint]="'960px'" [paginator]="true"
+                [scrollable]="true" [rows]="5" scrollHeight="flex"
+                styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0"
+                [globalFilterFields]="['descripcion, especialidad.descripcion']">
+                <ng-template pTemplate="caption">
+                    <div class="grid">
+                        <div
+                            class="col-12 flex flex-column sm:flex-column w-full  lg:flex-row align-items-center lg:justify-content-between justify-content-center">
+                            <p-iconField iconPosition="left" class="mb-4 lg:mb-0 w-full">
+                                <p-inputIcon>
+                                    <i class="pi pi-search"></i>
+                                </p-inputIcon>
+                                <input pInputText type="text" class="w-full lg:w-4"
+                                    (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
+                                    placeholder="Buscar plan" />
+                            </p-iconField>
+                        </div>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Catedra</th>
+                        <th>Comisión</th>
+                        <th>Condición</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-inscripcion>
+                    <tr>
+                        <td style="width:40%"><span
+                                class="p-column-title">Catedra</span>{{inscripcion.curso.materia.descripcion}}</td>
+                        <td style="width:40%"><span
+                                class="p-column-title">Comisión</span>{{inscripcion.curso.comision.descripcion}}</td>
+                        <td style="width:20%"><span class="p-column-title">Comisión</span>{{inscripcion.condicion}}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </ng-template>
+    </p-panel>
+</div>

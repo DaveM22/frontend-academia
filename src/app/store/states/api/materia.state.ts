@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { MateriaPageModelState } from "../../modelstate/pages/materia.modelstate";
-import { GetByIdMateriaAction, PutMateriaAction, PostMateriaAction, GetMateriasAction } from "../../actions/api/materia.action";
+import { GetByIdMateriaAction, PutMateriaAction, PostMateriaAction, GetMateriasAction, GetByIdForInscripcion } from "../../actions/api/materia.action";
 import { PlanService } from "../../../services/plan.service";
 import { lastValueFrom } from "rxjs";
 import { MateriaService } from "../../../services/materia.service";
@@ -45,6 +45,24 @@ export class MateriaState {
     }
   }
 
+  @Action(GetByIdForInscripcion)
+  async getByIdForInscripcion(ctx: StateContext<MateriaModelState>, action: GetByIdForInscripcion){
+    ctx.patchState({ error: false, loading:true })
+    try {
+      const response = await lastValueFrom(this.service.getForInscripcion(action.filters));
+      ctx.patchState({
+        materias:[...response],
+    })
+    }
+    catch (error) {
+      ctx.patchState({ error: true })
+    }
+    finally{
+      ctx.patchState({
+        loading:false
+      })
+    }
+  }
 
 
 

@@ -13,31 +13,37 @@ import { ToggleMenuAction } from '../../store/actions/pages/app.action';
 import { MenuModule } from 'primeng/menu';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { AuthService } from '@auth0/auth0-angular';
-
+import { AvatarModule } from 'primeng/avatar';
 @Component({
   selector: 'navbar',
   standalone: true,
-  imports: [CommonModule,MenubarModule, ButtonModule, CommonModule, SidebarModule,FormsModule, MenuModule, SidebarComponent],
+  imports: [CommonModule,MenubarModule,AvatarModule, ButtonModule, CommonModule, SidebarModule,FormsModule, MenuModule, SidebarComponent],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent implements OnInit {
   items: MenuItem[] | undefined;
+  logItems:MenuItem[] | undefined;
   itemsSideBar: MenuItem[] | undefined;
   sidebarVisible:boolean = true;
   toggle$:Observable<boolean> = this.store.select(AppPageState.getToggle);
   toggle:boolean = false;
+  picture!:string;
+  name!:string;
+  rol!:string;
 
   constructor(@Inject(DOCUMENT) public document:Document, private store:Store,private router:Router, public auth: AuthService){}
 
   ngOnInit() {
-    this.auth.idTokenClaims$.subscribe((x:any) => {
-      console.log(x["academia/auth.com/roles"])
-    })
     this.itemsSideBar = [
       { label: 'Especialidades', icon: 'pi pi-plus', command: () => this.redirect("/especialidades/lista") },
       { label: 'Planes', icon: 'pi pi-search', command: () => this.redirect("/planes/lista") }
     ];
+    this.auth.idTokenClaims$.subscribe(x => {
+      this.picture = x!.picture!
+      this.name = x!.name!
+      this.rol = x!["academia/auth.com/roles"][0]
+    })
       this.toggle$.subscribe( x => this.toggle = x);
       this.items = [
           {
@@ -46,6 +52,12 @@ export class NavbarComponent implements OnInit {
               command:() =>this.router.navigate(["/"])
           }
         ]
+        this.logItems = [
+          {
+          label:'Salir',
+          icon: 'pi pi-user',
+          command:() => this.logout()
+        }]
     }
 
     toggleAction(){
@@ -68,4 +80,10 @@ export class NavbarComponent implements OnInit {
     login(){
       this.auth.loginWithRedirect();
     }
+
+    loginItems(){
+      this.logItems = [{
+        label:'Salir'
+      }]
+    } 
 }

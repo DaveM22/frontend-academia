@@ -22,6 +22,8 @@ import { PersonaPageState } from './store/states/page/persona.state';
 import { AlumnoInscripcionState } from './store/states/api/alumno-incripcion.state';
 import { DocenteCursoState } from './store/states/api/docente-curso.state';
 import { authHttpInterceptorFn, AuthModule, provideAuth0 } from '@auth0/auth0-angular';
+import { UsuarioState } from './store/states/api/usuario.state';
+import { UsuarioPageState } from './store/states/page/usuario.state';
 
 export const appConfig: ApplicationConfig = {
   
@@ -37,7 +39,7 @@ export const appConfig: ApplicationConfig = {
       clientId: 'KnOM8qladHYWB4bFbKNLHdNDDVQn9GFP',
       authorizationParams: {
         redirect_uri: window.location.origin,
-        audience:'academia/auth'
+        audience:'https://academia.com'
       }, 
       httpInterceptor:{
         allowedList:[
@@ -45,7 +47,7 @@ export const appConfig: ApplicationConfig = {
             uri:'http://localhost:3000/api/*',
             tokenOptions:{
               authorizationParams:{
-                audience:'academia/auth'
+                audience:'https://academia.com'
               }
             }
           }
@@ -69,6 +71,8 @@ export const appConfig: ApplicationConfig = {
         PersonaPageState,
         ComisionState,
         ComisionPageState,
-        DocenteCursoState
+        DocenteCursoState,
+        UsuarioState,
+        UsuarioPageState
       ], { developmentMode: true})]
 };

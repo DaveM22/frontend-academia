@@ -19,6 +19,14 @@ export class MateriaService {
     return this.http.get<Materia[]>(`${environment.apiUrl}/materias`, {params : params});
   }
 
+  public getForInscripcion(filter:MateriaFilter){
+    let params = new HttpParams();
+    if(filter.planId !== ''){
+      params = params.set('planId', filter.planId);
+    }
+    return this.http.get<Materia[]>(`${environment.apiUrl}/materias/disponibles/${filter.alumnnoId}`, {params : params});
+  }
+
   public postMateria(materia:Materia) {
     return this.http.post<Materia>(`${environment.apiUrl}/materias`, materia);
   }

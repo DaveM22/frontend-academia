@@ -40,11 +40,20 @@ import { LoginComponent } from './pages/login/login.component';
 import { AuthGuard, authGuardFn } from '@auth0/auth0-angular';
 import { CallbackComponent } from './pages/callback/callback.component';
 import { adminGuard } from './admin.guard';
+import { UsuarioComponent } from './pages/usuario/usuario.component';
+import { UsuarioListaComponent } from './pages/usuario-lista/usuario-lista.component';
+import { UsuarioNuevoComponent } from './pages/usuario-nuevo/usuario-nuevo.component';
+import { UsuarioEditarComponent } from './pages/usuario-editar/usuario-editar.component';
+import { CatedrasAlumnoComponent } from './pages/catedras-alumno/catedras-alumno.component';
+import { InscripcionMateriaAlumnoComponent } from './pages/inscripcion-materia-alumno/inscripcion-materia-alumno.component';
+import { CursosDisponiblesComponent } from './pages/cursos-disponibles/cursos-disponibles.component';
+import { InscripcionMateriaAlumnoMateriasComponent } from './pages/inscripcion-materia-alumno-materias/inscripcion-materia-alumno-materias.component';
 
 export const routes: Routes = [
     {
         path: '',
         component: ApplayoutComponent,
+        canActivate:[AuthGuard],
         children: [
             {
                 path: 'especialidades',
@@ -67,6 +76,7 @@ export const routes: Routes = [
                     {path:'lista', pathMatch:'full', component:PlanListaComponent},
                     {path:'nuevo', pathMatch:'full', component:PlanNuevoComponent},
                     {path: 'editar/:id',pathMatch:'full', component: PlanEditarComponent},
+                    {path: ':id/materias',pathMatch:'full', component: PlanMateriasComponent},
                     {path:':id/materias/nuevo', component:PlanMateriasNuevoComponent},
                     {path:'planes/:id/materias/editar/:idMateria', component:PlanMateriasEditarComponent}
                 ]
@@ -117,6 +127,28 @@ export const routes: Routes = [
             {
                 path: 'inscripciones/:id/nuevo',
                 component: InscripcionNuevoComponent
+            },
+            {
+                path: 'alumno/catedras/:id',
+                component: CatedrasAlumnoComponent
+            },
+            {
+                path:'inscripcion-catedra',
+                component:InscripcionMateriaAlumnoComponent,
+                children:[
+                    {path:'materias-disponibles/:id', component: InscripcionMateriaAlumnoMateriasComponent},
+                    {path:'cursos-disponibles/:id', component: CursosDisponiblesComponent}
+                ]
+            },
+            {
+                path:'usuarios',
+                component: UsuarioComponent,
+                children:[
+                    { path:'lista', component:UsuarioListaComponent},
+                    { path:'nuevo', component:UsuarioNuevoComponent},
+                    { path:'editar/:id', component:UsuarioEditarComponent}
+                ],
+                canActivate:[AuthGuard, adminGuard],
             },
             {
                 path: 'asignacion-docentes',

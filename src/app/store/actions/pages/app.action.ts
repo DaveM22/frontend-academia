@@ -5,6 +5,18 @@ import { Materia } from "../../../entities/materia";
 import { Plan } from "../../../entities/plan";
 import { Profesor } from "../../../entities/profesor";
 
+
+export class ShowModalConfirmationAction{
+    static type = "[Modal] Show modal confirmation";
+    constructor(public show:boolean){}
+}
+
+
+export class SetPersonaId{
+    static type = "[APP] Set personId ";
+    constructor(public personId:string){}
+}
+
 export class ToggleMenuAction {
     static type = "[Page] Toggle button";
     constructor(public toggle: boolean) { }

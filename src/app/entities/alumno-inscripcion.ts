@@ -10,7 +10,7 @@ export class AlumnoInscripcion {
 
 export class AlumnoInscripcionDto {
     public nota:number = 0
-    public alumno:Alumno | null = null
-    public curso: Curso | null = null
+    public alumnoId:string = ''
+    public cursoId: string = ''
     public condicion:string = ''
 }

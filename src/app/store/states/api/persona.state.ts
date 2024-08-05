@@ -72,7 +72,7 @@ export class PersonaState {
     async GetAlumnoByIdAction(ctx: StateContext<PersonaModelState>, action:GetAlumnoByIdAction){
         try {
             const response = await lastValueFrom(this.service.getByIdAlumno(action.id, action.filter));
-            ctx.dispatch(new AsignSelectedPersona(response));
+            ctx.dispatch(new AsignSelectedAlumno(response));
         }
         catch (error) {
             ctx.patchState({

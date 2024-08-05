@@ -6,6 +6,8 @@ import { Plan } from "../../../entities/plan";
 import { Profesor } from "../../../entities/profesor";
 
 export interface AppModelState{
+    showModalConfirmation:boolean,
+    personId:string,
     toggle:boolean,
     selectedEspecialidadFilter:Especialidad | null,
     selectedPlanFilter:Plan | null,

@@ -21,3 +21,8 @@ export class GetByIdMateriaAction{
     static type = "[Materia API] Get by id materia";
     constructor(public id:string){}
 }
+
+export class GetByIdForInscripcion{
+    static type = "[Materia API] Get by id materia for inscripcion";
+    constructor(public filters:MateriaFilter){}
+}

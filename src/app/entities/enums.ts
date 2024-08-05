@@ -10,4 +10,10 @@ export enum Cargo{
     PRACTICA = "PRACTICA"
 }
 
+export enum RolesUsuario{
+    Administrador = "Administrador",
+    Alumno = "Alumno",
+    Docente = "Docente"
+}
+
 export const CondicionList = Object.entries(Condicion).map(([key, value]) => ({ label: key, value }));
