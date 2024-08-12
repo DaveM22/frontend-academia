@@ -36,4 +36,5 @@ export class DocenteCursoFilter{
 export class DocenteFilter{
     planId:string=''
     cursoId:string=''
+    incluirAsignaciones: boolean = false;
 }

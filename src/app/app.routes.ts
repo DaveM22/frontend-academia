@@ -48,6 +48,9 @@ import { CatedrasAlumnoComponent } from './pages/catedras-alumno/catedras-alumno
 import { InscripcionMateriaAlumnoComponent } from './pages/inscripcion-materia-alumno/inscripcion-materia-alumno.component';
 import { CursosDisponiblesComponent } from './pages/cursos-disponibles/cursos-disponibles.component';
 import { InscripcionMateriaAlumnoMateriasComponent } from './pages/inscripcion-materia-alumno-materias/inscripcion-materia-alumno-materias.component';
+import { CatedrasDocenteComponent } from './pages/catedras-docente/catedras-docente.component';
+import { CatedrasDocenteCursosComponent } from './pages/catedras-docente-cursos/catedras-docente-cursos.component';
+import { CatedrasDocenteInscripcionesComponent } from './pages/catedras-docente-inscripciones/catedras-docente-inscripciones.component';
 
 export const routes: Routes = [
     {
@@ -131,6 +134,14 @@ export const routes: Routes = [
             {
                 path: 'alumno/catedras/:id',
                 component: CatedrasAlumnoComponent
+            },
+            {
+                path:'docente/:id',
+                component: CatedrasDocenteComponent,
+                children:[
+                    {path:'cursos-asignados', component:CatedrasDocenteCursosComponent},
+                    {path:'cursos-inscripciones/:idCurso', component:CatedrasDocenteInscripcionesComponent}
+                ]
             },
             {
                 path:'inscripcion-catedra',

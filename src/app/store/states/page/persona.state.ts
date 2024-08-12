@@ -2,14 +2,15 @@ import { Injectable } from "@angular/core";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { PersonaPageModelState } from "../../modelstate/pages/persona.modelstate";
 import { ShowModalDelete } from "../../actions/pages/especialidad.action";
-import { AsignSelectedAlumno, AsignSelectedPersona, ClearSelectedAlumno, ClearSelectedPersona } from "../../actions/pages/persona.action";
+import { AsignSelectedAlumno, AsignSelectedPersona, AsignSelectedProfesor, ClearSelectedAlumno, ClearSelectedPersona, ClearSelectedProfesor } from "../../actions/pages/persona.action";
 
 @State<PersonaPageModelState>({
     name: 'personasPage',
     defaults:{
         showModalDelete:false,
         personaSelected:null,
-        alumnoSelected:null
+        alumnoSelected:null,
+        profesorSelected:null
     }
   })
 
@@ -29,6 +30,11 @@ import { AsignSelectedAlumno, AsignSelectedPersona, ClearSelectedAlumno, ClearSe
     @Selector()
     static getAlumnoSelected(state: PersonaPageModelState){
         return state.alumnoSelected;
+    }
+
+    @Selector()
+    static getProfesorSelected(state: PersonaPageModelState){
+        return state.profesorSelected;
     }
 
 
@@ -64,6 +70,20 @@ import { AsignSelectedAlumno, AsignSelectedPersona, ClearSelectedAlumno, ClearSe
     clearAlumno(ctx:StateContext<PersonaPageModelState>, action:ClearSelectedAlumno){
         return ctx.patchState({
             alumnoSelected: null
+        })
+    }
+
+    @Action(AsignSelectedProfesor)
+    asignProfesor(ctx:StateContext<PersonaPageModelState>, action:AsignSelectedProfesor){
+        return ctx.patchState({
+            profesorSelected: action.profesor!
+        })
+    }
+
+    @Action(ClearSelectedProfesor)
+    clearProfesor(ctx:StateContext<PersonaPageModelState>, action:ClearSelectedProfesor){
+        return ctx.patchState({
+            profesorSelected: null
         })
     }
   }

@@ -23,7 +23,7 @@ export class GetAlumnoByIdWithInscripcionesAction{
 
 export class GetProfesorByIdAction{
     static type = "[Persona API] Get one profesor";
-    constructor(public id:string){}
+    constructor(public id:string, public filter:DocenteFilter){}
 }
 
 export class PostAlumnoAction{

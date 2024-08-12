@@ -1,5 +1,6 @@
 import { Alumno } from "../../../entities/alumno"
 import { Persona } from "../../../entities/persona";
+import { Profesor } from "../../../entities/profesor";
 export class ShowModalDelete{
     static type = "[Modal] Show modal delete";
     constructor(public show:boolean){}
@@ -21,4 +22,14 @@ export class AsignSelectedAlumno{
 
 export class ClearSelectedAlumno {
     static type = "[Persona Page] clear alumno selected"
+}
+
+
+export class AsignSelectedProfesor{
+    static type = "[Persona Page] asign profesor selected"
+    constructor(public profesor: Profesor){}
+}
+
+export class ClearSelectedProfesor {
+    static type = "[Persona Page] clear profesor selected"
 }

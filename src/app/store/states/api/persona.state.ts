@@ -4,7 +4,7 @@ import { PersonaModelState } from "../../modelstate/api/persona.modelstate";
 import { PersonaService } from "../../../services/persona.service";
 import { GetAlumnoByIdAction, GetAlumnoByIdWithInscripcionesAction, GetAlumnosAction, GetProfesorByIdAction, GetProfesoresAction, PostAlumnoAction, PostProfesorAction, PutAlumnoAction, PutProfesorAction } from "../../actions/api/persona.action";
 import { lastValueFrom } from "rxjs";
-import { AsignSelectedAlumno, AsignSelectedPersona } from "../../actions/pages/persona.action";
+import { AsignSelectedAlumno, AsignSelectedPersona, AsignSelectedProfesor } from "../../actions/pages/persona.action";
 
 @State<PersonaModelState>({
     name: 'personas',
@@ -90,8 +90,8 @@ export class PersonaState {
 
     @Action(GetProfesorByIdAction)
     async getProfesorById(ctx: StateContext<PersonaModelState>, action:GetProfesorByIdAction){
-        const response = await lastValueFrom(this.service.getByIdProfesor(action.id));
-        ctx.dispatch(new AsignSelectedPersona(response));
+        const response = await lastValueFrom(this.service.getByIdProfesor(action.id, action.filter));
+        ctx.dispatch(new AsignSelectedProfesor(response));
     }
 
     @Action(GetProfesoresAction)

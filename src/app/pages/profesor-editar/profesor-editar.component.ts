@@ -7,6 +7,7 @@ import { Store } from '@ngxs/store';
 import { GetProfesorByIdAction } from '../../store/actions/api/persona.action';
 import { CommonModule } from '@angular/common';
 import { PersonaFormComponent } from '../../components/forms/persona-form/persona-form.component';
+import { DocenteFilter } from '../../entities/filter';
 
 @Component({
   selector: 'app-profesor-editar',
@@ -16,7 +17,7 @@ import { PersonaFormComponent } from '../../components/forms/persona-form/person
   styleUrl: './profesor-editar.component.scss'
 })
 export class ProfesorEditarComponent {
-  profesor$:Observable<Profesor | null> = this.store.select(PersonaPageState.getPersonaSelected);
+  profesor$:Observable<Profesor | null> = this.store.select(PersonaPageState.getProfesorSelected);
 
   constructor(private store:Store, private router:ActivatedRoute){
     
@@ -24,6 +25,6 @@ export class ProfesorEditarComponent {
 
 
   ngOnInit(): void {
-    this.store.dispatch(new GetProfesorByIdAction(this.router.snapshot.params['id']));
+    this.store.dispatch(new GetProfesorByIdAction(this.router.snapshot.params['id'], new DocenteFilter()));
   }
 }

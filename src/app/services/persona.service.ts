@@ -34,8 +34,10 @@ export class PersonaService {
     return this.http.get<Alumno>(`${environment.apiUrl}/personas/alumnos/${id}`, {params: params});
   }
 
-  getByIdProfesor(id:string){
-    return this.http.get<Profesor>(`${environment.apiUrl}/personas/profesores/${id}`);
+  getByIdProfesor(id:string, filter:DocenteFilter){
+    let params = new HttpParams();
+    params = params.set('incluirAsignaciones',filter.incluirAsignaciones);
+    return this.http.get<Profesor>(`${environment.apiUrl}/personas/profesores/${id}`, {params: params});
   }
 
   getByIdAlumnoInscripciones(id:string){

@@ -33,7 +33,7 @@ export class SidebarComponent implements OnInit {
       this.auth.idTokenClaims$.subscribe(claims => {
         console.log(claims)
         this.store.dispatch(new SetPersonaId(claims!["personaId"]));
-        this.rol = claims!["academia/auth.com/roles"][0]
+        this.rol = claims!["https://academia.com/roles"][0]
         console.log(this.rol)
         this.renderItems(this.rol);
       })
@@ -48,6 +48,9 @@ export class SidebarComponent implements OnInit {
         break;
       case RolesUsuario.Alumno.toString():
         this.itemsAlumno();
+        break;
+      case RolesUsuario.Docente.toString():
+        this.itemsDocente();
         break;
       default:
         console.log('break!')
@@ -75,6 +78,14 @@ export class SidebarComponent implements OnInit {
     this.items = [
       { label: 'Mis catedras', icon: 'pi pi pi-user', command: () => this.router.navigate(["alumno/catedras/"+personaId]) },
       { label: 'Insribirse a catedra', icon: 'pi pi pi-user', command: () => this.router.navigate(["inscripcion-catedra/materias-disponibles/"+personaId]) },
+    ]
+  }
+
+  itemsDocente(){
+    let personaId = this.store.selectSnapshot(AppPageState.getPersonId);
+    console.log(personaId)
+    this.items = [
+      { label: 'Catedras asignadas', icon: 'pi pi pi-user', command: () => this.router.navigate(["docente/"+personaId+"/cursos-asignados"]) },
     ]
   }
 
