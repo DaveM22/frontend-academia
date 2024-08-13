@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { DocenteCursoFilter } from '../entities/filter';
 import { DocenteCurso, DocenteCursoDto } from '../entities/docente-curso';
-import { environment } from '../../enviroment';
+import { environment } from '../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'

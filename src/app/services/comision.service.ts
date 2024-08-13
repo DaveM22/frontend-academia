@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Comision, ComisionDto } from '../entities/comision';
-import { environment } from '../../enviroment';
 import { ComisionFilter } from '../entities/filter';
+import { environment } from '../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'

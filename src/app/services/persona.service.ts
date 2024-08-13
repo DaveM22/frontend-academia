@@ -1,10 +1,10 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Alumno } from '../entities/alumno';
-import { environment } from '../../enviroment';
 import { Profesor } from '../entities/profesor';
 import { Persona, PersonaDto } from '../entities/persona';
 import { AlumnoFilter, DocenteFilter } from '../entities/filter';
+import { environment } from '../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'

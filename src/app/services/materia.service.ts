@@ -1,8 +1,8 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Materia } from '../entities/materia';
-import { environment } from '../../enviroment';
 import { MateriaFilter } from '../entities/filter';
+import { environment } from '../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'

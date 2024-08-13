@@ -1,9 +1,9 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from '../../enviroment';
 import { Curso, CursoDto } from '../entities/curso';
 import { Observable } from 'rxjs';
 import { CursoFilter } from '../entities/filter';
+import { environment } from '../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
