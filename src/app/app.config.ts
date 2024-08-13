@@ -39,15 +39,15 @@ export const appConfig: ApplicationConfig = {
       clientId: 'KnOM8qladHYWB4bFbKNLHdNDDVQn9GFP',
       authorizationParams: {
         redirect_uri: window.location.origin,
-        audience:'https://academia.com'
+        audience:process.env["AUDICENCE"]
       }, 
       httpInterceptor:{
         allowedList:[
           {
-            uri:'http://localhost:3000/api/*',
+            uri:`${process.env["BASEAPIURL"]}/*`,
             tokenOptions:{
               authorizationParams:{
-                audience:'https://academia.com'
+                audience:process.env["AUDICENCE"]
               }
             }
           }

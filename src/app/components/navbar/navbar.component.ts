@@ -42,7 +42,7 @@ export class NavbarComponent implements OnInit {
     this.auth.idTokenClaims$.subscribe(x => {
       this.picture = x!.picture!
       this.name = x!.name!
-      this.rol = x!["academia/auth.com/roles"][0]
+      this.rol = x![process.env["ROLELOING"]!][0]
     })
       this.toggle$.subscribe( x => this.toggle = x);
       this.items = [

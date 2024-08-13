@@ -10,7 +10,7 @@ export const adminGuard: CanActivateFn = (route, state) => {
 
   return authService.idTokenClaims$.pipe(
     take(1),
-    map((idToken: any) => idToken["https://academia.com/roles"].includes(expectedRole)),
+    map((idToken: any) => idToken[process.env["ROLELOGIN"]!].includes(expectedRole)),
     tap(hasRole => {
       if (!hasRole) {
         router.navigate(['/']);
