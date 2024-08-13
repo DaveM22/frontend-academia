@@ -14,7 +14,8 @@ import { MenuModule } from 'primeng/menu';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { AuthService } from '@auth0/auth0-angular';
 import { AvatarModule } from 'primeng/avatar';
-import { environment } from '../../../enviroment';
+import { environment } from '../../../environments/environment.development';
+
 @Component({
   selector: 'navbar',
   standalone: true,

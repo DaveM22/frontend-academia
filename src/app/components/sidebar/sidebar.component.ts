@@ -31,10 +31,8 @@ export class SidebarComponent implements OnInit {
     this.auth.isAuthenticated$.subscribe(x => {
       this.isLogged = x;
       this.auth.idTokenClaims$.subscribe(claims => {
-        console.log(claims)
         this.store.dispatch(new SetPersonaId(claims!["personaId"]));
         this.rol = claims!["https://academia.com/roles"][0]
-        console.log(this.rol)
         this.renderItems(this.rol);
       })
     })
@@ -53,7 +51,6 @@ export class SidebarComponent implements OnInit {
         this.itemsDocente();
         break;
       default:
-        console.log('break!')
         break;
     }
   }
@@ -74,7 +71,6 @@ export class SidebarComponent implements OnInit {
 
   itemsAlumno() {
     let personaId = this.store.selectSnapshot(AppPageState.getPersonId);
-    console.log(personaId)
     this.items = [
       { label: 'Mis catedras', icon: 'pi pi pi-user', command: () => this.router.navigate(["alumno/catedras/"+personaId]) },
       { label: 'Insribirse a catedra', icon: 'pi pi pi-user', command: () => this.router.navigate(["inscripcion-catedra/materias-disponibles/"+personaId]) },
@@ -83,7 +79,6 @@ export class SidebarComponent implements OnInit {
 
   itemsDocente(){
     let personaId = this.store.selectSnapshot(AppPageState.getPersonId);
-    console.log(personaId)
     this.items = [
       { label: 'Catedras asignadas', icon: 'pi pi pi-user', command: () => this.router.navigate(["docente/"+personaId+"/cursos-asignados"]) },
     ]

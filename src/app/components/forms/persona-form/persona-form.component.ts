@@ -112,7 +112,6 @@ export class PersonaFormComponent {
 
   public redirectPersona() {
     this.store.dispatch(new ClearSelectedPersona);
-    console.log(this.tipoPersona);
     if (this.tipoPersona === TipoPersonaEnum.ALUMNO) {
       this.router.navigate(["/personas/alumnos/lista"])
     }

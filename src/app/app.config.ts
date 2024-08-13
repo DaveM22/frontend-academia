@@ -24,7 +24,8 @@ import { DocenteCursoState } from './store/states/api/docente-curso.state';
 import { authHttpInterceptorFn, AuthModule, provideAuth0 } from '@auth0/auth0-angular';
 import { UsuarioState } from './store/states/api/usuario.state';
 import { UsuarioPageState } from './store/states/page/usuario.state';
-import { environment } from '../enviroment';
+import { environment } from '../environments/environment.development';
+
 
 export const appConfig: ApplicationConfig = {
   

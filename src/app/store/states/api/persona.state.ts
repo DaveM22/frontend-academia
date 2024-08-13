@@ -59,7 +59,6 @@ export class PersonaState {
             ctx.patchState({
                 error: true
             })
-            console.log(error)
         }
         finally {
             ctx.patchState({

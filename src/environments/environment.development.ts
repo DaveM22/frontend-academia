@@ -1,6 +1,6 @@
 export const environment = {
-    production: true,
-    apiUrl: 'https://backend-ncxs.onrender.com/api',
+    production: false,
+    apiUrl: 'http://localhost:3000/api',
     roleLogin:'https://academia.com/roles',
     audicence:'https://academia.com'
 };

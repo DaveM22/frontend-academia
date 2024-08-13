@@ -35,7 +35,6 @@ export class DocenteModalComponent implements OnInit {
     let filter = new DocenteFilter();
     filter.cursoId = this.cursoId
     filter.planId = this.planId;
-    console.log(this.planId);
     this.store.dispatch(new GetProfesoresAction(filter));
   }
 

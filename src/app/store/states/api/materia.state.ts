@@ -85,7 +85,6 @@ export class MateriaState {
     ctx.patchState({ error: false })
     try {
       const response = await lastValueFrom(this.service.getById(action.id));
-      console.log(response);
       await lastValueFrom(ctx.dispatch(new AsignMateriaAction(response)));
     }
     catch (error) {
