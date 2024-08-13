@@ -47,7 +47,7 @@ export const appConfig: ApplicationConfig = {
       httpInterceptor:{
         allowedList:[
           {
-            uri:`${environment.apiUrl}}/*`,
+            uri:`${environment.apiUrl}/*`,
             tokenOptions:{
               authorizationParams:{
                 audience:environment.audicence
@@ -77,5 +77,5 @@ export const appConfig: ApplicationConfig = {
         DocenteCursoState,
         UsuarioState,
         UsuarioPageState
-      ], { developmentMode: true})]
+      ], { developmentMode: !environment.production})]
 };
