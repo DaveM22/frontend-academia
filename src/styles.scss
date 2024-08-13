@@ -16,12 +16,7 @@ $breakpoints: (
 
 
 
-
-
-
-
 .content {
-
     .p-panel-header {
         height: 10%;
     }
@@ -34,27 +29,29 @@ $breakpoints: (
         height: 95% !important;
     }
 
- /*    @media (width > 920px) {
+    @media (width > 920px) {
          .p-panel-content {
             height: 90%;
         }
-    } */
-
-
-}
-#navbar{
-    height: 7vh;
+    }
 }
 
 #main{
     height: 90vh;
 }
 
+
+/* 
+#navbar{
+    height: 7vh;
+}
+
+
 @media (width < 1400px) {
     .p-panel-content {
         height: fit-content !important;
     }
-}
+} */
 /*  */
 /*  */
 
