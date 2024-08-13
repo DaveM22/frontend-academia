@@ -14,6 +14,7 @@ import { MenuModule } from 'primeng/menu';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { AuthService } from '@auth0/auth0-angular';
 import { AvatarModule } from 'primeng/avatar';
+import { environment } from '../../../enviroment';
 @Component({
   selector: 'navbar',
   standalone: true,
@@ -42,7 +43,7 @@ export class NavbarComponent implements OnInit {
     this.auth.idTokenClaims$.subscribe(x => {
       this.picture = x!.picture!
       this.name = x!.name!
-      this.rol = x![process.env["ROLELOING"]!][0]
+      this.rol = x![environment.roleLogin][0]
     })
       this.toggle$.subscribe( x => this.toggle = x);
       this.items = [

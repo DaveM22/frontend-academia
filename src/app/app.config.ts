@@ -24,6 +24,7 @@ import { DocenteCursoState } from './store/states/api/docente-curso.state';
 import { authHttpInterceptorFn, AuthModule, provideAuth0 } from '@auth0/auth0-angular';
 import { UsuarioState } from './store/states/api/usuario.state';
 import { UsuarioPageState } from './store/states/page/usuario.state';
+import { environment } from '../enviroment';
 
 export const appConfig: ApplicationConfig = {
   
@@ -39,15 +40,15 @@ export const appConfig: ApplicationConfig = {
       clientId: 'KnOM8qladHYWB4bFbKNLHdNDDVQn9GFP',
       authorizationParams: {
         redirect_uri: window.location.origin,
-        audience:process.env["AUDICENCE"]
+        audience:environment.audicence
       }, 
       httpInterceptor:{
         allowedList:[
           {
-            uri:`${process.env["BASEAPIURL"]}/*`,
+            uri:`${environment.apiUrl}}/*`,
             tokenOptions:{
               authorizationParams:{
-                audience:process.env["AUDICENCE"]
+                audience:environment.audicence
               }
             }
           }

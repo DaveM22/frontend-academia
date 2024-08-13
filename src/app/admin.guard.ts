@@ -2,6 +2,7 @@ import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
 import { from, map, take, tap } from 'rxjs';
+import { environment } from '../enviroment';
 
 export const adminGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthService);
@@ -10,7 +11,7 @@ export const adminGuard: CanActivateFn = (route, state) => {
 
   return authService.idTokenClaims$.pipe(
     take(1),
-    map((idToken: any) => idToken[process.env["ROLELOGIN"]!].includes(expectedRole)),
+    map((idToken: any) => idToken[environment.roleLogin].includes(expectedRole)),
     tap(hasRole => {
       if (!hasRole) {
         router.navigate(['/']);
