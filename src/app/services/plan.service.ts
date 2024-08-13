@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { Plan } from '../entities/plan';
 import { PlanDto } from '../dtos/plan.dto';
 import { PlanFilter } from '../entities/filter';
-import { environment } from '../../environments/environment.development';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'

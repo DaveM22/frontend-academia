@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AlumnoInscripcion, AlumnoInscripcionDto } from '../entities/alumno-inscripcion';
-import { environment } from '../../environments/environment.development';
+import { environment } from '../../environments/environment';
+
 
 
 @Injectable({

@@ -11,6 +11,7 @@ import { RolesUsuario } from '../../entities/enums';
 import { Store } from '@ngxs/store';
 import { SetPersonaId } from '../../store/actions/pages/app.action';
 import { AppPageState } from '../../store/states/page/app.state';
+import { environment } from '../../../environments/environment';
 @Component({
   selector: 'sidebar',
   standalone: true,
@@ -32,7 +33,7 @@ export class SidebarComponent implements OnInit {
       this.isLogged = x;
       this.auth.idTokenClaims$.subscribe(claims => {
         this.store.dispatch(new SetPersonaId(claims!["personaId"]));
-        this.rol = claims!["https://academia.com/roles"][0]
+        this.rol = claims![environment.roleLogin][0]
         this.renderItems(this.rol);
       })
     })

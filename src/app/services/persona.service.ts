@@ -4,7 +4,7 @@ import { Alumno } from '../entities/alumno';
 import { Profesor } from '../entities/profesor';
 import { Persona, PersonaDto } from '../entities/persona';
 import { AlumnoFilter, DocenteFilter } from '../entities/filter';
-import { environment } from '../../environments/environment.development';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'

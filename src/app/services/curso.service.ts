@@ -3,7 +3,8 @@ import { Injectable } from '@angular/core';
 import { Curso, CursoDto } from '../entities/curso';
 import { Observable } from 'rxjs';
 import { CursoFilter } from '../entities/filter';
-import { environment } from '../../environments/environment.development';
+import { environment } from '../../environments/environment';
+
 
 @Injectable({
   providedIn: 'root'
