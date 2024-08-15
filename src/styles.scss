@@ -14,12 +14,32 @@ $breakpoints: (
 @import "primeng/resources/primeng.css";
 @import "../node_modules/primeflex/primeflex.scss";
 
-
+#main{
+    height: 95%;
+}
 
 .content {
+    height: 100%;
     .p-panel-header {
         height: 10%;
+        padding: 0px;
     }
+    .p-toggleable-content.ng-trigger.ng-trigger-panelContent {
+        height: 90% !important;
+    }
+    .p-panel-content {
+        height: 100%;
+    }
+    @media (width < 920px) {
+       
+         .p-panel-content {
+            height: 90% !important;
+        }
+    }
+
+}
+/* .content {
+  
 
     .p-panel-content {
         height: 95%;
@@ -30,16 +50,19 @@ $breakpoints: (
     }
 
     @media (width > 920px) {
+        height: 100%;
          .p-panel-content {
-            height: 90%;
+            height: 95%;
         }
     }
+
+
 }
 
 #main{
     height: 90vh;
 }
-
+ */
 
 /* 
 #navbar{

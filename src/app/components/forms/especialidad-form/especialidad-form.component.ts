@@ -45,10 +45,11 @@ export class EspecialidadFormComponent implements OnInit {
 
     }
     else{
-      this.store.dispatch(new PutEspecialidadAction(this.especialidad)).subscribe(x => this.router.navigate(["/especialidades"]));
+      this.store.dispatch(new PutEspecialidadAction(this.especialidad)).subscribe(x => this.router.navigate(["/especialidades/lista"]));
       this.messageService.add({ severity: 'success', summary: 'Editar especialidad', detail: 'Se guardaron los cambios de la especialidad' });
       
       this.store.dispatch(new ClearSelectedEspecialidad);
+      this.router.navigate(["/especialidades/lista"])
 
     }
     this.form.reset();
