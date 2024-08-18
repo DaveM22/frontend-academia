@@ -76,11 +76,20 @@ export class EspecialidadState{
 
     @Action(PostEspecialidadAction)
     async postEspecialidadAction(ctx: StateContext<EspecialidadModelState>, action: PostEspecialidadAction){
-      const response = await lastValueFrom(this.service.postEspecialidad(action.especialidad));
-      const list = ctx.getState().especialidades;
-      ctx.patchState({
-        especialidades: [...list,response]
-      })
+      try{
+        const response = await lastValueFrom(this.service.postEspecialidad(action.especialidad));
+        const list = ctx.getState().especialidades;
+        ctx.patchState({
+          especialidades: [...list,response]
+        })
+      }
+      catch(error:any){
+        let errorMsg = ''
+        if(error.status === 409){
+          errorMsg = error.error.filter()
+        }
+        ctx.patchState({error: true, errorMessage: ''})
+      }
     }
 
     @Action(GetByIdEspecialidadAction)

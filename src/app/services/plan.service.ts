@@ -42,10 +42,10 @@ export class PlanService {
   }
 
   public postPlan(plan:PlanDto){
-    return this.http.post<Plan>(`${environment.apiUrl}/plan/`, plan);
+    return this.http.post<Plan>(`${environment.apiUrl}/planes/`, plan);
   }
 
   public putPlan(plan:PlanDto){
-    return this.http.put<Plan>(`${environment.apiUrl}/plan/${plan._id}`, plan)
+    return this.http.put<Plan>(`${environment.apiUrl}/planes/${plan._id}`, plan)
   }
 }

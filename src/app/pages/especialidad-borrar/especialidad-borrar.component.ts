@@ -41,7 +41,7 @@ export class EspecialidadBorrarComponent implements OnInit {
 
     this.confirmationService.confirm({
       header: 'Borrar especialidad',
-      message: '¿Desea eleminar la especialidad?',
+      message: '¿Desea eliminar la especialidad?',
       acceptIcon: 'pi pi-check mr-2',
       rejectIcon: 'pi pi-times mr-2',
       rejectButtonStyleClass: 'p-button-sm',
