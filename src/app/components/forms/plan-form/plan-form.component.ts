@@ -19,6 +19,7 @@ import { Observable } from "rxjs";
 import { EspecialidadState } from "../../../store/states/api/especialidad.state";
 import { CommonModule } from "@angular/common";
 import { PlanDto } from "../../../dtos/plan.dto";
+import { MessageService } from "primeng/api";
 @Component({
   selector: 'app-plan-form',
   standalone: true,
@@ -34,7 +35,7 @@ export class PlanFormComponent implements OnInit {
   selectedEspecialidad!:Especialidad[]
   especialidades!:Especialidad[]
 
-  constructor(private store:Store, private router:Router){}
+  constructor(private store:Store, private router:Router, private messageService:MessageService){}
 
   ngOnInit(): void {
     this.store.dispatch(new GetEspecialidadAction);
@@ -50,11 +51,13 @@ export class PlanFormComponent implements OnInit {
   public onSubmit(){
     this.plan = this.form.value
     if(this.form.value._id === ''){
-      this.store.dispatch(new PostPlanAction(this.plan)).subscribe(x =>this.router.navigate(["/planes"]));
+      this.store.dispatch(new PostPlanAction(this.plan)).subscribe(x =>this.router.navigate(["/planes/lista"]));
+      this.messageService.add({ severity: 'success', summary: 'Crear plan', detail: 'Se ha creado el plan' });
     }
     else{
-      this.store.dispatch(new PutPlanAction(this.plan)).subscribe(x => this.router.navigate(["/planes"]));
+      this.store.dispatch(new PutPlanAction(this.plan)).subscribe(x => this.router.navigate(["/planes/lista"]));
       this.store.dispatch(new ClearSelectedPlan);
+      this.messageService.add({ severity: 'success', summary: 'Editar plan', detail: 'Se han guardado los cambios del plan' });
     }
     this.form.reset();
   }

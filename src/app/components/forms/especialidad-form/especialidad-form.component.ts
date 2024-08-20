@@ -40,7 +40,7 @@ export class EspecialidadFormComponent implements OnInit {
     if(this.form.value._id === null){
       this.store.dispatch(new PostEspecialidadAction(this.especialidad)).subscribe(() => {
         this.router.navigate(["/especialidades/lista"])
-
+        this.messageService.add({ severity: 'success', summary: 'Editar especialidad', detail: 'Se ha creado la especialidad' });
       });
 
     }
