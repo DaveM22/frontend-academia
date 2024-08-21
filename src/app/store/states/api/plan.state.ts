@@ -1,13 +1,13 @@
 import { Injectable } from "@angular/core";
 import { Action, Select, Selector, State, StateContext } from "@ngxs/store";
 import { PlanModelState } from "../../modelstate/api/plan.modelstate";
-import { ClearPlanes, GetByIdPlanAction, GetByIdPlanForCursoAction, GetPlanAction, GetPlanByIdWithMateriasAction, GetPlanesByEspecialidad, PostPlanAction, PutPlanAction } from "../../actions/api/planes.action";
+import { ClearPlanes, GenerateReport, GetByIdPlanAction, GetByIdPlanForCursoAction, GetPlanAction, GetPlanByIdWithMateriasAction, GetPlanesByEspecialidad, PostPlanAction, PutPlanAction } from "../../actions/api/planes.action";
 import { lastValueFrom } from "rxjs";
 import { PlanService } from "../../../services/plan.service";
 import { ErrorStateHandler } from "../../../util/ErrorStateHandler";
 import { AsignSelectedEspecialidad } from "../../actions/pages/especialidad.action";
 import { AsignSelectedPlan } from "../../actions/pages/plan.action";
-
+import { saveAs } from 'file-saver';
 @State<PlanModelState>({
     name: 'planes',
     defaults:{
@@ -185,5 +185,12 @@ export class PlanState{
       finally{
         ctx.patchState({loading:false})
       }
+    }
+
+    @Action(GenerateReport)
+    async generateReport(ctx: StateContext<PlanModelState>, action: GenerateReport){
+      const reponse = await lastValueFrom(this.service.generateReport(action.id));
+      const filename = 'reporte.pdf'; // El nombre con el que se descargará el archivo
+      saveAs(reponse, filename);
     }
 }

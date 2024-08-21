@@ -44,6 +44,7 @@ styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0"
             <td style="width:30%"><span class="p-column-title">Especialidad</span>{{plan.especialidad.descripcion}}</td>
             <td style="width:40%"><span class="p-column-title">Acciones</span>
                 <div class="flex flex-column sm:flex-row gap-2 justify-content-center">
+                    <p-button size="small" class="w-full lg:w-3" styleClass="w-full" label="Generar reporte" (onClick)="generateReport(plan._id)"></p-button>
                     <p-button size="small" class="w-full lg:w-2" styleClass="w-full" label="Materias" (onClick)="redirectToMaterias(plan._id)"></p-button>
                     <p-button size="small" class="w-full lg:w-2" styleClass="w-full" label="Editar" severity="primary"
                         (onClick)="redirectEditarPlan(plan._id)" />

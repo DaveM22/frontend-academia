@@ -48,4 +48,8 @@ export class PlanService {
   public putPlan(plan:PlanDto){
     return this.http.put<Plan>(`${environment.apiUrl}/planes/${plan._id}`, plan)
   }
+
+  public generateReport(planId:string){
+    return this.http.get(`${environment.apiUrl}/planes/${planId}/reporte`, { responseType: 'blob' })
+  }
 }

@@ -46,3 +46,8 @@ export class ClearPlanes{
     static type = "[Plan API] Clear planes locally";
 }
 
+export class GenerateReport {
+    static type = "[Plan API] Generate report plan";
+    constructor(public id:string){}
+}
+
