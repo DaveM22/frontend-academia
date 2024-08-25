@@ -1,11 +1,12 @@
 import { Injectable } from "@angular/core";
 import { ComisionModelState } from "../../modelstate/api/comision.modelstate";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
-import { GetByIdComisionAction, GetComision, PostComisionAction, PutComisionAction } from "../../actions/api/comision.action";
+import { DeleteComisionAction, GetByIdComisionAction, GetComision, PostComisionAction, PutComisionAction } from "../../actions/api/comision.action";
 import { ErrorStateHandler } from "../../../util/ErrorStateHandler";
 import { lastValueFrom } from "rxjs";
 import { ComisionService } from "../../../services/comision.service";
 import { AsignComisionAction } from "../../actions/pages/comision.action";
+import { ComisionFilter } from "../../../entities/filter";
 
 @State<ComisionModelState>({
     name: 'comisiones',
@@ -86,6 +87,20 @@ export class ComisionState {
         comisiones:updatedEspecialidades
       })
 
+    }
+
+    @Action(DeleteComisionAction)
+    async deleteComision(ctx:StateContext<ComisionModelState>, action: DeleteComisionAction){
+      ctx.patchState({ error: false })
+      try {
+        await lastValueFrom(this.service.delete(action.id));
+        let filter = new ComisionFilter();
+        filter.mostrarPlan = true;
+        ctx.dispatch(new GetComision(filter));
+      }
+      catch (error) {
+        ctx.patchState({ error: true })
+      }
     }
 
 }

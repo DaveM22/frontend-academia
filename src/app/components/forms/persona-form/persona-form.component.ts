@@ -21,7 +21,7 @@ import { AppPageState } from '../../../store/states/page/app.state';
 import { Plan } from '../../../entities/plan';
 import { TipoPersonaEnum } from '../../../util/EnumTipoPersona';
 import { ClearSelectedPersona } from '../../../store/actions/pages/persona.action';
-import { ProfesorDto } from '../../../entities/profesor';
+import { Profesor, ProfesorDto } from '../../../entities/profesor';
 import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-persona-form',
@@ -35,9 +35,12 @@ export class PersonaFormComponent {
   @Input() title!: string;
   tipoPersona!: TipoPersonaEnum
   planSelected$: Observable<Plan | null> = this.store.select(AppPageState.getSelectedPlanInModal);
-  personaSelected$:Observable<Persona | null> = this.store.select(PersonaPageState.getPersonaSelected);
+  alumnoSelected$:Observable<Alumno | null> = this.store.select(PersonaPageState.getAlumnoSelected)
+  profesorSelected$:Observable<Profesor | null> = this.store.select(PersonaPageState.getProfesorSelected)
   form!: FormGroup;
   persona!: Persona;
+  alumno!:Alumno;
+  profesor!:Profesor;
   personaDto!: PersonaDto;
 
   constructor(private store: Store, private router: Router, private messageService: MessageService, private datePipe:DatePipe) { }
@@ -51,7 +54,7 @@ export class PersonaFormComponent {
       email: new FormControl(''),
       telefono: new FormControl(''),
       fechaNacimiento: new FormControl('', [Validators.required]),
-      plan: new FormControl('', [Validators.required]),
+      plan: new FormControl({value:'', disabled:true}, [Validators.required]),
       planId: new FormControl('', [Validators.required])
 
     });
@@ -61,9 +64,17 @@ export class PersonaFormComponent {
         this.form.patchValue({ 'plan': x.descripcion, 'planId': x._id });
       }
     })
-    this.personaSelected$.subscribe(x => {
+    this.alumnoSelected$.subscribe(x => {
       if(x !== null){
-        this.persona = x;
+        this.alumno = x;
+        this.tipoPersona = this.alumno.tipoPersona;
+        this.pathValues();
+      }
+    })
+    this.profesorSelected$.subscribe(x => {
+      if(x !== null){
+        this.profesor = x;
+        this.tipoPersona = this.profesor.tipoPersona;
         this.pathValues();
       }
     })
@@ -85,38 +96,39 @@ export class PersonaFormComponent {
   public submitAlumno(alumno: PersonaDto) {
     if (this.form.value._id === null) {
       this.store.dispatch(new PostAlumnoAction(alumno)).subscribe(() => {
-        this.router.navigate(["/personas/alumnos"])
+        this.router.navigate(["/alumnos/lista"])
       });
     }
     else {
-      this.store.dispatch(new PutAlumnoAction(alumno)).subscribe(x => this.router.navigate(["/personas/alumnos"]));
+      this.store.dispatch(new PutAlumnoAction(alumno)).subscribe(x => this.router.navigate(["/alumnos/lista"]));
       this.messageService.add({ severity: 'success', summary: 'Editar alumno', detail: 'Se guardaron los cambios del alumno' });
       this.store.dispatch(new ClearSelectedPersona);
     }
-    this.form.reset();
   }
 
   public submitProfesor(profesor: PersonaDto) {
     if (this.form.value._id === null) {
       this.store.dispatch(new PostProfesorAction(this.personaDto)).subscribe(() => {
-        this.router.navigate(["/personas/profesores"])
+        this.router.navigate(["/profesores/lista"])
       });
     }
     else {
-      this.store.dispatch(new PutProfesorAction(profesor)).subscribe(x => this.router.navigate(["/personas/profesores"]));
+      this.store.dispatch(new PutProfesorAction(profesor)).subscribe(x => this.router.navigate(["/profesores/lista"]));
       this.messageService.add({ severity: 'success', summary: 'Editar especialidad', detail: 'Se guardaron los cambios del profesor' });
       this.store.dispatch(new ClearSelectedPersona);
     }
-    this.form.reset();
+
   }
 
   public redirectPersona() {
-    this.store.dispatch(new ClearSelectedPersona);
-    if (this.tipoPersona === TipoPersonaEnum.ALUMNO) {
-      this.router.navigate(["/personas/alumnos/lista"])
+
+    if (this.tipoPersona === TipoPersonaEnum.ALUMNO.toString()) {
+      this.store.dispatch(new ClearSelectedPersona);
+      this.router.navigate(["/alumnos/lista"])
     }
     else {
-      this.router.navigate(["/personas/profesores/lista"])
+      this.store.dispatch(new ClearSelectedPersona);
+      this.router.navigate(["/profesores/lista"])
     }
 
   }
@@ -126,11 +138,16 @@ export class PersonaFormComponent {
   }
 
   pathValues() {
-    this.tipoPersona = this.persona.tipoPersona;
-    if (this.persona._id !== "") {
-      this.form.patchValue(this.persona);
-      this.form.patchValue({'fechaNacimiento':this.datePipe.transform(this.persona.fechaNacimiento, 'dd/MM/yyyy')})
-      this.form.patchValue({ 'plan': this.persona.plan.descripcion, 'planId': this.persona.plan._id });
+    if(this.tipoPersona === TipoPersonaEnum.ALUMNO.toString()){
+      this.form.patchValue(this.alumno);
+      console.log(this.alumno);
+      this.form.patchValue({'fechaNacimiento':this.datePipe.transform(this.alumno.fechaNacimiento, 'dd/MM/yyyy')})
+      this.form.patchValue({ 'plan': this.alumno.plan.descripcion, 'planId': this.alumno.plan._id });
+    }
+    else{
+      this.form.patchValue(this.profesor);
+      this.form.patchValue({'fechaNacimiento':this.datePipe.transform(this.profesor.fechaNacimiento, 'dd/MM/yyyy')})
+      this.form.patchValue({ 'plan': this.profesor.plan.descripcion, 'planId': this.profesor.plan._id });
     }
   }
 

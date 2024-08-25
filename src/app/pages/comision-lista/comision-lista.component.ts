@@ -5,20 +5,25 @@ import { Observable } from 'rxjs';
 import { Comision } from '../../entities/comision';
 import { ComisionFilter } from '../../entities/filter';
 import { ComisionState } from '../../store/states/api/comision.state';
-import { GetComision } from '../../store/actions/api/comision.action';
+import { DeleteComisionAction, GetComision } from '../../store/actions/api/comision.action';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { MessagesModule } from 'primeng/messages';
 import { PanelModule } from 'primeng/panel';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { ShowModalConfirmationAction } from '../../store/actions/pages/app.action';
+import { AppPageState } from '../../store/states/page/app.state';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @Component({
   selector: 'app-comision-lista',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, MessagesModule, PanelModule, ToastModule],
+  imports: [CommonModule, TableModule, ButtonModule, MessagesModule, PanelModule, ToastModule, ConfirmDialogModule],
   templateUrl: './comision-lista.component.html',
-  styleUrl: './comision-lista.component.scss'
+  styleUrl: './comision-lista.component.scss',
+  providers:[ConfirmationService]
 })
 export class ComisionListaComponent implements OnInit {
 
@@ -31,7 +36,9 @@ export class ComisionListaComponent implements OnInit {
   public errorMessage$:Observable<string> = this.store.select(ComisionState.getErrorMessage);
 
   public Comision!:Comision;
-  constructor(private store:Store, private router:Router){
+  showConfirmation$:Observable<boolean> = this.store.select(AppPageState.showModalConfirmation)
+  public comisionSelected!:Comision;
+  constructor(private store:Store, private router:Router, private confirmationService:ConfirmationService,private  messageService:MessageService){
     
   }
 
@@ -40,15 +47,14 @@ export class ComisionListaComponent implements OnInit {
     let filters = new ComisionFilter();
     filters.mostrarPlan = true;
     this.store.dispatch(new GetComision(filters));
-
+    this.showConfirmation$.subscribe(x => {
+      if(x  && this.comisionSelected){
+        this.confirm();
+      }
+    })
   }
 
 
-/*   showModal(esp:Comision){
-    this.Comision = esp;
-    this.store.dispatch(new ShowModalDeleteAction(true));
-  }
- */
   redirectNuevaComision(){
     this.router.navigate(["/comisiones/nuevo"]);
   }
@@ -59,4 +65,31 @@ export class ComisionListaComponent implements OnInit {
 
   Comisiones!: Comision[];
   title = 'academia';
+
+  confirm() {
+
+    this.confirmationService.confirm({
+      header: 'Borrar comisión',
+      message: `¿Desea eliminar la siguiente comisión: ${this.comisionSelected!.descripcion!} ?`,
+      acceptIcon: 'pi pi-check mr-2',
+      rejectIcon: 'pi pi-times mr-2',
+      rejectButtonStyleClass: 'p-button-sm',
+      acceptButtonStyleClass: 'p-button-outlined p-button-sm',
+        accept: () => {
+          this.store.dispatch(new DeleteComisionAction(this.comisionSelected._id))
+          .subscribe(() => {
+            this.store.dispatch(new ShowModalConfirmationAction(false))
+            this.messageService.add({ severity: 'success', summary: 'Borrar comisión', detail: `Se ha borrado la comisión: ${this.comisionSelected.descripcion}` });
+          })       
+        },
+        reject: () => {
+          this.store.dispatch(new ShowModalConfirmationAction(false))
+        }
+    });
+}
+
+modalConfirmar(comision:Comision){
+  this.comisionSelected = comision;
+  this.store.dispatch(new ShowModalConfirmationAction(true));
+}
 }

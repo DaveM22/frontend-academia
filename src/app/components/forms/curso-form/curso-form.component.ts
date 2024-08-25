@@ -9,7 +9,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
 import { ToastModule } from 'primeng/toast';
 import { PlanPageState } from '../../../store/states/page/plan.page.state';
-import { GetByIdPlanForCursoAction, PostPlanAction } from '../../../store/actions/api/planes.action';
+import { GetByIdPlanAction, GetByIdPlanForCursoAction, PostPlanAction } from '../../../store/actions/api/planes.action';
 import { Curso, CursoDto } from '../../../entities/curso';
 import { PostCursoAction, PutCursoAction } from '../../../store/actions/api/curso.action';
 import { CursoPageState } from '../../../store/states/page/curso.state';
@@ -27,6 +27,7 @@ import { MateriasModalComponent } from '../../modals/materias-modal/materias-mod
 import { Materia } from '../../../entities/materia';
 import { Comision } from '../../../entities/comision';
 import { ComisionesModalComponent } from '../../modals/comisiones-modal/comisiones-modal.component';
+import { PlanFilter } from '../../../entities/filter';
 
 @Component({
   selector: 'app-curso-form',
@@ -115,7 +116,11 @@ export class CursoFormComponent {
       if (x !== null) {
         this.plan = x!;
         this.form.patchValue({ 'plan': this.plan.descripcion, 'planId': this.plan._id });
-        this.store.dispatch(new GetByIdPlanForCursoAction(this.plan._id));
+        let filter = new PlanFilter();
+        filter.incluirMaterias = true;
+        filter.incluirComisiones = true;
+        
+        this.store.dispatch(new GetByIdPlanAction(this.plan._id, filter));
       }
     })
   }

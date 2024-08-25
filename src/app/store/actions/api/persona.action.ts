@@ -46,3 +46,13 @@ export class PutProfesorAction{
     constructor(public profesor:PersonaDto){}
 }
 
+export class DeleteAlumnoAction {
+    static type = "[Persona API Alumno] Delete Alumno";
+    constructor(public id:string){}
+}
+
+export class DeleteProfesorAction {
+    static type = "[Persona API Profesor] Delete Profesor";
+    constructor(public id:string){}
+}
+

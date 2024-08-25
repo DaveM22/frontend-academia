@@ -10,6 +10,7 @@ export class PlanFilter{
     especialidadId:string= '';
     mostrarEspecialidad:boolean = false;
     incluirMaterias:boolean = false;
+    incluirComisiones:boolean = false;
 }
 
 export class CursoFilter{

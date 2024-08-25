@@ -45,6 +45,7 @@ export class MateriaFormComponent {
     this.materia = this.form.value
     if(this.form.value._id === ''){
       this.store.dispatch(new PostMateriaAction(this.materia!)).subscribe(x =>this.router.navigate([`/planes/${this.planId}/materias`]));
+      
     }
     else{
       this.store.dispatch(new PutMateriaAction(this.materia!)).subscribe(x =>this.router.navigate([`/planes/${this.planId}/materias`]));

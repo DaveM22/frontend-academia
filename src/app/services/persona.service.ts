@@ -59,4 +59,12 @@ export class PersonaService {
   putProfesor(profesor:PersonaDto){
     return this.http.put<Profesor>(`${environment.apiUrl}/personas/profesores/${profesor._id}`, profesor);
   }
+
+  deleteProfesor(id:string){
+    return this.http.delete(`${environment.apiUrl}/personas/profesores/${id}`);
+  }
+
+  deleteAlumno(id:string){
+    return this.http.delete(`${environment.apiUrl}/personas/alumnos/${id}`);
+  }
 }

@@ -56,7 +56,7 @@ export const routes: Routes = [
     {
         path: '',
         component: ApplayoutComponent,
-        canActivate:[AuthGuard],
+        canActivate: [AuthGuard],
         children: [
             {
                 path: 'especialidades',
@@ -66,57 +66,57 @@ export const routes: Routes = [
                     { path: 'nuevo', pathMatch: 'full', component: EspecialidadNuevoComponent },
                     { path: 'editar/:id', pathMatch: 'full', component: EspecialidadEditarComponent }
                 ],
-                canActivate:[AuthGuard, adminGuard],
-                data:{
-                    role:'Administrador'
+                canActivate: [AuthGuard, adminGuard],
+                data: {
+                    role: 'Administrador'
                 }
 
             },
             {
                 path: 'planes',
                 component: PlanComponent,
-                children:[
-                    {path:'lista', pathMatch:'full', component:PlanListaComponent},
-                    {path:'nuevo', pathMatch:'full', component:PlanNuevoComponent},
-                    {path: 'editar/:id',pathMatch:'full', component: PlanEditarComponent},
-                    {path: ':id/materias',pathMatch:'full', component: PlanMateriasComponent},
-                    {path:':id/materias/nuevo', component:PlanMateriasNuevoComponent},
-                    {path:'planes/:id/materias/editar/:idMateria', component:PlanMateriasEditarComponent}
+                children: [
+                    { path: 'lista', pathMatch: 'full', component: PlanListaComponent },
+                    { path: 'nuevo', pathMatch: 'full', component: PlanNuevoComponent },
+                    { path: 'editar/:id', pathMatch: 'full', component: PlanEditarComponent },
+                    { path: ':id/materias', pathMatch: 'full', component: PlanMateriasComponent },
+                    { path: ':id/materias/nuevo', component: PlanMateriasNuevoComponent },
+                    { path: 'planes/:id/materias/editar/:idMateria', component: PlanMateriasEditarComponent }
                 ]
             },
             {
                 path: 'comisiones',
                 component: ComisionComponent,
-                children:[
-                    {path:'lista', component:ComisionListaComponent},
-                    {path:'nuevo', component:ComisionNuevoComponent},
-                    {path:'editar/:id', component:ComisionEditarComponent}
+                children: [
+                    { path: 'lista', component: ComisionListaComponent },
+                    { path: 'nuevo', component: ComisionNuevoComponent },
+                    { path: 'editar/:id', component: ComisionEditarComponent }
                 ]
             },
             {
                 path: 'cursos',
                 component: CursoComponent,
-                children:[
-                    {path:'lista', component:CursoListaComponent},
-                    {path:'nuevo', component:CursoNuevoComponent}
+                children: [
+                    { path: 'lista', component: CursoListaComponent },
+                    { path: 'nuevo', component: CursoNuevoComponent }
                 ]
             },
             {
-                path: 'personas/alumnos',
+                path: 'alumnos',
                 component: AlumnoComponent,
-                children:[
-                    {path:'lista', component: AlumnoListaComponent},
-                    {path:'nuevo', component: AlumnoNuevoComponent},
-                    {path:'editar/:id', component:AlumnoEditarComponent}
+                children: [
+                    { path: 'lista', component: AlumnoListaComponent },
+                    { path: 'nuevo', component: AlumnoNuevoComponent },
+                    { path: 'editar/:id', component: AlumnoEditarComponent }
                 ]
             },
             {
-                path: 'personas/profesores',
+                path: 'profesores',
                 component: ProfesorComponent,
-                children:[
-                    {path:'lista', component:ProfesorListaComponent},
-                    {path:'pnuevo' , component:ProfesorNuevoComponent},
-                    {path:'editar/:id' , component:ProfesorEditarComponent}
+                children: [
+                    { path: 'lista',pathMatch: 'full', component: ProfesorListaComponent },
+                    { path: 'nuevo',pathMatch: 'full', component: ProfesorNuevoComponent },
+                    { path: 'editar/:id',pathMatch: 'full', component: ProfesorEditarComponent }
                 ]
             },
             {
@@ -136,30 +136,30 @@ export const routes: Routes = [
                 component: CatedrasAlumnoComponent
             },
             {
-                path:'docente/:id',
+                path: 'docente/:id',
                 component: CatedrasDocenteComponent,
-                children:[
-                    {path:'cursos-asignados', component:CatedrasDocenteCursosComponent},
-                    {path:'cursos-inscripciones/:idCurso', component:CatedrasDocenteInscripcionesComponent}
+                children: [
+                    { path: 'cursos-asignados', component: CatedrasDocenteCursosComponent },
+                    { path: 'cursos-inscripciones/:idCurso', component: CatedrasDocenteInscripcionesComponent }
                 ]
             },
             {
-                path:'inscripcion-catedra',
-                component:InscripcionMateriaAlumnoComponent,
-                children:[
-                    {path:'materias-disponibles/:id', component: InscripcionMateriaAlumnoMateriasComponent},
-                    {path:'cursos-disponibles/:id', component: CursosDisponiblesComponent}
+                path: 'inscripcion-catedra',
+                component: InscripcionMateriaAlumnoComponent,
+                children: [
+                    { path: 'materias-disponibles/:id', component: InscripcionMateriaAlumnoMateriasComponent },
+                    { path: 'cursos-disponibles/:id', component: CursosDisponiblesComponent }
                 ]
             },
             {
-                path:'usuarios',
+                path: 'usuarios',
                 component: UsuarioComponent,
-                children:[
-                    { path:'lista', component:UsuarioListaComponent},
-                    { path:'nuevo', component:UsuarioNuevoComponent},
-                    { path:'editar/:id', component:UsuarioEditarComponent}
+                children: [
+                    { path: 'lista', component: UsuarioListaComponent },
+                    { path: 'nuevo', component: UsuarioNuevoComponent },
+                    { path: 'editar/:id', component: UsuarioEditarComponent }
                 ],
-                canActivate:[AuthGuard, adminGuard],
+                canActivate: [AuthGuard, adminGuard],
             },
             {
                 path: 'asignacion-docentes',
@@ -167,19 +167,19 @@ export const routes: Routes = [
                 children: [
                     { path: 'seleccionar-materia', pathMatch: 'full', component: MateriasAsignacionComponent },
                     { path: ':id/seleccionar-curso', pathMatch: 'full', component: MateriaCursosComponent },
-                    { path:':idMateria/:idCurso/docentes', pathMatch:'full', component:DocentesCursosComponent },
-                    { path:':idMateria/:idCurso/docentes/nuevo', pathMatch:'full', component:DocentesCursosNuevoComponent}
+                    { path: ':idMateria/:idCurso/docentes', pathMatch: 'full', component: DocentesCursosComponent },
+                    { path: ':idMateria/:idCurso/docentes/nuevo', pathMatch: 'full', component: DocentesCursosNuevoComponent }
                 ]
             },
         ]
     },
     {
-        path:'login',
-        component:LoginComponent
+        path: 'login',
+        component: LoginComponent
     },
     {
-        path:'callback',
-        component:CallbackComponent
+        path: 'callback',
+        component: CallbackComponent
     }
 
 

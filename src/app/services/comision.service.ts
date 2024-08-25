@@ -26,4 +26,8 @@ export class ComisionService {
   put(comision:ComisionDto){
     return this.http.put<Comision>(`${environment.apiUrl}/comisiones/${comision._id}`, comision);
   }
+
+  delete(id:string){
+    return this.http.delete(`${environment.apiUrl}/comisiones/${id}`);
+  }
 }

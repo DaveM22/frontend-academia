@@ -58,8 +58,8 @@ export class SidebarComponent implements OnInit {
 
   itemsAdministrador() {
     this.items = [
-      { label: 'Alumnos', icon: 'pi pi pi-user', command: () => this.router.navigate(["/personas/alumnos/lista"]) },
-      { label: 'Profesores', icon: 'pi pi pi-user', command: () => this.router.navigate(["/personas/profesores/lista"]) },
+      { label: 'Alumnos', icon: 'pi pi pi-user', command: () => this.router.navigate(["/alumnos/lista"]) },
+      { label: 'Profesores', icon: 'pi pi pi-user', command: () => this.router.navigate(["/profesores/lista"]) },
       { label: 'Especialidades', icon: 'pi pi-cog', command: () => this.router.navigate(["/especialidades/lista"]) },
       { label: 'Planes y materias', icon: 'pi pi-cog', command: () => this.router.navigate(["/planes/lista"]) },
       { label: 'Comisiones', icon: 'pi pi-cog', command: () => this.router.navigate(["/comisiones/lista"]) },

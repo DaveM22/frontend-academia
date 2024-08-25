@@ -67,7 +67,7 @@ export class EspecialidadState{
 
     @Action(DeleteEspecialidadAction)
     async deleteEspecialidadAction(ctx: StateContext<EspecialidadModelState>, action: DeleteEspecialidadAction){
-      const response = await lastValueFrom(this.service.deleteEspecialidad(action.id));
+      await lastValueFrom(this.service.deleteEspecialidad(action.id));
       ctx.patchState({
         especialidades: ctx.getState().especialidades.filter(x => x._id !== action.id)
         

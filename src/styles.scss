@@ -18,6 +18,12 @@ $breakpoints: (
     height: 95%;
 }
 
+.form-disabled{
+    .p-component:disabled {
+        opacity: 1 !important;
+    }
+}
+
 .content {
     height: 100%;
     .p-panel-header {
@@ -35,46 +41,17 @@ $breakpoints: (
          .p-panel-content {
             height: 95% !important;
         }
-    }
 
-}
-/* .content {
-  
-
-    .p-panel-content {
-        height: 95%;
-    }
-
-    .p-toggleable-content.ng-trigger.ng-trigger-panelContent {
-        height: 95% !important;
-    }
-
-    @media (width > 920px) {
-        height: 100%;
-         .p-panel-content {
-            height: 95%;
+        .form-height{
+            div.p-card-body{
+                
+            overflow-y: scroll !important;
+            height: 100% !important;
+        
+            }
         }
     }
 
-
 }
 
-#main{
-    height: 90vh;
-}
- */
-
-/* 
-#navbar{
-    height: 7vh;
-}
-
-
-@media (width < 1400px) {
-    .p-panel-content {
-        height: fit-content !important;
-    }
-} */
-/*  */
-/*  */
 

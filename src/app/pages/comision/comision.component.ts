@@ -22,41 +22,4 @@ import { ComisionFilter } from '../../entities/filter';
 })
 export class ComisionComponent {
 
-  public comisiones$: Observable<Comision[]> = this.store.select(ComisionState.getComisiones)
-
-  public loading$:Observable<boolean> = this.store.select(ComisionState.getLoading);
-
-  public error$:Observable<boolean> = this.store.select(ComisionState.getError);
-
-  public errorMessage$:Observable<string> = this.store.select(ComisionState.getErrorMessage);
-
-  public Comision!:Comision;
-  constructor(private store:Store, private router:Router){
-    
-  }
-
-
-  ngOnInit(): void {
-    let filters = new ComisionFilter();
-    filters.mostrarPlan = true;
-    this.store.dispatch(new GetComisionAction(filters));
-
-  }
-
-
-/*   showModal(esp:Comision){
-    this.Comision = esp;
-    this.store.dispatch(new ShowModalDeleteAction(true));
-  }
- */
-  redirectNuevaComision(){
-    this.router.navigate(["/comisiones/nuevo"]);
-  }
-
-  redirectEditarComision(id:string){
-    this.router.navigate(["/comisiones/editar/" + id])
-  }
-
-  Comisiones!: Comision[];
-  title = 'academia';
 }

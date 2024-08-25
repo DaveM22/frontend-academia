@@ -36,19 +36,19 @@ export class CursoService {
     return this.http.get<Curso[]>(`${environment.apiUrl}/cursos`, { params: params });
   }
 
-  public deleteEspecialidad(id: string) {
+  public delete(id: string) {
     return this.http.delete(`${environment.apiUrl}/cursos/${id}`);
   }
 
-  public postEspecialidad(especialidad: CursoDto) {
+  public post(especialidad: CursoDto) {
     return this.http.post<Curso>(`${environment.apiUrl}/cursos`, especialidad);
   }
 
-  public getByIdEspecialidad(id: string) {
+  public getById(id: string) {
     return this.http.get<Curso>(`${environment.apiUrl}/cursos/${id}`);
   }
 
-  public putEspecialidad(especialidad: CursoDto) {
+  public put(especialidad: CursoDto) {
     return this.http.put<Curso>(`${environment.apiUrl}/cursos/${especialidad._id}`, especialidad);
   }
 

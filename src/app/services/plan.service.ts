@@ -26,7 +26,14 @@ export class PlanService {
   }
 
   public getPlanById(idplan:string, filter:PlanFilter){
-    return this.http.get<Plan>(`${environment.apiUrl}/planes/${idplan}?incluirMaterias=${filter.incluirMaterias}`);
+    let params = new HttpParams();
+    if(filter.incluirComisiones){
+      params = params.set('incluirComisiones', filter.incluirComisiones)
+    }
+    if(filter.incluirMaterias){
+      params = params.set('incluirMaterias', filter.incluirMaterias)
+    }
+    return this.http.get<Plan>(`${environment.apiUrl}/planes/${idplan}`, {params: params});
   }
 
   public getPlanesByEspecialidad(idEspecialidad:string) {

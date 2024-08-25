@@ -19,7 +19,7 @@ import { Persona } from '../../entities/persona';
   styleUrl: './alumno-editar.component.scss'
 })
 export class AlumnoEditarComponent {
-  alumno$:Observable<Persona | null> = this.store.select(PersonaPageState.getPersonaSelected);
+  alumno$:Observable<Persona | null> = this.store.select(PersonaPageState.getAlumnoSelected);
 
   constructor(private store:Store, private router:ActivatedRoute){}
 

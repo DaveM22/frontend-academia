@@ -130,26 +130,6 @@ export class PlanState{
       }
     }
 
-    @Action(GetByIdPlanForCursoAction)
-    async getByIdPlanForCursoAction(ctx: StateContext<PlanModelState>, action: GetByIdPlanForCursoAction){
-      ctx.patchState({loading:true, error:false});
-      try{
-        const response = await lastValueFrom(this.service.getPlanByIdForCurso(action.id));
-        ctx.dispatch(new AsignSelectedPlan(response));
-        ctx.patchState({
-            error:false
-        })
-      }
-      catch(error:any){
-        ErrorStateHandler.handleError(error, ctx);
-      }
-      finally{
-        ctx.patchState({loading:false})
-      }
-    }
-
-    
-
     @Action(GetPlanByIdWithMateriasAction)
     async getPlanByIdWithMaterias(ctx: StateContext<PlanModelState>, action:GetPlanByIdWithMateriasAction){
       ctx.patchState({loading:true, error:false});

@@ -21,6 +21,7 @@ import { ClearComisionAction } from '../../../store/actions/pages/comision.actio
 import { ClearSelectedPlan } from '../../../store/actions/pages/plan.action';
 import { Comision, ComisionDto } from '../../../entities/comision';
 import { PostComisionAction, PutComisionAction } from '../../../store/actions/api/comision.action';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-comision-form',
@@ -38,7 +39,8 @@ export class ComisionFormComponent implements OnInit, OnDestroy {
   planSelected$: Observable<Plan | null> = this.store.select(AppPageState.getSelectedPlanInModal);
   form!: FormGroup;
   comision!:ComisionDto;
-  constructor(private store: Store,  private router:Router) { }
+  plan!:Plan;
+  constructor(private store: Store,  private router:Router, private messageService:MessageService) { }
 
 
 
@@ -52,7 +54,7 @@ export class ComisionFormComponent implements OnInit, OnDestroy {
       planId: new FormControl('', [Validators.required])
     });
     this.pathValues();
-
+    this.subscripcionPlanSelected();
   }
 
 
@@ -72,7 +74,7 @@ export class ComisionFormComponent implements OnInit, OnDestroy {
   redirectComisiones() {
     this.store.dispatch(new ClearComisionAction);
 
-    this.router.navigate(["/comisiones"]);
+    this.router.navigate(["/comisiones/lista"]);
   }
 
 
@@ -80,19 +82,30 @@ export class ComisionFormComponent implements OnInit, OnDestroy {
 
   public onSubmit() { 
     this.comision = this.form.value
-    if(this.form.value._id === ''){
+    console.log(this.comision)
+    if(this.comision._id === null){
       this.store.dispatch(new PostComisionAction(this.comision)).subscribe(() => {
-        this.router.navigate(["/comisiones"])
-
+        this.router.navigate(["/comisiones/lista"])
+        this.messageService.add({ severity: 'success', summary: 'Crear comisión', detail: 'Se ha creado la comision' });
       });
 
     }
     else{
-      this.store.dispatch(new PutComisionAction(this.comision)).subscribe(x => this.router.navigate(["/comisiones"]));
+      this.store.dispatch(new PutComisionAction(this.comision)).subscribe(x => this.router.navigate(["/comisiones/lista"]));
       this.store.dispatch(new ClearComisionAction());
+      this.messageService.add({ severity: 'success', summary: 'Editar comisión', detail: 'Se han guardado los cambios de la comisión' });
     }
     this.form.reset();
 
+  }
+
+  subscripcionPlanSelected(){
+    this.planSelected$.subscribe(x => {
+      if (x !== null) {
+        this.plan = x!;
+        this.form.patchValue({ 'plan': this.plan.descripcion, 'planId': this.plan._id });
+      }
+    })
   }
 
 

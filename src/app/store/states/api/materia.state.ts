@@ -1,13 +1,15 @@
 import { Injectable } from "@angular/core";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { MateriaPageModelState } from "../../modelstate/pages/materia.modelstate";
-import { GetByIdMateriaAction, PutMateriaAction, PostMateriaAction, GetMateriasAction, GetByIdForInscripcion } from "../../actions/api/materia.action";
+import { GetByIdMateriaAction, PutMateriaAction, PostMateriaAction, GetMateriasAction, GetByIdForInscripcion, DeleteMateria as DeleteMateriaAction } from "../../actions/api/materia.action";
 import { PlanService } from "../../../services/plan.service";
 import { lastValueFrom } from "rxjs";
 import { MateriaService } from "../../../services/materia.service";
 import { MateriaModelState } from "../../modelstate/api/materia.modelstate";
 import { AsignMateriaAction } from "../../actions/pages/materia.action";
 import { MessageService } from "primeng/api";
+import { GetByIdPlanAction } from "../../actions/api/planes.action";
+import { PlanFilter } from "../../../entities/filter";
 
 @State<MateriaModelState>({
   name: 'materias',
@@ -98,6 +100,20 @@ export class MateriaState {
     try {
       const response = await lastValueFrom(this.service.putMateria(action.materia));
       await lastValueFrom(ctx.dispatch(new AsignMateriaAction(response)));
+    }
+    catch (error) {
+      ctx.patchState({ error: true })
+    }
+  }
+
+  @Action(DeleteMateriaAction)
+  async DeleteMateria(ctx:StateContext<MateriaModelState>, action: DeleteMateriaAction){
+    ctx.patchState({ error: false })
+    try {
+      await lastValueFrom(this.service.delete(action.materia._id));
+      let filter = new PlanFilter();
+      filter.incluirMaterias = true;
+      ctx.dispatch(new GetByIdPlanAction(action.materia.plan, filter))
     }
     catch (error) {
       ctx.patchState({ error: true })

@@ -20,3 +20,8 @@ export class GetByIdComisionAction{
     static type = "[Comision API] Get by id Comision";
     constructor(public id:string){}
 }
+
+export class DeleteComisionAction{
+    static type = "[Comision API] Delete comision";
+    constructor(public id:string){}
+}

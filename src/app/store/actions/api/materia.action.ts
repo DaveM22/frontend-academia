@@ -26,3 +26,8 @@ export class GetByIdForInscripcion{
     static type = "[Materia API] Get by id materia for inscripcion";
     constructor(public filters:MateriaFilter){}
 }
+
+export class DeleteMateria {
+    static type = "[Materia API] Delete materia";
+    constructor(public materia:Materia){}
+}

@@ -40,5 +40,9 @@ export class MateriaService {
     return this.http.get<Materia>(`${environment.apiUrl}/materias/${id}`);
   }
 
+  public delete(id:string){
+    return this.http.delete(`${environment.apiUrl}/materias/${id}`);
+  }
+
 
 }

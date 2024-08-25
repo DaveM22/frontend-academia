@@ -33,9 +33,9 @@ import { AsignSelectedPlan, ClearSelectedPlan, ShowModalDelete } from "../../act
 
     @Action(AsignSelectedPlan)
     asignPlan(ctx:StateContext<PlanModelState>, action:AsignSelectedPlan){
-        return ctx.patchState({
+        ctx.patchState({
             planSelected: action.plan!
-        })
+        });
     }
 
     @Action(ClearSelectedPlan)

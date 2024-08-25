@@ -12,24 +12,37 @@ import { Materia } from '../../entities/materia';
 import { ButtonModule } from 'primeng/button';
 import { PlanFilter } from '../../entities/filter';
 import { PlanPageState } from '../../store/states/page/plan.page.state';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { AppPageState } from '../../store/states/page/app.state';
+import { ShowModalConfirmationAction } from '../../store/actions/pages/app.action';
+import { DeleteMateria } from '../../store/actions/api/materia.action';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @Component({
   selector: 'app-plan-materias',
   standalone: true,
-  imports: [TableModule, CommonModule, MessagesModule, ButtonModule],
+  imports: [TableModule, CommonModule, MessagesModule, ButtonModule, ConfirmDialogModule],
   templateUrl: './plan-materias.component.html',
-  styleUrl: './plan-materias.component.scss'
+  styleUrl: './plan-materias.component.scss',
+  providers: [ConfirmationService]
 })
 export class PlanMateriasComponent implements OnInit {
   error$:Observable<boolean> = this.store.select(PlanState.getError);
   errorMessage$:Observable<string> = this.store.select(PlanState.getErrorMessage);
   loading$:Observable<boolean> = this.store.select(PlanState.getLoading);
   planSelected$:Observable<Plan | null> = this.store.select(PlanPageState.getPlanSelected);
+  showConfirmation$:Observable<boolean> = this.store.select(AppPageState.showModalConfirmation)
   plan!:Plan;
   materias:Materia[]=[]
   header!:string;
   id!:string;
-  constructor(private store:Store,private activadedRoute:ActivatedRoute, private router:Router){
+  materiaSelected!:Materia;
+  constructor(
+    private store:Store,
+    private activadedRoute:ActivatedRoute, 
+    private router:Router, 
+    private confimationService:ConfirmationService,
+    private messageService:MessageService){
 
   }
   ngOnInit(): void {
@@ -42,6 +55,12 @@ export class PlanMateriasComponent implements OnInit {
         this.plan = x;
         this.materias = this.plan.materias;
         this.header = this.plan.descripcion;
+      }
+    })
+
+    this.showConfirmation$.subscribe(x => {
+      if(x  && this.materiaSelected){
+        this.confirm();
       }
     })
 
@@ -58,5 +77,33 @@ export class PlanMateriasComponent implements OnInit {
   redirectPlanes(){
     this.router.navigate(['/planes/lista']);
   }
+
+  
+  confirm() {
+
+    this.confimationService.confirm({
+      header: 'Inscripción a curso',
+      message: `'¿Desea eliminar la siguiente materia: ${this.materiaSelected!.descripcion!} ?`,
+      acceptIcon: 'pi pi-check mr-2',
+      rejectIcon: 'pi pi-times mr-2',
+      rejectButtonStyleClass: 'p-button-sm',
+      acceptButtonStyleClass: 'p-button-outlined p-button-sm',
+        accept: () => {
+          this.store.dispatch(new DeleteMateria(this.materiaSelected))
+          .subscribe(() => {
+            this.store.dispatch(new ShowModalConfirmationAction(false))
+            this.messageService.add({ severity: 'success', summary: 'Borrar materia', detail: `Se ha borrado la materia: ${this.materiaSelected.descripcion}` });
+          })       
+        },
+        reject: () => {
+          this.store.dispatch(new ShowModalConfirmationAction(false))
+        }
+    });
+}
+
+modalConfirmar(materia:Materia){
+  this.materiaSelected = materia;
+  this.store.dispatch(new ShowModalConfirmationAction(true));
+}
 
 }

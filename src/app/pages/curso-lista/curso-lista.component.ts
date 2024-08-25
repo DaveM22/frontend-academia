@@ -4,7 +4,7 @@ import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { Curso } from '../../entities/curso';
 import { CursoFilter } from '../../entities/filter';
-import { GetCursoAction } from '../../store/actions/api/curso.action';
+import { DeleteCursoAction, GetCursoAction } from '../../store/actions/api/curso.action';
 import { CursoState } from '../../store/states/api/curso.state';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
@@ -12,25 +12,37 @@ import { MessagesModule } from 'primeng/messages';
 import { PanelModule } from 'primeng/panel';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { ShowModalConfirmationAction } from '../../store/actions/pages/app.action';
+import { AppPageState } from '../../store/states/page/app.state';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputIconModule } from 'primeng/inputicon';
 
 @Component({
   selector: 'app-curso-lista',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, MessagesModule, PanelModule, ToastModule],
+  imports: [CommonModule, TableModule, ButtonModule, MessagesModule, PanelModule, ToastModule, ConfirmDialogModule, IconFieldModule, InputTextModule, InputIconModule],
   templateUrl: './curso-lista.component.html',
-  styleUrl: './curso-lista.component.scss'
+  styleUrl: './curso-lista.component.scss',
+  providers: [ConfirmationService]
 })
 export class CursoListaComponent implements OnInit {
   public cursos$: Observable<Curso[]> = this.store.select(CursoState.getCursos)
 
-  public loading$:Observable<boolean> = this.store.select(CursoState.getLoading);
+  public loading$: Observable<boolean> = this.store.select(CursoState.getLoading);
 
-  public error$:Observable<boolean> = this.store.select(CursoState.getError);
+  public error$: Observable<boolean> = this.store.select(CursoState.getError);
 
-  public errorMessage$:Observable<string> = this.store.select(CursoState.getErrorMessage);
+  public errorMessage$: Observable<string> = this.store.select(CursoState.getErrorMessage);
   curso!: Curso;
 
-  constructor(private store:Store, private router:Router){
+  cursoSelected!: Curso;
+
+  showConfirmation$:Observable<boolean> = this.store.select(AppPageState.showModalConfirmation)
+
+  constructor(private store: Store, private router: Router, private confirmationService: ConfirmationService, private messageService: MessageService) {
 
   }
 
@@ -39,22 +51,48 @@ export class CursoListaComponent implements OnInit {
     filters.mostrarComision = true;
     filters.mostrarMateria = true;
     this.store.dispatch(new GetCursoAction(filters));
+    this.showConfirmation$.subscribe(x => {
+      if(x  && this.cursoSelected){
+        this.confirm();
+      }
+    })
   }
 
-
-/*   showModal(curso:Curso){
-    this.curso = curso;
-    this.store.dispatch(new ShowModalDelete(true));
-  } */
-
-  redirectNewCurso(){
+  redirectNewCurso() {
     this.router.navigate(["/cursos/nuevo"]);
   }
 
-  redirectEditCurso(id:string){
+  redirectEditCurso(id: string) {
     this.router.navigate(["/cursos/editar/" + id])
   }
 
   cursos!: Curso[];
   title = 'academia';
+
+  confirm() {
+    this.confirmationService.confirm({
+      header: 'Borrar curso',
+      message: `¿Desea eliminar el siguiente curso: ${this.cursoSelected.descripcion!} ?`,
+      acceptIcon: 'pi pi-check mr-2',
+      rejectIcon: 'pi pi-times mr-2',
+      rejectButtonStyleClass: 'p-button-sm',
+      acceptButtonStyleClass: 'p-button-outlined p-button-sm',
+      accept: () => {
+        this.store.dispatch(new DeleteCursoAction(this.cursoSelected._id))
+          .subscribe(() => {
+            this.store.dispatch(new ShowModalConfirmationAction(false))
+            this.messageService.add({ severity: 'success', summary: 'Borrar curso', detail: `Se ha borrado el curso: ${this.cursoSelected.descripcion}` });
+          })
+      },
+      reject: () => {
+        this.store.dispatch(new ShowModalConfirmationAction(false))
+      }
+    });
+  }
+
+  modalConfirmar(curso:Curso){
+    this.cursoSelected = curso;
+    this.store.dispatch(new ShowModalConfirmationAction(true));
+  }
+
 }

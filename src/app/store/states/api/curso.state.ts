@@ -61,18 +61,17 @@ export class CursoState {
         }
 
     }
-    /* 
-        @Action(DeleteCursoAction)
-        async deleteEspecialidadAction(ctx: StateContext<CursoModelState>, action: DeleteEspecialidadAction){
-          const response = await lastValueFrom(this.service.deleteEspecialidad(action.id));
-          ctx.patchState({
-            especialidades: ctx.getState().especialidades.filter(x => x._id !== action.id)
-          })
-        }
-     */
+
+    @Action(DeleteCursoAction)
+    async deleteEspecialidadAction(ctx: StateContext<CursoModelState>, action: DeleteCursoAction){
+      await lastValueFrom(this.service.delete(action.id));
+      ctx.patchState({
+        cursos: ctx.getState().cursos.filter(x => x._id !== action.id)
+      })
+    }
     @Action(PostCursoAction)
     async postEspecialidadAction(ctx: StateContext<CursoModelState>, action: PostCursoAction) {
-        const response = await lastValueFrom(await this.service.postEspecialidad(action.curso));
+        const response = await lastValueFrom(await this.service.post(action.curso));
         const list = ctx.getState().cursos;
         ctx.patchState({
             cursos: [...list, response]
@@ -81,13 +80,13 @@ export class CursoState {
 
     @Action(GetByIdCursoAction)
     async getByIdEspecialidad(ctx: StateContext<CursoModelState>, action: GetByIdCursoAction) {
-        const response = await lastValueFrom(await this.service.getByIdEspecialidad(action.id));
+        const response = await lastValueFrom(await this.service.getById(action.id));
         ctx.dispatch(new AsignSelectedCursoAction(response));
     }
 
     @Action(PutCursoAction)
     async putEspecialidad(ctx: StateContext<CursoModelState>, action: PutCursoAction) {
-        const response = await lastValueFrom(await this.service.putEspecialidad(action.curso));
+        const response = await lastValueFrom(await this.service.put(action.curso));
         const state = ctx.getState();
         const updatedEspecialidades = ctx.getState().cursos.map(item =>
             item._id === response._id ? response : item

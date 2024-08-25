@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { Alumno } from '../../entities/alumno';
-import { GetAlumnosAction } from '../../store/actions/api/persona.action';
+import { DeleteAlumnoAction, GetAlumnosAction } from '../../store/actions/api/persona.action';
 import { PersonaState } from '../../store/states/api/persona.state';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
@@ -15,32 +15,71 @@ import { PanelModule } from 'primeng/panel';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
 import { EspecialidadBorrarComponent } from '../especialidad-borrar/especialidad-borrar.component';
+import { AppPageState } from '../../store/states/page/app.state';
+import { ShowModalConfirmationAction } from '../../store/actions/pages/app.action';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @Component({
   selector: 'app-alumno-lista',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, EspecialidadBorrarComponent, MessagesModule, PanelModule, ToastModule, IconFieldModule, InputTextModule, InputIconModule],
+  imports: [CommonModule, TableModule, ButtonModule,ConfirmDialogModule, EspecialidadBorrarComponent, MessagesModule, PanelModule, ToastModule, IconFieldModule, InputTextModule, InputIconModule],
   templateUrl: './alumno-lista.component.html',
-  styleUrl: './alumno-lista.component.scss'
+  styleUrl: './alumno-lista.component.scss',
+  providers:[ConfirmationService]
 })
 export class AlumnoListaComponent implements OnInit {
   alumnos$:Observable<Alumno[]> = this.store.select(PersonaState.getAlumnos);
   loading$:Observable<boolean> = this.store.select(PersonaState.getLoading);
   error$:Observable<boolean> = this.store.select(PersonaState.getError)
   errorMessage$:Observable<string> = this.store.select(PersonaState.getErrorMessage);
-
-  constructor(private store:Store, private router:Router){}
+  showConfirmation$:Observable<boolean> = this.store.select(AppPageState.showModalConfirmation)
+  alumnoSelected!:Alumno
+  constructor(private store:Store, private router:Router, private confirmationService:ConfirmationService, private messageService:MessageService){}
 
 
   redirecToNuevoAlumno(){
-    this.router.navigate(["/personas/alumnos/nuevo"]);
+    this.router.navigate(["/alumnos/nuevo"]);
   }
 
   redirectToEditarAlumno(id:string){
-    this.router.navigate([`/personas/alumnos/editar/${id}`]);
+    this.router.navigate([`/alumnos/editar/${id}`]);
   }
 
   ngOnInit(): void {
     this.store.dispatch(new GetAlumnosAction);
+
+    this.showConfirmation$.subscribe(x => {
+      if(x  && this.alumnoSelected){
+        this.confirm();
+      }
+    })
+  }
+
+  confirm() {
+
+    this.confirmationService.confirm({
+      header: 'Borrar alumno',
+      message: `¿Desea eliminar el siguiente comisión: Legajo:${this.alumnoSelected.legajo} ${this.alumnoSelected.nombre} ${this.alumnoSelected.apellido}  ?`,
+      acceptIcon: 'pi pi-check mr-2',
+      rejectIcon: 'pi pi-times mr-2',
+      rejectButtonStyleClass: 'p-button-sm',
+      acceptButtonStyleClass: 'p-button-outlined p-button-sm',
+        accept: () => {
+          this.store.dispatch(new DeleteAlumnoAction(this.alumnoSelected._id))
+          .subscribe(() => {
+            this.store.dispatch(new ShowModalConfirmationAction(false))
+            this.messageService.add({ severity: 'success', summary: 'Borrar comisión', detail: `Se ha borrado el alumno: Legajo:${this.alumnoSelected.legajo} ${this.alumnoSelected.nombre} ${this.alumnoSelected.apellido}` });
+          })       
+        },
+        reject: () => {
+          this.store.dispatch(new ShowModalConfirmationAction(false))
+        }
+    });
+}
+
+  modalConfirmar(alumno:Alumno){
+    this.alumnoSelected = alumno;
+    this.store.dispatch(new ShowModalConfirmationAction(true));
   }
 }
