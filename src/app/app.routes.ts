@@ -51,6 +51,7 @@ import { InscripcionMateriaAlumnoMateriasComponent } from './pages/inscripcion-m
 import { CatedrasDocenteComponent } from './pages/catedras-docente/catedras-docente.component';
 import { CatedrasDocenteCursosComponent } from './pages/catedras-docente-cursos/catedras-docente-cursos.component';
 import { CatedrasDocenteInscripcionesComponent } from './pages/catedras-docente-inscripciones/catedras-docente-inscripciones.component';
+import { InscripcionAlumnoListaComponent } from './pages/inscripcion-alumno-lista/inscripcion-alumno-lista.component';
 
 export const routes: Routes = [
     {
@@ -114,23 +115,31 @@ export const routes: Routes = [
                 path: 'profesores',
                 component: ProfesorComponent,
                 children: [
-                    { path: 'lista',pathMatch: 'full', component: ProfesorListaComponent },
-                    { path: 'nuevo',pathMatch: 'full', component: ProfesorNuevoComponent },
-                    { path: 'editar/:id',pathMatch: 'full', component: ProfesorEditarComponent }
+                    { path: 'lista', pathMatch: 'full', component: ProfesorListaComponent },
+                    { path: 'nuevo', pathMatch: 'full', component: ProfesorNuevoComponent },
+                    { path: 'editar/:id', pathMatch: 'full', component: ProfesorEditarComponent }
                 ]
             },
             {
-                path: 'inscripciones-alumnos',
-                component: InscripcionAlumnoComponent
+                path: 'inscripciones/alumnos',
+                component: InscripcionAlumnoComponent,
+                children: [
+                    {
+                        path:'lista',
+                        component:InscripcionAlumnoListaComponent
+                    },
+                    {
+                        path: ':id',
+                        component: InscripcionesComponent
+                    },
+
+                    {
+                        path: ':id/nuevo',
+                        component: InscripcionNuevoComponent
+                    },
+                ]
             },
-            {
-                path: 'inscripciones/:id',
-                component: InscripcionesComponent
-            },
-            {
-                path: 'inscripciones/:id/nuevo',
-                component: InscripcionNuevoComponent
-            },
+
             {
                 path: 'alumno/catedras/:id',
                 component: CatedrasAlumnoComponent

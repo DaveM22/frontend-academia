@@ -11,6 +11,7 @@ export interface AppModelState{
     toggle:boolean,
     selectedEspecialidadFilter:Especialidad | null,
     selectedPlanFilter:Plan | null,
+    selectedMateriaFilter:Materia | null,
     selectedPlanInModal:Plan | null,
     selectedMateriaInModal:Materia | null,
     selectedComisionInModal:Comision | null,

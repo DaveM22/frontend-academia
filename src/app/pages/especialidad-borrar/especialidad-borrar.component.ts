@@ -44,16 +44,26 @@ export class EspecialidadBorrarComponent implements OnInit {
       message: '¿Desea eliminar la especialidad?',
       acceptIcon: 'pi pi-check mr-2',
       rejectIcon: 'pi pi-times mr-2',
+      acceptLabel:'Borrar',
+      rejectLabel:'Cancelar',
       rejectButtonStyleClass: 'p-button-sm',
       acceptButtonStyleClass: 'p-button-outlined p-button-sm',
         accept: () => {
-          this.store.dispatch(new DeleteEspecialidadAction(this.especialidad._id));
-          this.store.dispatch(new ShowModalDelete(false))
+          this.accept();
         },
         reject: () => {
-          this.store.dispatch(new ShowModalDelete(false))
+          this.reject();
         }
     });
+}
+
+accept(){
+  this.store.dispatch(new DeleteEspecialidadAction(this.especialidad._id));
+  this.store.dispatch(new ShowModalDelete(false))
+}
+
+reject(){
+  this.store.dispatch(new ShowModalDelete(false))
 }
   
 }

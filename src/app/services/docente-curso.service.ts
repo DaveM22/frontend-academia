@@ -16,11 +16,15 @@ export class DocenteCursoService {
     if(filter.cursoId !== ''){
       params = params.set('cursoId', filter.cursoId);
     }
-    return this.http.get<DocenteCurso[]>(`${environment.apiUrl}/docentes-cursos`, {params: params})
+    return this.http.get<DocenteCurso[]>(`${environment.apiUrl}/docentes-cursos`, {params: params});
 
   }
 
   public post(docenteCurso:DocenteCursoDto){
-    return this.http.post<DocenteCurso>(`${environment.apiUrl}/docentes-cursos`, docenteCurso)
+    return this.http.post<DocenteCurso>(`${environment.apiUrl}/docentes-cursos`, docenteCurso);
+  }
+
+  public delete(id:string){
+    return this.http.delete(`${environment.apiUrl}/docentes-cursos/${id}`);
   }
 }

@@ -17,11 +17,11 @@
     <ng-template pTemplate="caption">
         <div class="grid">
             @if (alumno) {
-                <h1> Catedras del alumno: ({{alumno.legajo}}) {{alumno.apellido}} {{alumno.nombre}} </h1>
+                <h2> Catedras del alumno: ({{alumno.legajo}}) {{alumno.apellido}} {{alumno.nombre}} </h2>
             }
             <div class="col-12 flex flex-column sm:flex-column md:flex-row lg:flex-row align-items-center lg:justify-content-between justify-content-center">
-  
-                <p-iconField iconPosition="left" class="mb-4 lg:mb-0">
+                <p-button label="Volver a inscripciones" severity="primary" (onClick)="redirectToInscripcionesalumnos()"></p-button>
+                <p-iconField iconPosition="left" class="mt-4 mb-4 lg:mb-0">
                     <p-inputIcon>
                         <i class="pi pi-search"></i>
                     </p-inputIcon>
@@ -59,12 +59,12 @@
         <ng-template pTemplate="emptymessage">
             @if (inscripciones.length === 0) {
                 <tr>
-                    <td class="text-center" colspan="3">No se han registrado inscripciones</td>
+                    <td class="text-center" colspan="4">No se han registrado inscripciones</td>
                 </tr>
             }
             @else {
                 <tr>
-                    <td class="text-center" colspan="3">No se encontraron inscripciones con el filtro aplicado</td>
+                    <td class="text-center" colspan="4">No se encontraron inscripciones con el filtro aplicado</td>
                 </tr>
             }
         </ng-template>

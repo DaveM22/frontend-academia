@@ -17,27 +17,46 @@ import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { ToolbarModule } from 'primeng/toolbar';
+import { PersonaPageState } from '../../../store/states/page/persona.state';
+import { Alumno } from '../../../entities/alumno';
+import { MateriaFilterComponent } from '../../filters/materia-filter/materia-filter.component';
+import { Materia } from '../../../entities/materia';
 
 @Component({
   selector: 'app-cursos-modal',
   standalone: true,
-  imports: [EspecialidadFilterComponent, PlanFilterComponent, ToolbarModule,TableModule, DialogModule, ButtonModule, CommonModule],
+  imports: [EspecialidadFilterComponent, PlanFilterComponent, ToolbarModule,TableModule, DialogModule, ButtonModule, CommonModule,  MateriaFilterComponent],
   templateUrl: './cursos-modal.component.html',
   styleUrl: './cursos-modal.component.scss'
 })
 export class CursosModalComponent implements OnInit {
   cursos$:Observable<Curso[]> = this.store.select(CursoState.getCursos);
-
+  persona$:Observable<Alumno | null> = this.store.select(PersonaPageState.getAlumnoSelected);
+  selectedMateriaInFilter$:Observable<Materia | null> = this.store.select(AppPageState.getSelectedMateriaInFilter)
   showModal$:Observable<boolean> = this.store.select(AppPageState.getShowModalCursos);
   especialidadSelected$:Observable<Especialidad | null> = this.store.select(AppPageState.getSelectedEspecialidad);
-
+  planId!:string;
   curso!:Curso[]
 
   constructor(private store:Store){}
   ngOnInit(): void {
-    let filter = new CursoFilter();
-    filter.planId = '';
-    // this.store.dispatch(new GetCursoAction(filter));
+
+
+
+    this.persona$.subscribe(x => {
+      if(x !== null){
+        this.planId = x.plan._id;
+/*        */
+      }
+    })
+
+    this.selectedMateriaInFilter$.subscribe(x => {
+      if(x !== null){
+        let filter = new CursoFilter();
+        filter.materiaId = x._id
+        this.store.dispatch(new GetCursoAction(filter));
+      }
+    })
   }
 
 

@@ -31,9 +31,14 @@ export class MateriaState {
     return state.materias;
   }
 
+  @Selector()
+  static getLoading(state: MateriaModelState){
+    return state.loading;
+  }
+
   @Action(GetMateriasAction)
   async getMateriasAction(ctx: StateContext<MateriaModelState>, action: GetMateriasAction) {
-    ctx.patchState({ error: false })
+    ctx.patchState({ error: false, loading:true })
     try {
       const response = await lastValueFrom(this.service.getMateria(action.filter));
       ctx.patchState({
@@ -44,6 +49,11 @@ export class MateriaState {
     }
     catch (error) {
       ctx.patchState({ error: true })
+    }
+    finally{
+      ctx.patchState({
+        loading:false
+      })
     }
   }
 

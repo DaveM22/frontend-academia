@@ -11,11 +11,8 @@ import { environment } from '../../environments/environment';
 })
 export class PlanService {
 
-  constructor(private http:HttpClient) { 
-    
-  }
+  constructor(private http:HttpClient) { }
 
-  
   public getPlanes(filter:PlanFilter) : Observable<Plan[]>{
     let params = new HttpParams();
     params = params.set('mostrarEspecialidad', filter.mostrarEspecialidad)
@@ -54,6 +51,10 @@ export class PlanService {
 
   public putPlan(plan:PlanDto){
     return this.http.put<Plan>(`${environment.apiUrl}/planes/${plan._id}`, plan)
+  }
+
+  public delete(id:string){
+    return this.http.delete(`${environment.apiUrl}/planes/${id}`)
   }
 
   public generateReport(planId:string){

@@ -12,26 +12,39 @@ import { Store } from '@ngxs/store';
 import { DocenteCursoState } from '../../store/states/api/docente-curso.state';
 import { DocenteCurso } from '../../entities/docente-curso';
 import { ActivatedRoute, Router } from '@angular/router';
-import { GetDocenteCursoAction } from '../../store/actions/api/docente-curso.action';
+import { DeleteDocenteCursoAction, GetDocenteCursoAction } from '../../store/actions/api/docente-curso.action';
 import { DocenteCursoFilter } from '../../entities/filter';
 import { CursoState } from '../../store/states/api/curso.state';
 import { CursoPageState } from '../../store/states/page/curso.state';
 import { GetByIdCursoAction } from '../../store/actions/api/curso.action';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { AppPageState } from '../../store/states/page/app.state';
+import { ShowModalConfirmationAction } from '../../store/actions/pages/app.action';
 
 @Component({
   selector: 'app-docentes-cursos',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, IconFieldModule, InputIconModule, MessagesModule, InputTextModule],
+  imports: [CommonModule, TableModule, ButtonModule, IconFieldModule, InputIconModule, MessagesModule, InputTextModule, ConfirmDialogModule],
   templateUrl: './docentes-cursos.component.html',
-  styleUrl: './docentes-cursos.component.scss'
+  styleUrl: './docentes-cursos.component.scss',
+  providers:[ConfirmationService]
 })
 export class DocentesCursosComponent implements OnInit {
   docenteCursos$: Observable<DocenteCurso[]> = this.store.select(DocenteCursoState.getDocentesCursos);
+  showConfirmation$:Observable<boolean> = this.store.select(AppPageState.showModalConfirmation)
   curso$:Observable<Curso | null> = this.store.select(CursoPageState.getCursoSelected);
+  docenteCursoSelected!:DocenteCurso
   materiaId:string='';
   cursoId:string='';
   curso!:Curso;
-  constructor(private store:Store, private activateRoute:ActivatedRoute, private router:Router){}
+  constructor(
+    private store:Store, 
+    private activateRoute:ActivatedRoute, 
+    private router:Router, 
+    private confirmationService:ConfirmationService,
+    private messageService:MessageService)
+    {}
 
   ngOnInit(): void {  
     this.curso$.subscribe(x => {
@@ -46,10 +59,42 @@ export class DocentesCursosComponent implements OnInit {
     filter.cursoId = this.cursoId
     this.store.dispatch(new GetByIdCursoAction(this.cursoId));
     this.store.dispatch(new GetDocenteCursoAction(filter));
+
+    this.showConfirmation$.subscribe(x => {
+      if(x  && this.docenteCursoSelected){
+        this.confirm();
+      }
+    })
   }
 
   redirectNewDocenteCurso(){
     this.router.navigate([`asignacion-docentes/${this.materiaId}/${this.cursoId}/docentes/nuevo`])
+  }
+
+  confirm() {
+    this.confirmationService.confirm({
+      header: 'Borrar curso',
+      message: `¿Desea eliminar la sigueinte asignación de profesor?`,
+      acceptIcon: 'pi pi-check mr-2',
+      rejectIcon: 'pi pi-times mr-2',
+      rejectButtonStyleClass: 'p-button-sm',
+      acceptButtonStyleClass: 'p-button-outlined p-button-sm',
+      accept: () => {
+        this.store.dispatch(new DeleteDocenteCursoAction(this.docenteCursoSelected._id))
+          .subscribe(() => {
+            this.store.dispatch(new ShowModalConfirmationAction(false))
+            this.messageService.add({ severity: 'success', summary: 'Borrar asignación de profesor a curso', detail: `Se ha borrado la asignación al curso` });
+          })
+      },
+      reject: () => {
+        this.store.dispatch(new ShowModalConfirmationAction(false))
+      }
+    });
+  }
+
+  modalConfirmar(docenteCurso:DocenteCurso){
+    this.docenteCursoSelected = docenteCurso;
+    this.store.dispatch(new ShowModalConfirmationAction(true));
   }
 
 

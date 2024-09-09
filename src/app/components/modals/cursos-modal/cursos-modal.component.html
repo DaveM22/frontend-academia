@@ -3,8 +3,11 @@
     <p-toolbar styleClass="mb-4 gap-2">
         <ng-template pTemplate="left">
             <div class="sm:flex justify-content-center">
-                <app-especialidad-filter></app-especialidad-filter>
-                <app-plan-filter></app-plan-filter>
+                <div class="field w-full">
+                    <label>Materias:</label>
+                    <app-materia-filter></app-materia-filter>
+                </div>
+ 
             </div>
         </ng-template>
 

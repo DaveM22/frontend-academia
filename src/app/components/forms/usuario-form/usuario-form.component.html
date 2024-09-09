@@ -7,7 +7,7 @@
             <div class="flex overflow-hidden justify-content-center">
                 <div class="col-12 lg:col-4">
                     <div class="field">
-                        <label for="nombreUsuario">Usuario</label>
+                        <label for="nombreUsuario">Usuario:</label>
                         <input id="nombreUsuario" pInputText formControlName="nombreUsuario" type="text" class="w-full">
                         @if(form.get('nombreUsuario')?.invalid && form.get('nombreUsuario')?.dirty){
                         <small class="p-error block">
@@ -16,7 +16,7 @@
                         }
                     </div>
                     <div class="field">
-                        <label for="nombreYapellido">Nombre y apellido</label>
+                        <label for="nombreYapellido">Nombre y apellido:</label>
                         <input id="nombreYapellido" pInputText formControlName="nombreYapellido" type="text" class="w-full">
                         @if(form.get('descripcion')?.invalid && form.get('nombreYapellido')?.dirty){
                         <small class="p-error block">
@@ -25,7 +25,7 @@
                         }
                     </div>
                     <div class="field">
-                        <label for="nombreYapellido">Clave</label>
+                        <label for="nombreYapellido">Clave:</label>
                         <p-password formControlName="value" [feedback]="false" class="w-full" styleClass="w-full" />
                         @if(form.get('descripcion')?.invalid && form.get('clave')?.dirty){
                         <small class="p-error block">

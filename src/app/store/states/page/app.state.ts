@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { AppModelState } from "../../modelstate/pages/app.modelstate";
-import { ClearDocenteInModal, ClearSelectedComisionInModal, ClearSelectedCursoInModal, ClearSelectedEspecialidadFilter, ClearSelectedMateriaInModal, ClearSelectedPlanFilter, ClearSelectedPlanInModal, SelectedComisionInModal, SelectedCursoInModal, SelectedDocenteInModal, SelectedEspecialidadFilter, SelectedMateriaForCurso as SelectedMateriaInModal, SelectedPlanFilter, SelectedPlanInModal, SetPersonaId, ShowComisionesModal, ShowCursoModal, ShowDocenteModal, ShowMateriaModal, ShowModalConfirmationAction, ShowPlanModal, ToggleMenuAction } from "../../actions/pages/app.action";
+import { ClearDocenteInModal, ClearSelectedComisionInModal, ClearSelectedCursoInModal, ClearSelectedEspecialidadFilter, ClearSelectedMateriaInFilter, ClearSelectedMateriaInModal, ClearSelectedPlanFilter, ClearSelectedPlanInModal, SelectedComisionInModal, SelectedCursoInModal, SelectedDocenteInModal, SelectedEspecialidadFilter, SelectedMateriaInFilter, SelectedMateriaForCurso as SelectedMateriaInModal, SelectedPlanFilter, SelectedPlanInModal, SetPersonaId, ShowComisionesModal, ShowCursoModal, ShowDocenteModal, ShowMateriaModal, ShowModalConfirmationAction, ShowPlanModal, ToggleMenuAction } from "../../actions/pages/app.action";
 import { ClearSelectedCursoAction } from "../../actions/pages/curso.action";
 
 @State<AppModelState>({
@@ -11,6 +11,7 @@ import { ClearSelectedCursoAction } from "../../actions/pages/curso.action";
         personId:'',
         toggle: false,
         selectedEspecialidadFilter: null,
+        selectedMateriaFilter:null,
         selectedPlanInModal: null,
         selectedMateriaInModal: null,
         selectedComisionInModal: null,
@@ -41,6 +42,11 @@ export class AppPageState {
     @Selector()
     static getSelectedPlanInFilter(state: AppModelState){
         return state.selectedPlanFilter;
+    }
+
+    @Selector()
+    static getSelectedMateriaInFilter(state: AppModelState){
+        return state.selectedMateriaFilter;
     }
 
     @Selector()
@@ -154,6 +160,23 @@ export class AppPageState {
             selectedPlanFilter: null
         });
     }
+
+    @Action(SelectedMateriaInFilter)
+    selectedMateriaFilter(ctx: StateContext<AppModelState>, action: SelectedMateriaInFilter) {
+        ctx.patchState({
+            selectedMateriaFilter: action.materia
+        });
+    }
+
+    @Action(ClearSelectedMateriaInFilter)
+    clearMateriaFilter(ctx: StateContext<AppModelState>, action: ClearSelectedMateriaInFilter) {
+        ctx.patchState({
+            selectedMateriaFilter: null
+        });
+    }
+
+
+
 
     @Action(SelectedPlanInModal)
     selectedPlanInModal(ctx: StateContext<AppModelState>, action: SelectedPlanInModal) {

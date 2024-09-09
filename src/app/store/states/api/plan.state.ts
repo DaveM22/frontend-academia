@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Action, Select, Selector, State, StateContext } from "@ngxs/store";
 import { PlanModelState } from "../../modelstate/api/plan.modelstate";
-import { ClearPlanes, GenerateReport, GetByIdPlanAction, GetByIdPlanForCursoAction, GetPlanAction, GetPlanByIdWithMateriasAction, GetPlanesByEspecialidad, PostPlanAction, PutPlanAction } from "../../actions/api/planes.action";
+import { ClearPlanes, DeletePlanAction, GenerateReport, GetByIdPlanAction, GetByIdPlanForCursoAction, GetPlanAction, GetPlanByIdWithMateriasAction, GetPlanesByEspecialidad, PostPlanAction, PutPlanAction } from "../../actions/api/planes.action";
 import { lastValueFrom } from "rxjs";
 import { PlanService } from "../../../services/plan.service";
 import { ErrorStateHandler } from "../../../util/ErrorStateHandler";
@@ -157,6 +157,24 @@ export class PlanState{
         ctx.patchState({
             planes: response,
             error:false
+        })
+      }
+      catch(error:any){
+        ErrorStateHandler.handleError(error, ctx);
+      }
+      finally{
+        ctx.patchState({loading:false})
+      }
+    }
+
+    @Action(DeletePlanAction)
+    async deletePlan(ctx: StateContext<PlanModelState>, action:DeletePlanAction){
+      ctx.patchState({loading:true, error:false});
+      try{
+        const response = await lastValueFrom(this.service.delete(action.id));
+        ctx.patchState({
+          planes: ctx.getState().planes.filter(x => x._id !== action.id)
+          
         })
       }
       catch(error:any){

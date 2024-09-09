@@ -9,7 +9,7 @@
                         <input id="descripcion" pInputText formControlName="nombre" type="text" class="w-full">
                         @if(form.get('nombre')?.invalid && form.get('nombre')?.dirty){
                         <small class="p-error block">
-                            El campo descripcion es requerido
+                            El campo nombre es requerido
                         </small>
                         }
                     </div>
@@ -18,7 +18,7 @@
                         <input id="descripcion" pInputText formControlName="apellido" type="text" class="w-full">
                         @if(form.get('apellido')?.invalid && form.get('apellido')?.dirty){
                         <small class="p-error block">
-                            El campo descripcion es requerido
+                            El campo apellido es requerido
                         </small>
                         }
                     </div>
@@ -30,7 +30,7 @@
                         <input id="descripcion" pInputText formControlName="direccion" type="text" class="w-full">
                         @if(form.get('direccion')?.invalid && form.get('direccion')?.dirty){
                         <small class="p-error block">
-                            El campo descripcion es requerido
+                            El campo dirección es requerido
                         </small>
                         }
                     </div>
@@ -39,7 +39,7 @@
                         <input id="descripcion" pInputText formControlName="email" type="text" class="w-full">
                         @if(form.get('email')?.invalid && form.get('email')?.dirty){
                         <small class="p-error block">
-                            El campo descripcion es requerido
+                            El campo email es requerido
                         </small>
                         }
                     </div>
@@ -52,18 +52,18 @@
                         <input id="descripcion" pInputText formControlName="telefono" type="text" class="w-full">
                         @if(form.get('telefono')?.invalid && form.get('telefono')?.dirty){
                         <small class="p-error block">
-                            El campo descripcion es requerido
+                            El campo teléfono es requerido
                         </small>
                         }
                     </div>
                     <div class="field col-12 md:col-4 lg:col-3 xl:col-3">
                         <label for="descripcion">Fecha nacimiento:</label>
     
-                        <p-inputMask mask="99/99/9999" placeholder="99/99/9999" slotChar="mm/dd/yyyy" styleClass="w-full"
+                        <p-inputMask mask="99/99/9999" placeholder="dd/mm/aaaa" slotChar="dd/mm/aaaa" styleClass="w-full"
                             formControlName="fechaNacimiento" />
                         @if(form.get('fechaNacimiento')?.invalid && form.get('fechaNacimiento')?.dirty){
                         <small class="p-error block">
-                            El campo descripcion es requerido
+                            El campo fecha nacimiento es requerido
                         </small>
         
                         }
@@ -72,7 +72,7 @@
     
                 <div class="formgrid grid justify-content-center">
                     <div class="field col-12 md:col-8 lg:col-6 xl:col-3">
-                        <label>Plan</label>
+                        <label>Plan:</label>
                         <div class="field grid">
                             <div class="col-12 sm:col-12 md:col-9 lg:col-8">
                                 <input type="text" pInputText placeholder="Seleccione un plan" class="form-disabled w-full sm:w-full" 
@@ -93,7 +93,7 @@
         </div>
     
         <div class="flex  align-items-center justify-content-center font-bold text-white border-round gap-3">
-            <button type="submit" pButton label="Guardar" icon="pi pi-check" class="p-button-success w-full md:w-3 lg:w-2"></button>
+            <button type="submit" pButton label="Guardar" icon="pi pi-check" class="p-button-success w-full md:w-3 lg:w-2" [disabled]="form.invalid"></button>
             <button type="button" pButton label="Cancelar" icon="pi pi-times" class="p-button-danger w-full md:w-3 lg:w-2" (click)="redirectPersona()"></button>
         </div>
     </form>

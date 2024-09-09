@@ -1,0 +1,14 @@
+
+<p-dropdown 
+styleClass="w-full"
+[options]="(materias$ | async)!" 
+[(ngModel)]="materia"
+[checkmark]="true" 
+[loading]="(loading$ | async)"
+optionLabel="descripcion" 
+[showClear]="true" 
+placeholder="Seleccione una materia"
+(onChange)="onChangeEspecialidad()"
+(onClear)="onClear()"
+appendTo="body" />
+

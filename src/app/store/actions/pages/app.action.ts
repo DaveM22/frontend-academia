@@ -116,3 +116,12 @@ export class SelectedCursoInModal{
 export class ClearSelectedCursoInModal{
     static type = "[Page] Clear curso selected";
 }
+
+export class SelectedMateriaInFilter{
+    static type = "[Page] Materia selected";
+    constructor(public materia:Materia){}
+}
+
+export class ClearSelectedMateriaInFilter{
+    static type = "[Page] Clear materia selected";
+}

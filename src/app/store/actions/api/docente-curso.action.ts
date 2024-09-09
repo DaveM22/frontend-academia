@@ -10,3 +10,8 @@ export class PostDocenteCursoAction{
     static type = "[DocenteCurso API] post docente cursos";
     constructor(public docenteCurso:DocenteCursoDto){}
 }
+
+export class DeleteDocenteCursoAction{
+    static type = "[DocenteCurso API] delete docente cursos";
+    constructor(public id:string){}
+}

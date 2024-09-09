@@ -1,19 +1,27 @@
-@if (error$ | async)
-{
-<p-messages severity="error">
-    <ng-template pTemplate>
-
-        <div class="ml-2">{{(errorMessage$ | async)}}</div>
-    </ng-template>
-</p-messages>
-
-}
-
-<p-table [value]="(comisiones$ | async)!" [loading]="(loading$ | async)"
-    styleClass="p-datatable-gridlines p-datatable-striped" responsiveLayout="stack"
-    [breakpoint]="'960px'" [paginator]="true" [scrollable]="true" scrollHeight="flex" [rows]="5">
+<p-table #dt2 [value]="(comisiones$ | async)!" [loading]="(loading$ | async)" [globalFilterFields]="['descripcion']"
+    styleClass="p-datatable-gridlines p-datatable-striped" responsiveLayout="stack" [breakpoint]="'960px'"
+    [paginator]="true" [scrollable]="true" scrollHeight="flex" [rows]="5">
     <ng-template pTemplate="caption">
-        <div class="flex align-items-center lg:justify-content-end justify-content-center">
+        @if (error$ | async)
+        {
+        <p-messages severity="error">
+            <ng-template pTemplate>
+
+                <div class="ml-2">{{(errorMessage$ | async)}}</div>
+            </ng-template>
+        </p-messages>
+
+        }
+        <div
+            class="col-12 flex flex-column sm:flex-column lg:flex-row align-items-center lg:justify-content-between justify-content-center">
+
+            <p-iconField iconPosition="left" class="mb-4 lg:mb-0">
+                <p-inputIcon>
+                    <i class="pi pi-search"></i>
+                </p-inputIcon>
+                <input pInputText type="text" (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
+                    placeholder="Buscar comisión" />
+            </p-iconField>
             <p-button label="Nueva comisión" severity="primary" (onClick)="redirectNuevaComision()"></p-button>
         </div>
     </ng-template>
@@ -34,7 +42,7 @@
                 <div class="flex gap-2 justify-content-center">
                     <p-button size="small" label="Editar" severity="primary" class="mr-20"
                         (onClick)="redirectEditarComision(comision._id)" />
-                    <p-button size="small" label="Borrar" severity="danger"  (onClick)="modalConfirmar(comision)"/>
+                    <p-button size="small" label="Borrar" severity="danger" (onClick)="modalConfirmar(comision)" />
                     <!--                         -->
                 </div>
             </td>

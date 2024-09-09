@@ -5,7 +5,7 @@
             <div class="flex overflow-hidden justify-content-center">
                 <div class="col-12 lg:col-4">
                     <div class="field">
-                        <label for="descripcion">Descripcion</label>
+                        <label for="descripcion">Descripcion:</label>
                         <input id="firstname1" pInputText formControlName="descripcion" type="text"
                             class="w-full">
                         @if(form.get('descripcion')?.invalid && form.get('descripcion')?.dirty){
@@ -18,7 +18,7 @@
                         </small>
                     </div>
                     <div class="field">
-                        <label>Especialidad</label>
+                        <label>Especialidad:</label>
                         <p-dropdown [options]="(especialidades$ | async)!" formControlName="especialidadId" dataKey="_id"
                         optionValue="_id" appendTo="body"
                             optionLabel="descripcion" [filter]="true" filterBy="descripcion" styleClass="w-full"

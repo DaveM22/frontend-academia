@@ -11,13 +11,14 @@ import { PersonaState } from '../../store/states/api/persona.state';
 import { GetAlumnoByIdAction, GetAlumnosAction } from '../../store/actions/api/persona.action';
 import { MessagesModule } from 'primeng/messages';
 import { InputTextModule } from 'primeng/inputtext';
-import { Route, Router } from '@angular/router';
+import { Route, Router, RouterModule } from '@angular/router';
 import { EspecialidadFilterComponent } from "../../components/filters/especialidad-filter/especialidad-filter.component";
+import { PanelModule } from 'primeng/panel';
 
 @Component({
   selector: 'app-inscripcion-alumno',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, IconFieldModule, InputIconModule, MessagesModule, InputTextModule, EspecialidadFilterComponent],
+  imports: [CommonModule, PanelModule, RouterModule],
   templateUrl: './inscripcion-alumno.component.html',
   styleUrl: './inscripcion-alumno.component.scss'
 })

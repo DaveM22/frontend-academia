@@ -35,6 +35,7 @@ export class MateriasAsignacionComponent {
   materias$:Observable<Materia[]> = this.store.select(MateriaState.getMaterias);
   disablePlanDropDown:boolean = true;
   messages: Messages[] | undefined;
+  materias!: Materia[];
 
 
   constructor(private store:Store, private route:Router){}
@@ -53,14 +54,22 @@ export class MateriasAsignacionComponent {
       }
     })
 
+    this.materias$.subscribe(x => {
+      if(x){
+        this.materias = x;
+      }
+    })
 
 
 
     this.planSelected$.subscribe(x => {
-      if(x !== null){
+      if(x){
         let filter = new MateriaFilter();
         filter.planId = x._id;
         this.store.dispatch(new GetMateriasAction(filter))
+      }
+      else{
+        this.materias = [];
       }
     })
   }

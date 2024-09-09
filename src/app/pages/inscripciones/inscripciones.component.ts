@@ -49,7 +49,11 @@ export class InscripcionesComponent implements OnInit  {
   }
 
   redirectToNuevaInscripcion(){
-    this.route.navigate([`inscripciones/${this.alumno._id}/nuevo`]);
+    this.route.navigate([`inscripciones/alumnos/${this.alumno._id}/nuevo`]);
+  }
+
+  redirectToInscripcionesalumnos(){
+    this.route.navigate([`inscripciones/alumnos/lista`]);
   }
 
   redirectActualizarInscripcion(inscripcionId:string){

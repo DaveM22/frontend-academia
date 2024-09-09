@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { DocenteCursoModelState } from "../../modelstate/api/docente-curso.modelstate";
-import { GetDocenteCursoAction, PostDocenteCursoAction  } from "../../actions/api/docente-curso.action";
+import { DeleteDocenteCursoAction, GetDocenteCursoAction, PostDocenteCursoAction  } from "../../actions/api/docente-curso.action";
 import { lastValueFrom } from "rxjs";
 import { DocenteCursoService } from "../../../services/docente-curso.service";
 
@@ -62,6 +62,24 @@ export class DocenteCursoState {
             const list = ctx.getState().docentes_cursos;
             ctx.patchState({
               docentes_cursos: [...list,response]
+            })
+        }
+        catch(error){
+            ctx.dispatch({error:true})
+        }
+        finally{
+            ctx.patchState({
+                loading:false
+            })
+        }
+    }
+
+    @Action(DeleteDocenteCursoAction)
+    async deleteDocenteCurso(ctx:StateContext<DocenteCursoModelState>, action:DeleteDocenteCursoAction){
+        try{
+            await lastValueFrom(this.service.delete(action.id))
+            ctx.patchState({
+              docentes_cursos: ctx.getState().docentes_cursos.filter(x => x._id !== action.id)              
             })
         }
         catch(error){

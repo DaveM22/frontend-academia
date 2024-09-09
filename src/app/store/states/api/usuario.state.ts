@@ -29,6 +29,11 @@ export class UsuarioState{
     static getError(state: UsuarioModelState){
         return state.error;
     }
+
+    @Selector()
+    static getErrorMessage(state: UsuarioModelState){
+        return state.errorMessage;
+    }
     
     @Selector()
     static getUsuarios(state: UsuarioModelState){

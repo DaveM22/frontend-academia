@@ -4,7 +4,7 @@
             <div class="flex justify-content-center">
                 <div class="col-12 md:col-8 lg:col-6">
                     <div class="field">
-                        <label for="descripcion">Descripcion</label>
+                        <label for="descripcion">Descripcion:</label>
                         <input id="firstname1" pInputText formControlName="descripcion" type="text"
                             class="w-full">
                         @if(form.get('descripcion')?.invalid && form.get('descripcion')?.dirty){
@@ -15,7 +15,7 @@
                     </div>
 
                     <div class="field">
-                        <label for="anioCalendario">Año calendario</label>
+                        <label for="anioCalendario">Año calendario:</label>
                         <p-inputNumber inputId="integeronly" formControlName="anioEspecialidad" class="w-full" inputStyleClass="w-full" styleClass="w-full md:w-full lg:w-auto"    />
                         @if(form.get('anioEspecialidad')?.invalid && form.get('anioEspecialidad')?.dirty){
                         <small class="p-error block">

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Plan } from '../../../entities/plan';
 import { PlanState } from '../../../store/states/api/plan.state';
 import { Observable } from 'rxjs';
@@ -16,7 +16,7 @@ import { DropdownModule } from 'primeng/dropdown';
   templateUrl: './plan-filter.component.html',
   styleUrl: './plan-filter.component.scss'
 })
-export class PlanFilterComponent  {
+export class PlanFilterComponent implements OnDestroy  {
   @Input() disable: boolean = false;
   planes$:Observable<Plan[]> = this.store.select(PlanState.getPlanes);
   loading$:Observable<boolean> = this.store.select(PlanState.getLoading);
@@ -25,12 +25,16 @@ export class PlanFilterComponent  {
   constructor(private store:Store){}
 
 
+
+  ngOnDestroy(): void {
+    this.store.dispatch(new ClearPlanes());
+  }
+
   onChangeEspecialidad(){
     this.store.dispatch(new SelectedPlanFilter(this.plan));
   }
 
   onClear(){
     this.store.dispatch(new ClearSelectedPlanFilter);
-    this.store.dispatch(new ClearPlanes);
   }
 }

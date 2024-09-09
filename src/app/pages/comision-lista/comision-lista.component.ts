@@ -16,11 +16,14 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ShowModalConfirmationAction } from '../../store/actions/pages/app.action';
 import { AppPageState } from '../../store/states/page/app.state';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { InputTextModule } from 'primeng/inputtext';
 
 @Component({
   selector: 'app-comision-lista',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, MessagesModule, PanelModule, ToastModule, ConfirmDialogModule],
+  imports: [CommonModule, TableModule, ButtonModule, MessagesModule, PanelModule, ToastModule, ConfirmDialogModule,  IconFieldModule, InputTextModule, InputIconModule],
   templateUrl: './comision-lista.component.html',
   styleUrl: './comision-lista.component.scss',
   providers:[ConfirmationService]

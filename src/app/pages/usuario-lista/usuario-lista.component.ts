@@ -28,7 +28,7 @@ export class UsuarioListaComponent implements OnInit {
   usuarios$:Observable<Usuario[]> = this.store.select(UsuarioState.getUsuarios) 
   loading$:Observable<boolean> = this.store.select(UsuarioState.getLoading);
   error$:Observable<boolean> = this.store.select(UsuarioState.getError);
-
+  errorMessage$:Observable<string> = this.store.select(UsuarioState.getErrorMessage)
   constructor(private store:Store, private router:Router){}
 
 

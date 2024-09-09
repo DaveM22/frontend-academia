@@ -99,7 +99,9 @@ export class InscripcionFormComponent implements OnInit {
 
   onSubmit(){
     this.alumnoInscripcionDto = this.form.value
-    this.store.dispatch(new PostAlumnoInscripcion(this.alumnoInscripcionDto));
+    this.store.dispatch(new PostAlumnoInscripcion(this.alumnoInscripcionDto)).subscribe(() => {
+      this.router.navigate([`/inscripciones/alumnos/${this.alumnoId}`]);
+    });
   }
 
   toggleModalCursos(){
@@ -107,7 +109,7 @@ export class InscripcionFormComponent implements OnInit {
   }
 
   redirectInscripcionesAlumno(){
-    this.router.navigate([`/inscripciones/${this.alumnoId}`]);
+    this.router.navigate([`/inscripciones/alumnos/${this.alumnoId}`]);
   }
 
 
