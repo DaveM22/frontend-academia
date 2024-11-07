@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { ErrorHandler, Injectable } from "@angular/core";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { PersonaModelState } from "../../modelstate/api/persona.modelstate";
 import { PersonaService } from "../../../services/persona.service";
@@ -6,6 +6,7 @@ import { DeleteAlumnoAction, DeleteProfesorAction, GetAlumnoByIdAction, GetAlumn
 import { lastValueFrom } from "rxjs";
 import { AsignSelectedAlumno, AsignSelectedPersona, AsignSelectedProfesor } from "../../actions/pages/persona.action";
 import { MessageService } from "primeng/api";
+import { ErrorStateHandler } from "../../../util/ErrorStateHandler";
 
 @State<PersonaModelState>({
     name: 'personas',
@@ -159,10 +160,15 @@ export class PersonaState {
 
     @Action(DeleteAlumnoAction)
     async deleteAlumno(ctx: StateContext<PersonaModelState>, action: DeleteAlumnoAction) {
+       try{
         await lastValueFrom(this.service.deleteAlumno(action.id));
         ctx.patchState({
             alumnos: ctx.getState().alumnos.filter(x => x._id !== action.id)
         })
+       }
+       catch(error){
+        ErrorStateHandler.handleError(error, ctx);
+       }
     }
 
     @Action(DeleteProfesorAction)

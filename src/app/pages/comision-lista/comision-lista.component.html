@@ -13,16 +13,16 @@
 
         }
         <div
-            class="col-12 flex flex-column sm:flex-column lg:flex-row align-items-center lg:justify-content-between justify-content-center">
+        class="col-12 flex flex-column sm:flex-column w-full  lg:flex-row align-items-center lg:justify-content-between justify-content-center">
 
-            <p-iconField iconPosition="left" class="mb-4 lg:mb-0">
+            <p-iconField iconPosition="left" class="mb-4 lg:mb-0 w-full">
                 <p-inputIcon>
                     <i class="pi pi-search"></i>
                 </p-inputIcon>
-                <input pInputText type="text" (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
+                <input pInputText type="text" class="w-full lg:w-4" (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
                     placeholder="Buscar comisión" />
             </p-iconField>
-            <p-button label="Nueva comisión" severity="primary" (onClick)="redirectNuevaComision()"></p-button>
+            <p-button label="Nueva comisión" severity="primary" class="w-full lg:w-2" styleClass="w-full" (onClick)="redirectNuevaComision()"></p-button>
         </div>
     </ng-template>
     <ng-template pTemplate="header">

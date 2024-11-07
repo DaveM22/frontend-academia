@@ -30,9 +30,9 @@
     </ng-template>
     <ng-template pTemplate="header">
         <tr>
+            <th>Legajo</th>
             <th>Nombre</th>
             <th>Apellido</th>
-            <th>Legajo</th>
             <th>Dirección</th>
             <th>Telefono</th>
             <th>Fecha nacimiento</th>
@@ -43,9 +43,9 @@
     </ng-template>
     <ng-template pTemplate="body" let-alumno>
         <tr>
+            <td><span class="p-column-title">Legajo</span>{{alumno.legajo}}</td>
             <td><span class="p-column-title">Nombre</span>{{alumno.nombre}}</td>
             <td><span class="p-column-title">Apellido</span>{{alumno.apellido}}</td>
-            <td><span class="p-column-title">Legajo</span>{{alumno.legajo}}</td>
             <td><span class="p-column-title">Dirección</span>{{alumno.direccion}}</td>
             <td><span class="p-column-title">Telefono</span>{{alumno.telefono}}</td>
             <td><span class="p-column-title">Fecha nacimiento</span> {{ alumno.fechaNacimiento | date:'dd/MM/yyyy' }}

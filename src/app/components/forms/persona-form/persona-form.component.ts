@@ -51,6 +51,7 @@ export class PersonaFormComponent {
       nombre: new FormControl('', [Validators.required]),
       apellido: new FormControl('', [Validators.required]),
       direccion: new FormControl('', [Validators.required]),
+      legajo: new FormControl('', Validators.required),
       email: new FormControl(''),
       telefono: new FormControl(''),
       fechaNacimiento: new FormControl('', [Validators.required]),
