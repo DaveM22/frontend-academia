@@ -97,9 +97,17 @@ export class ComisionState {
         let filter = new ComisionFilter();
         filter.mostrarPlan = true;
         ctx.dispatch(new GetComision(filter));
+        ctx.patchState({
+          comisiones: ctx.getState().comisiones.filter(x => x._id !== action.id)   
+        })
       }
-      catch (error) {
+      catch (error:any) {
+        console.log(error)
         ctx.patchState({ error: true })
+        ctx.patchState({
+          error:true,
+          errorMessage: error.error.error
+        })
       }
     }
 

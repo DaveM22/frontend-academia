@@ -55,7 +55,9 @@ import { AsignSelectedAlumno, AsignSelectedPersona, AsignSelectedProfesor, Clear
     @Action(ClearSelectedPersona)
     clearPersona(ctx:StateContext<PersonaPageModelState>, action:ClearSelectedPersona){
         return ctx.patchState({
-            personaSelected: null
+            personaSelected: null,
+            alumnoSelected:null,
+            profesorSelected:null
         })
     }
 

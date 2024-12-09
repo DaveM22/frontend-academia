@@ -92,11 +92,11 @@ export class EspecialidadState{
     @Action(PutEspecialidadAction)
     async putEspecialidad(ctx: StateContext<EspecialidadModelState>, action: PutEspecialidadAction){
       const response = await lastValueFrom(this.service.putEspecialidad(action.especialdiad));
-      const state = ctx.getState();
-      const updatedEspecialidades = ctx.getState().especialidades.map(item =>
+      
+      const updatedEspecialidades = ctx.getState().especialidades.map(item => item = 
         item._id === response._id ? response : item
       );
-
+      console.log(updatedEspecialidades)
       ctx.patchState({
         especialidades:updatedEspecialidades
       })

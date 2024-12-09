@@ -24,7 +24,7 @@ import { AppPageState } from '../../store/states/page/app.state';
 @Component({
   selector: 'app-plan-lista',
   standalone: true,
-  imports: [CommonModule, ToolbarModule,ConfirmDialogModule, EspecialidadFilterComponent, PlanFilterComponent, TableModule, ButtonModule, IconFieldModule, InputIconModule, MessagesModule, InputTextModule],
+  imports: [ButtonModule, TableModule, CommonModule, MessagesModule, IconFieldModule, InputIconModule, ConfirmDialogModule, InputTextModule],
   templateUrl: './plan-lista.component.html',
   styleUrl: './plan-lista.component.scss',
   providers: [ConfirmationService]
@@ -34,9 +34,10 @@ export class PlanListaComponent implements OnInit {
   public loading$: Observable<boolean> = this.store.select(PlanState.getLoading);
   public error$: Observable<boolean> = this.store.select(PlanState.getError);
   public errorMessage$: Observable<string> = this.store.select(PlanState.getErrorMessage);
-  showConfirmation$:Observable<boolean> = this.store.select(AppPageState.showModalConfirmation)
-  public planSelected!:Plan;
+  showConfirmation$: Observable<boolean> = this.store.select(AppPageState.showModalConfirmation)
+  public planSelected!: Plan;
   public plan!: Plan;
+  error: boolean = false;
 
   constructor(
     private store: Store,
@@ -50,8 +51,9 @@ export class PlanListaComponent implements OnInit {
     let filter = new PlanFilter();
     filter.mostrarEspecialidad = true
     this.store.dispatch(new GetPlanAction(filter));
+    this.error$.subscribe(x => this.error = x);
     this.showConfirmation$.subscribe(x => {
-      if(x && this.planSelected){
+      if (x && this.planSelected) {
         this.confirm();
       }
     })
@@ -91,9 +93,12 @@ export class PlanListaComponent implements OnInit {
       accept: () => {
         this.store.dispatch(new DeletePlanAction(this.planSelected._id))
           .subscribe(() => {
-            this.store.dispatch(new ShowModalConfirmationAction(false))
-            this.messageService.add({ severity: 'success', summary: 'Borrar plan', detail: `Se ha borrado el plan: ${this.planSelected.descripcion}` });
+            if (!this.error) {
+              this.store.dispatch(new ShowModalConfirmationAction(false))
+              this.messageService.add({ severity: 'success', summary: 'Borrar plan', detail: `Se ha borrado el plan: ${this.planSelected.descripcion}` });
+            }
           })
+          this.store.dispatch(new ShowModalConfirmationAction(false))
       },
       reject: () => {
         this.store.dispatch(new ShowModalConfirmationAction(false))

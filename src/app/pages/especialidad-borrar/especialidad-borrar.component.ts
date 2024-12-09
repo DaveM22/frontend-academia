@@ -11,23 +11,27 @@ import { ShowModalDelete } from '../../store/actions/pages/especialidad.action';
 import { DeleteEspecialidadAction } from '../../store/actions/api/especialidad.action';
 import { EspecialidadState } from '../../store/states/api/especialidad.state';
 import { Especialidad } from '../../entities/especialidad';
+import { ShowModalConfirmationAction } from '../../store/actions/pages/app.action';
 @Component({
   selector: 'especialidad-borrar-modal',
   standalone: true,
   imports: [ConfirmDialogModule, ButtonModule,  CommonModule],
   templateUrl: './especialidad-borrar.component.html',
   styleUrl: './especialidad-borrar.component.scss',
-  providers: [ConfirmationService, MessageService]
+  providers: [ConfirmationService]
 })
 export class EspecialidadBorrarComponent implements OnInit {
   @Input() especialidad!:Especialidad
+  error$:Observable<boolean> = this.store.select(EspecialidadState.getError);
   show$:Observable<boolean> = this.store.select(EspecialidadPageState.getShowModalDelete);
-  constructor(private store:Store, private confirmationService: ConfirmationService){
-
-  }
-
+  error:boolean = false
+  constructor(private store:Store, private confirmationService: ConfirmationService, private  messageService:MessageService) {}
 
   ngOnInit(): void {
+    this.error$.subscribe(x => {
+      this.error = x;
+    })
+
     this.show$.subscribe(x => {
       if(x){
         this.confirm();
@@ -35,10 +39,7 @@ export class EspecialidadBorrarComponent implements OnInit {
     })
   }
 
-  
-
   confirm() {
-
     this.confirmationService.confirm({
       header: 'Borrar especialidad',
       message: '¿Desea eliminar la especialidad?',
@@ -58,8 +59,15 @@ export class EspecialidadBorrarComponent implements OnInit {
 }
 
 accept(){
-  this.store.dispatch(new DeleteEspecialidadAction(this.especialidad._id));
-  this.store.dispatch(new ShowModalDelete(false))
+  this.store.dispatch(new DeleteEspecialidadAction(this.especialidad._id))
+  .subscribe(() => {
+    console.log(!this.error)
+    if(!this.error){
+      this.store.dispatch(new ShowModalConfirmationAction(false))
+      this.messageService.add({ severity: 'success', summary: 'Borrar comisión', detail: `Se ha borrado la especialidad: ${this.especialidad.descripcion}` });
+    }
+    this.store.dispatch(new ShowModalDelete(false))
+  })
 }
 
 reject(){

@@ -98,4 +98,9 @@ export class DocentesCursosComponent implements OnInit {
   }
 
 
+  redirectBackToCourses(){
+    this.router.navigate([`asignacion-docentes/${this.materiaId}/seleccionar-curso`])
+  }
+
+
 }

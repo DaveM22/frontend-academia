@@ -20,6 +20,21 @@
                         severity="primary" (onClick)="selectComision(comision)"></p-button></td>
             </tr>
         </ng-template>
+        <ng-template pTemplate="emptymessage">
+            @if(comisiones){
+                @if (comisiones.length === 0) {
+                    <tr>
+                        <td class="text-center" colspan="8">No se han registrado comisiones para esta materia</td>
+                    </tr>
+                    }
+                    @else {
+                    <tr>
+                        <td class="text-center" colspan="8">No se encontraron comisiones con el filtro aplicado</td>
+                    </tr>
+                    }
+            }
+
+        </ng-template>
     </p-table>
     <ng-template pTemplate="footer">
         <button type="button" pButton icon="pi pi-times" (click)="toggleOffModal()" label="Salir"

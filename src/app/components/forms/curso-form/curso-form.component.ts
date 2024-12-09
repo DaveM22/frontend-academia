@@ -83,11 +83,11 @@ export class CursoFormComponent {
     this.curso = this.form.value
     if (this.form.value._id === null) {
       this.store.dispatch(new PostCursoAction(this.curso)).subscribe(() => {
-        this.router.navigate(["/cursos"])
+        this.router.navigate(["/cursos/lista"])
       });
     }
     else {
-      this.store.dispatch(new PutCursoAction(this.curso)).subscribe(x => this.router.navigate(["/cursos"]));
+      this.store.dispatch(new PutCursoAction(this.curso)).subscribe(x => this.router.navigate(["/cursos/lista"]));
       this.messageService.add({ severity: 'success', summary: 'Editar curso', detail: 'Se guardaron los cambios del curso' });
       this.store.dispatch(new ClearSelectedCursoAction);
     }

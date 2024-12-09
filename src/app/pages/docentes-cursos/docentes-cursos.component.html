@@ -3,9 +3,12 @@
     [rows]="5" scrollHeight="48vh" [globalFilterFields]="['nombre', 'apellido', 'direccion', 'email', 'legajo']">
     <ng-template pTemplate="caption">
         <div class="grid">
+            @if (curso) {
+                <h2 class="pt-0 col-12 flex justify-content-center"> Docentes del curso: {{curso.descripcion}}</h2>
+            }
             <div
                 class="col-12 flex flex-column sm:flex-column md:flex-row lg:flex-row align-items-center lg:justify-content-between justify-content-center">
-                <h1> Docentes del curso: {{curso.descripcion}}</h1>
+                <p-button label="Volver hacia atras" severity="primary" (onClick)="redirectBackToCourses()"></p-button>
                 <p-iconField iconPosition="left" class="mb-4 lg:mb-0">
                     <p-inputIcon>
                         <i class="pi pi-search"></i>

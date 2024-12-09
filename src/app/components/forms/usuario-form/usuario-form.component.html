@@ -26,7 +26,7 @@
                     </div>
                     <div class="field">
                         <label for="nombreYapellido">Clave:</label>
-                        <p-password formControlName="value" [feedback]="false" class="w-full" styleClass="w-full" />
+                        <p-password formControlName="clave" [feedback]="false" class="w-full" styleClass="w-full" />
                         @if(form.get('descripcion')?.invalid && form.get('clave')?.dirty){
                         <small class="p-error block">
                             El campo clave es requerido

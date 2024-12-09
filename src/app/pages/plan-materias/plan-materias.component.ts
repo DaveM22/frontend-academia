@@ -82,7 +82,7 @@ export class PlanMateriasComponent implements OnInit {
   confirm() {
 
     this.confimationService.confirm({
-      header: 'Inscripción a curso',
+      header: 'Borrar materia',
       message: `'¿Desea eliminar la siguiente materia: ${this.materiaSelected!.descripcion!} ?`,
       acceptIcon: 'pi pi-check mr-2',
       rejectIcon: 'pi pi-times mr-2',

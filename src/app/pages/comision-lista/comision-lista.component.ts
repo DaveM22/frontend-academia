@@ -41,6 +41,7 @@ export class ComisionListaComponent implements OnInit {
   public Comision!:Comision;
   showConfirmation$:Observable<boolean> = this.store.select(AppPageState.showModalConfirmation)
   public comisionSelected!:Comision;
+  public error:boolean = false;
   constructor(private store:Store, private router:Router, private confirmationService:ConfirmationService,private  messageService:MessageService){
     
   }
@@ -50,6 +51,7 @@ export class ComisionListaComponent implements OnInit {
     let filters = new ComisionFilter();
     filters.mostrarPlan = true;
     this.store.dispatch(new GetComision(filters));
+    this.error$.subscribe(x => this.error = x);
     this.showConfirmation$.subscribe(x => {
       if(x  && this.comisionSelected){
         this.confirm();
@@ -76,17 +78,22 @@ export class ComisionListaComponent implements OnInit {
       message: `¿Desea eliminar la siguiente comisión: ${this.comisionSelected!.descripcion!} ?`,
       acceptIcon: 'pi pi-check mr-2',
       rejectIcon: 'pi pi-times mr-2',
+      acceptLabel:'Borrar',
+      rejectLabel:'Cancelar',
       rejectButtonStyleClass: 'p-button-sm',
       acceptButtonStyleClass: 'p-button-outlined p-button-sm',
         accept: () => {
           this.store.dispatch(new DeleteComisionAction(this.comisionSelected._id))
           .subscribe(() => {
-            this.store.dispatch(new ShowModalConfirmationAction(false))
-            this.messageService.add({ severity: 'success', summary: 'Borrar comisión', detail: `Se ha borrado la comisión: ${this.comisionSelected.descripcion}` });
+            if(!this.error){
+              this.store.dispatch(new ShowModalConfirmationAction(false))
+              this.messageService.add({ severity: 'success', summary: 'Borrar comisión', detail: `Se ha borrado la comisión: ${this.comisionSelected.descripcion}` });
+            }
+            this.store.dispatch(new ShowModalConfirmationAction(false));
           })       
         },
         reject: () => {
-          this.store.dispatch(new ShowModalConfirmationAction(false))
+          this.store.dispatch(new ShowModalConfirmationAction(false));
         }
     });
 }

@@ -14,7 +14,7 @@ import { ToastModule } from 'primeng/toast';
 import { RippleModule } from 'primeng/ripple';
 import { InputMaskModule } from 'primeng/inputmask';
 import { PlanesModalComponent } from '../../modals/planes-modal/planes-modal.component';
-import { ShowPlanModal } from '../../../store/actions/pages/app.action';
+import { ClearSelectedPlanInModal, ShowPlanModal } from '../../../store/actions/pages/app.action';
 import { Observable } from 'rxjs';
 import { PlanState } from '../../../store/states/api/plan.state';
 import { AppPageState } from '../../../store/states/page/app.state';
@@ -23,6 +23,7 @@ import { TipoPersonaEnum } from '../../../util/EnumTipoPersona';
 import { ClearSelectedPersona } from '../../../store/actions/pages/persona.action';
 import { Profesor, ProfesorDto } from '../../../entities/profesor';
 import { DatePipe } from '@angular/common';
+import { ClearSelectedPlan } from '../../../store/actions/pages/plan.action';
 @Component({
   selector: 'app-persona-form',
   standalone: true,
@@ -56,7 +57,7 @@ export class PersonaFormComponent {
       telefono: new FormControl(''),
       fechaNacimiento: new FormControl('', [Validators.required]),
       plan: new FormControl({value:'', disabled:true}, [Validators.required]),
-      planId: new FormControl('', [Validators.required])
+      planId: new FormControl({value:'', disabled:true}, [Validators.required])
 
     });
 
@@ -122,13 +123,12 @@ export class PersonaFormComponent {
   }
 
   public redirectPersona() {
-
+    this.store.dispatch(new ClearSelectedPersona);
+    this.store.dispatch(new ClearSelectedPlanInModal);
     if (this.tipoPersona === TipoPersonaEnum.ALUMNO.toString()) {
-      this.store.dispatch(new ClearSelectedPersona);
       this.router.navigate(["/alumnos/lista"])
     }
     else {
-      this.store.dispatch(new ClearSelectedPersona);
       this.router.navigate(["/profesores/lista"])
     }
 

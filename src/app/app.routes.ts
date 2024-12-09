@@ -39,7 +39,7 @@ import { ProfesorListaComponent } from './pages/profesor-lista/profesor-lista.co
 import { LoginComponent } from './pages/login/login.component';
 import { AuthGuard, authGuardFn } from '@auth0/auth0-angular';
 import { CallbackComponent } from './pages/callback/callback.component';
-import { adminGuard } from './admin.guard';
+import { adminGuard, alumnoGuard } from './admin.guard';
 import { UsuarioComponent } from './pages/usuario/usuario.component';
 import { UsuarioListaComponent } from './pages/usuario-lista/usuario-lista.component';
 import { UsuarioNuevoComponent } from './pages/usuario-nuevo/usuario-nuevo.component';
@@ -83,7 +83,11 @@ export const routes: Routes = [
                     { path: ':id/materias', pathMatch: 'full', component: PlanMateriasComponent },
                     { path: ':id/materias/nuevo', component: PlanMateriasNuevoComponent },
                     { path: 'planes/:id/materias/editar/:idMateria', component: PlanMateriasEditarComponent }
-                ]
+                ],
+                canActivate: [AuthGuard, adminGuard],
+                data: {
+                    role: 'Administrador'
+                }
             },
             {
                 path: 'comisiones',
@@ -92,7 +96,11 @@ export const routes: Routes = [
                     { path: 'lista', component: ComisionListaComponent },
                     { path: 'nuevo', component: ComisionNuevoComponent },
                     { path: 'editar/:id', component: ComisionEditarComponent }
-                ]
+                ],
+                canActivate: [AuthGuard, adminGuard],
+                data: {
+                    role: 'Administrador'
+                }
             },
             {
                 path: 'cursos',
@@ -100,7 +108,11 @@ export const routes: Routes = [
                 children: [
                     { path: 'lista', component: CursoListaComponent },
                     { path: 'nuevo', component: CursoNuevoComponent }
-                ]
+                ],
+                canActivate: [AuthGuard, adminGuard],
+                data: {
+                    role: 'Administrador'
+                }
             },
             {
                 path: 'alumnos',
@@ -109,7 +121,11 @@ export const routes: Routes = [
                     { path: 'lista', component: AlumnoListaComponent },
                     { path: 'nuevo', component: AlumnoNuevoComponent },
                     { path: 'editar/:id', component: AlumnoEditarComponent }
-                ]
+                ],
+                canActivate: [AuthGuard, adminGuard],
+                data: {
+                    role: 'Administrador'
+                }
             },
             {
                 path: 'profesores',
@@ -118,7 +134,11 @@ export const routes: Routes = [
                     { path: 'lista', pathMatch: 'full', component: ProfesorListaComponent },
                     { path: 'nuevo', pathMatch: 'full', component: ProfesorNuevoComponent },
                     { path: 'editar/:id', pathMatch: 'full', component: ProfesorEditarComponent }
-                ]
+                ],
+                canActivate: [AuthGuard, adminGuard],
+                data: {
+                    role: 'Administrador'
+                }
             },
             {
                 path: 'inscripciones/alumnos',
@@ -137,7 +157,11 @@ export const routes: Routes = [
                         path: ':id/nuevo',
                         component: InscripcionNuevoComponent
                     },
-                ]
+                ],
+                canActivate: [AuthGuard, adminGuard],
+                data: {
+                    role: 'Administrador'
+                }
             },
 
             {
@@ -150,7 +174,11 @@ export const routes: Routes = [
                 children: [
                     { path: 'cursos-asignados', component: CatedrasDocenteCursosComponent },
                     { path: 'cursos-inscripciones/:idCurso', component: CatedrasDocenteInscripcionesComponent }
-                ]
+                ],
+                canActivate: [AuthGuard, adminGuard],
+                data: {
+                    role: 'Administrador'
+                }
             },
             {
                 path: 'inscripcion-catedra',
@@ -158,7 +186,11 @@ export const routes: Routes = [
                 children: [
                     { path: 'materias-disponibles/:id', component: InscripcionMateriaAlumnoMateriasComponent },
                     { path: 'cursos-disponibles/:id', component: CursosDisponiblesComponent }
-                ]
+                ],
+                canActivate: [AuthGuard, alumnoGuard],
+                data: {
+                    role: 'Alumno'
+                }
             },
             {
                 path: 'usuarios',
@@ -178,7 +210,11 @@ export const routes: Routes = [
                     { path: ':id/seleccionar-curso', pathMatch: 'full', component: MateriaCursosComponent },
                     { path: ':idMateria/:idCurso/docentes', pathMatch: 'full', component: DocentesCursosComponent },
                     { path: ':idMateria/:idCurso/docentes/nuevo', pathMatch: 'full', component: DocentesCursosNuevoComponent }
-                ]
+                ],
+                canActivate: [AuthGuard, adminGuard],
+                data: {
+                    role: 'Administrador'
+                }
             },
         ]
     },
