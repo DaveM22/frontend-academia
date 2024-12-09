@@ -3,8 +3,35 @@
 </div> -->
 
     <div class="shadow-8">
-        <p-menubar [model]="items">
+        <p-menubar>
+            <ng-template pTemplate="start">
+                <!-- Botón personalizado que reemplaza al botón nativo -->
+                <button 
+                  class="p-button p-button-rounded p-button-text md:hidden" 
+                  (click)="toggleAction()">
+                  <i class="pi pi-bars"></i>
+                </button>
 
+              </ng-template>
+              <ng-template pTemplate="end">
+                <!-- Botón personalizado que reemplaza al botón nativo -->
+                @if ((this.auth.isAuthenticated$ | async)) {
+
+                    <button  pRipple class="relative overflow-hidden w-full p-link flex align-items-center p-2 pl-3 text-color hover:surface-200 border-noround" (click)="menu.toggle($event)">
+                        <p-avatar image="https://cdn.auth0.com/avatars/um.png" class="mr-2" shape="circle" />
+                        <span class="inline-flex flex-column">
+                            <span class="font-bold">{{name}}</span>
+                            <span class="text-sm">{{rol}}</span>
+                        </span>
+                    </button>
+                    <p-menu #menu [model]="logItems" [popup]="true" />
+        
+                }
+                @else {
+                    <p-button icon="pi pi-user" label="Ingresar" (onClick)="login()" ></p-button>
+                }
+                
+              </ng-template>
         </p-menubar>
     </div>
 
@@ -32,3 +59,7 @@
  <p-sidebar [(visible)]="toggle" (onHide)="onHide()" closeOnEscape="true">
     <sidebar></sidebar>
 </p-sidebar> -->
+
+<p-sidebar [(visible)]="toggle" (onHide)="onHide()" closeOnEscape="true">
+    <sidebar></sidebar>
+</p-sidebar>

@@ -47,19 +47,7 @@ export class NavbarComponent implements OnInit {
       this.rol = x![environment.roleLogin][0]
     })
       this.toggle$.subscribe( x => this.toggle = x);
-      this.items = [
-          {
-              label: 'Inicio',
-              icon: 'pi pi-home',
-              command:() =>this.router.navigate(["/"])
-          }
-        ]
-        this.logItems = [
-          {
-          label:'Salir',
-          icon: 'pi pi-user',
-          command:() => this.logout()
-        }]
+
     }
 
     toggleAction(){
