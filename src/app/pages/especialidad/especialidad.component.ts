@@ -17,10 +17,11 @@ import { InputTextModule } from 'primeng/inputtext';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { AsignarEspecialidadId } from '../../store/actions/pages/navigate.action';
+import { CardModule } from 'primeng/card';
 @Component({
   selector: 'app-especialidad',
   standalone: true,
-  imports: [RouterModule,CommonModule, PanelModule],
+  imports: [RouterModule,CommonModule, PanelModule, CardModule],
   templateUrl: './especialidad.component.html',
   styleUrl: './especialidad.component.scss'
 })

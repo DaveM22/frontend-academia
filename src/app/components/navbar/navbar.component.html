@@ -1,9 +1,14 @@
 <!-- <div class="card">
-    <p-menubar [model]="items">
 
-    </p-menubar>
 </div> -->
- <div class="flex align-items-center bg-primary justify-content-between font-bold text-left lg:p-1 border-round m-3 static h-full">
+
+    <div class="shadow-8">
+        <p-menubar [model]="items">
+
+        </p-menubar>
+    </div>
+
+<!--  <div class="flex align-items-center bg-primary justify-content-between font-bold text-left lg:p-1 border-round m-3 static h-full">
     <p-button icon="pi pi-bars" (onClick)="toggleAction()"   ></p-button>
     <div>
         @if ((this.auth.isAuthenticated$ | async)) {
@@ -16,8 +21,6 @@
                 </span>
             </button>
             <p-menu #menu [model]="logItems" [popup]="true" />
-<!-- 
-            <p-button icon="pi pi-user" label="Salir" (onClick)="logout()"></p-button> -->
 
         }
         @else {
@@ -28,4 +31,4 @@
 
  <p-sidebar [(visible)]="toggle" (onHide)="onHide()" closeOnEscape="true">
     <sidebar></sidebar>
-</p-sidebar>
+</p-sidebar> -->

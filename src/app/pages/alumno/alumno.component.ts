@@ -13,11 +13,12 @@ import { GetAlumnosAction } from '../../store/actions/api/persona.action';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputIconModule } from 'primeng/inputicon';
 import { IconFieldModule } from 'primeng/iconfield';
+import { CardModule } from 'primeng/card';
 
 @Component({
   selector: 'app-alumno',
   standalone: true,
-  imports: [CommonModule, PanelModule, RouterModule],
+  imports: [CommonModule, PanelModule, RouterModule, CardModule],
   templateUrl: './alumno.component.html',
   styleUrl: './alumno.component.scss'
 })
