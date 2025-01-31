@@ -2,6 +2,26 @@
     responsiveLayout="stack" [breakpoint]="'960px'" [paginator]="true" [scrollable]="true"
     [rows]="5" scrollHeight="flex" [globalFilterFields]="['nombre', 'apellido', 'direccion', 'email', 'legajo']">
     <ng-template pTemplate="caption">
+        <div class="flex align-items-center justify-content-center pb-4">
+           <h2> Seleccione un curso</h2>
+        </div>
+
+        <div class="grid">
+            <div class="col-12 flex flex-column sm:flex-column w-full  lg:flex-row align-items-center lg:justify-content-between justify-content-center">
+                <p-button label="Volver a planes" severity="primary" class="w-full mb-4 lg:mb-0 lg:w-2" styleClass="w-full"  ></p-button>
+                <p-iconField iconPosition="left" class="mb-4 lg:mb-0">
+                    <p-inputIcon>
+                        <i class="pi pi-search"></i>
+                    </p-inputIcon>
+                    <input pInputText type="text" (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
+                        placeholder="Buscar curso" />
+                </p-iconField>
+            </div>
+        </div>
+
+    </ng-template>
+<!--     <ng-template pTemplate="caption">
+        
         <div class="grid">
             <div
                 class="col-12 flex flex-column sm:flex-column md:flex-row lg:flex-row align-items-center lg:justify-content-between justify-content-center">
@@ -15,7 +35,7 @@
                 </p-iconField>
             </div>
         </div>
-    </ng-template>
+    </ng-template> -->
     <ng-template pTemplate="header">
         <tr>
             <th>Curso</th>
@@ -32,5 +52,17 @@
                 </div>
             </td>
         </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+        @if ((cursos$ | async)!.length === 0) {
+        <tr>
+            <td class="text-center" colspan="2">No se han registrado cursos para esta materia</td>
+        </tr>
+        }
+        @else {
+        <tr>
+            <td class="text-center" colspan="2">No se encontraron cursos con el filtro aplicado</td>
+        </tr>
+        }
     </ng-template>
 </p-table>

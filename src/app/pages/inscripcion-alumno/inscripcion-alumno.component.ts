@@ -14,11 +14,12 @@ import { InputTextModule } from 'primeng/inputtext';
 import { Route, Router, RouterModule } from '@angular/router';
 import { EspecialidadFilterComponent } from "../../components/filters/especialidad-filter/especialidad-filter.component";
 import { PanelModule } from 'primeng/panel';
+import { CardModule } from 'primeng/card';
 
 @Component({
   selector: 'app-inscripcion-alumno',
   standalone: true,
-  imports: [CommonModule, PanelModule, RouterModule],
+  imports: [CommonModule, PanelModule, RouterModule, CardModule],
   templateUrl: './inscripcion-alumno.component.html',
   styleUrl: './inscripcion-alumno.component.scss'
 })

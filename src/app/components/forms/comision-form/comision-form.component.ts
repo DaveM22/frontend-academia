@@ -30,7 +30,7 @@ import { MessageService } from 'primeng/api';
     InputTextModule,
     CardModule,
     ButtonModule,
-    ToastModule, RippleModule, InputNumberModule, InputGroupModule, PlanesModalComponent, CommonModule],
+    ToastModule, RippleModule, InputNumberModule, PlanesModalComponent, CommonModule],
   templateUrl: './comision-form.component.html',
   styleUrl: './comision-form.component.scss'
 })

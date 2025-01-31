@@ -1,6 +1,6 @@
 <p-table #dt2 [value]="(alumnos$ | async)!" [loading]="(loading$ | async)"
     styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0" responsiveLayout="stack" [breakpoint]="'960px'"
-    [paginator]="true" [scrollable]="true" [rows]="5" scrollHeight="flex"
+    [paginator]="true" [scrollable]="true" [rows]="5" [scrollHeight]="scrollSize"
     [globalFilterFields]="['nombre', 'apellido', 'direccion', 'email', 'legajo']">
     <ng-template pTemplate="caption">
         @if (error$ | async)

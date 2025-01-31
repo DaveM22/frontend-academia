@@ -38,6 +38,7 @@ export class PersonaFormComponent {
   planSelected$: Observable<Plan | null> = this.store.select(AppPageState.getSelectedPlanInModal);
   alumnoSelected$:Observable<Alumno | null> = this.store.select(PersonaPageState.getAlumnoSelected)
   profesorSelected$:Observable<Profesor | null> = this.store.select(PersonaPageState.getProfesorSelected)
+  personaSelected$:Observable<Persona | null> = this.store.select(PersonaPageState.getPersonaSelected)
   form!: FormGroup;
   persona!: Persona;
   alumno!:Alumno;
@@ -47,17 +48,17 @@ export class PersonaFormComponent {
   constructor(private store: Store, private router: Router, private messageService: MessageService, private datePipe:DatePipe) { }
 
   ngOnInit(): void {
+
     this.form = new FormGroup({
       _id: new FormControl(null),
       nombre: new FormControl('', [Validators.required]),
       apellido: new FormControl('', [Validators.required]),
       direccion: new FormControl('', [Validators.required]),
-      legajo: new FormControl('', Validators.required),
       email: new FormControl(''),
       telefono: new FormControl(''),
       fechaNacimiento: new FormControl('', [Validators.required]),
       plan: new FormControl({value:'', disabled:true}, [Validators.required]),
-      planId: new FormControl({value:'', disabled:true}, [Validators.required])
+      planId: new FormControl('', [Validators.required])
 
     });
 
@@ -73,6 +74,14 @@ export class PersonaFormComponent {
         this.pathValues();
       }
     })
+
+    this.personaSelected$.subscribe(x => {
+      if(x){
+        this.tipoPersona = x?.tipoPersona!;
+        console.log(this.tipoPersona)
+      }
+    })
+
     this.profesorSelected$.subscribe(x => {
       if(x !== null){
         this.profesor = x;
@@ -83,7 +92,7 @@ export class PersonaFormComponent {
   }
 
   public onSubmit() {
-    if (this.tipoPersona === TipoPersonaEnum.ALUMNO) {
+    if (this.tipoPersona === TipoPersonaEnum.ALUMNO.toString()) {
       this.personaDto = new AlumnoDto();
       this.personaDto = this.form.value
       this.submitAlumno(this.personaDto);
@@ -99,7 +108,9 @@ export class PersonaFormComponent {
     if (this.form.value._id === null) {
       this.store.dispatch(new PostAlumnoAction(alumno)).subscribe(() => {
         this.router.navigate(["/alumnos/lista"])
+        this.messageService.add({ severity: 'success', summary: 'Crear alumno', detail: 'Se ha creado el alumno' });
       });
+
     }
     else {
       this.store.dispatch(new PutAlumnoAction(alumno)).subscribe(x => this.router.navigate(["/alumnos/lista"]));
@@ -112,26 +123,26 @@ export class PersonaFormComponent {
     if (this.form.value._id === null) {
       this.store.dispatch(new PostProfesorAction(this.personaDto)).subscribe(() => {
         this.router.navigate(["/profesores/lista"])
+        this.messageService.add({ severity: 'success', summary: 'Crear profesor', detail: 'Se ha creado el profesor' });
       });
     }
     else {
       this.store.dispatch(new PutProfesorAction(profesor)).subscribe(x => this.router.navigate(["/profesores/lista"]));
-      this.messageService.add({ severity: 'success', summary: 'Editar especialidad', detail: 'Se guardaron los cambios del profesor' });
+      this.messageService.add({ severity: 'success', summary: 'Editar profesor', detail: 'Se guardaron los cambios del profesor' });
       this.store.dispatch(new ClearSelectedPersona);
     }
 
   }
 
   public redirectPersona() {
-    this.store.dispatch(new ClearSelectedPersona);
-    this.store.dispatch(new ClearSelectedPlanInModal);
     if (this.tipoPersona === TipoPersonaEnum.ALUMNO.toString()) {
       this.router.navigate(["/alumnos/lista"])
     }
     else {
       this.router.navigate(["/profesores/lista"])
     }
-
+    this.store.dispatch(new ClearSelectedPersona);
+    this.store.dispatch(new ClearSelectedPlanInModal);
   }
 
   toggleModalPlanes() {

@@ -17,6 +17,7 @@ import { AppPageState } from '../../store/states/page/app.state';
 import { ShowModalConfirmationAction } from '../../store/actions/pages/app.action';
 import { DeleteMateria } from '../../store/actions/api/materia.action';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ScreenSizeService } from '../../services/screen-size.service.service';
 
 @Component({
   selector: 'app-plan-materias',
@@ -37,12 +38,14 @@ export class PlanMateriasComponent implements OnInit {
   header!:string;
   id!:string;
   materiaSelected!:Materia;
+  scrollSize: string = "flex";
   constructor(
     private store:Store,
     private activadedRoute:ActivatedRoute, 
     private router:Router, 
     private confimationService:ConfirmationService,
-    private messageService:MessageService){
+    private messageService:MessageService,
+    private screenService:ScreenSizeService){
 
   }
   ngOnInit(): void {
@@ -63,6 +66,10 @@ export class PlanMateriasComponent implements OnInit {
         this.confirm();
       }
     })
+
+    this.screenService.screenSize$.subscribe((x:any) => {
+      this.scrollSize = x.currentTarget.innerWidth > 992 ? 'flex' : '50vh'
+   })
 
   }
 

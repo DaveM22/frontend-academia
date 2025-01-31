@@ -52,7 +52,8 @@ export class PersonaState {
     @Action(GetAlumnosAction)
     async getAlumnos(ctx: StateContext<PersonaModelState>, action: GetAlumnosAction) {
         ctx.patchState({
-            loading: true
+            loading: true,
+            error:false
         })
         try {
             const response = await lastValueFrom(this.service.getAlumnos());
@@ -75,6 +76,10 @@ export class PersonaState {
 
     @Action(GetAlumnoByIdAction)
     async GetAlumnoByIdAction(ctx: StateContext<PersonaModelState>, action: GetAlumnoByIdAction) {
+        ctx.patchState({
+            loading: true,
+            error:false
+        })
         try {
             const response = await lastValueFrom(this.service.getByIdAlumno(action.id, action.filter));
             ctx.dispatch(new AsignSelectedAlumno(response));

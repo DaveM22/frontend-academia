@@ -1,6 +1,6 @@
 <p-table #dt2 [value]="(comisiones$ | async)!" [loading]="(loading$ | async)" [globalFilterFields]="['descripcion']"
     styleClass="p-datatable-gridlines p-datatable-striped" responsiveLayout="stack" [breakpoint]="'960px'"
-    [paginator]="true" [scrollable]="true" scrollHeight="flex" [rows]="5">
+    [paginator]="true" [scrollable]="true" [scrollHeight]="scrollSize" [rows]="5">
     <ng-template pTemplate="caption">
         @if (error$ | async)
         {

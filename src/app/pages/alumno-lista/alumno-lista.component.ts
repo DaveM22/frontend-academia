@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { Alumno } from '../../entities/alumno';
-import { DeleteAlumnoAction, GetAlumnosAction } from '../../store/actions/api/persona.action';
+import { DeleteAlumnoAction, GetAlumnoByIdAction, GetAlumnosAction } from '../../store/actions/api/persona.action';
 import { PersonaState } from '../../store/states/api/persona.state';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
@@ -19,23 +19,27 @@ import { AppPageState } from '../../store/states/page/app.state';
 import { ShowModalConfirmationAction } from '../../store/actions/pages/app.action';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ScreenSizeService } from '../../services/screen-size.service.service';
+import { AlumnoFilter } from '../../entities/filter';
 
 @Component({
   selector: 'app-alumno-lista',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule,ConfirmDialogModule, EspecialidadBorrarComponent, MessagesModule, PanelModule, ToastModule, IconFieldModule, InputTextModule, InputIconModule],
+  imports: [CommonModule, TableModule, ButtonModule,ConfirmDialogModule, MessagesModule, PanelModule, ToastModule, IconFieldModule, InputTextModule, InputIconModule],
   templateUrl: './alumno-lista.component.html',
   styleUrl: './alumno-lista.component.scss',
   providers:[ConfirmationService]
 })
 export class AlumnoListaComponent implements OnInit {
+  screenSize = { width: 0, height: 0 };
   alumnos$:Observable<Alumno[]> = this.store.select(PersonaState.getAlumnos);
   loading$:Observable<boolean> = this.store.select(PersonaState.getLoading);
   error$:Observable<boolean> = this.store.select(PersonaState.getError)
   errorMessage$:Observable<string> = this.store.select(PersonaState.getErrorMessage);
   showConfirmation$:Observable<boolean> = this.store.select(AppPageState.showModalConfirmation)
   alumnoSelected!:Alumno
-  constructor(private store:Store, private router:Router, private confirmationService:ConfirmationService, private messageService:MessageService){}
+  scrollSize:string = "flex";
+  constructor(private store:Store, private router:Router, private confirmationService:ConfirmationService, private messageService:MessageService, private screenService:ScreenSizeService){}
 
 
   redirecToNuevoAlumno(){
@@ -43,16 +47,24 @@ export class AlumnoListaComponent implements OnInit {
   }
 
   redirectToEditarAlumno(id:string){
-    this.router.navigate([`/alumnos/editar/${id}`]);
+    let filter = new AlumnoFilter();
+    filter.incluirInscripciones = false;
+    this.store.dispatch(new GetAlumnoByIdAction(id, filter)).subscribe(() => {
+      this.router.navigate([`/alumnos/editar/${id}`]);
+    })
+
   }
 
   ngOnInit(): void {
     this.store.dispatch(new GetAlumnosAction);
-
     this.showConfirmation$.subscribe(x => {
       if(x  && this.alumnoSelected){
         this.confirm();
       }
+    })
+
+    this.screenService.screenSize$.subscribe((x:any) => {
+       this.scrollSize = x.currentTarget.innerWidth > 992 ? 'flex' : '50vh'
     })
   }
 
@@ -82,4 +94,5 @@ export class AlumnoListaComponent implements OnInit {
     this.alumnoSelected = alumno;
     this.store.dispatch(new ShowModalConfirmationAction(true));
   }
+
 }

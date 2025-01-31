@@ -25,6 +25,8 @@ import { authHttpInterceptorFn, AuthModule, provideAuth0 } from '@auth0/auth0-an
 import { UsuarioState } from './store/states/api/usuario.state';
 import { UsuarioPageState } from './store/states/page/usuario.state';
 import { environment } from '../environments/environment';
+import { AlumnoInscripcionPageState } from './store/states/page/alumno-inscripcion.state';
+import { InputNumber } from 'primeng/inputnumber';
 
 
 
@@ -76,6 +78,7 @@ export const appConfig: ApplicationConfig = {
         ComisionPageState,
         DocenteCursoState,
         UsuarioState,
-        UsuarioPageState
+        UsuarioPageState,
+        AlumnoInscripcionPageState
       ], { developmentMode: !environment.production})]
 };

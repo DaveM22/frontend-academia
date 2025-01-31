@@ -21,12 +21,8 @@ import { Persona } from '../../entities/persona';
 export class AlumnoEditarComponent {
   alumno$:Observable<Persona | null> = this.store.select(PersonaPageState.getAlumnoSelected);
 
-  constructor(private store:Store, private router:ActivatedRoute){}
+  constructor(private store:Store){}
 
-  ngOnInit(): void {
-    let filter = new AlumnoFilter();
-    filter.incluirInscripciones = false;
-    this.store.dispatch(new GetAlumnoByIdAction(this.router.snapshot.params['id'], filter));
-  }
+
   
 }

@@ -12,11 +12,12 @@ import { MessagesModule } from 'primeng/messages';
 import { PanelModule } from 'primeng/panel';
 import { ToastModule } from 'primeng/toast';
 import { ComisionFilter } from '../../entities/filter';
+import { CardModule } from 'primeng/card';
 
 @Component({
   selector: 'app-comision',
   standalone: true,
-  imports: [CommonModule, PanelModule, RouterModule],
+  imports: [CommonModule, PanelModule, RouterModule, CardModule],
   templateUrl: './comision.component.html',
   styleUrl: './comision.component.scss'
 })

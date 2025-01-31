@@ -1,52 +1,50 @@
-<p-card [header]="title" styleClass="h-full">
-    <ng-template pTemplate="content">
-        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+<div class="flex justify-content-center align-items-center">
+    <h3>{{title}}</h3>
+  </div>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
             
-            <div class="flex overflow-hidden justify-content-center">
-                <div class="col-12 lg:col-4">
-                    <div class="field">
-                        <label for="descripcion">Descripcion:</label>
-                        <input id="firstname1" pInputText formControlName="descripcion" type="text"
-                            class="w-full">
-                        @if(form.get('descripcion')?.invalid && form.get('descripcion')?.dirty){
-                        <small class="p-error block">
-                            El campo descripcion es requerido
-                        </small>
-                        }
-                        <small id="descripcion-help">
-                            Ingrese la descripción que tendra el plan
-                        </small>
-                    </div>
-                    <div class="field">
-                        <label>Especialidad:</label>
-                        <p-dropdown [options]="(especialidades$ | async)!" formControlName="especialidadId" dataKey="_id"
-                        optionValue="_id" appendTo="body"
-                            optionLabel="descripcion" [filter]="true" filterBy="descripcion" styleClass="w-full"
-                            placeholder="Seleccionar una especialidad">
-                            <ng-template pTemplate="selectedItem" let-selectedOption>
-                                <div class="flex align-items-center gap-2">
-                                    <div>{{ selectedOption.descripcion }}</div>
-                                </div>
-                            </ng-template>
-                            <ng-template let-especialidad pTemplate="item">
-                                <div class="flex align-items-center gap-2">
-        
-                                    <div>{{ especialidad.descripcion }}</div>
-                                </div>
-                            </ng-template>
-                        </p-dropdown>
-                    </div>
-                </div>
+    <div class="flex overflow-hidden justify-content-center">
+        <div class="col-12 lg:col-4">
+            <div class="field">
+                <label for="descripcion">Descripcion:</label>
+                <input id="firstname1" pInputText formControlName="descripcion" type="text"
+                    class="w-full">
+                @if(form.get('descripcion')?.invalid && form.get('descripcion')?.dirty){
+                <small class="p-error block">
+                    El campo descripcion es requerido
+                </small>
+                }
+                <small id="descripcion-help">
+                    Ingrese la descripción que tendra el plan
+                </small>
             </div>
+            <div class="field">
+                <label>Especialidad:</label>
+                <p-dropdown [options]="(especialidades$ | async)!" formControlName="especialidadId" dataKey="_id"
+                optionValue="_id" appendTo="body"
+                    optionLabel="descripcion" [filter]="true" filterBy="descripcion" styleClass="w-full"
+                    placeholder="Seleccionar una especialidad">
+                    <ng-template pTemplate="selectedItem" let-selectedOption>
+                        <div class="flex align-items-center gap-2">
+                            <div>{{ selectedOption.descripcion }}</div>
+                        </div>
+                    </ng-template>
+                    <ng-template let-especialidad pTemplate="item">
+                        <div class="flex align-items-center gap-2">
 
-
-            <div
-                class="flex flew-row align-items-center justify-content-center font-bold text-white border-round m-2 gap-2">
-                <p-button type="submit" label="Guardar" severity="success" [disabled]="form.invalid"></p-button>
-                <p-button label="Cancelar" severity="danger" (onClick)="redirectPlanes()"></p-button>
+                            <div>{{ especialidad.descripcion }}</div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
             </div>
+        </div>
+    </div>
 
-        </form>
-    </ng-template>
 
-</p-card>
+    <div
+        class="flex flew-row align-items-center justify-content-center font-bold text-white border-round m-2 gap-2">
+        <p-button type="submit" label="Guardar" severity="success" [disabled]="form.invalid"></p-button>
+        <p-button label="Cancelar" severity="danger" (onClick)="redirectPlanes()"></p-button>
+    </div>
+
+</form>

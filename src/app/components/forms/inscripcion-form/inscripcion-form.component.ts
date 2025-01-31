@@ -26,17 +26,23 @@ import { Condicion, CondicionList } from '../../../entities/enums';
 import { DropdownModule } from 'primeng/dropdown';
 import { KeyValuePipe } from '@angular/common';
 import { AlumnoInscripcion, AlumnoInscripcionDto } from '../../../entities/alumno-inscripcion';
-import { PostAlumnoInscripcion } from '../../../store/actions/api/alumno-inscripcion.action';
-
+import { PostAlumnoInscripcionAction, PutAlumnoInscripcionAction } from '../../../store/actions/api/alumno-inscripcion.action';
+import { AlumnoInscripcionPageState } from '../../../store/states/page/alumno-inscripcion.state';
+import { InputNumber, InputNumberModule } from 'primeng/inputnumber';
+import { InputGroupModule } from 'primeng/inputgroup';
+import { MessageService } from 'primeng/api';
+import { MessagesModule } from 'primeng/messages';
 @Component({
   selector: 'app-inscripcion-form',
   standalone: true,
-  imports: [ReactiveFormsModule, KeyValuePipe, InputTextModule, CardModule, ButtonModule,ToastModule,  RippleModule, CursosModalComponent, DropdownModule],
+  imports: [ReactiveFormsModule, InputTextModule,InputNumberModule, CardModule, ButtonModule,ToastModule, MessagesModule , RippleModule, CursosModalComponent, DropdownModule, 
+    InputGroupModule],
   templateUrl: './inscripcion-form.component.html',
   styleUrl: './inscripcion-form.component.scss'
 })
 export class InscripcionFormComponent implements OnInit {
   alumno$:Observable<Alumno | null> = this.store.select(PersonaPageState.getAlumnoSelected);
+  alumnoInscripcion$:Observable<AlumnoInscripcion | null> = this.store.select(AlumnoInscripcionPageState.getAlumnoInscripcionSelected);
   especialidadSelected$:Observable<Especialidad | null> = this.store.select(AppPageState.getSelectedEspecialidad);
   planSelected$:Observable<Plan | null> = this.store.select(AppPageState.getSelectedPlanInFilter);
   cursoSelectedModal$:Observable<Curso | null> = this.store.select(AppPageState.getSelectedCursoInModal);
@@ -46,10 +52,10 @@ export class InscripcionFormComponent implements OnInit {
   alumnoInscripcionDto!:AlumnoInscripcionDto
   form!: FormGroup;
   condiciones:any[] = CondicionList;
-  constructor(private store:Store, private router:Router,private activatedRoute:ActivatedRoute){}
+  constructor(private store:Store, private router:Router, private messageService:MessageService, private activatedRoute:ActivatedRoute){}
 
   ngOnInit(): void {
-    this.condiciones = [Condicion.INSCRIPTO.toString()];
+    this.condiciones = [Condicion.INSCRIPTO.toString(), Condicion.APROBADO.toString(), Condicion.REGULAR.toString()];
     this.especialidadSelected$.subscribe(x =>{
         if(x !== null){
           let filter = new PlanFilter();
@@ -66,6 +72,8 @@ export class InscripcionFormComponent implements OnInit {
      }
     })
 
+
+
     this.cursoSelectedModal$.subscribe(x => {
       if(x !== null){
         this.form.patchValue({'curso':x.descripcion, 'cursoId':x._id})
@@ -81,13 +89,21 @@ export class InscripcionFormComponent implements OnInit {
       alumnoId:new FormControl('', [Validators.required]),
       curso: new FormControl({value:'', disabled:true}, [Validators.required]),
       cursoId: new FormControl('', [Validators.required]),
-      condicion: new FormControl('', [Validators.required])
+      condicion: new FormControl('', [Validators.required]),
+      nota: new FormControl('')
     });
 
     this.alumno$.subscribe(x => {
       if(x !== null){
         this.alumno = x;
         this.form.patchValue({'alumno':`${this.alumno.apellido} ${this.alumno.nombre}`, 'alumnoId':this.alumno._id})
+      }
+    })
+
+    this.alumnoInscripcion$.subscribe(x => {
+      if(x){
+        this.alumnoInscripcion = x;
+        this.form.patchValue({'_id':x._id,'alumno':`${x.alumno!.apellido} ${x.alumno!.nombre}`, 'alumnoId':x.alumno!._id, 'condicion': x.condicion, nota:x.nota, 'curso':x.curso?.descripcion, 'cursoId': x.curso?._id})
       }
     })
 
@@ -99,9 +115,18 @@ export class InscripcionFormComponent implements OnInit {
 
   onSubmit(){
     this.alumnoInscripcionDto = this.form.value
-    this.store.dispatch(new PostAlumnoInscripcion(this.alumnoInscripcionDto)).subscribe(() => {
+   if(this.alumnoInscripcion._id === ''){
+    this.store.dispatch(new PostAlumnoInscripcionAction(this.alumnoInscripcionDto)).subscribe(() => {
       this.router.navigate([`/inscripciones/alumnos/${this.alumnoId}`]);
+      this.messageService.add({ severity: 'success', summary: 'Crear inscripción', detail: 'Se ha registrado la inscripción' });
     });
+   }
+   else{
+    this.store.dispatch(new PutAlumnoInscripcionAction(this.alumnoInscripcion._id,this.alumnoInscripcionDto)).subscribe(() => {
+      this.router.navigate([`/inscripciones/alumnos/${this.alumnoId}`]);
+      this.messageService.add({ severity: 'success', summary: 'Editar inscripción', detail: 'Se han guardado los cambios de la inscripción' });
+    });
+   }
   }
 
   toggleModalCursos(){

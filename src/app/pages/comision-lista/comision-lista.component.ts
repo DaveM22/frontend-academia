@@ -19,6 +19,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
+import { ScreenSizeService } from '../../services/screen-size.service.service';
 
 @Component({
   selector: 'app-comision-lista',
@@ -42,7 +43,8 @@ export class ComisionListaComponent implements OnInit {
   showConfirmation$:Observable<boolean> = this.store.select(AppPageState.showModalConfirmation)
   public comisionSelected!:Comision;
   public error:boolean = false;
-  constructor(private store:Store, private router:Router, private confirmationService:ConfirmationService,private  messageService:MessageService){
+  scrollSize: string = "flex";
+  constructor(private store:Store, private router:Router, private confirmationService:ConfirmationService,private  messageService:MessageService, private screenService:ScreenSizeService){
     
   }
 
@@ -57,6 +59,10 @@ export class ComisionListaComponent implements OnInit {
         this.confirm();
       }
     })
+
+    this.screenService.screenSize$.subscribe((x:any) => {
+      this.scrollSize = x.currentTarget.innerWidth > 992 ? 'flex' : '50vh'
+   })
   }
 
 

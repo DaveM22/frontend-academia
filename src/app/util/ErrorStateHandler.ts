@@ -4,6 +4,12 @@ export class ErrorStateHandler{
 
     static handleError(error:any, ctx: StateContext<any>){
       switch(error.status){
+        case 403:
+          ctx.patchState({
+            error:true,
+            errorMessage:"No posee permisos suficientes para realizar esta acción"
+          })
+          break;
         case 0:
           ctx.patchState({
             error:true,

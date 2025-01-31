@@ -20,6 +20,7 @@ import { AppPageState } from '../../store/states/page/app.state';
 import { ShowModalConfirmationAction } from '../../store/actions/pages/app.action';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ScreenSizeService } from '../../services/screen-size.service.service';
 
 @Component({
   selector: 'app-profesor-lista',
@@ -36,7 +37,8 @@ export class ProfesorListaComponent implements OnInit {
   errorMessage$: Observable<string> = this.store.select(PersonaState.getErrorMessage);
   showConfirmation$: Observable<boolean> = this.store.select(AppPageState.showModalConfirmation)
   profesorSelected!: Profesor;
-  constructor(private store: Store, private router: Router, private messageService: MessageService, private confirmationService: ConfirmationService) {}
+  scrollSize: string = 'flex';
+  constructor(private store: Store, private router: Router, private messageService: MessageService, private confirmationService: ConfirmationService, private screenService:ScreenSizeService) {}
 
   ngOnInit(): void {
     let filter = new DocenteFilter();
@@ -46,6 +48,10 @@ export class ProfesorListaComponent implements OnInit {
         this.confirm();
       }
     })
+
+    this.screenService.screenSize$.subscribe((x:any) => {
+      this.scrollSize = x.currentTarget.innerWidth > 992 ? 'flex' : '50vh'
+   })
   }
 
   confirm() {

@@ -51,14 +51,19 @@ export class PlanFormComponent implements OnInit {
   public onSubmit(){
     this.plan = this.form.value
     if(this.form.value._id === ''){
-      this.store.dispatch(new PostPlanAction(this.plan)).subscribe(x =>this.router.navigate(["/planes/lista"]));
-      this.messageService.add({ severity: 'success', summary: 'Crear plan', detail: 'Se ha creado el plan' });
+      this.store.dispatch(new PostPlanAction(this.plan)).subscribe(x => {
+        this.router.navigate(["/planes/lista"]);
+        this.messageService.add({ severity: 'success', summary: 'Crear plan', detail: 'Se ha creado el plan' });
+      });
+
     }
     else{
-      this.store.dispatch(new PutPlanAction(this.plan)).subscribe(x => this.router.navigate(["/planes/lista"]));
-      this.store.dispatch(new ClearSelectedPlan);
-      this.messageService.add({ severity: 'success', summary: 'Editar plan', detail: 'Se han guardado los cambios del plan' });
+      this.store.dispatch(new PutPlanAction(this.plan)).subscribe(x => {
+        this.router.navigate(["/planes/lista"])
+        this.messageService.add({ severity: 'success', summary: 'Editar plan', detail: 'Se han guardado los cambios del plan' });
+      });
     }
+    this.store.dispatch(new ClearSelectedPlan);
     this.form.reset();
   }
 

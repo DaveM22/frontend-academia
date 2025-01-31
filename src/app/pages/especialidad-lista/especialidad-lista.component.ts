@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { Especialidad } from '../../entities/especialidad';
-import { GetEspecialidadAction } from '../../store/actions/api/especialidad.action';
+import { GetByIdEspecialidadAction, GetEspecialidadAction } from '../../store/actions/api/especialidad.action';
 import { ShowModalDelete } from '../../store/actions/pages/especialidad.action';
 import { AsignarEspecialidadId } from '../../store/actions/pages/navigate.action';
 import { EspecialidadState } from '../../store/states/api/especialidad.state';
@@ -17,6 +17,7 @@ import { PanelModule } from 'primeng/panel';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
 import { EspecialidadBorrarComponent } from '../especialidad-borrar/especialidad-borrar.component';
+import { ScreenSizeService } from '../../services/screen-size.service.service';
 
 @Component({
   selector: 'app-especialidad-lista',
@@ -26,7 +27,7 @@ import { EspecialidadBorrarComponent } from '../especialidad-borrar/especialidad
   styleUrl: './especialidad-lista.component.scss'
 })
 export class EspecialidadListaComponent implements OnInit {
-
+  screenSize = { width: 0, height: 0 };
   public especialidades$: Observable<Especialidad[]> = this.store.select(EspecialidadState.getEspecialidades)
 
   public loading$:Observable<boolean> = this.store.select(EspecialidadState.getLoading);
@@ -35,8 +36,12 @@ export class EspecialidadListaComponent implements OnInit {
 
   public errorMessage$:Observable<string> = this.store.select(EspecialidadState.getErrorMessage);
 
+
+
+
   public especialidad!:Especialidad;
-  constructor(private store:Store, private router:Router){
+  scrollSize: string = "flex";
+  constructor(private store:Store, private router:Router, private screenService:ScreenSizeService){
     
   }
 
@@ -46,6 +51,11 @@ export class EspecialidadListaComponent implements OnInit {
     this.especialidades$.subscribe(x => {
 
     })
+
+    this.screenService.screenSize$.subscribe((x:any) => {
+      this.scrollSize = x.currentTarget.innerWidth > 992 ? 'flex' : '50vh'
+   })
+
   }
 
 
@@ -59,9 +69,13 @@ export class EspecialidadListaComponent implements OnInit {
   }
 
   redirectEditEspecialidad(id:string){
-    this.router.navigate([`especialidades/editar/${id}`])
+    this.store.dispatch(new GetByIdEspecialidadAction(id)).subscribe(() => {
+      this.router.navigate([`especialidades/editar/${id}`])
+    });
+
   }
 
   especialidades!: Especialidad[];
   title = 'academia';
+
 }

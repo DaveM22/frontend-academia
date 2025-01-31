@@ -1,6 +1,6 @@
-<p-card [header]="title" styleClass="h-full form-height">
-
-        
+<div class="flex justify-content-center pt-0 pb-0 align-items-center">
+    <h3>{{title}}</h3>
+  </div>
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
             <div class="flex h-full justify-content-center form-height">
                 <div class="col-12 lg:col-5">
@@ -106,7 +106,7 @@
                 <p-button label="Cancelar" severity="danger" (onClick)="redirectCursos()"></p-button>
             </div>
         </form>
-</p-card>
+
 
 <app-planes-modal></app-planes-modal>
 <app-materias-modal></app-materias-modal>

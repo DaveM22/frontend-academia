@@ -17,11 +17,12 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 import { PlanFilter } from '../../entities/filter';
+import { CardModule } from 'primeng/card';
 
 @Component({
   selector: 'app-plan',
   standalone: true,
-  imports: [CommonModule, RouterModule, PanelModule],
+  imports: [CommonModule, RouterModule, PanelModule, CardModule],
   templateUrl: './plan.component.html',
   styleUrl: './plan.component.scss'
 })

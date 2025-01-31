@@ -12,11 +12,12 @@ import { Store } from '@ngxs/store';
 import { Router, RouterModule } from '@angular/router';
 import { GetCursoAction } from '../../store/actions/api/curso.action';
 import { CursoFilter } from '../../entities/filter';
+import { CardModule } from 'primeng/card';
 
 @Component({
   selector: 'app-curso',
   standalone: true,
-  imports: [CommonModule, PanelModule, RouterModule],
+  imports: [CommonModule, PanelModule, RouterModule, CardModule],
   templateUrl: './curso.component.html',
   styleUrl: './curso.component.scss'
 })

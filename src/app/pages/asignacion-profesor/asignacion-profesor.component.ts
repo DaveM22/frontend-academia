@@ -19,11 +19,12 @@ import { Materia } from '../../entities/materia';
 import { MateriaState } from '../../store/states/api/materia.state';
 import { RouterModule } from '@angular/router';
 import { PanelModule } from 'primeng/panel';
+import { CardModule } from 'primeng/card';
 
 @Component({
   selector: 'app-asignacion-profesor',
   standalone: true,
-  imports: [RouterModule, PanelModule],
+  imports: [RouterModule, PanelModule, CardModule],
   templateUrl: './asignacion-profesor.component.html',
   styleUrl: './asignacion-profesor.component.scss'
 })

@@ -85,8 +85,19 @@ export class EspecialidadState{
 
     @Action(GetByIdEspecialidadAction)
     async getByIdEspecialidad(ctx: StateContext<EspecialidadModelState>, action: GetByIdEspecialidadAction){
-      const response = await lastValueFrom(this.service.getByIdEspecialidad(action.id));
-      ctx.dispatch(new AsignSelectedEspecialidad(response));
+      ctx.patchState({loading:true, error:false})
+
+      try{
+        const response = await lastValueFrom(this.service.getByIdEspecialidad(action.id));
+        ctx.dispatch(new AsignSelectedEspecialidad(response));
+      }
+      catch(error:any){
+        ErrorStateHandler.handleError(error, ctx);
+      }
+      finally{
+        ctx.patchState({loading:false})
+      }
+
     }
 
     @Action(PutEspecialidadAction)
@@ -116,11 +127,7 @@ export class EspecialidadState{
         })
       }
       catch(error: any){
-        console.log(error)
-        ctx.patchState({
-          error:true,
-          errorMessage: error.error.error
-        })
+        ErrorStateHandler.handleError(error, ctx);
       }
     }
 

@@ -1,12 +1,29 @@
-import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { CursoFormComponent } from '../../components/forms/curso-form/curso-form.component';
+import { Observable } from 'rxjs';
+import { Curso } from '../../entities/curso';
+import { Store } from '@ngxs/store';
+import { CursoPageState } from '../../store/states/page/curso.state';
+import { GetByIdCursoAction } from '../../store/actions/api/curso.action';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-curso-editar',
   standalone: true,
-  imports: [],
+  imports: [CursoFormComponent, CommonModule],
   templateUrl: './curso-editar.component.html',
   styleUrl: './curso-editar.component.scss'
 })
-export class CursoEditarComponent {
+export class CursoEditarComponent implements OnInit {
+
+constructor(private store:Store, private router:ActivatedRoute){}
+
+
+  curso$:Observable<Curso | null> = this.store.select(CursoPageState.getCursoSelected);
+
+  ngOnInit(): void {
+    this.store.dispatch(new GetByIdCursoAction(this.router.snapshot.params['id']));
+  }
 
 }

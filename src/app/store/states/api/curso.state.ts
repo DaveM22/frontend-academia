@@ -2,10 +2,11 @@ import { Injectable } from "@angular/core";
 import { CursoModelState } from "../../modelstate/api/curso.modelstate";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { CursoService } from "../../../services/curso.service";
-import { ClearCursos, DeleteCursoAction, GetByIdCursoAction, GetCursoAction, PostCursoAction, PutCursoAction } from "../../actions/api/curso.action";
+import { ClearCursos, DeleteCursoAction, GenerateReport, GetByIdCursoAction, GetCursoAction, PostCursoAction, PutCursoAction } from "../../actions/api/curso.action";
 import { lastValueFrom } from "rxjs";
 import { ErrorStateHandler } from "../../../util/ErrorStateHandler";
 import { AsignSelectedCursoAction } from "../../actions/pages/curso.action";
+import saveAs from "file-saver";
 
 @State<CursoModelState>({
     name: 'cursos',
@@ -47,6 +48,7 @@ export class CursoState {
         ctx.patchState({ loading: true, error: false })
         try {
             const response = await lastValueFrom(this.service.getCursos(action.filters));
+
             ctx.patchState({
                 cursos: [...response],
                 loading: false,
@@ -69,6 +71,7 @@ export class CursoState {
         cursos: ctx.getState().cursos.filter(x => x._id !== action.id)
       })
     }
+    
     @Action(PostCursoAction)
     async postEspecialidadAction(ctx: StateContext<CursoModelState>, action: PostCursoAction) {
         const response = await lastValueFrom(await this.service.post(action.curso));
@@ -80,7 +83,8 @@ export class CursoState {
 
     @Action(GetByIdCursoAction)
     async getByIdEspecialidad(ctx: StateContext<CursoModelState>, action: GetByIdCursoAction) {
-        const response = await lastValueFrom(await this.service.getById(action.id));
+        const response = await lastValueFrom(this.service.getById(action.id));
+        console.log(response);
         ctx.dispatch(new AsignSelectedCursoAction(response));
     }
 
@@ -105,6 +109,13 @@ export class CursoState {
       ctx.patchState({
         cursos:[]
       })
+    }
+
+    @Action(GenerateReport)
+    async generateReport(ctx: StateContext<CursoModelState>, action: GenerateReport){
+      const reponse = await lastValueFrom(this.service.generateReport(action.id));
+      const filename = 'reporte-curso.pdf';
+      saveAs(reponse, filename);
     }
 
 }

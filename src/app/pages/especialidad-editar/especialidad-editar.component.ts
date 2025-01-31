@@ -16,20 +16,13 @@ import { EspecialidadPageState } from '../../store/states/page/especialidad.stat
   templateUrl: './especialidad-editar.component.html',
   styleUrl: './especialidad-editar.component.scss'
 })
-export class EspecialidadEditarComponent implements OnInit {
+export class EspecialidadEditarComponent {
   especialidad$:Observable<Especialidad | null> = this.store.select(EspecialidadPageState.getEspecialidadSelected);
   especialidad!:Especialidad;
   constructor(private store:Store, private router:ActivatedRoute){
     
   }
 
-
-  ngOnInit(): void {
-    this.especialidad$.subscribe(x => {
-      this.especialidad = x!;
-    })
-    this.store.dispatch(new GetByIdEspecialidadAction(this.router.snapshot.params['id']));
-  }
 
 
 }

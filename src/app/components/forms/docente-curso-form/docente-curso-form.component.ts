@@ -23,7 +23,7 @@ import { PostDocenteCursoAction } from '../../../store/actions/api/docente-curso
 @Component({
   selector: 'app-docente-curso-form',
   standalone: true,
-  imports: [ReactiveFormsModule,DocenteModalComponent,CommonModule, KeyValuePipe, InputTextModule, CardModule, ButtonModule, RippleModule, DropdownModule],
+  imports: [ReactiveFormsModule,DocenteModalComponent,CommonModule, InputTextModule, CardModule, ButtonModule, RippleModule, DropdownModule],
   templateUrl: './docente-curso-form.component.html',
   styleUrl: './docente-curso-form.component.scss'
 })

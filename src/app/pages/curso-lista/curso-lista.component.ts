@@ -4,7 +4,7 @@ import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { Curso } from '../../entities/curso';
 import { CursoFilter } from '../../entities/filter';
-import { DeleteCursoAction, GetCursoAction } from '../../store/actions/api/curso.action';
+import { DeleteCursoAction, GenerateReport, GetCursoAction } from '../../store/actions/api/curso.action';
 import { CursoState } from '../../store/states/api/curso.state';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
@@ -66,13 +66,17 @@ export class CursoListaComponent implements OnInit {
     this.router.navigate(["/cursos/editar/" + id])
   }
 
+  generateReport(id: string) {
+    this.store.dispatch(new GenerateReport(id));
+  }
+
   cursos!: Curso[];
   title = 'academia';
 
   confirm() {
     this.confirmationService.confirm({
       header: 'Borrar curso',
-      message: `¿Desea eliminar el siguiente curso: ${this.cursoSelected.descripcion!} ?`,
+      message: `¿ Desea eliminar el siguiente curso: ${this.cursoSelected.descripcion!} ?`,
       acceptIcon: 'pi pi-check mr-2',
       rejectIcon: 'pi pi-times mr-2',
       rejectButtonStyleClass: 'p-button-sm',

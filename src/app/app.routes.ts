@@ -52,6 +52,8 @@ import { CatedrasDocenteComponent } from './pages/catedras-docente/catedras-doce
 import { CatedrasDocenteCursosComponent } from './pages/catedras-docente-cursos/catedras-docente-cursos.component';
 import { CatedrasDocenteInscripcionesComponent } from './pages/catedras-docente-inscripciones/catedras-docente-inscripciones.component';
 import { InscripcionAlumnoListaComponent } from './pages/inscripcion-alumno-lista/inscripcion-alumno-lista.component';
+import { InscripcionAlumnoEditarComponent } from './pages/inscripcion-alumno-editar/inscripcion-alumno-editar.component';
+import { CursoEditarComponent } from './pages/curso-editar/curso-editar.component';
 
 export const routes: Routes = [
     {
@@ -107,7 +109,8 @@ export const routes: Routes = [
                 component: CursoComponent,
                 children: [
                     { path: 'lista', component: CursoListaComponent },
-                    { path: 'nuevo', component: CursoNuevoComponent }
+                    { path: 'nuevo', component: CursoNuevoComponent },
+                    { path: 'editar/:id', component: CursoEditarComponent }
                 ],
                 canActivate: [AuthGuard, adminGuard],
                 data: {
@@ -156,6 +159,10 @@ export const routes: Routes = [
                     {
                         path: ':id/nuevo',
                         component: InscripcionNuevoComponent
+                    },
+                    {
+                        path: ':id/inscripcion/editar/:idInscripcion',
+                        component: InscripcionAlumnoEditarComponent
                     },
                 ],
                 canActivate: [AuthGuard, adminGuard],

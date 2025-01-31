@@ -52,5 +52,9 @@ export class CursoService {
     return this.http.put<Curso>(`${environment.apiUrl}/cursos/${especialidad._id}`, especialidad);
   }
 
+  public generateReport(cursoId:string){
+    return this.http.get(`${environment.apiUrl}/cursos/${cursoId}/reporte`, { responseType: 'blob' })
+  }
+
 }
 

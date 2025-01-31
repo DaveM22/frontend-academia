@@ -1,5 +1,5 @@
 <p-dialog header="Seleccionar curso" [resizable]="false" [modal]="true" [maximizable]="true" appendTo="body"
-    [visible]="(showModal$ | async)!" [style]="{width: '95%'}" [contentStyle]="{height: '75vh'}">
+    [visible]="(showModal$ | async)!" [style]="{width: '95%'}">
     <p-toolbar styleClass="mb-4 gap-2">
         <ng-template pTemplate="left">
             <div class="sm:flex justify-content-center">
@@ -40,5 +40,21 @@
         <button type="button" pButton icon="pi pi-times" (click)="toggleOffModal()" label="Salir"
             class="p-button-danger">
         </button>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+        @if((cursos$ | async)!){
+            @if ((cursos$ | async)!.length === 0) {
+                <tr>
+                    <td class="text-center" colspan="2">No se han registrado cursos para esta materia</td>
+                </tr>
+                }
+                @else {
+                <tr>
+                    <td class="text-center" colspan="2">No se encontraron cursos con el filtro aplicado</td>
+                </tr>
+                }
+        }
+
     </ng-template>
 </p-dialog>

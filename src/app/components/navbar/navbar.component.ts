@@ -48,6 +48,12 @@ export class NavbarComponent implements OnInit {
     })
       this.toggle$.subscribe( x => this.toggle = x);
 
+        this.logItems = [
+          {
+          label:'Salir',
+          icon: 'pi pi-user',
+          command:() => this.logout()
+        }]
     }
 
     toggleAction(){

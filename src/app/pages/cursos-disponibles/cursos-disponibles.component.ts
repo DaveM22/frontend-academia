@@ -23,7 +23,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
 import { ShowModalConfirmationAction } from '../../store/actions/pages/app.action';
 import { AlumnoInscripcion, AlumnoInscripcionDto } from '../../entities/alumno-inscripcion';
-import { PostAlumnoInscripcion } from '../../store/actions/api/alumno-inscripcion.action';
+import { PostAlumnoInscripcionAction } from '../../store/actions/api/alumno-inscripcion.action';
 import { Condicion } from '../../entities/enums';
 
 @Component({
@@ -77,7 +77,7 @@ export class CursosDisponiblesComponent implements OnInit {
           al.condicion = Condicion.INSCRIPTO.toString();
           al.cursoId =  this.cursoSelected;
           this.store.dispatch([
-            new PostAlumnoInscripcion(al),
+            new PostAlumnoInscripcionAction(al),
             new ShowModalConfirmationAction(false)
           ]).subscribe(x => {
             const personId = this.store.selectSnapshot(AppPageState.getPersonId);

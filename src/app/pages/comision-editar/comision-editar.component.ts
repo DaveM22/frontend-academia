@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ComisionFormComponent } from '../../components/forms/comision-form/comision-form.component';
 import { Observable } from 'rxjs';
 import { Comision } from '../../entities/comision';
@@ -16,7 +16,7 @@ import { GetByIdComisionAction } from '../../store/actions/api/comision.action';
   templateUrl: './comision-editar.component.html',
   styleUrl: './comision-editar.component.scss'
 })
-export class ComisionEditarComponent {
+export class ComisionEditarComponent implements OnInit {
   comision$:Observable<Comision | null> = this.store.select(ComisionPageState.getComisionSelected);
 
   constructor(private store:Store, private router:ActivatedRoute){

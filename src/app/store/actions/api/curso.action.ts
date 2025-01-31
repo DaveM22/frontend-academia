@@ -29,3 +29,9 @@ export class GetByIdCursoAction{
 export class ClearCursos{
     static type = "[Curso API] Clear cursos locally";
 }
+
+export class GenerateReport {
+    static type = "[Curso API] Generate reporte de cursos";
+    constructor(public id:string){}
+}
+
