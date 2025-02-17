@@ -187,8 +187,18 @@ export class PlanState{
 
     @Action(GenerateReport)
     async generateReport(ctx: StateContext<PlanModelState>, action: GenerateReport){
-      const reponse = await lastValueFrom(this.service.generateReport(action.id));
-      const filename = 'reporte.pdf'; // El nombre con el que se descargará el archivo
-      saveAs(reponse, filename);
+      ctx.patchState({loading:true, error:false});
+      try{
+        const reponse = await lastValueFrom(this.service.generateReport(action.id));
+        const filename = 'reporte.pdf';
+        saveAs(reponse, filename);
+      }
+      catch(error:any){
+        ErrorStateHandler.handleError(error, ctx);
+      }
+      finally{
+        ctx.patchState({loading:false})
+      }
+
     }
 }

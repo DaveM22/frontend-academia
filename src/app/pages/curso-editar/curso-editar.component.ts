@@ -15,15 +15,11 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './curso-editar.component.html',
   styleUrl: './curso-editar.component.scss'
 })
-export class CursoEditarComponent implements OnInit {
+export class CursoEditarComponent {
 
 constructor(private store:Store, private router:ActivatedRoute){}
 
 
   curso$:Observable<Curso | null> = this.store.select(CursoPageState.getCursoSelected);
-
-  ngOnInit(): void {
-    this.store.dispatch(new GetByIdCursoAction(this.router.snapshot.params['id']));
-  }
 
 }

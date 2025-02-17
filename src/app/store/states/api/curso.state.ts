@@ -113,9 +113,21 @@ export class CursoState {
 
     @Action(GenerateReport)
     async generateReport(ctx: StateContext<CursoModelState>, action: GenerateReport){
-      const reponse = await lastValueFrom(this.service.generateReport(action.id));
-      const filename = 'reporte-curso.pdf';
-      saveAs(reponse, filename);
+
+        ctx.patchState({ loading: true, error: false })
+        try {
+    
+            const reponse = await lastValueFrom(this.service.generateReport(action.id));
+            const filename = 'reporte-curso.pdf';
+            saveAs(reponse, filename);
+        }
+        catch (error: any) {
+            ErrorStateHandler.handleError(error, ctx);
+        }
+        finally {
+            ctx.patchState({ loading: false })
+        }
+
     }
 
 }

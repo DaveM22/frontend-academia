@@ -54,6 +54,7 @@ import { CatedrasDocenteInscripcionesComponent } from './pages/catedras-docente-
 import { InscripcionAlumnoListaComponent } from './pages/inscripcion-alumno-lista/inscripcion-alumno-lista.component';
 import { InscripcionAlumnoEditarComponent } from './pages/inscripcion-alumno-editar/inscripcion-alumno-editar.component';
 import { CursoEditarComponent } from './pages/curso-editar/curso-editar.component';
+import { ParameterComponent } from './pages/parameter/parameter.component';
 
 export const routes: Routes = [
     {
@@ -61,6 +62,14 @@ export const routes: Routes = [
         component: ApplayoutComponent,
         canActivate: [AuthGuard],
         children: [
+            {
+                path:'parametros',
+                component: ParameterComponent,
+                canActivate: [AuthGuard, adminGuard],
+                data:{
+                    role:'Administrador'
+                }
+            },
             {
                 path: 'especialidades',
                 component: EspecialidadComponent,

@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { Comision } from '../../entities/comision';
 import { ComisionFilter } from '../../entities/filter';
 import { ComisionState } from '../../store/states/api/comision.state';
-import { DeleteComisionAction, GetComision } from '../../store/actions/api/comision.action';
+import { DeleteComisionAction, GetByIdComisionAction, GetComision } from '../../store/actions/api/comision.action';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { MessagesModule } from 'primeng/messages';
@@ -71,7 +71,9 @@ export class ComisionListaComponent implements OnInit {
   }
 
   redirectEditarComision(id:string){
-    this.router.navigate(["/comisiones/editar/" + id])
+    this.store.dispatch(new GetByIdComisionAction(id)).subscribe(() => {
+      this.router.navigate(["/comisiones/editar/" + id]);
+    })
   }
 
   Comisiones!: Comision[];

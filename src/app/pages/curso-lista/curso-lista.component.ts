@@ -4,7 +4,7 @@ import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { Curso } from '../../entities/curso';
 import { CursoFilter } from '../../entities/filter';
-import { DeleteCursoAction, GenerateReport, GetCursoAction } from '../../store/actions/api/curso.action';
+import { DeleteCursoAction, GenerateReport, GetByIdCursoAction, GetCursoAction } from '../../store/actions/api/curso.action';
 import { CursoState } from '../../store/states/api/curso.state';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
@@ -63,7 +63,9 @@ export class CursoListaComponent implements OnInit {
   }
 
   redirectEditCurso(id: string) {
-    this.router.navigate(["/cursos/editar/" + id])
+    this.store.dispatch(new GetByIdCursoAction(id)).subscribe(() => {
+      this.router.navigate(["/cursos/editar/" + id]);
+    })
   }
 
   generateReport(id: string) {

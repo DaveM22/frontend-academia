@@ -63,8 +63,19 @@ export class ComisionState {
 
     @Action(GetByIdComisionAction)
     async getByIdComision(ctx: StateContext<ComisionModelState>, action: GetByIdComisionAction){
-      const response = await lastValueFrom(this.service.getById(action.id));
-      ctx.dispatch(new AsignComisionAction(response));
+
+      ctx.patchState({loading:true, error:false})
+      try{
+        const response = await lastValueFrom(this.service.getById(action.id));
+        ctx.dispatch(new AsignComisionAction(response));
+      }
+      catch(error:any){
+        ErrorStateHandler.handleError(error, ctx);
+      }
+      finally{
+        ctx.patchState({loading:false})
+      }
+
     }
 
     @Action(PostComisionAction)

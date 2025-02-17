@@ -16,7 +16,7 @@ import { GetByIdComisionAction } from '../../store/actions/api/comision.action';
   templateUrl: './comision-editar.component.html',
   styleUrl: './comision-editar.component.scss'
 })
-export class ComisionEditarComponent implements OnInit {
+export class ComisionEditarComponent {
   comision$:Observable<Comision | null> = this.store.select(ComisionPageState.getComisionSelected);
 
   constructor(private store:Store, private router:ActivatedRoute){
@@ -24,8 +24,5 @@ export class ComisionEditarComponent implements OnInit {
   }
 
 
-  ngOnInit(): void {
-    this.store.dispatch(new GetByIdComisionAction(this.router.snapshot.params['id']));
-  }
 
 }

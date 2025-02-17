@@ -83,7 +83,13 @@ export class SidebarComponent implements OnInit {
           { label: 'Profesores en cursos', icon: 'pi pi-pen-to-square', command: () => this.navigate("/asignacion-docentes/seleccionar-materia") },
         ]
 
-      }
+      },
+    {
+      label:'Configuraciones',
+      items:[
+        {label:'Parametros', icon:'pi pi-cog', command: () => this.navigate("/parametros")}
+      ]
+    }
 
 
     ];
