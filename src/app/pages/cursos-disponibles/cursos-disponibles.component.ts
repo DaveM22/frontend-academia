@@ -29,7 +29,7 @@ import { Condicion } from '../../entities/enums';
 @Component({
   selector: 'app-cursos-disponibles',
   standalone: true,
-  imports: [CommonModule,ConfirmDialogModule,ToolbarModule,EspecialidadFilterComponent, TableModule, ButtonModule, IconFieldModule, InputIconModule, MessagesModule, InputTextModule],
+  imports: [CommonModule,ConfirmDialogModule,ToolbarModule, TableModule, ButtonModule, IconFieldModule, InputIconModule, MessagesModule, InputTextModule],
   templateUrl: './cursos-disponibles.component.html',
   styleUrl: './cursos-disponibles.component.scss',
   providers:[ConfirmationService]

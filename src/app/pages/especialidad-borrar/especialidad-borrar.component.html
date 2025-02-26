@@ -6,9 +6,9 @@
         </div>
     </ng-template>
     <ng-template pTemplate="footer" let-reject="reject">
-        <button type="button" pButton icon="pi pi-check" label="Aceptar" (click)="cd.accept()"
+        <button type="button" pButton icon="pi pi-check" label="Aceptar" (click)="cd.onAccept()"
             class="ui-button-success"></button>
-        <button type="button" pButton icon="pi pi-times" label="Cancelar" (click)="cd.reject()"
+        <button type="button" pButton icon="pi pi-times" label="Cancelar" (click)="cd.onReject()"
             class="ui-button-secondary"></button>
     </ng-template>
 </p-confirmDialog>

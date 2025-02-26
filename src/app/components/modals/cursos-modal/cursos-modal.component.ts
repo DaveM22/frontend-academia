@@ -25,7 +25,7 @@ import { Materia } from '../../../entities/materia';
 @Component({
   selector: 'app-cursos-modal',
   standalone: true,
-  imports: [EspecialidadFilterComponent, PlanFilterComponent, ToolbarModule,TableModule, DialogModule, ButtonModule, CommonModule,  MateriaFilterComponent],
+  imports: [ToolbarModule,TableModule, DialogModule, ButtonModule, CommonModule,  MateriaFilterComponent],
   templateUrl: './cursos-modal.component.html',
   styleUrl: './cursos-modal.component.scss'
 })

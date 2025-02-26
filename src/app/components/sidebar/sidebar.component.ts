@@ -12,10 +12,11 @@ import { Store } from '@ngxs/store';
 import { SetPersonaId, ToggleMenuAction } from '../../store/actions/pages/app.action';
 import { AppPageState } from '../../store/states/page/app.state';
 import { environment } from '../../../environments/environment';
+import { DrawerModule } from 'primeng/drawer';
 @Component({
   selector: 'sidebar',
   standalone: true,
-  imports: [MenuModule, SidebarModule, PanelMenuModule],
+  imports: [MenuModule, DrawerModule, PanelMenuModule],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss'
 })

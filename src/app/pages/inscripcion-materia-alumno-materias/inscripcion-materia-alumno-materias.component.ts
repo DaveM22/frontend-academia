@@ -23,7 +23,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-inscripcion-materia-alumno-materias',
   standalone: true,
-  imports: [CommonModule,ToolbarModule,EspecialidadFilterComponent, TableModule, ButtonModule, IconFieldModule, InputIconModule, MessagesModule, InputTextModule],
+  imports: [CommonModule,ToolbarModule, TableModule, ButtonModule, IconFieldModule, InputIconModule, MessagesModule, InputTextModule],
   templateUrl: './inscripcion-materia-alumno-materias.component.html',
   styleUrl: './inscripcion-materia-alumno-materias.component.scss'
 })

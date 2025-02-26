@@ -1,3 +1,4 @@
+@use "primeicons/primeicons.css";
 $sm:576px !default;
 $md:992px !default;
 $lg:1400px !default;
@@ -9,10 +10,18 @@ $breakpoints: (
     'lg': $lg,
     'xl': $xl
 ) !default;
+
+
+
+html {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
+      Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  }
+
+/* @import "primeng/resources/themes/soho-dark/theme.css";
 @import "primeicons/primeicons.css";
-@import "primeng/resources/themes/soho-dark/theme.css";
 @import "primeng/resources/primeng.css";
-@import "../node_modules/primeflex/primeflex.scss";
+@import "../node_modules/primeflex/primeflex.scss"; */
 
 
        
@@ -25,6 +34,8 @@ $breakpoints: (
         max-height: 100% !important;
     }
 }
+
+
 
 
 
