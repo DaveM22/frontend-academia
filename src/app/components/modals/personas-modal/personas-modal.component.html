@@ -1,6 +1,41 @@
-<p-dialog header="Seleccionar profesor" [closable]="false" [resizable]="false" [modal]="true" [maximizable]="true" appendTo="body"
+<p-dialog header="Seleccionar persona a vincular usuario" [closable]="false" [resizable]="false" [modal]="true" [maximizable]="true" appendTo="body"
     [visible]="(showModal$ | async)!" [style]="{width: '95%'}" [contentStyle]="{height: '75vh'}">
-    <p-table #table [value]="(profesores | async)!" [scrollable]="true" scrollHeight="flex"
+    <p-toolbar styleClass="mb-4 gap-2">
+        <ng-template pTemplate="left">
+            <div class="sm:flex justify-content-center">
+                <div class="mr-2">
+                    <app-especialidad-filter></app-especialidad-filter>
+                </div>
+                <div class="mr-2">
+                    <app-plan-filter></app-plan-filter>
+                </div>
+
+                <div class="mr-2">
+                    <p-select
+                    styleClass="w-full"
+                    [options]="tiposUsuarios" 
+                    [checkmark]="true" 
+                    [(ngModel)]="tipoUsuarioSelected"
+                    optionValue="val"
+                    optionLabel="name" 
+                    [showClear]="true" 
+                    placeholder="Seleccionar tipo persona"
+                    [disabled]="disableTipos"
+                    (onChange)="onChangeTipo()"
+                    (onClear)="onClear()"
+                    appendTo="body" ></p-select>
+                </div>
+ 
+
+
+            </div>
+        </ng-template>
+<!--                 [loading]="(loading$ | async)" -->
+        <ng-template pTemplate="right">
+
+        </ng-template>
+    </p-toolbar>
+    <p-table #table [value]="personas" [scrollable]="true" scrollHeight="flex"
         styleClass="p-datatable-gridlines p-datatable-striped" responsiveLayout="stack">
         <ng-template pTemplate="header">
             <tr>

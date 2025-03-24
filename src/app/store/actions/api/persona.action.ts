@@ -3,6 +3,7 @@ import { AlumnoFilter, DocenteFilter } from "../../../entities/filter";
 import { PersonaDto } from "../../../entities/persona";
 
 export class GetAlumnosAction{
+    constructor(public filters:AlumnoFilter){}
     static type = "[Persona API] List alumnos";
 }
 

@@ -11,7 +11,7 @@ import { ButtonModule } from 'primeng/button';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
-import { MessagesModule } from 'primeng/messages';
+import { MessageModule } from 'primeng/message';
 import { PanelModule } from 'primeng/panel';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
@@ -25,7 +25,7 @@ import { ScreenSizeService } from '../../services/screen-size.service.service';
 @Component({
   selector: 'app-profesor-lista',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule,ConfirmDialogModule, MessagesModule, PanelModule, ToastModule, IconFieldModule, InputTextModule, InputIconModule],
+  imports: [CommonModule, TableModule, ButtonModule,ConfirmDialogModule, MessageModule, PanelModule, ToastModule, IconFieldModule, InputTextModule, InputIconModule],
   templateUrl: './profesor-lista.component.html',
   styleUrl: './profesor-lista.component.scss',
   providers:[ConfirmationService]

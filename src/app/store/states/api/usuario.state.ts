@@ -1,11 +1,12 @@
 import { Injectable } from "@angular/core";
 import { UsuarioModelState } from "../../modelstate/api/usuario.modelstate";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
-import { GetByIdUsuarioAction, GetUsuarioListaAction } from "../../actions/api/usuarios.action";
+import { DeleteUsuarioAction, GetByIdUsuarioAction, GetUsuarioListaAction, PostUsuarioAction } from "../../actions/api/usuarios.action";
 import { UsuarioService } from "../../../services/usuario.service";
 import { lastValueFrom, Observable } from "rxjs";
 import { Usuario } from "../../../entities/usuario";
 import { AsignSelectedUsuario } from "../../actions/pages/usuario.action";
+import { ErrorStateHandler } from "../../../util/ErrorStateHandler";
 
 @State<UsuarioModelState>({
     name: 'usuarios',
@@ -84,5 +85,37 @@ export class UsuarioState{
             })
         }
     }
+
+        @Action(DeleteUsuarioAction)
+        async deletePlan(ctx: StateContext<UsuarioModelState>, action:DeleteUsuarioAction){
+          ctx.patchState({loading:true, error:false});
+          try{
+            const response = await lastValueFrom(this.service.deleteUsuario(action.id));
+            ctx.patchState({
+              usuarios: ctx.getState().usuarios.filter(x => x._id !== action.id)
+              
+            })
+          }
+          catch(error:any){
+            ErrorStateHandler.handleError(error, ctx);
+          }
+          finally{
+            ctx.patchState({loading:false})
+          }
+        }
+
+        @Action(PostUsuarioAction)
+        async postPlanAction(ctx: StateContext<UsuarioModelState>, action: PostUsuarioAction){
+          try{
+            const response = await lastValueFrom(this.service.postUsuario(action.usr));
+          }
+          catch(error:any){
+            ErrorStateHandler.handleError(error, ctx);
+          }
+          finally{
+            ctx.patchState({loading:false})
+          }
+        }
+
 }
 

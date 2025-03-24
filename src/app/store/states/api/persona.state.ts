@@ -56,7 +56,7 @@ export class PersonaState {
             error:false
         })
         try {
-            const response = await lastValueFrom(this.service.getAlumnos());
+            const response = await lastValueFrom(this.service.getAlumnos(action.filters));
             ctx.patchState({
                 alumnos: response
             })
@@ -184,10 +184,15 @@ export class PersonaState {
 
     @Action(DeleteProfesorAction)
     async deleteProfesor(ctx: StateContext<PersonaModelState>, action: DeleteProfesorAction) {
-        await lastValueFrom(this.service.deleteProfesor(action.id));
-        ctx.patchState({
-            profesores: ctx.getState().profesores.filter(x => x._id !== action.id)
-        })
+        try{
+            await lastValueFrom(this.service.deleteProfesor(action.id));
+            ctx.patchState({
+                  profesores: ctx.getState().profesores.filter(x => x._id !== action.id)
+            })
+           }
+           catch(error){
+            ErrorStateHandler.handleError(error, ctx);
+           }
     }
 
 }

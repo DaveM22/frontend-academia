@@ -114,8 +114,9 @@ export class InscripcionFormComponent implements OnInit {
   }
 
   onSubmit(){
-    this.alumnoInscripcionDto = this.form.value
+    this.alumnoInscripcion = this.form.value
    if(this.alumnoInscripcion._id === ''){
+    this.alumnoInscripcionDto = this.form.value;
     this.store.dispatch(new PostAlumnoInscripcionAction(this.alumnoInscripcionDto)).subscribe(() => {
       this.router.navigate([`/inscripciones/alumnos/${this.alumnoId}`]);
       this.messageService.add({ severity: 'success', summary: 'Crear inscripción', detail: 'Se ha registrado la inscripción' });

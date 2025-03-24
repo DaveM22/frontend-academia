@@ -13,8 +13,12 @@ export class PersonaService {
 
   constructor(private http:HttpClient) { }
 
-  getAlumnos(){
-    return this.http.get<Alumno[]>(`${environment.apiUrl}/personas/alumnos`);
+  getAlumnos(filter:AlumnoFilter){
+    let params = new HttpParams();
+    if(filter.planId !== ''){
+      params = params.set('planId',filter.planId);
+    }
+    return this.http.get<Alumno[]>(`${environment.apiUrl}/personas/alumnos`, {params:params});
   }
 
   getProfesores(filters:DocenteFilter){

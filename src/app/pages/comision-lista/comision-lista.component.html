@@ -4,12 +4,10 @@
     <ng-template pTemplate="caption">
         @if (error$ | async)
         {
-        <p-messages severity="error">
-            <ng-template pTemplate>
+        <p-message severity="error" styleClass="mb-2">
+            {{(errorMessage$ | async)}}
+        </p-message>
 
-                <div class="ml-2">{{(errorMessage$ | async)}}</div>
-            </ng-template>
-        </p-messages>
 
         }
         <div
@@ -22,7 +20,7 @@
                 <input pInputText type="text" class="w-full lg:w-4" (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
                     placeholder="Buscar comisión" />
             </p-iconField>
-            <p-button label="Nueva comisión" severity="primary" class="w-full lg:w-2" styleClass="w-full" (onClick)="redirectNuevaComision()"></p-button>
+            <p-button label="Nueva comisión" severity="info" class="w-full lg:w-2" styleClass="w-full" (onClick)="redirectNuevaComision()"></p-button>
         </div>
     </ng-template>
     <ng-template pTemplate="header">
@@ -40,7 +38,7 @@
             <td style="width:30%"><span class="p-column-title">Plan</span>{{comision.plan.descripcion}}</td>
             <td style="width:15%"><span class="p-column-title">Acciones</span>
                 <div class="flex gap-2 justify-content-center">
-                    <p-button size="small" label="Editar" severity="primary" class="mr-20"
+                    <p-button size="small" label="Editar" severity="warn" class="mr-20"
                         (onClick)="redirectEditarComision(comision._id)" />
                     <p-button size="small" label="Borrar" severity="danger" (onClick)="modalConfirmar(comision)" />
                     <!--                         -->
@@ -63,7 +61,7 @@
     </ng-template>
 </p-table>
 
-<p-confirmDialog #cd>
+<p-confirmDialog #cd [closable]="false">
     <ng-template pTemplate="message" let-message>
         <div class="flex flex-column align-items-center w-full gap-3 border-bottom-1 surface-border">
             <i class="pi pi-exclamation-circle text-6xl text-primary-500"></i>
@@ -71,9 +69,9 @@
         </div>
     </ng-template>
     <ng-template pTemplate="footer" let-reject="reject">
-        <button type="button" pButton icon="pi pi-check" label="Aceptar" (click)="cd.onAccept()"
+        <button type="button" pButton icon="pi pi-check" label="Aceptar" severity="success" (click)="cd.onAccept()"
             class="ui-button-success"></button>
-        <button type="button" pButton icon="pi pi-times" label="Cancelar" (click)="cd.onReject()"
+        <button type="button" pButton icon="pi pi-times" label="Cancelar" severity="danger" (click)="cd.onReject()"
             class="ui-button-secondary"></button>
     </ng-template>
 </p-confirmDialog>

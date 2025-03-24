@@ -23,6 +23,7 @@ export class CursoFilter{
 
 export class AlumnoFilter{
     incluirInscripciones:boolean = false;
+    planId:string = ''
 }
 
 export class MateriaFilter{

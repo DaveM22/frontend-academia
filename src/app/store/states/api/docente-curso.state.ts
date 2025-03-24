@@ -39,6 +39,7 @@ export class DocenteCursoState {
 
     @Action(GetDocenteCursoAction)
     async getDocenteCurso(ctx:StateContext<DocenteCursoModelState>, action:GetDocenteCursoAction){
+        ctx.patchState({ error: false, loading:true })
         try{
             const response = await lastValueFrom(this.service.get(action.filter))
             ctx.patchState({
@@ -57,6 +58,7 @@ export class DocenteCursoState {
 
     @Action(PostDocenteCursoAction)
     async postDocenteCurso(ctx:StateContext<DocenteCursoModelState>, action:PostDocenteCursoAction){
+        ctx.patchState({ error: false, loading:true })
         try{
             const response = await lastValueFrom(this.service.post(action.docenteCurso))
             const list = ctx.getState().docentes_cursos;

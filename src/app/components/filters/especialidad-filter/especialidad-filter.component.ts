@@ -9,10 +9,11 @@ import { CommonModule } from '@angular/common';
 import { ClearSelectedEspecialidadFilter, SelectedEspecialidadFilter } from '../../../store/actions/pages/app.action';
 import { FormsModule } from '@angular/forms';
 import { ClearPlanes } from '../../../store/actions/api/planes.action';
+import { SelectModule } from 'primeng/select';
 @Component({
   selector: 'app-especialidad-filter',
   standalone: true,
-  imports: [DropdownModule, CommonModule, FormsModule],
+  imports: [SelectModule, CommonModule, FormsModule],
   templateUrl: './especialidad-filter.component.html',
   styleUrl: './especialidad-filter.component.scss'
 })

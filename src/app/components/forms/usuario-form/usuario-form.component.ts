@@ -15,49 +15,80 @@ import { EspecialidadPageState } from '../../../store/states/page/especialidad.s
 import { UsuarioPageState } from '../../../store/states/page/usuario.state';
 import { Usuario } from '../../../entities/usuario';
 import { PasswordModule } from 'primeng/password';
+import { SelectModule } from 'primeng/select';
+import { PostUsuarioAction } from '../../../store/actions/api/usuarios.action';
+import { Persona } from '../../../entities/persona';
+import { PersonaPageState } from '../../../store/states/page/persona.state';
+import { Observable } from 'rxjs';
+import { ShowPersonaModal } from '../../../store/actions/pages/app.action';
+import { PersonasModalComponent } from "../../modals/personas-modal/personas-modal.component";
 
 @Component({
   selector: 'app-usuario-form',
   standalone: true,
-  imports: [ReactiveFormsModule, InputTextModule, CardModule, ButtonModule,ToastModule,  RippleModule, PasswordModule],
+  imports: [ReactiveFormsModule, InputTextModule, CardModule, ButtonModule, PersonasModalComponent, ToastModule, RippleModule, PasswordModule, SelectModule, PersonasModalComponent],
   templateUrl: './usuario-form.component.html',
   styleUrl: './usuario-form.component.scss'
 })
 export class UsuarioFormComponent {
+  personaSelected$:Observable<Persona | null> = this.store.select(PersonaPageState.getPersonaSelected)
   form!: FormGroup;
   @Input() usuario!:Usuario;
   @Input() title!:string;
-
+  roles: object[] | undefined;
+  personaSelected!: Persona;
   constructor(private store:Store, private router:Router, private messageService:MessageService){}
 
   ngOnInit(): void {
     this.form = new FormGroup({
       _id: new FormControl(null),
+      email:new FormControl('', [Validators.required]),
       nombreUsuario: new FormControl('', [Validators.required]),
       nombreYapellido: new FormControl('', [Validators.required]),
-      clave: new FormControl('',[Validators.required])
+      clave: new FormControl('',[Validators.required]),
+      role: new FormControl('', [Validators.required]),
+      persona: new FormControl('', [Validators.required]),
+      personaId: new FormControl('', [Validators.required])
     });
     this.form.patchValue(this.store.selectSnapshot(UsuarioPageState.getUsuarioSelected)!);
+
+    this.roles = [
+      {name:'Docente', code:'rol_7dAr6i1DwSZLKsrh'},
+      {name:'Alumnno', code:'rol_QNzSR8heCdXENPon'}
+  ];
   }
 
+
+    pathValues(){
+      let persona = this.store.selectSnapshot(PersonaPageState.getPersonaSelected)!
+      if(persona._id !== ""){
+        this.form.patchValue(persona);
+        this.form.patchValue({'plan': persona.plan.descripcion, 'planId':persona.plan._id});
+      }
+    }
+
   public onSubmit(){
-/*     this.especialidad = this.form.value
     if(this.form.value._id === null){
-      this.store.dispatch(new PostEspecialidadAction(this.especialidad)).subscribe(() => {
-        this.router.navigate(["/especialidades/lista"])
-
-      });
-
+      this.usuario = this.form.value;
+      this.store.dispatch(new PostUsuarioAction(this.usuario)).subscribe(() => {
+        this.router.navigate(["/usuarios/lista"])
+      })
     }
-    else{
-      this.store.dispatch(new PutEspecialidadAction(this.especialidad)).subscribe(x => this.router.navigate(["/especialidades"]));
-      this.messageService.add({ severity: 'success', summary: 'Editar especialidad', detail: 'Se guardaron los cambios de la especialidad' });
-      
-      this.store.dispatch(new ClearSelectedEspecialidad);
 
-    }
-    this.form.reset(); */
+  }
 
+  subscripcionUsuarioSelected(){
+    this.personaSelected$.subscribe(x => {
+      if (x !== null) {
+        this.personaSelected = x!;
+        this.form.patchValue({ 'persona': this.personaSelected.legajo , 'personaId': this.personaSelected._id });
+      }
+    })
+  }
+
+
+  toggleModalPersonas(){
+    this.store.dispatch(new ShowPersonaModal(true));
   }
 
   public redirectEspecialidades(){

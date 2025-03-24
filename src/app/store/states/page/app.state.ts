@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { AppModelState } from "../../modelstate/pages/app.modelstate";
-import { ClearDocenteInModal, ClearSelectedComisionInModal, ClearSelectedCursoInModal, ClearSelectedEspecialidadFilter, ClearSelectedMateriaInFilter, ClearSelectedMateriaInModal, ClearSelectedPlanFilter, ClearSelectedPlanInModal, SelectedComisionInModal, SelectedCursoInModal, SelectedDocenteInModal, SelectedEspecialidadFilter, SelectedMateriaInFilter, SelectedMateriaForCurso as SelectedMateriaInModal, SelectedPlanFilter, SelectedPlanInModal, SetPersonaId, ShowComisionesModal, ShowCursoModal, ShowDocenteModal, ShowMateriaModal, ShowModalConfirmationAction, ShowPlanModal, ToggleMenuAction } from "../../actions/pages/app.action";
+import { ClearDocenteInModal, ClearSelectedComisionInModal, ClearSelectedCursoInModal, ClearSelectedEspecialidadFilter, ClearSelectedMateriaInFilter, ClearSelectedMateriaInModal, ClearSelectedPlanFilter, ClearSelectedPlanInModal, SelectedComisionInModal, SelectedCursoInModal, SelectedDocenteInModal, SelectedEspecialidadFilter, SelectedMateriaInFilter, SelectedMateriaForCurso as SelectedMateriaInModal, SelectedPlanFilter, SelectedPlanInModal, SetPersonaId, ShowComisionesModal, ShowCursoModal, ShowDocenteModal, ShowMateriaModal, ShowModalConfirmationAction, ShowPersonaModal, ShowPlanModal, ToggleMenuAction } from "../../actions/pages/app.action";
 import { ClearSelectedCursoAction } from "../../actions/pages/curso.action";
 
 @State<AppModelState>({
@@ -22,7 +22,8 @@ import { ClearSelectedCursoAction } from "../../actions/pages/curso.action";
         showMateriaModal: false,
         showComisionModal: false,
         showCursoModal: false,
-        showProfesorModal:false
+        showProfesorModal:false,
+        showPersonaModal:false
     }
 })
 
@@ -78,6 +79,11 @@ export class AppPageState {
     @Selector()
     static getShowModalPlanes(state: AppModelState) {
         return state.showPlanModal;
+    }
+
+    @Selector()
+    static getShowModalPersonas(state: AppModelState) {
+        return state.showPersonaModal;
     }
 
     @Selector()
@@ -246,6 +252,13 @@ export class AppPageState {
     showMateriaModal(ctx: StateContext<AppModelState>, action: ShowMateriaModal) {
         ctx.patchState({
             showMateriaModal: action.show
+        })
+    }
+
+    @Action(ShowPersonaModal)
+    showPersonaModal(ctx: StateContext<AppModelState>, action: ShowPersonaModal) {
+        ctx.patchState({
+            showPersonaModal:action.show
         })
     }
 

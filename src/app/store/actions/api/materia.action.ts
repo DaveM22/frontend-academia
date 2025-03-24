@@ -31,3 +31,8 @@ export class DeleteMateria {
     static type = "[Materia API] Delete materia";
     constructor(public materia:Materia){}
 }
+
+export class ClearMateriasAction{
+    static type = "[Materia API] Clear materias result list";
+    constructor(){}
+}

@@ -24,7 +24,7 @@
                     <input pInputText type="text" class="w-full lg:w-4" (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
                         placeholder="Buscar curso" />
                 </p-iconField>
-                <p-button label="Nuevo curso" severity="primary" class="w-full lg:w-2" styleClass="w-full" (onClick)="redirectNewCurso()"></p-button>
+                <p-button label="Nuevo curso" severity="info" class="w-full lg:w-2" styleClass="w-full" (onClick)="redirectNewCurso()"></p-button>
             </div>
         </div>
     </ng-template>
@@ -46,13 +46,22 @@
             <td style="width:20%"><span class="p-column-title">Materia</span>{{curso.materia.descripcion}}</td>
             <td style="width:5%"><span class="p-column-title">Cupo</span>{{curso.cupo || 0}}</td>
             <td style="width:20%"><span class="p-column-title">Acciones</span>
-                <div class="flex gap-2 justify-content-center">
-                    <p-button size="small" label="Reporte de Inscripciones" severity="primary" class="mr-20" (onClick)="generateReport(curso._id)"
-                    />
-                    <p-button size="small" label="Editar" severity="primary" class="mr-20"
-                        (onClick)="redirectEditCurso(curso._id)" />
-                    <p-button size="small" label="Borrar" severity="danger" class="mr-20"
-                        (onClick)="modalConfirmar(curso)" />
+
+                <div class="flex flex-column sm:flex-row gap-2 justify-content-center">
+         <!--            <p-button size="small" class="w-full lg:w-3" styleClass="w-full" label="Generar reporte"
+                        (onClick)="generateReport(plan._id)"></p-button>
+                    <p-button size="small" class="w-full lg:w-2" styleClass="w-full" label="Materias"
+                        (onClick)="redirectToMaterias(plan._id)"></p-button>
+                    <p-button size="small" class="w-full lg:w-2"  styleClass="w-full" label="Editar" severity="warn"
+                        (onClick)="redirectEditarPlan(plan._id)" />
+                    <p-button size="small" class="w-full lg:w-2" styleClass="w-full" label="Borrar" severity="danger"
+                        (onClick)="modalConfirmar(plan)" /> -->
+                        <p-button size="small" label="Reporte de Inscripciones" severity="primary"  class="w-full sm:w-12  md:w-12 lg:w-9" styleClass="w-full" (onClick)="generateReport(curso._id)"
+                        />
+                        <p-button size="small" label="Editar" severity="warn"  class="w-full lg:w-2" styleClass="w-full"
+                            (onClick)="redirectEditCurso(curso._id)" />
+                        <p-button size="small" label="Borrar" severity="danger"  class="w-full lg:w-2" styleClass="w-full"
+                            (onClick)="modalConfirmar(curso)" />
                 </div>
             </td>
         </tr>
@@ -73,11 +82,17 @@
 </p-table>
 
 
-<p-confirmDialog>
+<p-confirmDialog #cd [closable]="false">
     <ng-template pTemplate="message" let-message>
         <div class="flex flex-column align-items-center w-full gap-3 border-bottom-1 surface-border">
             <i class="pi pi-exclamation-circle text-6xl text-primary-500"></i>
             <p>{{ message.message }}</p>
         </div>
+    </ng-template>
+    <ng-template pTemplate="footer" let-reject="reject">
+        <button type="button" pButton icon="pi pi-check" label="Aceptar" severity="success" (click)="cd.onAccept()"
+            class="ui-button-success"></button>
+        <button type="button" pButton icon="pi pi-times" label="Cancelar" severity="danger" (click)="cd.onReject()"
+            class="ui-button-secondary"></button>
     </ng-template>
 </p-confirmDialog>

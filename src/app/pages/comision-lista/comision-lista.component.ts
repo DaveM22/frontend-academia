@@ -8,7 +8,7 @@ import { ComisionState } from '../../store/states/api/comision.state';
 import { DeleteComisionAction, GetByIdComisionAction, GetComision } from '../../store/actions/api/comision.action';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
-import { MessagesModule } from 'primeng/messages';
+import { MessageModule } from 'primeng/message';
 import { PanelModule } from 'primeng/panel';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
@@ -24,7 +24,7 @@ import { ScreenSizeService } from '../../services/screen-size.service.service';
 @Component({
   selector: 'app-comision-lista',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, MessagesModule, PanelModule, ToastModule, ConfirmDialogModule,  IconFieldModule, InputTextModule, InputIconModule],
+  imports: [CommonModule, TableModule, ButtonModule, MessageModule, PanelModule, ToastModule, ConfirmDialogModule,  IconFieldModule, InputTextModule, InputIconModule],
   templateUrl: './comision-lista.component.html',
   styleUrl: './comision-lista.component.scss',
   providers:[ConfirmationService]

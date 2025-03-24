@@ -5,12 +5,9 @@
     <ng-template pTemplate="caption">
         @if (error$ | async)
 {
-<p-messages severity="error">
-    <ng-template pTemplate>
-
-        <div class="ml-2">{{(errorMessage$ | async)}}</div>
-    </ng-template>
-</p-messages>
+<p-message severity="error">
+    {{(errorMessage$ | async)}}
+</p-message>
 
 }
 
@@ -25,7 +22,7 @@
                     <input pInputText type="text"  class="w-full lg:w-4" (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
                         placeholder="Buscar especialidad" />
                 </p-iconField>
-                <p-button label="Nueva especialidad" severity="primary"  class="w-full lg:w-2" styleClass="w-full"
+                <p-button label="Nueva especialidad" severity="info"  class="w-full lg:w-2" styleClass="w-full"
                     (onClick)="redirectNewEspecialidad()"></p-button>
             </div>
         </div>
@@ -42,7 +39,7 @@
             </td>
             <td style="width:15%"><span class="p-column-title">Acciones</span>
                 <div class="flex gap-2 justify-content-center">
-                    <p-button size="small" label="Editar" severity="primary" class="mr-20"
+                    <p-button size="small" label="Editar" severity="warn" class="mr-20"
                         (onClick)="redirectEditEspecialidad(especialidad._id)" />
                     <p-button size="small" label="Borrar" severity="danger" (onClick)="showModal(especialidad)" />
                 </div>

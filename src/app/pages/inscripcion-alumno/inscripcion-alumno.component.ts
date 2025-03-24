@@ -15,6 +15,7 @@ import { Route, Router, RouterModule } from '@angular/router';
 import { EspecialidadFilterComponent } from "../../components/filters/especialidad-filter/especialidad-filter.component";
 import { PanelModule } from 'primeng/panel';
 import { CardModule } from 'primeng/card';
+import { AlumnoFilter } from '../../entities/filter';
 
 @Component({
   selector: 'app-inscripcion-alumno',
@@ -31,7 +32,7 @@ export class InscripcionAlumnoComponent implements OnInit {
   constructor(private store:Store, private router:Router){}
 
   ngOnInit(): void {
-    this.store.dispatch(new GetAlumnosAction);
+    this.store.dispatch(new GetAlumnosAction(new AlumnoFilter()));
   }
 
   redirectToInscripciones(id:string){

@@ -5,15 +5,14 @@
     <ng-template pTemplate="caption">
         @if (error$ | async)
         {
-        <p-messages severity="error">
-            <ng-template pTemplate>
+            <p-message icon="pi pi-times" styleClass="mb-2" severity="error">
+              {{(errorMessage$ | async)}}
+            </p-message>
 
-                <div class="ml-2">{{(errorMessage$ | async)}}</div>
-            </ng-template>
-        </p-messages>
 
         }
         <div class="grid">
+            
             <div
                 class="col-12 flex flex-column sm:flex-column w-full  lg:flex-row align-items-center lg:justify-content-between justify-content-center">
                 <p-iconField iconPosition="left" class="mb-4 lg:mb-0 w-full">
@@ -23,7 +22,7 @@
                     <input pInputText type="text" class="w-full lg:w-4"
                         (input)="dt2.filterGlobal($any($event.target).value, 'contains')" placeholder="Buscar plan" />
                 </p-iconField>
-                <p-button label="Nuevo plan" severity="primary" class="w-full lg:w-2" styleClass="w-full"
+                <p-button label="Nuevo plan" severity="info" class="w-full lg:w-2" styleClass="w-full"
                     (onClick)="redirectNuevoPlan()"></p-button>
             </div>
         </div>
@@ -45,7 +44,7 @@
                         (onClick)="generateReport(plan._id)"></p-button>
                     <p-button size="small" class="w-full lg:w-2" styleClass="w-full" label="Materias"
                         (onClick)="redirectToMaterias(plan._id)"></p-button>
-                    <p-button size="small" class="w-full lg:w-2" styleClass="w-full" label="Editar" severity="primary"
+                    <p-button size="small" class="w-full lg:w-2"  styleClass="w-full" label="Editar" severity="warn"
                         (onClick)="redirectEditarPlan(plan._id)" />
                     <p-button size="small" class="w-full lg:w-2" styleClass="w-full" label="Borrar" severity="danger"
                         (onClick)="modalConfirmar(plan)" />
@@ -55,7 +54,7 @@
     </ng-template>
 </p-table>
 
-<p-confirmDialog #cd>
+<p-confirmDialog #cd [closable]="false">
     <ng-template pTemplate="message" let-message>
         <div class="flex flex-column align-items-center w-full gap-3 border-bottom-1 surface-border">
             <i class="pi pi-exclamation-circle text-6xl text-primary-500"></i>
@@ -63,9 +62,9 @@
         </div>
     </ng-template>
     <ng-template pTemplate="footer" let-reject="reject">
-        <button type="button" pButton icon="pi pi-check" label="Aceptar" (click)="cd.onAccept()"
+        <button type="button" pButton icon="pi pi-check" label="Aceptar" severity="success" (click)="cd.onAccept()"
             class="ui-button-success"></button>
-        <button type="button" pButton icon="pi pi-times" label="Cancelar" (click)="cd.onReject()"
+        <button type="button" pButton icon="pi pi-times" label="Cancelar" severity="danger" (click)="cd.onReject()"
             class="ui-button-secondary"></button>
     </ng-template>
 </p-confirmDialog>

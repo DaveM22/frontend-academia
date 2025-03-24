@@ -73,5 +73,9 @@ accept(){
 reject(){
   this.store.dispatch(new ShowModalDelete(false))
 }
+
+onhide(){
+  this.store.dispatch(new ShowModalDelete(false))
+}
   
 }

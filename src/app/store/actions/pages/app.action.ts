@@ -2,6 +2,7 @@ import { Comision } from "../../../entities/comision";
 import { Curso } from "../../../entities/curso";
 import { Especialidad } from "../../../entities/especialidad";
 import { Materia } from "../../../entities/materia";
+import { Persona } from "../../../entities/persona";
 import { Plan } from "../../../entities/plan";
 import { Profesor } from "../../../entities/profesor";
 
@@ -124,4 +125,20 @@ export class SelectedMateriaInFilter{
 
 export class ClearSelectedMateriaInFilter{
     static type = "[Page] Clear materia selected";
+}
+
+export class ShowPersonaModal {
+    static type = "[Page] Show persona modal";
+    constructor(public show:boolean){}
+}
+
+
+export class SelectedPersonaInModal{
+    static typer = "[Page] Persona selected in modal";
+    constructor(public persona:Persona){}
+}
+
+export class ClearPersonaInModal{
+    static type = "[Page] clear persona selected in filter";
+    constructor(){}
 }

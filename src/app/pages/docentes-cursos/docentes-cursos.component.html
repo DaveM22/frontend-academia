@@ -1,4 +1,4 @@
-<p-table #dt2 [value]="(docenteCursos$ | async)!" styleClass="p-datatable-gridlines p-datatable-striped"
+<p-table #dt2 [value]="(docenteCursos$ | async)!" [loading]="(loading$ | async)" styleClass="p-datatable-gridlines p-datatable-striped"
     responsiveLayout="stack" styleClass="h-full pt-0" [breakpoint]="'960px'" [paginator]="true" [scrollable]="true"
     [rows]="5" scrollHeight="48vh" [globalFilterFields]="['nombre', 'apellido', 'direccion', 'email', 'legajo']">
     <ng-template pTemplate="caption">
@@ -35,7 +35,7 @@
             <td><span class="p-column-title">Cargo</span>{{docenteCurso.cargo}}</td>
             <td><span class="p-column-title">Acciones</span>
                 <div class="flex gap-2 justify-content-center">
-                    <p-button size="small" label="Quitar" (onClick)="modalConfirmar(docenteCurso)"></p-button>
+                    <p-button size="small" label="Quitar" severity="danger" (onClick)="modalConfirmar(docenteCurso)"></p-button>
                 </div>
             </td>
         </tr>
@@ -54,11 +54,17 @@
     </ng-template>
 </p-table>
 
-<p-confirmDialog>
+<p-confirmDialog #cd [closable]="false">
     <ng-template pTemplate="message" let-message>
         <div class="flex flex-column align-items-center w-full gap-3 border-bottom-1 surface-border">
             <i class="pi pi-exclamation-circle text-6xl text-primary-500"></i>
             <p>{{ message.message }}</p>
         </div>
+    </ng-template>
+    <ng-template pTemplate="footer" let-reject="reject">
+        <button type="button" pButton icon="pi pi-check" label="Aceptar" severity="success" (click)="cd.onAccept()"
+            class="ui-button-success"></button>
+        <button type="button" pButton icon="pi pi-times" label="Cancelar" severity="danger" (click)="cd.onReject()"
+            class="ui-button-secondary"></button>
     </ng-template>
 </p-confirmDialog>

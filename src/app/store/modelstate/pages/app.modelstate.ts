@@ -21,5 +21,6 @@ export interface AppModelState{
     showMateriaModal:boolean,
     showComisionModal:boolean,
     showCursoModal:boolean,
-    showProfesorModal:boolean
+    showProfesorModal:boolean,
+    showPersonaModal:boolean
 }

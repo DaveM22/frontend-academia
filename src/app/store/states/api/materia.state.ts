@@ -1,12 +1,12 @@
 import { Injectable } from "@angular/core";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { MateriaPageModelState } from "../../modelstate/pages/materia.modelstate";
-import { GetByIdMateriaAction, PutMateriaAction, PostMateriaAction, GetMateriasAction, GetByIdForInscripcion, DeleteMateria as DeleteMateriaAction } from "../../actions/api/materia.action";
+import { GetByIdMateriaAction, PutMateriaAction, PostMateriaAction, GetMateriasAction, GetByIdForInscripcion, DeleteMateria as DeleteMateriaAction, ClearMateriasAction } from "../../actions/api/materia.action";
 import { PlanService } from "../../../services/plan.service";
 import { lastValueFrom } from "rxjs";
 import { MateriaService } from "../../../services/materia.service";
 import { MateriaModelState } from "../../modelstate/api/materia.modelstate";
-import { AsignMateriaAction } from "../../actions/pages/materia.action";
+import { AsignMateriaAction, ClearMateriaAction } from "../../actions/pages/materia.action";
 import { MessageService } from "primeng/api";
 import { GetByIdPlanAction } from "../../actions/api/planes.action";
 import { PlanFilter } from "../../../entities/filter";
@@ -77,7 +77,10 @@ export class MateriaState {
   }
 
 
-
+@Action(ClearMateriasAction)
+async clearMaterias(ctx: StateContext<MateriaModelState>, action: ClearMateriasAction){
+  return ctx.patchState({materias:[]})
+}
 
 
   @Action(PostMateriaAction)

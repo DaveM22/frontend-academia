@@ -17,18 +17,29 @@
                 <!-- Botón personalizado que reemplaza al botón nativo -->
                 @if ((this.auth.isAuthenticated$ | async)) {
 
-                    <button  pRipple class="relative overflow-hidden w-full p-link flex align-items-center p-2 pl-3 text-color hover:surface-200 border-noround" (click)="menu.toggle($event)">
+                    <p-button (click)="menu.toggle($event)" rounded="true" [outlined]="true" styleClass="relative overflow-hidden w-full p-link flex align-items-center  text-color hover:surface-200">
+                        <p-avatar image="https://cdn.auth0.com/avatars/um.png" class="mr-2" shape="circle" />
+                        <span class="inline-flex flex-column">
+                            <span class="font-bold">{{name}}</span>
+                            <span class="text-sm">{{rol}}</span>
+                        </span>
+      
+                    </p-button>
+                    <p-menu #menu [model]="logItems" [popup]="true" />
+<!-- 
+                    
+                    <button   pRipple class="relative overflow-hidden w-full p-link flex align-items-center p-2 pl-3 text-color hover:surface-200 border-noround" (click)="menu.toggle($event)">
                         <p-avatar image="https://cdn.auth0.com/avatars/um.png" class="mr-2" shape="circle" />
                         <span class="inline-flex flex-column">
                             <span class="font-bold">{{name}}</span>
                             <span class="text-sm">{{rol}}</span>
                         </span>
                     </button>
-                    <p-menu #menu [model]="logItems" [popup]="true" />
+                    <p-menu #menu [model]="logItems" [popup]="true" /> -->
         
                 }
                 @else {
-                    <p-button icon="pi pi-user" label="Ingresar" (onClick)="login()" ></p-button>
+                    <p-button icon="pi pi-user" label="Ingresar" [rounded]="true"  (onClick)="login()" ></p-button>
                 }
                 
               </ng-template>

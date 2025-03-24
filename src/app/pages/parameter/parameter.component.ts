@@ -30,7 +30,7 @@ export class ParameterComponent implements OnInit {
 
   ngOnInit(): void {
       this.form = new FormGroup({
-      enabledInscripciones: new FormControl(false, [Validators.required]),
+      habilitarInscripciones: new FormControl(false, [Validators.required]),
       
    });
   }

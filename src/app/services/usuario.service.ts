@@ -12,10 +12,18 @@ export class UsuarioService {
   constructor(private http:HttpClient) { }
 
   public getUsuarios(){
-    return this.http.get<Usuario[]>(`${environment.apiUrl}/usuarios`)
+    return this.http.get<Usuario[]>(`${environment.apiUrl}/usuarios`);
   }
 
   public getByIdUsuario(id:string){
-    return this.http.get<Usuario>(`${environment.apiUrl}/usuarios/${id}`)
+    return this.http.get<Usuario>(`${environment.apiUrl}/usuarios/${id}`);
+  }
+
+  public postUsuario(usr:Usuario){
+    return this.http.post<Usuario>(`${environment.apiUrl}/usuarios`, usr);
+  }
+
+  public deleteUsuario(id:string){
+    return this.http.delete<Usuario>(`${environment.apiUrl}/usuarios/${id}`)
   }
 }

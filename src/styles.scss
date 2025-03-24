@@ -4,6 +4,13 @@ $md:992px !default;
 $lg:1400px !default;
 $xl:2200px !default;
 
+
+@media (min-width: 768px) {
+    .p-column-title {
+      display: none;
+    }
+  }
+
 $breakpoints: (
     'sm': $sm,
     'md': $md,

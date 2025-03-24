@@ -1097,17 +1097,17 @@ const MyPreset = definePreset(Material, {
                           }
                       },
                       success: {
-                          background: "{green.500}",
+                          background: "{green.950}",
                           hoverBackground: "{green.400}",
                           activeBackground: "{green.300}",
-                          borderColor: "{green.500}",
+                          borderColor: "{green.950}",
                           hoverBorderColor: "{green.400}",
                           activeBorderColor: "{green.300}",
                           color: "#ffffff",
                           hoverColor: "#ffffff",
                           activeColor: "#ffffff",
                           focusRing: {
-                              color: "{green.500}",
+                              color: "{green.950}",
                               shadow: "none"
                           }
                       },
@@ -1669,7 +1669,7 @@ const MyPreset = definePreset(Material, {
               shadow: "0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12)"
           },
           body: {
-              padding: "1.5rem",
+              padding: " 0 1.5rem 1.5rem 1.5rem",
               gap: "0.75rem"
           },
           caption: {

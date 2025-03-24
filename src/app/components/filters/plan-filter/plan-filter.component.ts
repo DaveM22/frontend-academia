@@ -8,11 +8,12 @@ import { ClearPlanes } from '../../../store/actions/api/planes.action';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { DropdownModule } from 'primeng/dropdown';
+import { SelectModule } from 'primeng/select';
 
 @Component({
   selector: 'app-plan-filter',
   standalone: true,
-  imports: [DropdownModule, CommonModule, FormsModule],
+  imports: [SelectModule, CommonModule, FormsModule],
   templateUrl: './plan-filter.component.html',
   styleUrl: './plan-filter.component.scss'
 })

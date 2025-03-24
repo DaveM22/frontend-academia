@@ -34,6 +34,7 @@ export class DocentesCursosComponent implements OnInit {
   docenteCursos$: Observable<DocenteCurso[]> = this.store.select(DocenteCursoState.getDocentesCursos);
   showConfirmation$:Observable<boolean> = this.store.select(AppPageState.showModalConfirmation)
   curso$:Observable<Curso | null> = this.store.select(CursoPageState.getCursoSelected);
+  loading$: Observable<boolean> = this.store.select(DocenteCursoState.getLoading);
   docenteCursoSelected!:DocenteCurso
   materiaId:string='';
   cursoId:string='';

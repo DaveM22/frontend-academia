@@ -13,15 +13,20 @@ import { Observable } from 'rxjs';
 import { Store } from '@ngxs/store';
 import { UsuarioState } from '../../store/states/api/usuario.state';
 import { Usuario } from '../../entities/usuario';
-import { GetUsuarioListaAction } from '../../store/actions/api/usuarios.action';
+import { DeleteUsuarioAction, GetUsuarioListaAction } from '../../store/actions/api/usuarios.action';
 import { Router } from '@angular/router';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { AppPageState } from '../../store/states/page/app.state';
+import { ShowModalConfirmationAction } from '../../store/actions/pages/app.action';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-usuario-lista',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, MessagesModule, PanelModule, ToastModule, IconFieldModule, InputTextModule, InputIconModule],
+  imports: [CommonModule, TableModule, ButtonModule,ConfirmDialogModule, MessagesModule, PanelModule, ToastModule, IconFieldModule, InputTextModule, InputIconModule],
   templateUrl: './usuario-lista.component.html',
-  styleUrl: './usuario-lista.component.scss'
+  styleUrl: './usuario-lista.component.scss',
+  providers:[ConfirmationService]
 })
 export class UsuarioListaComponent implements OnInit {
 
@@ -29,10 +34,17 @@ export class UsuarioListaComponent implements OnInit {
   loading$:Observable<boolean> = this.store.select(UsuarioState.getLoading);
   error$:Observable<boolean> = this.store.select(UsuarioState.getError);
   errorMessage$:Observable<string> = this.store.select(UsuarioState.getErrorMessage)
-  constructor(private store:Store, private router:Router){}
+  usuarioSelected$!:Usuario;
+ showConfirmation$: Observable<boolean> = this.store.select(AppPageState.showModalConfirmation)
+  constructor(private store:Store, private router:Router, private messageService: MessageService,  private confirmationService: ConfirmationService){}
 
 
   ngOnInit(): void {
+    this.showConfirmation$.subscribe(x => {
+      if (x && this.usuarioSelected$) {
+        this.confirm();
+      }
+    })
     this.store.dispatch(new GetUsuarioListaAction());
   }
 
@@ -43,5 +55,31 @@ export class UsuarioListaComponent implements OnInit {
   redirigirNuevoUsuario(){
     this.router.navigate([`usuarios/nuevo`]);
   }
+
+    confirm() {
+      this.confirmationService.confirm({
+        header: 'Borrar profesor',
+        message: `¿Desea eliminar el siguiente usuario: ${this.usuarioSelected$.nombreUsuario}  ?`,
+        acceptIcon: 'pi pi-check mr-2',
+        rejectIcon: 'pi pi-times mr-2',
+        rejectButtonStyleClass: 'p-button-sm',
+        acceptButtonStyleClass: 'p-button-outlined p-button-sm',
+        accept: () => {
+          this.store.dispatch(new DeleteUsuarioAction(this.usuarioSelected$._id))
+            .subscribe(() => {
+              this.store.dispatch(new ShowModalConfirmationAction(false))
+              this.messageService.add({ severity: 'success', summary: 'Borrar profesor', detail: `Se ha borrado el usuario` });
+            })
+        },
+        reject: () => {
+          this.store.dispatch(new ShowModalConfirmationAction(false))
+        }
+      });
+    }
+  
+      modalConfirmar(usuario:Usuario){
+        this.usuarioSelected$= usuario;
+        this.store.dispatch(new ShowModalConfirmationAction(true));
+      }
 
 }

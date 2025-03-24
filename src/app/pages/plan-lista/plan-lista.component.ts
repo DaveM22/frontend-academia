@@ -11,7 +11,7 @@ import { ButtonModule } from 'primeng/button';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
-import { MessagesModule } from 'primeng/messages';
+import { MessageModule } from 'primeng/message';
 import { TableModule } from 'primeng/table';
 import { ToolbarModule } from 'primeng/toolbar';
 import { EspecialidadFilterComponent } from '../../components/filters/especialidad-filter/especialidad-filter.component';
@@ -24,7 +24,7 @@ import { AppPageState } from '../../store/states/page/app.state';
 @Component({
   selector: 'app-plan-lista',
   standalone: true,
-  imports: [ButtonModule, TableModule, CommonModule, MessagesModule, IconFieldModule, InputIconModule, ConfirmDialogModule, InputTextModule],
+  imports: [ButtonModule, TableModule, CommonModule, MessageModule, IconFieldModule, InputIconModule, ConfirmDialogModule, InputTextModule],
   templateUrl: './plan-lista.component.html',
   styleUrl: './plan-lista.component.scss',
   providers: [ConfirmationService]

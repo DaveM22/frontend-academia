@@ -6,6 +6,7 @@
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
             <div class="flex overflow-hidden justify-content-center">
                 <div class="col-12 lg:col-4">
+
                     <div class="field">
                         <label for="nombreUsuario">Usuario:</label>
                         <input id="nombreUsuario" pInputText formControlName="nombreUsuario" type="text" class="w-full">
@@ -25,6 +26,15 @@
                         }
                     </div>
                     <div class="field">
+                        <label for="email">Email:</label>
+                        <input id="email" pInputText formControlName="email" type="text" class="w-full">
+                        @if(form.get('email')?.invalid && form.get('email')?.dirty){
+                        <small class="p-error block">
+                            El campo Email es requerido
+                        </small>
+                        }
+                    </div>
+                    <div class="field">
                         <label for="nombreYapellido">Clave:</label>
                         <p-password formControlName="clave" [feedback]="false" class="w-full" styleClass="w-full" />
                         @if(form.get('descripcion')?.invalid && form.get('clave')?.dirty){
@@ -32,6 +42,25 @@
                             El campo clave es requerido
                         </small>
                         }
+                    </div>
+                    <div class="field">
+                        <label for="rol">Rol:</label>
+                        <p-select formControlName="role" [options]="roles" optionLabel="name" optionValue="code" appendTo="body" placeholder="Seleccionar role" class="w-full md:w-56" />
+                    </div>
+                    <div class="field">
+                        <label>Plan:</label>
+                        <div class="field grid">
+                            <div class="col-12 sm:col-12 lg:col-7">
+                                <input type="text" pInputText placeholder="Seleccione una persona" class="w-full sm:w-full"
+                                    formControlName="persona" />
+                            </div>
+
+                            <div class="col-12 sm:col-12 lg:col-5">
+                                <p-button label="Seleccionar persona" severity="primary"
+                                    styleClass="w-full mt-2 sm:w-full align-items-center lg:w-full sm:mt-2 lg:mt-0 "
+                                    (onClick)="toggleModalPersonas()"></p-button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -43,4 +72,4 @@
         </form>
     </ng-template>
 </p-card>
-
+<app-personas-modal></app-personas-modal>

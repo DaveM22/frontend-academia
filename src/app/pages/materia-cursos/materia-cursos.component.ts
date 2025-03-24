@@ -24,6 +24,7 @@ import { TableModule } from 'primeng/table';
 export class MateriaCursosComponent implements OnInit {
   cursos$:Observable<Curso[]> = this.store.select(CursoState.getCursos); 
   materiaId:string = ''
+  loading$:Observable<boolean> = this.store.select(CursoState.getLoading);
   constructor(private store:Store, private activateRouter:ActivatedRoute, private route:Router){}
 
 
@@ -36,6 +37,10 @@ export class MateriaCursosComponent implements OnInit {
 
   redirectDocentesCursos(id:string){
     this.route.navigate([`asignacion-docentes/${this.materiaId}/${id}/docentes`]);
+  }
+
+  redirectSeleccionarMateria(){
+    this.route.navigate(["/asignacion-docentes/seleccionar-materia"])
   }
 
 }

@@ -76,7 +76,7 @@ export class DocenteCursoFormComponent implements OnInit {
   }
 
   redirectDocenteCursos(){
-
+    this.router.navigate([`asignacion-docentes/${this.curso.materia?._id}/${this.curso._id}/docentes`])
   }
 
   onSubmit(){

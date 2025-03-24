@@ -14,6 +14,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { MessagesModule } from 'primeng/messages';
 import { TableModule } from 'primeng/table';
 import { EspecialidadFilterComponent } from '../../components/filters/especialidad-filter/especialidad-filter.component';
+import { AlumnoFilter } from '../../entities/filter';
 
 @Component({
   selector: 'app-inscripcion-alumno-lista',
@@ -30,7 +31,7 @@ export class InscripcionAlumnoListaComponent implements OnInit {
   constructor(private store:Store, private router:Router){}
 
   ngOnInit(): void {
-    this.store.dispatch(new GetAlumnosAction);
+    this.store.dispatch(new GetAlumnosAction(new AlumnoFilter()));
   }
 
   redirectToInscripciones(id:string){

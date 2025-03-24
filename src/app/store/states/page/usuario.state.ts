@@ -7,12 +7,19 @@ import { AsignSelectedUsuario, ClearSelectedUsuario } from "../../actions/pages/
 @State<UsuarioModelState>({
     name: 'usuariosPage',
     defaults:{
+        showModalDelete:false,
         usuarioSelected:null
     }
   })
 
   @Injectable()
   export class UsuarioPageState{
+
+     @Selector()
+    static getShowModalDelete(state: UsuarioModelState){
+        return state.showModalDelete;
+    }
+
     @Selector()
     static getUsuarioSelected(state: UsuarioModelState){
         return state.usuarioSelected;

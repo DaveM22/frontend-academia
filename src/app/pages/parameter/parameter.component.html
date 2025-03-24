@@ -12,7 +12,7 @@
             <div class="flex overflow-hidden justify-content-center">
                 <div class="col-12 lg:col-4">
                     <div class="field">
-                        <label for="descripcion">Descripcion:</label>
+                        <label for="descripcion">Habilitar inscripciones:</label>
 <!--                         <input id="descripcion" pInputText formControlName="descripcion" type="text" class="w-full">
                         @if(form.get('descripcion')?.invalid && form.get('descripcion')?.dirty){
                         <small class="p-error block">
@@ -20,7 +20,7 @@
                         </small>
                         } -->
                         <div class="card flex justify-center">
-                            <p-togglebutton formControlName="enabledInscripciones" onLabel="Locked" offLabel="Unlocked" onIcon="pi-check" offIcon="pi pi-times" onIcon="pi-lock" offIcon="pi pi-lock-open" styleClass="w-36" ariaLabel="Do you confirm" />
+                            <p-toggleswitch formControlName="habilitarInscripciones" class="w-full" />
                         </div>
                     </div>
                 </div>

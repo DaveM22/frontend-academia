@@ -56,7 +56,7 @@ export class AlumnoListaComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.store.dispatch(new GetAlumnosAction);
+    this.store.dispatch(new GetAlumnosAction(new AlumnoFilter()));
     this.showConfirmation$.subscribe(x => {
       if(x  && this.alumnoSelected){
         this.confirm();
