@@ -32,7 +32,6 @@ export class InscripcionAlumnoComponent implements OnInit {
   constructor(private store:Store, private router:Router){}
 
   ngOnInit(): void {
-    this.store.dispatch(new GetAlumnosAction(new AlumnoFilter()));
   }
 
   redirectToInscripciones(id:string){

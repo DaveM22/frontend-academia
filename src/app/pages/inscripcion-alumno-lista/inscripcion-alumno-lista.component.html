@@ -17,6 +17,27 @@
     <ng-template pTemplate="caption">
         <div class="grid">
             <div class="col-12 flex flex-column sm:flex-column md:flex-row lg:flex-row align-items-center lg:justify-content-between justify-content-center">
+                <div class="sm:block  lg:flex gap-2">
+                    <div class="mb-3">
+                        <div class="field">
+                            <label>Especialidad:</label>
+                            <div class="field">
+                                <app-especialidad-filter></app-especialidad-filter>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="field">
+                            <label>Plan:</label>
+                            <div class="field">
+                                <app-plan-filter [disable]="disablePlanDropDown"></app-plan-filter>
+                            </div>
+                        </div>
+            
+                    </div>
+            
+            
+                </div>
                 <p-iconField iconPosition="left" class="mb-4 lg:mb-0">
                     <p-inputIcon>
                         <i class="pi pi-search"></i>

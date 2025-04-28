@@ -10,3 +10,8 @@
 :host::ng-deep  .p-card .p-card-content{
     height: 90%;
 } */
+
+
+:host::ng-deep  .p-card .p-card-body{
+    overflow-y:auto;
+}

@@ -13,7 +13,7 @@ import { ErrorStateHandler } from "../../../util/ErrorStateHandler";
     defaults: {
         alumnos: [],
         profesores: [],
-        loading: true,
+        loading: false,
         error: false,
         errorMessage: '',
     }

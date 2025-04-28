@@ -17,7 +17,7 @@
     <ng-template pTemplate="caption">
         <div class="grid">
             @if (alumno) {
-                <h2> Catedras del alumno: ({{alumno.legajo}}) {{alumno.apellido}} {{alumno.nombre}} </h2>
+                <h2> Catedras del alumno: ({{alumno.legajo}}) {{alumno.apellido}} {{alumno.nombre}} Plan: {{alumno.plan.descripcion}} </h2>
             }
             <div class="col-12 flex flex-column sm:flex-column md:flex-row lg:flex-row align-items-center lg:justify-content-between justify-content-center">
                 <p-button label="Volver a inscripciones" severity="primary" (onClick)="redirectToInscripcionesalumnos()"></p-button>

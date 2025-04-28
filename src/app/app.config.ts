@@ -30,6 +30,7 @@ import { providePrimeNG } from 'primeng/config';
 import { withNgxsLoggerPlugin } from '@ngxs/logger-plugin';
 import Material from '@primeng/themes/material';
 import { definePreset } from '@primeng/themes';
+import { style } from '@angular/animations';
 
 const MyPreset = definePreset(Material, {
   primitive: {
@@ -1669,6 +1670,7 @@ const MyPreset = definePreset(Material, {
               shadow: "0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12)"
           },
           body: {
+              style: "overflow-y:overlay",
               padding: " 0 1.5rem 1.5rem 1.5rem",
               gap: "0.75rem"
           },
