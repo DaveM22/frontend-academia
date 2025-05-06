@@ -22,7 +22,7 @@
                         <div class="field">
                             <label>Especialidad:</label>
                             <div class="field">
-                                <app-especialidad-filter></app-especialidad-filter>
+                                <app-especialidad-filter (selectionChange)="onEspecialidadChanged($event)"></app-especialidad-filter>
                             </div>
                         </div>
                     </div>
@@ -30,7 +30,7 @@
                         <div class="field">
                             <label>Plan:</label>
                             <div class="field">
-                                <app-plan-filter [disable]="disablePlanDropDown"></app-plan-filter>
+                                <app-plan-filter (selectionChange)="onPlanChanged($event!)" [disable]="disablePlanDropDown"></app-plan-filter>
                             </div>
                         </div>
             

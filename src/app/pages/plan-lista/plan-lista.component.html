@@ -1,6 +1,6 @@
 <p-table #dt2 [value]="planes" [loading]="(loading$ | async)" responsiveLayout="stack" [breakpoint]="'960px'"
     [paginator]="true" [scrollable]="true" [rows]="5" scrollHeight="flex"
-    styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0"
+    styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0" responsiveLayout="stack" [breakpoint]="'960px'"
     [globalFilterFields]="['descripcion, especialidad.descripcion']">
     <ng-template pTemplate="caption">
         @if (error$ | async)

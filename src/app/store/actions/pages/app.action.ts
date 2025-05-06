@@ -53,7 +53,7 @@ export class ShowCursoModal {
     constructor(public show: boolean) { }
 }
 
-export class SelectedEspecialidadFilter {
+export class SelectedEspecialidadFilterAction {
     static type = "[Page] Especialidad Selected";
     constructor(public especialidad: Especialidad) { }
 }

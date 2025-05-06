@@ -8,7 +8,7 @@ export class ShowModalDelete{
 
 export class AsignSelectedEspecialidad {
     static type = "[Especialidad Page] asign especialidad selected"
-    constructor(public especialidad: Especialidad){}
+    constructor(public especialidad: Especialidad, public context?: string | null){}
 }
 
 export class ClearSelectedEspecialidad {

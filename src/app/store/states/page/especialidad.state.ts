@@ -7,7 +7,8 @@ import { AsignSelectedEspecialidad, ClearSelectedEspecialidad, ShowModalDelete }
     name: 'especialidadesPage',
     defaults:{
         showModalDelete:false,
-        especialidadSelected:null
+        especialidadSelected:null,
+        context:null
     }
   })
 
@@ -35,7 +36,8 @@ import { AsignSelectedEspecialidad, ClearSelectedEspecialidad, ShowModalDelete }
     @Action(AsignSelectedEspecialidad)
     asignEspecialidad(ctx:StateContext<EspecialidadPageModelState>, action:AsignSelectedEspecialidad){
         return ctx.patchState({
-            especialidadSelected: action.especialidad!
+            especialidadSelected: action.especialidad!,
+            context:action.context
         })
     }
 

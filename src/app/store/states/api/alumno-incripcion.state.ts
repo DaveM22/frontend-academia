@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Action, State, StateContext } from "@ngxs/store";
+import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { AlumnoInscripcionModelState } from "../../modelstate/api/alumno-inscripcion.modelstate";
 import { DeleteAlumnoInscripcionAction, GetOneAlumnoInscripcionAction, PostAlumnoInscripcionAction, PutAlumnoInscripcionAction } from "../../actions/api/alumno-inscripcion.action";
 import { AlumnoInscripcionService } from "../../../services/alumno-inscripcion.service";
@@ -21,33 +21,43 @@ import { ErrorStateHandler } from "../../../util/ErrorStateHandler";
 @Injectable()
 export class AlumnoInscripcionState {
     
+  @Selector()
+  static getLoading(state: AlumnoInscripcionModelState) {
+      return state.loading;
+  }
 
     constructor(private service:AlumnoInscripcionService){}
 
     @Action(PostAlumnoInscripcionAction)
     async postAlumnoInscripcion(ctx:StateContext<AlumnoInscripcionModelState>, action: PostAlumnoInscripcionAction){
+      ctx.patchState({loading:true, error:false})
         const response = await lastValueFrom(this.service.post(action.inscripcion));
         const list = ctx.getState().inscripciones;
         ctx.patchState({
-          inscripciones: [...list,response]
+          inscripciones: [...list,response],
+          loading:false
         })
     }
 
     @Action(GetOneAlumnoInscripcionAction)
     async getOneAlumnoInscripcion(ctx:StateContext<AlumnoInscripcionModelState>, action: GetOneAlumnoInscripcionAction){
+      ctx.patchState({loading:true, error:false})
         const response = await lastValueFrom(this.service.get(action.id));
         ctx.dispatch(new AsignAlumnoInscripcionAction(response));
+        ctx.patchState({loading:false, error:false})
     }
 
     @Action(PutAlumnoInscripcionAction)
     async putAlumnoInscripcion(ctx:StateContext<AlumnoInscripcionModelState>, action: PutAlumnoInscripcionAction){
+      ctx.patchState({loading:true, error:false})
         const response = await lastValueFrom(this.service.put(action.id,action.alumnoInscripcion));
 
         const updatedAlumnoInscripcion = ctx.getState().inscripciones.map(item => item = 
           item._id === response._id ? response : item
         );
         ctx.patchState({
-          inscripciones:updatedAlumnoInscripcion 
+          inscripciones:updatedAlumnoInscripcion,
+          loading:false
         })
   
     }

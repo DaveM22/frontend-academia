@@ -22,6 +22,7 @@ import { Route, Router } from '@angular/router';
 import { FieldsetModule } from 'primeng/fieldset';
 import { ClearSelectedPlan } from '../../store/actions/pages/plan.action';
 import { ClearSelectedEspecialidadFilter, ClearSelectedPlanFilter } from '../../store/actions/pages/app.action';
+import { Plan } from '../../entities/plan';
 
 @Component({
   selector: 'app-materias-asignacion',
@@ -31,49 +32,30 @@ import { ClearSelectedEspecialidadFilter, ClearSelectedPlanFilter } from '../../
   styleUrl: './materias-asignacion.component.scss'
 })
 export class MateriasAsignacionComponent implements OnDestroy{
-
+  loading$:Observable<boolean | null> = this.store.select(MateriaState.getLoading);
   especialidadSelected$:Observable<Especialidad | null> = this.store.select(AppPageState.getSelectedEspecialidad);
   planSelected$:Observable<Especialidad | null> = this.store.select(AppPageState.getSelectedPlanInFilter);
   materias$:Observable<Materia[]> = this.store.select(MateriaState.getMaterias);
   disablePlanDropDown:boolean = true;
   messages: Message[] | undefined;
   materias!: Materia[];
+  mostrarTip: boolean = true;
+  plan!:Plan | undefined;
 
 
   constructor(private store:Store, private route:Router){}
 
 
   ngOnInit(): void {
-    this.especialidadSelected$.subscribe(x => {
-      if(x !== null){
-        this.disablePlanDropDown = false;
-        let filter = new PlanFilter();
-        filter.especialidadId = x._id;
-        this.store.dispatch(new GetPlanAction(filter))
-      }
-      else{
-        this.disablePlanDropDown = true;
-      }
-    })
 
+
+  
     this.materias$.subscribe(x => {
-      if(x){
+      if(x !== null){
         this.materias = x;
       }
     })
 
-
-
-    this.planSelected$.subscribe(x => {
-      if(x){
-        let filter = new MateriaFilter();
-        filter.planId = x._id;
-        this.store.dispatch(new GetMateriasAction(filter))
-      }
-      else{
-        this.materias = [];
-      }
-    })
   }
 
 
@@ -82,6 +64,38 @@ export class MateriasAsignacionComponent implements OnDestroy{
     this.store.dispatch(new ClearMateriasAction());
     this.store.dispatch(new ClearSelectedEspecialidadFilter);
     this.route.navigate([`asignacion-docentes/${id}/seleccionar-curso`]);
+  }
+
+  onPlanChanged(value:Plan){
+    if(value){
+      this.plan = value;
+      let filter = new MateriaFilter();
+      filter.planId = value._id;
+      this.store.dispatch(new GetMateriasAction(filter))
+      this.mostrarTip = false;
+    }
+    else{
+      this.plan = undefined;
+      this.store.dispatch(new ClearMateriasAction());
+    }
+  }
+
+
+  onEspecialidadChanged(value: Especialidad) {
+    if(value){
+      this.disablePlanDropDown = false;
+      let filter = new PlanFilter();
+      filter.especialidadId = value._id;
+      this.store.dispatch(new GetPlanAction(filter))
+      
+    }
+    else{
+      this.plan = undefined;
+      this.store.dispatch(new ClearPlanes);
+      this.store.dispatch(new ClearSelectedPlanFilter);
+      this.store.dispatch(new ClearMateriasAction());
+    }
+
   }
 
   ngOnDestroy(): void {

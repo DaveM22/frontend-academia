@@ -123,6 +123,7 @@ export class InscripcionFormComponent implements OnInit {
     });
    }
    else{
+    this.alumnoInscripcionDto = this.form.value;
     this.store.dispatch(new PutAlumnoInscripcionAction(this.alumnoInscripcion._id,this.alumnoInscripcionDto)).subscribe(() => {
       this.router.navigate([`/inscripciones/alumnos/${this.alumnoId}`]);
       this.messageService.add({ severity: 'success', summary: 'Editar inscripción', detail: 'Se han guardado los cambios de la inscripción' });

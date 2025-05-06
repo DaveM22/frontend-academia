@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { PersonaState } from '../../store/states/api/persona.state';
 import { Observable } from 'rxjs';
 import { Alumno } from '../../entities/alumno';
 import { Store } from '@ngxs/store';
 
-import { GetAlumnosAction } from '../../store/actions/api/persona.action';
+import { ClearAlumnoListAction, GetAlumnosAction } from '../../store/actions/api/persona.action';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
@@ -20,6 +20,9 @@ import { Especialidad } from '../../entities/especialidad';
 import { Plan } from '../../entities/plan';
 import { AppPageState } from '../../store/states/page/app.state';
 import { GetPlanAction } from '../../store/actions/api/planes.action';
+import { ClearSelectedPersona } from '../../store/actions/pages/persona.action';
+import { ClearSelectedPlanFilter, SelectedEspecialidadFilterAction, SelectedPlanFilter } from '../../store/actions/pages/app.action';
+import { AsignSelectedPlan } from '../../store/actions/pages/plan.action';
 
 @Component({
   selector: 'app-inscripcion-alumno-lista',
@@ -28,7 +31,7 @@ import { GetPlanAction } from '../../store/actions/api/planes.action';
   templateUrl: './inscripcion-alumno-lista.component.html',
   styleUrl: './inscripcion-alumno-lista.component.scss'
 })
-export class InscripcionAlumnoListaComponent implements OnInit {
+export class InscripcionAlumnoListaComponent implements OnInit, OnDestroy {
   alumnos$:Observable<Alumno[]> = this.store.select(PersonaState.getAlumnos);
   loading$:Observable<boolean> = this.store.select(PersonaState.getLoading);
   error$:Observable<boolean> = this.store.select(PersonaState.getError);
@@ -38,30 +41,69 @@ export class InscripcionAlumnoListaComponent implements OnInit {
   errorMessage$:Observable<string> = this.store.select(PersonaState.getErrorMessage);
   constructor(private store:Store, private router:Router){}
 
-  ngOnInit(): void {
 
-        this.especialidadSelected$.subscribe(x => {
-          if(x){
-            this.disablePlanDropDown = false;
-            let filter = new PlanFilter();
-            filter.especialidadId = x._id;
-            this.store.dispatch(new GetPlanAction(filter))
-          }
-          else{
-            this.disablePlanDropDown = true;
-          }
-        })
-    
-        this.planSelected$.subscribe(x => {
-          if(x){
-            const filter = new AlumnoFilter();
-            filter.planId = x._id;
-            this.store.dispatch(new GetAlumnosAction(filter));
-          }
-        })
+  ngOnInit(): void {
+    this.especialidadSelected$.subscribe(x => {
+      if(x !== null){
+        this.disablePlanDropDown = false;
+        let filter = new PlanFilter();
+        filter.especialidadId = x._id;
+        this.store.dispatch(new GetPlanAction(filter))
+      }
+      else{
+        this.store.dispatch(new ClearSelectedPlanFilter);
+        this.disablePlanDropDown = true;
+      }
+    })
+
+    this.planSelected$.subscribe(x => {
+      if(x){
+        const filter = new AlumnoFilter();
+        filter.planId = x._id;
+        this.store.dispatch(new GetAlumnosAction(filter));
+      }
+    })
+/*       */
   }
+
+
+    onPlanChanged(value:Plan){
+      this.store.dispatch(new SelectedPlanFilter(value));
+/*       if(value){
+        const filter = new AlumnoFilter();
+        filter.planId = value._id;
+        this.store.dispatch(new GetAlumnosAction(filter));
+        this.store.dispatch(new SelectedPlanFilter(value));
+      }
+      else{
+        this.store.dispatch(new ClearSelectedPlanFilter);
+        this.store.dispatch(new ClearAlumnoListAction);
+      } */
+    }
+  
+  
+    onEspecialidadChanged(value: Especialidad) {
+
+      this.store.dispatch(new SelectedEspecialidadFilterAction(value))
+   /*    console.log(value);
+      if(value){
+        this.disablePlanDropDown = false;
+        let filter = new PlanFilter();
+        filter.especialidadId = value._id;
+        this.store.dispatch(new GetPlanAction(filter))
+      }
+      else{
+        this.disablePlanDropDown = true;
+        this.store.dispatch(new ClearSelectedPlanFilter);
+        this.store.dispatch(new ClearAlumnoListAction);
+      } */
+    }
 
   redirectToInscripciones(id:string){
     this.router.navigate([`/inscripciones/alumnos/${id}`]);
+  }
+
+  ngOnDestroy(): void {
+    this.store.dispatch(new ClearAlumnoListAction);
   }
 }

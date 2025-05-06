@@ -1,6 +1,7 @@
 import { Alumno } from "../../../entities/alumno"
 import { Persona } from "../../../entities/persona";
 import { Profesor } from "../../../entities/profesor";
+
 export class ShowModalDelete{
     static type = "[Modal] Show modal delete";
     constructor(public show:boolean){}

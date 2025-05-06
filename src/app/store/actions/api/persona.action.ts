@@ -57,3 +57,15 @@ export class DeleteProfesorAction {
     constructor(public id:string){}
 }
 
+export class UpdateManualLoading {
+    static type = "[Internal] Update manual loading";
+    constructor(public loading:boolean){}
+}
+
+
+export class ClearAlumnoListAction{
+    static type = "[Internal] Clear alumno data";
+    constructor(){}
+}
+
+

@@ -7,7 +7,8 @@ import { AsignSelectedPlan, ClearSelectedPlan, ShowModalDelete } from "../../act
     name: 'planesPage',
     defaults:{
         showModalDelete:false,
-        planSelected:null
+        planSelected:null,
+        context:null
     }
   })
 
@@ -34,7 +35,8 @@ import { AsignSelectedPlan, ClearSelectedPlan, ShowModalDelete } from "../../act
     @Action(AsignSelectedPlan)
     asignPlan(ctx:StateContext<PlanModelState>, action:AsignSelectedPlan){
         ctx.patchState({
-            planSelected: action.plan!
+            planSelected: action.plan!,
+            context:action.context
         });
     }
 

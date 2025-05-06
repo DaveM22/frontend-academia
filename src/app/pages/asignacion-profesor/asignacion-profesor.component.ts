@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
@@ -14,12 +14,13 @@ import { Especialidad } from '../../entities/especialidad';
 import { AppPageState } from '../../store/states/page/app.state';
 import { GetPlanAction, GetPlanByIdWithMateriasAction } from '../../store/actions/api/planes.action';
 import { MateriaFilter, PlanFilter } from '../../entities/filter';
-import { GetMateriasAction } from '../../store/actions/api/materia.action';
+import { ClearMateriasAction, GetMateriasAction } from '../../store/actions/api/materia.action';
 import { Materia } from '../../entities/materia';
 import { MateriaState } from '../../store/states/api/materia.state';
 import { RouterModule } from '@angular/router';
 import { PanelModule } from 'primeng/panel';
 import { CardModule } from 'primeng/card';
+import { ClearSelectedMateriaInFilter } from '../../store/actions/pages/app.action';
 
 @Component({
   selector: 'app-asignacion-profesor',
@@ -28,7 +29,7 @@ import { CardModule } from 'primeng/card';
   templateUrl: './asignacion-profesor.component.html',
   styleUrl: './asignacion-profesor.component.scss'
 })
-export class AsignacionProfesorComponent implements OnInit {
+export class AsignacionProfesorComponent implements OnInit, OnDestroy {
 
   especialidadSelected$:Observable<Especialidad | null> = this.store.select(AppPageState.getSelectedEspecialidad);
   planSelected$:Observable<Especialidad | null> = this.store.select(AppPageState.getSelectedPlanInFilter);
@@ -39,26 +40,15 @@ export class AsignacionProfesorComponent implements OnInit {
 
   constructor(private store:Store){}
 
-  ngOnInit(): void {
-    this.especialidadSelected$.subscribe(x => {
-      if(x !== null){
-        this.disablePlanDropDown = false;
-        let filter = new PlanFilter();
-        filter.especialidadId = x._id;
-        this.store.dispatch(new GetPlanAction(filter))
-      }
-      else{
-        this.disablePlanDropDown = true;
-      }
-    })
 
-    this.planSelected$.subscribe(x => {
-      if(x !== null){
-        let filter = new MateriaFilter();
-        filter.planId = x._id;
-        this.store.dispatch(new GetMateriasAction(filter))
-      }
-    })
+  ngOnInit(): void {
+
+
+  }
+
+
+  ngOnDestroy(): void {
+    this.store.dispatch(new ClearMateriasAction);
   }
 
 

@@ -13,14 +13,15 @@ import { Observable } from 'rxjs';
 import { Persona } from '../../entities/persona';
 import { PersonaState } from '../../store/states/api/persona.state';
 import { AlumnoInscripcion } from '../../entities/alumno-inscripcion';
-import { GetAlumnoByIdAction, GetAlumnoByIdWithInscripcionesAction } from '../../store/actions/api/persona.action';
+import { GetAlumnoByIdAction, GetAlumnoByIdWithInscripcionesAction, UpdateManualLoading } from '../../store/actions/api/persona.action';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlumnoFilter } from '../../entities/filter';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { DeleteAlumnoInscripcionAction } from '../../store/actions/api/alumno-inscripcion.action';
+import { DeleteAlumnoInscripcionAction, GetOneAlumnoInscripcionAction } from '../../store/actions/api/alumno-inscripcion.action';
 import { AppPageState } from '../../store/states/page/app.state';
 import { ShowModalConfirmationAction } from '../../store/actions/pages/app.action';
+import { AlumnoInscripcionState } from '../../store/states/api/alumno-incripcion.state';
 
 @Component({
   selector: 'app-inscripciones',
@@ -32,7 +33,7 @@ import { ShowModalConfirmationAction } from '../../store/actions/pages/app.actio
 })
 export class InscripcionesComponent implements OnInit  {
   alumno$:Observable<Alumno | null> = this.store.select(PersonaPageState.getAlumnoSelected);
-  loading$:Observable<boolean> = this.store.select(PersonaState.getLoading);
+  loading$:Observable<boolean> = this.store.select(PersonaState.getLoading) || this.store.select(AlumnoInscripcionState.getLoading);
   alumno!:Alumno;
   inscripciones:AlumnoInscripcion[]=[]
   showConfirmation$:Observable<boolean> = this.store.select(AppPageState.showModalConfirmation)
@@ -49,6 +50,7 @@ export class InscripcionesComponent implements OnInit  {
       if(x !== null){
         this.alumno = x;
         this.inscripciones = this.alumno.inscripciones;
+        this.loading$.subscribe(x => false);
       }
     })
 
@@ -86,7 +88,14 @@ export class InscripcionesComponent implements OnInit  {
   }
 
   redirectActualizarInscripcion(inscripcionId:string){
-    this.route.navigate([`inscripciones/alumnos/${this.alumno._id}/inscripcion/editar/${inscripcionId}`]);
+    this.store.dispatch(new UpdateManualLoading(true)).subscribe(() => {
+      this.store.dispatch(new GetOneAlumnoInscripcionAction(inscripcionId)).subscribe(() => {
+        this.store.dispatch(new UpdateManualLoading(false)).subscribe(() => {
+          this.route.navigate([`inscripciones/alumnos/${this.alumno._id}/inscripcion/editar/${inscripcionId}`]);
+        })
+      });
+    })
+
   }
 
   

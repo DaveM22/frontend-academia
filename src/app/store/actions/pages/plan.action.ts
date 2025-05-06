@@ -7,7 +7,7 @@ export class ShowModalDelete{
 
 export class AsignSelectedPlan {
     static type = "[Plan Page] asign plan selected"
-    constructor(public plan: Plan){}
+    constructor(public plan: Plan, public context?:string | null){}
 }
 
 export class ClearSelectedPlan {
