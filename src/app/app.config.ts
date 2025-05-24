@@ -357,9 +357,9 @@ const MyPreset = definePreset(Material, {
           paddingX: "0.75rem",
           paddingY: "0.75rem",
           sm: {
-              fontSize: "0.875rem",
-              paddingX: "0.625rem",
-              paddingY: "0.625rem"
+              fontSize: "0.7rem",
+              paddingX: "0.6rem",
+              paddingY: "0.6rem"
           },
           lg: {
               fontSize: "1.125rem",
