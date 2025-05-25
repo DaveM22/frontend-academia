@@ -11,7 +11,34 @@
 
 }
 
-        <div class="grid">
+<div class="flex flex-col w-full gap-2 md:flex-row justify-between">
+<div>
+    <p-iconField iconPosition="left">
+        <p-inputIcon>
+            <i class="pi pi-search"></i>
+        </p-inputIcon>
+        <input pInputText type="text" class="w-full text-sm sm:text-base md:text-lg py-1 sm:py-1 md:py-1" styleClass="w-full text-sm sm:text-base md:text-lg py-1 sm:py-1 md:py-1" (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
+            placeholder="Buscar especialidad" />
+    </p-iconField>
+</div>
+<div>
+    <p-button
+    label="Nueva especialidad"
+    severity="info"
+    class="w-full"
+    [styleClass]="
+      'w-full text-sm sm:text-base md:text-lg px-3 py-1 sm:px-4 sm:py-1 md:px-5 md:py-1'
+    "
+    (onClick)="redirectNewEspecialidad()"
+  ></p-button>
+</div>
+</div>
+
+
+
+
+
+<!--         <div class="grid">
             <div
                 class="col-12 flex flex-column sm:flex-column lg:flex-row align-items-center lg:justify-content-between justify-content-center">
 
@@ -25,7 +52,7 @@
                 <p-button size="small" label="Nueva especialidad" severity="info"  class="w-full lg:w-3" styleClass="w-full"
                     (onClick)="redirectNewEspecialidad()"></p-button>
             </div>
-        </div>
+        </div> -->
     </ng-template>
     <ng-template pTemplate="header">
         <tr>
@@ -39,7 +66,7 @@
             </td>
             <td style="width:15%"><span class="p-column-title">Acciones</span>
                 <div class="flex gap-2 justify-content-center">
-                    <p-button size="small" label="Editar" severity="warn" class="mr-20"
+                    <p-button size="small" label="Editar" severity="warn" class="mr-1"
                         (onClick)="redirectEditEspecialidad(especialidad._id)" />
                     <p-button size="small" label="Borrar" severity="danger" (onClick)="showModal(especialidad)" />
                 </div>

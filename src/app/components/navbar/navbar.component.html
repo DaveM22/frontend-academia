@@ -7,7 +7,7 @@
             <ng-template pTemplate="start">
                 <!-- Botón personalizado que reemplaza al botón nativo -->
                 <button 
-                  class="p-button p-button-rounded p-button-text md:hidden" 
+                  class="p-button p-button-rounded p-button-text not-sr-only lg:sr-only" 
                   (click)="toggleAction()">
                   <i class="pi pi-bars"></i>
                 </button>
@@ -17,13 +17,26 @@
                 <!-- Botón personalizado que reemplaza al botón nativo -->
                 @if ((this.auth.isAuthenticated$ | async)) {
 
-                    <p-button (click)="menu.toggle($event)" rounded="true" [outlined]="true" styleClass="relative overflow-hidden w-full p-link flex align-items-center  text-color hover:surface-200">
+                    <p-button (click)="menu.toggle($event)" rounded="true" [outlined]="true">
                         <p-avatar image="https://cdn.auth0.com/avatars/um.png" class="mr-2" shape="circle" />
-                        <span class="inline-flex flex-column">
-                            <span class="font-bold">{{name}}</span>
-                            <span class="text-sm">{{rol}}</span>
-                        </span>
-      
+                        <div class="flex flex-col">
+                            <div>
+                                <strong class="text-xs">{{name}}</strong>
+                            </div>
+                            <div>
+                                <span class="text-xs">{{rol}}</span>
+                            </div>
+                          </div>
+ <!--                        <div class="flex flex-col gap-">
+
+                            <div>
+                       
+                       
+                            </div>
+                            <div>
+              
+                            </div>
+                          </div> -->
                     </p-button>
                     <p-menu #menu [model]="logItems" [popup]="true" />
 <!-- 

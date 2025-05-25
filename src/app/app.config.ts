@@ -5266,7 +5266,7 @@ export const appConfig: ApplicationConfig = {
               darkModeSelector: 'system',
               cssLayer: {
                 name: 'primeng',
-                order: 'app-styles, primeng, another-css-library'
+                order: 'tailwind, theme, base, primeng'
             }
             }
         }

@@ -1,10 +1,16 @@
-@use 'sass:map';
-@import "primeicons/primeicons.css";
 
+@use "tailwindcss";
+@use "primeicons/primeicons.css";
+@plugin 'tailwindcss-primeui';
+@layer tailwind, primeng;
+
+@layer tailwind {
+  @import "tailwindcss";
+}
 
 html {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
-      Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+      Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol' !important;
   }
 
   :host::ng-deep  .p-datatable-flex-scrollable>.p-datatable-wrapper {
