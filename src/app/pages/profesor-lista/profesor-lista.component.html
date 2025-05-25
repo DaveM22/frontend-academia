@@ -1,6 +1,6 @@
 <p-table #dt2 [value]="(profesores$ | async)!" [loading]="(loading$ | async)"
-    styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0" responsiveLayout="stack" [breakpoint]="'960px'"
-    [paginator]="true" [scrollable]="true" [rows]="5" [scrollHeight]="scrollSize"
+    styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-sm" responsiveLayout="stack" [breakpoint]="'960px'"
+    [paginator]="true" size="small" [scrollable]="true" [rows]="5" [scrollHeight]="scrollSize"
     [globalFilterFields]="['nombre', 'apellido','direccion', 'email','legajo']">
     <ng-template pTemplate="caption">
         @if (error$ | async)
@@ -17,10 +17,10 @@
                     <p-inputIcon>
                         <i class="pi pi-search"></i>
                     </p-inputIcon>
-                    <input pInputText type="text" class="w-full lg:w-4" (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
+                    <input pInputText pSize="small" type="text" class="w-full lg:w-4" (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
                         placeholder="Buscar profesor" />
                 </p-iconField>
-                <p-button label="Nuevo profesor" severity="info"  class="w-full lg:w-2" styleClass="w-full" (onClick)="redirecToNuevoProfesor()"></p-button>
+                <p-button size="small" label="Nuevo profesor" severity="info"  class="w-full lg:w-2" styleClass="w-full" (onClick)="redirecToNuevoProfesor()"></p-button>
             </div>
         </div>
     </ng-template>
@@ -76,9 +76,9 @@
         </div>
     </ng-template>
     <ng-template pTemplate="footer" let-reject="reject">
-        <button type="button" pButton icon="pi pi-check" label="Aceptar" severity="success" (click)="cd.onAccept()"
+        <button type="button" size="small" pButton icon="pi pi-check" label="Aceptar" severity="success" (click)="cd.onAccept()"
             class="ui-button-success"></button>
-        <button type="button" pButton icon="pi pi-times" label="Cancelar" severity="danger" (click)="cd.onReject()"
+        <button type="button" size="small" pButton icon="pi pi-times" label="Cancelar" severity="danger" (click)="cd.onReject()"
             class="ui-button-secondary"></button>
     </ng-template>
 </p-confirmDialog>

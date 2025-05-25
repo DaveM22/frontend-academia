@@ -1,7 +1,7 @@
 <p-table #dt2 [value]="(cursos$ | async)!" [loading]="(loading$ | async)"
     [globalFilterFields]="['descripcion','anioCalendario','comision.descripcion','materia.descripcion']"
-    styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0" responsiveLayout="stack" [breakpoint]="'960px'"
-    [paginator]="true" [scrollable]="true" scrollHeight="flex" [rows]="5">
+    styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-sm" responsiveLayout="stack" [breakpoint]="'960px'"
+    [paginator]="true" size="small" [scrollable]="true" scrollHeight="flex" [rows]="5">
     <ng-template pTemplate="caption">
         @if (error$ | async)
         {
@@ -21,10 +21,10 @@
                     <p-inputIcon>
                         <i class="pi pi-search"></i>
                     </p-inputIcon>
-                    <input pInputText type="text" class="w-full lg:w-4" (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
+                    <input pInputText pSize="small" type="text" class="w-full lg:w-4" (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
                         placeholder="Buscar curso" />
                 </p-iconField>
-                <p-button label="Nuevo curso" severity="info" class="w-full lg:w-2" styleClass="w-full" (onClick)="redirectNewCurso()"></p-button>
+                <p-button label="Nuevo curso" size="small" severity="info" class="w-full lg:w-2" styleClass="w-full" (onClick)="redirectNewCurso()"></p-button>
             </div>
         </div>
     </ng-template>
@@ -45,7 +45,7 @@
             <td style="width:20%"><span class="p-column-title">Comisión</span>{{curso.comision.descripcion}}</td>
             <td style="width:20%"><span class="p-column-title">Materia</span>{{curso.materia.descripcion}}</td>
             <td style="width:5%"><span class="p-column-title">Cupo</span>{{curso.cupo || 0}}</td>
-            <td style="width:20%"><span class="p-column-title">Acciones</span>
+            <td style="width:auto"><span class="p-column-title">Acciones</span>
 
                 <div class="flex flex-column sm:flex-row gap-2 justify-content-center">
          <!--            <p-button size="small" class="w-full lg:w-3" styleClass="w-full" label="Generar reporte"
@@ -56,7 +56,7 @@
                         (onClick)="redirectEditarPlan(plan._id)" />
                     <p-button size="small" class="w-full lg:w-2" styleClass="w-full" label="Borrar" severity="danger"
                         (onClick)="modalConfirmar(plan)" /> -->
-                        <p-button size="small" label="Reporte de Inscripciones" severity="primary"  class="w-full sm:w-12  md:w-12 lg:w-9" styleClass="w-full" (onClick)="generateReport(curso._id)"
+                        <p-button size="small" label="Reporte de Inscripciones" severity="primary"  class="w-full sm:w-12  md:w-12 lg:w-12" styleClass="w-full" (onClick)="generateReport(curso._id)"
                         />
                         <p-button size="small" label="Editar" severity="warn"  class="w-full lg:w-2" styleClass="w-full"
                             (onClick)="redirectEditCurso(curso._id)" />

@@ -1,5 +1,5 @@
 <p-table #dt2 [value]="(comisiones$ | async)!" [loading]="(loading$ | async)" [globalFilterFields]="['descripcion']"
-    styleClass="p-datatable-gridlines p-datatable-striped" responsiveLayout="stack" [breakpoint]="'960px'"
+    styleClass="p-datatable-gridlines p-datatable-striped text-sm" size="small" responsiveLayout="stack" [breakpoint]="'960px'"
     [paginator]="true" [scrollable]="true" [scrollHeight]="scrollSize" [rows]="5">
     <ng-template pTemplate="caption">
         @if (error$ | async)
@@ -17,10 +17,10 @@
                 <p-inputIcon>
                     <i class="pi pi-search"></i>
                 </p-inputIcon>
-                <input pInputText type="text" class="w-full lg:w-4" (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
+                <input pSize="small" pInputText type="text" class="w-full lg:w-4" (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
                     placeholder="Buscar comisión" />
             </p-iconField>
-            <p-button label="Nueva comisión" severity="info" class="w-full lg:w-2" styleClass="w-full" (onClick)="redirectNuevaComision()"></p-button>
+            <p-button size="small" label="Nueva comisión" severity="info" class="w-full lg:w-2" styleClass="w-full" (onClick)="redirectNuevaComision()"></p-button>
         </div>
     </ng-template>
     <ng-template pTemplate="header">

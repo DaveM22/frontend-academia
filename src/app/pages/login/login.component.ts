@@ -15,7 +15,6 @@ export class LoginComponent  {
   
 
   login(): void {
-    // Call this to redirect the user to the login page
     this.auth.loginWithRedirect();
   }
 

@@ -1,6 +1,6 @@
 <p-table #dt2 [value]="(alumnos$ | async)!" [loading]="(loading$ | async)"
-    styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0" responsiveLayout="stack" [breakpoint]="'960px'"
-    [paginator]="true" [scrollable]="true" [rows]="5" [scrollHeight]="scrollSize"
+    styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-sm" responsiveLayout="stack" [breakpoint]="'960px'"
+    [paginator]="true" size="small" [scrollable]="true" [rows]="5" [scrollHeight]="scrollSize"
     [globalFilterFields]="['nombre', 'apellido', 'direccion', 'email', 'legajo']">
     <ng-template pTemplate="caption">
         @if (error$ | async)
@@ -20,10 +20,10 @@
                     <p-inputIcon>
                         <i class="pi pi-search"></i>
                     </p-inputIcon>
-                    <input pInputText type="text" class="w-full lg:w-4"
+                    <input pSize="small" pInputText type="text" class="w-full lg:w-4"
                         (input)="dt2.filterGlobal($any($event.target).value, 'contains')" placeholder="Buscar alumno" />
                 </p-iconField>
-                <p-button label="Nuevo alumno" severity="info" class="w-full lg:w-2" styleClass="w-full"
+                <p-button size="small" label="Nuevo alumno" severity="info" class="w-full lg:w-2" styleClass="w-full"
                     (onClick)="redirecToNuevoAlumno()"></p-button>
             </div>
         </div>

@@ -10,9 +10,10 @@
 }
 
     <p-table #dt2  [value]="(alumnos$ | async)!" [loading]="(loading$ | async)" 
-    styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0" responsiveLayout="stack"
+    styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-sm" responsiveLayout="stack"
     [breakpoint]="'960px'" [paginator]="true" [scrollable]="true" [rows]="5" scrollHeight="flex"
     [globalFilterFields]="['nombre', 'apellido', 'direccion', 'email', 'legajo']"
+    size="small"
     >
     <ng-template pTemplate="caption">
         <div class="grid">
@@ -43,7 +44,8 @@
                         <i class="pi pi-search"></i>
                     </p-inputIcon>
                     <input 
-                        pInputText 
+                        pInputText
+                        pSize="small" 
                         type="text" 
                         (input)="dt2.filterGlobal($any($event.target).value, 'contains')" 
                         placeholder="Buscar alumno" />
