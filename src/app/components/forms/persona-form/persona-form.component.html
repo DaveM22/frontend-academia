@@ -7,7 +7,7 @@
             <div class="formgrid grid justify-content-center">
                 <div class="field col-12 md:col-4 lg:col-3 xl:col-3">
                     <label for="descripcion" class="text-sm">Nombre:</label>
-                    <input id="descripcion" pSize="small" pInputText formControlName="nombre" type="text" class="w-full">
+                    <input id="descripcion" pInputText formControlName="nombre" type="text" class="text-2xl p-1 sm:text-xs p-1 md:text-xs p-1 lg:text-xs p-1 xl:text-2xl p-1 w-full">
                     @if(form.get('nombre')?.invalid && form.get('nombre')?.dirty){
                     <small class="p-error block">
                         El campo nombre es requerido
@@ -16,7 +16,7 @@
                 </div>
                 <div class="field col-12 md:col-4 lg:col-3 xl:col-3">
                     <label for="descripcion" class="text-sm">Apellido:</label>
-                    <input id="descripcion" pSize="small" pInputText formControlName="apellido" type="text" class="w-full">
+                    <input id="descripcion" pInputText formControlName="apellido" type="text" class="text-2xl p-1 sm:text-xs p-1 md:text-xs p-1 lg:text-xs p-1 xl:text-2xl p-1 w-full">
                     @if(form.get('apellido')?.invalid && form.get('apellido')?.dirty){
                     <small class="p-error block">
                         El campo apellido es requerido
@@ -28,7 +28,7 @@
             <div class="formgrid grid justify-content-center">
                 <div class="field col-12 md:col-4 lg:col-3 xl:col-3">
                     <label for="descripcion" class="text-sm">Dirección:</label>
-                    <input id="descripcion" pSize="small" pInputText formControlName="direccion" type="text" class="w-full">
+                    <input id="descripcion" pInputText formControlName="direccion" type="text" class="text-2xl p-1 sm:text-xs p-1 md:text-xs p-1 lg:text-xs p-1 xl:text-2xl p-1 w-full">
                     @if(form.get('direccion')?.invalid && form.get('direccion')?.dirty){
                     <small class="p-error block">
                         El campo dirección es requerido
@@ -37,7 +37,7 @@
                 </div>
                 <div class="field col-12 md:col-4 lg:col-3 xl:col-3">
                     <label for="descripcion" class="text-sm">Email:</label>
-                    <input id="descripcion" pSize="small" pInputText formControlName="email" type="text" class="w-full">
+                    <input id="descripcion" pInputText formControlName="email" type="text" class="text-2xl p-1 sm:text-xs p-1 md:text-xs p-1 lg:text-xs p-1 xl:text-2xl p-1 w-full">
                     @if(form.get('email')?.invalid && form.get('email')?.dirty){
                     <small class="p-error block">
                         El campo email es requerido
@@ -50,7 +50,7 @@
             <div class="formgrid grid justify-content-center">
                 <div class="field col-12 md:col-4 lg:col-3 xl:col-3">
                     <label for="descripcion" class="text-sm">Teléfono:</label>
-                    <input id="descripcion" pSize="small" pInputText formControlName="telefono" type="text" class="w-full">
+                    <input id="descripcion"  pInputText formControlName="telefono" type="text" class="text-2xl p-1 sm:text-xs p-1 md:text-xs p-1 lg:text-xs p-1 xl:text-2xl p-1 w-full">
                     @if(form.get('telefono')?.invalid && form.get('telefono')?.dirty){
                     <small class="p-error block">
                         El campo teléfono es requerido
@@ -60,7 +60,7 @@
                 <div class="field col-12 md:col-4 lg:col-3 xl:col-3">
                     <label for="descripcion" class="text-sm">Fecha nacimiento:</label>
 
-                    <p-inputMask size="small" mask="99/99/9999" placeholder="dd/mm/aaaa" slotChar="dd/mm/aaaa" styleClass="w-full"
+                    <p-inputMask  mask="99/99/9999" placeholder="dd/mm/aaaa" slotChar="dd/mm/aaaa" styleClass="text-2xl p-1 sm:text-xs p-1 md:text-xs p-1 lg:text-xs p-1 xl:text-2xl p-1 w-full"
                         formControlName="fechaNacimiento" />
                     @if(form.get('fechaNacimiento')?.invalid && form.get('fechaNacimiento')?.dirty){
                     <small class="p-error block">
@@ -76,13 +76,13 @@
                     <label class="text-sm">Plan:</label>
                     <div class="field grid">
                         <div class="col-12 sm:col-12 md:col-12 lg:col-8">
-                            <input type="text" pSize="small" pInputText placeholder="Seleccione un plan" class="form-disabled w-full sm:w-full lg:w-full" 
+                            <input type="text" pSize="small" pInputText placeholder="Seleccione un plan" class="text-2xl p-1 sm:text-xs p-1 md:text-xs p-1 lg:text-xs p-1 xl:text-2xl p-1 form-disabled w-full sm:w-full lg:w-full" 
                                 formControlName="plan" readonly style="cursor: not-allowed;"/>
                         </div>
     
                         <div class="col-12 sm:col-12 md:col-3 lg:col-4">
                             <p-button label="Seleccionar plan" size="small" severity="primary"
-                                styleClass="w-full mt-2 w-full align-items-center md:mt-0 "
+                                styleClass="text-2xl p-1 sm:text-xs p-1 md:text-xs p-1 lg:text-xs p-1 xl:text-2xl p-1 w-full mt-2 w-full align-items-center md:mt-0 "
                                 (onClick)="toggleModalPlanes()"></p-button>
                         </div>
                     </div>

@@ -1,31 +1,5 @@
 @use 'sass:map';
 @import "primeicons/primeicons.css";
-$breakpoints: (
-  'xxl': 1400px  // ← Agregar XXL
-);
-
-$sizes: (4, 5, 6, 7, 8);
-$text-sizes: (xl, 2xl, 3xl, 4xl, 5xl);
-
-// Generar utilities para XXL
-@media (min-width: map.get($breakpoints, 'xxl')) {
-  @each $size in $sizes {
-    .xxl\:p-#{$size} {
-      padding: #{$size * 0.25}rem !important;
-    }
-    .xxl\:m-#{$size} {
-      margin: #{$size * 0.25}rem !important;
-    }
-  }
-  
-  @each $size in $text-sizes {
-    .xxl\:text-#{$size} {
-
-      @if $size == '2xl' { font-size: 1.5rem !important; }
-      @if $size == '3xl' { font-size: 1.875rem !important; }
-    }
-  }
-}
 
 
 html {
