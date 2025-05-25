@@ -7,7 +7,7 @@
         <div class="col-12 lg:col-4">
             <div class="field">
                 <label for="descripcion" class="lg:text-sm">Descripcion:</label>
-                <input id="descripcion"  pInputText formControlName="descripcion" type="text" class="p-inputtext-sm md:p-inputtext-lg lg:p-inputtext-lg w-full">
+                <input id="descripcion"  pInputText formControlName="descripcion" type="text" class="text-lg p-2 md:text-xs p-1 2xl:text-lg p-1 3xl:text-xl p-1 w-full">
                 @if(form.get('descripcion')?.invalid && form.get('descripcion')?.dirty){
                 <small class="p-error block">
                     El campo descripción es requerido
