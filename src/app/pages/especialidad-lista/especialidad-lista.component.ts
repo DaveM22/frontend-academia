@@ -48,14 +48,7 @@ export class EspecialidadListaComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.dispatch(new GetEspecialidadAction());
-    this.especialidades$.subscribe(x => {
-
-    })
-
-    this.screenService.screenSize$.subscribe((x:any) => {
-      this.scrollSize = x.currentTarget.innerWidth > 992 ? 'flex' : '50vh'
-   })
-
+  
   }
 
 

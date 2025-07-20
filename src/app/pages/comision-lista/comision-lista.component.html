@@ -10,18 +10,22 @@
 
 
         }
-        <div
-        class="col-12 flex flex-column sm:flex-column w-full  lg:flex-row align-items-center lg:justify-content-between justify-content-center">
 
+        <div class="flex flex-col w-full gap-2 md:flex-row justify-between">
+            <div>
             <p-iconField iconPosition="left" class="mb-4 lg:mb-0 w-full">
                 <p-inputIcon>
                     <i class="pi pi-search"></i>
                 </p-inputIcon>
-                <input pSize="small" pInputText type="text" class="w-full lg:w-4" (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
+                <input pSize="small" pInputText type="text" class="w-full text-sm sm:text-base md:text-lg py-1 sm:py-1 md:py-1" (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
                     placeholder="Buscar comisión" />
             </p-iconField>
-            <p-button size="small" label="Nueva comisión" severity="info" class="w-full lg:w-2" styleClass="w-full" (onClick)="redirectNuevaComision()"></p-button>
+            </div>
+            <div>
+                <p-button label="Nueva comisión" severity="info" class="w-full text-sm sm:text-base md:text-lg py-1 sm:py-1 md:py-1" styleClass="w-full text-sm sm:text-base md:text-lg py-1 sm:py-1 md:py-1" (onClick)="redirectNuevaComision()"></p-button>
+            </div>
         </div>
+
     </ng-template>
     <ng-template pTemplate="header">
         <tr>
@@ -36,9 +40,9 @@
             <td style="width:20%"><span class="p-column-title">Año especialidad</span>{{comision.anioEspecialidad}}</td>
             <td style="width:30%"><span class="p-column-title">Comisión</span>{{comision.descripcion}}</td>
             <td style="width:30%"><span class="p-column-title">Plan</span>{{comision.plan.descripcion}}</td>
-            <td style="width:15%"><span class="p-column-title">Acciones</span>
-                <div class="flex gap-2 justify-content-center">
-                    <p-button size="small" label="Editar" severity="warn" class="mr-20"
+            <td style="width:auto"><span class="p-column-title">Acciones</span>
+                <div class="flex gap-2 justify-center">
+                    <p-button size="small" label="Editar" severity="warn"
                         (onClick)="redirectEditarComision(comision._id)" />
                     <p-button size="small" label="Borrar" severity="danger" (onClick)="modalConfirmar(comision)" />
                     <!--                         -->

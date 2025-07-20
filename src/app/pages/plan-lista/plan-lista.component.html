@@ -11,18 +11,18 @@
 
 
         }
-        <div class="grid">
-            
-            <div
-                class="col-12 flex flex-column sm:flex-column w-full  lg:flex-row align-items-center lg:justify-content-between justify-content-center">
+        <div class="flex flex-col w-full gap-2 md:flex-row justify-between">
+            <div>
                 <p-iconField iconPosition="left" class="mb-4 lg:mb-0 w-full">
                     <p-inputIcon>
                         <i class="pi pi-search"></i>
                     </p-inputIcon>
-                    <input pInputText pSize="small" type="text" class="w-full lg:w-4"
+                    <input pInputText type="text" class="w-full text-sm sm:text-base md:text-lg py-1 sm:py-1 md:py-1"
                         (input)="dt2.filterGlobal($any($event.target).value, 'contains')" placeholder="Buscar plan" />
                 </p-iconField>
-                <p-button size="small" label="Nuevo plan" severity="info" class="w-full lg:w-3" styleClass="w-full"
+            </div>
+            <div>
+                <p-button label="Nuevo plan" severity="info" class="w-full text-sm sm:text-base md:text-lg py-1 sm:py-1 md:py-1" styleClass="w-full text-sm sm:text-base md:text-lg py-1 sm:py-1 md:py-1"
                     (onClick)="redirectNuevoPlan()"></p-button>
             </div>
         </div>
@@ -38,15 +38,15 @@
         <tr>
             <td style="width:30%"><span class="p-column-title">Descripcion</span>{{plan.descripcion}}</td>
             <td style="width:30%"><span class="p-column-title">Especialidad</span>{{plan.especialidad.descripcion}}</td>
-            <td style="width:40%"><span class="p-column-title">Acciones</span>
-                <div class="flex flex-column sm:flex-row gap-2 justify-content-center">
-                    <p-button size="small" class="w-full lg:w-4" styleClass="w-full" label="Generar reporte"
+            <td style="width:auto"><span class="p-column-title">Acciones</span>
+                <div class="flex gap-2 justify-end">
+                    <p-button size="small" label="Generar reporte"
                         (onClick)="generateReport(plan._id)"></p-button>
-                    <p-button size="small" class="w-full lg:w-2" styleClass="w-full" label="Materias"
+                    <p-button size="small" label="Materias"
                         (onClick)="redirectToMaterias(plan._id)"></p-button>
-                    <p-button size="small" class="w-full lg:w-2"  styleClass="w-full" label="Editar" severity="warn"
+                    <p-button size="small" label="Editar" severity="warn"
                         (onClick)="redirectEditarPlan(plan._id)" />
-                    <p-button size="small" class="w-full lg:w-2" styleClass="w-full" label="Borrar" severity="danger"
+                    <p-button size="small" label="Borrar" severity="danger"
                         (onClick)="modalConfirmar(plan)" />
                 </div>
             </td>

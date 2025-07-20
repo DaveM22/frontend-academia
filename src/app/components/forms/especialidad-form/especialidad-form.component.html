@@ -1,24 +1,26 @@
 
-<div class="flex justify-content-center align-items-center">
-    <h3>{{title}}</h3>
+<div class="flex flex-row justify-center align-items-center">
+    <h5 class="text-lg text-center font-bold text-white pb-2">{{title}}</h5>
   </div>
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <div class="flex overflow-hidden justify-content-center">
-        <div class="col-12 lg:col-4">
-            <div class="field">
-                <label for="descripcion" class="lg:text-sm">Descripcion:</label>
-                <input id="descripcion"  pInputText formControlName="descripcion" type="text" class="text-2xl p-1 sm:text-xs p-1 md:text-xs p-1 lg:text-xs p-1 xl:text-2xl p-1 w-full">
-                @if(form.get('descripcion')?.invalid && form.get('descripcion')?.dirty){
-                <small class="p-error block">
-                    El campo descripción es requerido
-                </small>
-                }
+        <div class="flex flex-row justify-center">
+        <div>
+            <div class="formgrid grid justify-content-center">
+                <div class="field col-12 md:col-4 lg:col-3 xl:col-3">
+                    <label for="descripcion" class="text-sm">Descripción</label>
+                    <input id="descripcion" pInputText formControlName="descripcion" type="text" class="text-2xl p-1 sm:text-xs p-1 md:text-xs p-1 lg:text-xs p-1 xl:text-2xl p-1 w-full">
+                    @if(form.get('descripcion')?.invalid && form.get('descripcion')?.dirty){
+                    <small class="p-error block">
+                        El campo nombre es requerido
+                    </small>
+                    }
+                </div>
             </div>
         </div>
-    </div>
+        </div>
 
-    <div class="flex align-items-center justify-content-center font-bold text-white border-round m-2">
-        <button type="submit" pButton label="Guardar" icon="pi pi-check" class="text-xs p-2 xl:text-xl p-1 p-button-success mr-2" [disabled]="form.invalid"></button>
-        <button label="Cancelar" pButton severity="danger" icon="pi pi-times" class="text-xs p-2 xl:text-xl p-1" (onClick)="redirectEspecialidades()"></button>
+    <div class="flex flex-row justify-center mt-2 font-bold text-white border-round">
+        <p-button size="small" pButton label="Guardar" icon="pi pi-check" class="text-xs p-2 p-1 p-button-success mr-2" [disabled]="form.invalid"></p-button>
+            <p-button label="Cancelar" size="small" pButton severity="danger" icon="pi pi-times" class="text-xs p-1" (onClick)="redirectEspecialidades()"></p-button>
     </div>
 </form>

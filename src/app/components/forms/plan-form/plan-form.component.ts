@@ -49,6 +49,7 @@ export class PlanFormComponent implements OnInit {
   }
 
   public onSubmit(){
+    console.log("submitea")
     this.plan = this.form.value
     if(this.form.value._id === ''){
       this.store.dispatch(new PostPlanAction(this.plan)).subscribe(x => {
