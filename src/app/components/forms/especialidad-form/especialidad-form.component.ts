@@ -13,10 +13,15 @@ import { ClearSelectedEspecialidad } from '../../../store/actions/pages/especial
 import { MessageService } from 'primeng/api';
 import { RippleModule } from 'primeng/ripple';
 import { ToastModule } from 'primeng/toast';
+import { BlockUI } from 'primeng/blockui';
+import { Observable } from 'rxjs';
+import { CommonModule } from '@angular/common';
+import { ProgressSpinner } from 'primeng/progressspinner';
+import { PanelModule } from 'primeng/panel';
 @Component({
   selector: 'app-especialidad-form',
   standalone: true,
-  imports: [ReactiveFormsModule, InputTextModule, CardModule, ButtonModule,ToastModule,  RippleModule],
+  imports: [CommonModule,PanelModule,ReactiveFormsModule, InputTextModule, CardModule, ButtonModule,ToastModule,  RippleModule, BlockUI, ProgressSpinner],
   templateUrl: './especialidad-form.component.html',
   styleUrl: './especialidad-form.component.scss'
 })
@@ -24,6 +29,8 @@ export class EspecialidadFormComponent implements OnInit {
   form!: FormGroup;
   @Input() especialidad!:Especialidad;
   @Input() title!:string;
+  
+  public loading$:Observable<boolean> = this.store.select(EspecialidadState.getLoading);
 
   constructor(private store:Store, private router:Router, private messageService:MessageService){}
 

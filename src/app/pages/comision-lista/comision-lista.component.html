@@ -1,5 +1,5 @@
 <p-table #dt2 [value]="(comisiones$ | async)!" [loading]="(loading$ | async)" [globalFilterFields]="['descripcion']"
-    styleClass="p-datatable-gridlines p-datatable-striped text-sm" size="small" responsiveLayout="stack" [breakpoint]="'960px'"
+   styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-sm lg:text-xl" size="small" responsiveLayout="stack" [breakpoint]="'960px'"
     [paginator]="true" [scrollable]="true" [scrollHeight]="scrollSize" [rows]="5">
     <ng-template pTemplate="caption">
         @if (error$ | async)
@@ -17,12 +17,12 @@
                 <p-inputIcon>
                     <i class="pi pi-search"></i>
                 </p-inputIcon>
-                <input pSize="small" pInputText type="text" class="w-full text-sm sm:text-base md:text-lg py-1 sm:py-1 md:py-1" (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
+                <input pSize="small" pInputText type="text" class="w-full text-sm lg:text-xl py-1 sm:py-1 md:py-1" (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
                     placeholder="Buscar comisión" />
             </p-iconField>
             </div>
             <div>
-                <p-button label="Nueva comisión" severity="info" class="w-full text-sm sm:text-base md:text-lg py-1 sm:py-1 md:py-1" styleClass="w-full text-sm sm:text-base md:text-lg py-1 sm:py-1 md:py-1" (onClick)="redirectNuevaComision()"></p-button>
+                <p-button label="Nueva comisión" severity="info" class="w-full text-sm lg:text-xl py-1 sm:py-1 md:py-1" styleClass="w-full text-sm sm:text-base md:text-lg py-1 sm:py-1 md:py-1" (onClick)="redirectNuevaComision()"></p-button>
             </div>
         </div>
 
@@ -42,10 +42,10 @@
             <td style="width:30%"><span class="p-column-title">Plan</span>{{comision.plan.descripcion}}</td>
             <td style="width:auto"><span class="p-column-title">Acciones</span>
                 <div class="flex gap-2 justify-center">
-                    <p-button size="small" label="Editar" severity="warn"
+                    <p-button label="Editar" severity="warn"  class="text-sm lg:text-xl"
                         (onClick)="redirectEditarComision(comision._id)" />
-                    <p-button size="small" label="Borrar" severity="danger" (onClick)="modalConfirmar(comision)" />
-                    <!--                         -->
+                    <p-button label="Borrar" severity="danger"  class="text-sm lg:text-xl" (onClick)="modalConfirmar(comision)" />
+
                 </div>
             </td>
         </tr>
@@ -67,15 +67,15 @@
 
 <p-confirmDialog #cd [closable]="false">
     <ng-template pTemplate="message" let-message>
-        <div class="flex flex-column align-items-center w-full gap-3 border-bottom-1 surface-border">
+        <div class="flex flex-col items-center w-full gap-3 border-bottom-1 surface-border">
             <i class="pi pi-exclamation-circle text-6xl text-primary-500"></i>
             <p>{{ message.message }}</p>
         </div>
     </ng-template>
     <ng-template pTemplate="footer" let-reject="reject">
-        <button type="button" pButton icon="pi pi-check" label="Aceptar" severity="success" (click)="cd.onAccept()"
-            class="ui-button-success"></button>
-        <button type="button" pButton icon="pi pi-times" label="Cancelar" severity="danger" (click)="cd.onReject()"
-            class="ui-button-secondary"></button>
+        <p-button  icon="pi pi-check" label="Aceptar" severity="success" (click)="cd.onAccept()"
+            class="text-sm lg:text-xl"></p-button>
+        <p-button  icon="pi pi-times" label="Cancelar" severity="danger" (click)="cd.onReject()"
+            class="text-sm lg:text-xl"></p-button>
     </ng-template>
 </p-confirmDialog>

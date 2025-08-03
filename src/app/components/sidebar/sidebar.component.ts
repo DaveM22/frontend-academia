@@ -62,33 +62,35 @@ export class SidebarComponent implements OnInit {
       {
         label:'Personal',
         items:[
-          { label: 'Alumnos',styleClass:'lg:text-sm', icon: 'pi pi pi-user', command: () => this.navigate("/alumnos/lista") },
-          { label: 'Profesores',styleClass:'lg:text-sm', icon: 'pi pi pi-user', command: () => this.navigate("/profesores/lista") },
-          { label: 'Usuarios',styleClass:'lg:text-sm', icon: 'pi pi pi-user', command: () => this.navigate("/usuarios/lista") }
-        ]
+          { label: 'Alumnos',styleClass:'text-sm lg:text-lg', icon: 'pi pi pi-user', command: () => this.navigate("/alumnos/lista") },
+          { label: 'Profesores',styleClass:'text-sm lg:text-lg', icon: 'pi pi pi-user', command: () => this.navigate("/profesores/lista") },
+          { label: 'Usuarios',styleClass:'text-sm lg:text-lg', icon: 'pi pi pi-user', command: () => this.navigate("/usuarios/lista") }
+        ],
+        styleClass:'text-sm lg:text-lg'
       },
       {
         label:'Alumnado',
         items:[
-          { label: 'Especialidades',styleClass:'lg:text-sm', icon: 'pi pi-cog', command: () => this.navigate("/especialidades/lista") },
-          { label: 'Planes y materias',styleClass:'lg:text-sm', icon: 'pi pi-cog', command: () => this.navigate("/planes/lista") },
-          { label: 'Comisiones',styleClass:'lg:text-sm', icon: 'pi pi-cog', command: () => this.navigate("/comisiones/lista") },
-          { label: 'Cursos',styleClass:'lg:text-sm', icon: 'pi pi-cog', command: () => this.navigate("/cursos/lista") },
-        ]
+          { label: 'Especialidades',styleClass:'text-sm lg:text-lg', icon: 'pi pi-cog', command: () => this.navigate("/especialidades/lista") },
+          { label: 'Planes y materias',styleClass:'text-sm lg:text-lg', icon: 'pi pi-cog', command: () => this.navigate("/planes/lista") },
+          { label: 'Comisiones',styleClass:'text-sm lg:text-lg', icon: 'pi pi-cog', command: () => this.navigate("/comisiones/lista") },
+          { label: 'Cursos',styleClass:'text-sm lg:text-lg', icon: 'pi pi-cog', command: () => this.navigate("/cursos/lista") },
+        ],
+         styleClass:'text-sm lg:text-lg'
       },
 
       {
         label:'Inscripciones',
         items:[
-          { label: 'Inscripciones de alumnos',styleClass:'lg:text-sm', icon: 'pi pi-pen-to-square', command: () => this.navigate("inscripciones/alumnos/lista") },
-          { label: 'Profesores en cursos',styleClass:'lg:text-sm', icon: 'pi pi-pen-to-square', command: () => this.navigate("/asignacion-docentes/seleccionar-materia") },
-        ]
-
+          { label: 'Inscripciones de alumnos',styleClass:'text-sm lg:text-lg', icon: 'pi pi-pen-to-square', command: () => this.navigate("inscripciones/alumnos/lista") },
+          { label: 'Profesores en cursos',styleClass:'text-sm lg:text-lg', icon: 'pi pi-pen-to-square', command: () => this.navigate("/asignacion-docentes/seleccionar-materia") },
+        ],
+        styleClass:'text-sm lg:text-lg'
       },
     {
       label:'Configuraciones',
       items:[
-        {label:'Parametros',styleClass:'lg:text-sm', icon:'pi pi-cog', command: () => this.navigate("/parametros")}
+        {label:'Parametros',styleClass:'text-sm lg:text-lg', icon:'pi pi-cog', command: () => this.navigate("/parametros")}
       ]
     }
 

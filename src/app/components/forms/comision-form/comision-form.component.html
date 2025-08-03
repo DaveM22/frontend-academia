@@ -1,52 +1,48 @@
-<div class="flex justify-content-center align-items-center">
-    <h3>{{title}}</h3>
-  </div>
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <div class="flex h-full justify-content-center form-height">
-        <div class="col-12 lg:col-5">
-            <div class="field">
-                <label for="descripcion">Descripcion:</label>
-                <input id="firstname1" pInputText formControlName="descripcion" type="text"
-                    class="w-full">
-                @if(form.get('descripcion')?.invalid && form.get('descripcion')?.dirty){
-                <small class="p-error block">
-                    El campo descripcion es requerido
-                </small>
-                }
-            </div>
+<div class="flex flex-row justify-center align-items-center">
+    <h3 class="text-xl text-center font-bold text-white pb-2">{{title}}</h3>
+</div>
+<div class="grid place-items-center">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="grid grid-cols-12 gap-4 w-full max-w-screen-lg">
 
-            <div class="field">
-                <label for="anioCalendario">Año calendario:</label>
-                <p-inputNumber inputId="integeronly" formControlName="anioEspecialidad" class="w-full" inputStyleClass="w-full" styleClass="w-full md:w-full lg:w-auto"    />
-                @if(form.get('anioEspecialidad')?.invalid && form.get('anioEspecialidad')?.dirty){
-                <small class="p-error block">
-                    El campo Año especialidad es requerido
-                </small>
-                }
-            </div>
-            <div class="field">
-                <label>Plan:</label>
-                <div class="field grid">
-                    <div class="col-12 sm:col-12 md:col-9 lg:col-8">
-                        <input type="text" pInputText placeholder="Seleccione un plan" class="form-disabled w-full sm:w-full" 
-                            formControlName="plan" readonly style="cursor: not-allowed;"/>
-                    </div>
-
-                    <div class="col-12 sm:col-12 md:col-3 lg:col-4">
-                        <p-button label="Seleccionar plan" severity="primary"
-                            styleClass="w-full mt-2 w-full align-items-center md:mt-0 "
-                            (onClick)="toggleModalPlanes()"></p-button>
-                    </div>
-                </div>
-            </div>
-            
-
+        <div class="col-span-12 lg:col-start-4 lg:col-span-6">
+            <label for="descripcion" class="text-sm lg:text-xl">Descripcion:</label>
+            <input id="descripcion" pInputText formControlName="descripcion" type="text"
+                class="text-sm lg:text-xl w-full">
+            @if(form.get('descripcion')?.invalid && form.get('descripcion')?.dirty){
+            <small class="p-error block">
+                El campo descripcion es requerido
+            </small>
+            }
         </div>
-    </div>
-    <div class="flex align-items-center justify-content-center font-bold text-white border-round m-2">
-        <button type="submit" pButton label="Guardar" icon="pi pi-check" class="p-button-success mr-2"></button>
-        <p-button label="Cancelar" severity="danger" (onClick)="redirectComisiones()"></p-button>
-    </div>
-</form>
+
+        <div class="col-span-12 lg:col-start-4 lg:col-span-6">
+            <label class="text-sm lg:text-xl" for="anioCalendario">Año calendario:</label>
+            <p-inputNumber inputId="integeronly" formControlName="anioEspecialidad" class="w-full"
+                inputStyleClass="w-full" styleClass="w-full md:w-full lg:w-auto" />
+            @if(form.get('anioEspecialidad')?.invalid && form.get('anioEspecialidad')?.dirty){
+            <small class="p-error block">
+                El campo Año especialidad es requerido
+            </small>
+            }
+        </div>
+
+        <div class="col-span-12 lg:col-start-4 lg:col-span-6">
+            <label class="text-sm lg:text-xl">Plan:</label>
+            <input type="text" pInputText placeholder="Seleccione un plan" class="form-disabled w-full sm:w-full"
+                formControlName="plan" readonly style="cursor: not-allowed;" />
+            <p-button label="Seleccionar plan" severity="primary" styleClass="w-full mt-2 w-full align-items-center  "
+                (onClick)="toggleModalPlanes()"></p-button>
+        </div>
+        <div class="col-span-12 lg:col-start-4 lg:col-span-6 flex justify-center">
+            <p-button type="submit" label="Guardar" icon="pi pi-check" class="text-sm w-full lg:text-2xl mr-2" styleClass="w-full"
+                severity="success" [disabled]="form.invalid"></p-button>
+            <p-button label="Cancelar" severity="danger" class="text-sm w-full lg:text-2xl mr-2" styleClass="w-full"
+                (onClick)="redirectComisiones()"></p-button>
+        </div>
+
+    </form>
+</div>
+
+
 
 <app-planes-modal></app-planes-modal>

@@ -64,7 +64,7 @@ accept(){
     console.log(!this.error)
     if(!this.error){
       this.store.dispatch(new ShowModalConfirmationAction(false))
-      this.messageService.add({ severity: 'success', summary: 'Borrar comisión', detail: `Se ha borrado la especialidad: ${this.especialidad.descripcion}` });
+      this.messageService.add({ severity: 'success', summary: 'Borrar especialidad', detail: `Se ha borrado la especialidad: ${this.especialidad.descripcion}` });
     }
     this.store.dispatch(new ShowModalDelete(false))
   })

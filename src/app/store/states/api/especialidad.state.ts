@@ -67,6 +67,7 @@ export class EspecialidadState{
 
     @Action(PostEspecialidadAction)
     async postEspecialidadAction(ctx: StateContext<EspecialidadModelState>, action: PostEspecialidadAction){
+      ctx.patchState({loading:true, error:false})
       try{
         const response = await lastValueFrom(this.service.postEspecialidad(action.especialidad));
         const list = ctx.getState().especialidades;
@@ -80,6 +81,9 @@ export class EspecialidadState{
           errorMsg = error.error.filter()
         }
         ctx.patchState({error: true, errorMessage: ''})
+      }
+      finally{
+        ctx.patchState({loading:false})
       }
     }
 
@@ -118,7 +122,8 @@ export class EspecialidadState{
     async deleteEspecialidadAction(ctx: StateContext<EspecialidadModelState>, action: DeleteEspecialidadAction){
       ctx.patchState({
         error:false,
-        errorMessage:''
+        errorMessage:'',
+        loading:true,
       })
       try{
         await lastValueFrom(this.service.deleteEspecialidad(action.id));
@@ -128,6 +133,11 @@ export class EspecialidadState{
       }
       catch(error: any){
         ErrorStateHandler.handleError(error, ctx);
+      }
+      finally{
+        ctx.patchState({
+        loading:false,
+      })
       }
     }
 

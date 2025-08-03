@@ -18,14 +18,17 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { AsignarEspecialidadId } from '../../store/actions/pages/navigate.action';
 import { CardModule } from 'primeng/card';
+import { BlockUI } from 'primeng/blockui';
+import { ProgressSpinner } from 'primeng/progressspinner';
 @Component({
   selector: 'app-especialidad',
   standalone: true,
-  imports: [RouterModule,CommonModule, PanelModule, CardModule],
+  imports: [RouterModule,CommonModule, PanelModule, CardModule, BlockUI, ProgressSpinner],
   templateUrl: './especialidad.component.html',
   styleUrl: './especialidad.component.scss'
 })
 export class EspecialidadComponent  {
+  public loading$:Observable<boolean> = this.store.select(EspecialidadState.getLoading);
 
-
+  constructor(private store:Store){}
 }

@@ -1,15 +1,15 @@
 
 <p-table #dt2 [value]="(especialidades$ | async)!" [loading]="(loading$ | async)"
-    styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-sm" responsiveLayout="stack" [breakpoint]="'960px'"
+    styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-sm lg:text-xl" responsiveLayout="stack" [breakpoint]="'960px'"
     [paginator]="true" [scrollable]="true" size="small" [rows]="5" [scrollHeight]="scrollSize" [globalFilterFields]="['descripcion']">
     <ng-template pTemplate="caption">
-        @if (error$ | async)
-{
-<p-message severity="error">
-    {{(errorMessage$ | async)}}
-</p-message>
+    @if (error$ | async)
+    {
+    <p-message severity="error" class="mb-2">
+        {{(errorMessage$ | async)}}
+    </p-message>
 
-}
+    }
 
 <div class="flex flex-col w-full gap-2 md:flex-row justify-between">
 <div>
@@ -17,7 +17,7 @@
         <p-inputIcon>
             <i class="pi pi-search"></i>
         </p-inputIcon>
-        <input pInputText type="text" class="w-full text-sm sm:text-base md:text-lg py-1 sm:py-1 md:py-1" styleClass="w-full text-sm sm:text-base md:text-lg py-1 sm:py-1 md:py-1" (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
+        <input pInputText type="text" class="w-full text-sm lg:text-xl py-1 sm:py-1 md:py-1" (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
             placeholder="Buscar especialidad" />
     </p-iconField>
 </div>
@@ -43,13 +43,13 @@
     </ng-template>
     <ng-template pTemplate="body" let-especialidad>
         <tr>
-            <td  style="width:85%"><span class="p-column-title">Especialidad</span>{{especialidad.descripcion}}
+            <td  style="width:80%"><span class="p-column-title">Especialidad</span>{{especialidad.descripcion}}
             </td>
-            <td style="width:15%"><span class="p-column-title">Acciones</span>
-                <div class="flex gap-2 justify-content-center">
-                    <p-button size="small" label="Editar" severity="warn" class="mr-1"
+            <td style="width:20%"><span class="p-column-title">Acciones</span>
+                <div class="flex gap-2 justify-center">
+                    <p-button class="text-sm lg:text-lg" label="Editar" severity="warn" 
                         (onClick)="redirectEditEspecialidad(especialidad._id)" />
-                    <p-button size="small" label="Borrar" severity="danger" (onClick)="showModal(especialidad)" />
+                    <p-button class="text-sm lg:text-lg" label="Borrar" severity="danger" (onClick)="showModal(especialidad)" />
                 </div>
             </td>
         </tr>

@@ -1,14 +1,14 @@
-<div class="flex justify-content-center align-items-center">
-    <h3>{{title}}</h3>
+<div class="flex flex-row justify-center align-items-center">
+    <h4 class="text-xl text-center font-bold text-white pb-2">{{title}}</h4>
   </div>
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
             
-    <div class="flex overflow-hidden justify-content-center">
-        <div class="col-12 lg:col-4">
-            <div class="field">
-                <label for="descripcion">Descripcion:</label>
+    <div class="flex flex-row justify-center">
+        <div>
+            <div class="field col-12 md:col-4 lg:col-3 xl:col-3">
+                <label for="descripcion" class="text-sm lg:text-xl">Descripcion:</label>
                 <input id="firstname1" pInputText formControlName="descripcion" type="text"
-                    class="w-full">
+                    class="w-full text-sm lg:text-xl">
                 @if(form.get('descripcion')?.invalid && form.get('descripcion')?.dirty){
                 <small class="p-error block">
                     El campo descripcion es requerido
@@ -18,11 +18,11 @@
                     Ingrese la descripción que tendra el plan
                 </small>
             </div>
-            <div class="field">
-                <label>Especialidad:</label>
+            <div class="field col-12 md:col-4 lg:col-3 xl:col-3">
+                <label class="text-sm lg:text-xl">Especialidad:</label>
                 <p-dropdown [options]="(especialidades$ | async)!" formControlName="especialidadId" dataKey="_id"
                 optionValue="_id" appendTo="body"
-                    optionLabel="descripcion" [filter]="true" filterBy="descripcion" styleClass="w-full"
+                    optionLabel="descripcion" [filter]="true" filterBy="descripcion" styleClass="w-full text-sm lg:text-xl"
                     placeholder="Seleccionar una especialidad">
                     <ng-template pTemplate="selectedItem" let-selectedOption>
                         <div class="flex align-items-center gap-2">
@@ -42,9 +42,9 @@
 
 
     <div
-        class="flex flew-row align-items-center justify-content-center font-bold text-white border-round m-2 gap-2">
-        <p-button type="submit" label="Guardar" severity="success" [disabled]="form.invalid"></p-button>
-        <p-button label="Cancelar" severity="danger" (onClick)="redirectPlanes()"></p-button>
+        class="flex flex-row justify-center mt-2 font-bold text-white border-round">
+        <p-button type="submit" label="Guardar" severity="success" class="text-sm lg:text-2xl mr-2" [disabled]="form.invalid"></p-button>
+        <p-button label="Cancelar" severity="danger" class="text-sm lg:text-2xl mr-2" (onClick)="redirectPlanes()"></p-button>
     </div>
 
 </form>

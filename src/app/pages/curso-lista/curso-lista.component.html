@@ -1,6 +1,6 @@
 <p-table #dt2 [value]="(cursos$ | async)!" [loading]="(loading$ | async)"
     [globalFilterFields]="['descripcion','anioCalendario','comision.descripcion','materia.descripcion']"
-    styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-sm" responsiveLayout="stack" [breakpoint]="'960px'"
+    styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-sm lg:text-xl" responsiveLayout="stack" [breakpoint]="'960px'"
     [paginator]="true" size="small" [scrollable]="true" scrollHeight="flex" [rows]="5">
     <ng-template pTemplate="caption">
         @if (error$ | async)
@@ -20,14 +20,14 @@
                     <p-inputIcon>
                         <i class="pi pi-search"></i>
                     </p-inputIcon>
-                    <input pInputText pSize="small" type="text" class="w-full text-sm sm:text-base md:text-lg py-1 sm:py-1 md:py-1" styleClass="w-full text-sm sm:text-base md:text-lg py-1 sm:py-1 md:py-1" (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
+                    <input pInputText  type="text" class="w-full text-sm sm:text-base md:text-lg py-1 sm:py-1 md:py-1" styleClass="w-full text-sm sm:text-base md:text-lg py-1 sm:py-1 md:py-1" (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
                         placeholder="Buscar curso" />
                 </p-iconField>
             </div>
             <div>
-                <p-button label="Nuevo curso" size="small" severity="info"   class="w-full"
+                <p-button label="Nuevo curso"  severity="info"   class="w-full"
                 [styleClass]="
-                  'w-full text-sm sm:text-base md:text-lg px-3 py-1 sm:px-4 sm:py-1 md:px-5 md:py-1'
+                  'w-full text-sm lg:text-xl px-3 py-1 sm:px-4 sm:py-1 md:px-5 md:py-1'
                 " (onClick)="redirectNewCurso()"></p-button>
             </div>
         </div>
@@ -53,19 +53,11 @@
             <td style="width:auto"><span class="p-column-title">Acciones</span>
 
                 <div class="flex gap-2 justify-content-center">
-         <!--            <p-button size="small" class="w-full lg:w-3" styleClass="w-full" label="Generar reporte"
-                        (onClick)="generateReport(plan._id)"></p-button>
-                    <p-button size="small" class="w-full lg:w-2" styleClass="w-full" label="Materias"
-                        (onClick)="redirectToMaterias(plan._id)"></p-button>
-                    <p-button size="small" class="w-full lg:w-2"  styleClass="w-full" label="Editar" severity="warn"
-                        (onClick)="redirectEditarPlan(plan._id)" />
-                    <p-button size="small" class="w-full lg:w-2" styleClass="w-full" label="Borrar" severity="danger"
-                        (onClick)="modalConfirmar(plan)" /> -->
-                        <p-button size="small" label="Reporte de Inscripciones" class="text-nowrap" severity="primary" (onClick)="generateReport(curso._id)"
+                        <p-button  label="Reporte de Inscripciones" class="text-nowrap text-sm lg:text-xl" severity="primary" (onClick)="generateReport(curso._id)"
                         />
-                        <p-button size="small" label="Editar" severity="warn"
+                        <p-button label="Editar" severity="warn" class="text-sm lg:text-xl"
                             (onClick)="redirectEditCurso(curso._id)" />
-                        <p-button size="small" label="Borrar" severity="danger"
+                        <p-button label="Borrar" severity="danger" class="text-sm lg:text-xl"
                             (onClick)="modalConfirmar(curso)" />
                 </div>
             </td>

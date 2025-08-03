@@ -1,29 +1,27 @@
 <p-table #dt2 [value]="planes" [loading]="(loading$ | async)" responsiveLayout="stack" [breakpoint]="'960px'"
     [paginator]="true" [scrollable]="true" [rows]="5" scrollHeight="flex" size="small"
-    styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-sm" responsiveLayout="stack" [breakpoint]="'960px'"
-    [globalFilterFields]="['descripcion, especialidad.descripcion']">
+    styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-sm lg:text-xl" responsiveLayout="stack"
+    [breakpoint]="'960px'" [globalFilterFields]="['descripcion, especialidad.descripcion']">
     <ng-template pTemplate="caption">
         @if (error$ | async)
-        {
-            <p-message icon="pi pi-times" styleClass="mb-2" severity="error">
-              {{(errorMessage$ | async)}}
-            </p-message>
+{
+<p-message severity="error" class="mb-2">
+    {{(errorMessage$ | async)}}
+</p-message>
 
-
-        }
+}
         <div class="flex flex-col w-full gap-2 md:flex-row justify-between">
             <div>
-                <p-iconField iconPosition="left" class="mb-4 lg:mb-0 w-full">
+                <p-iconField iconPosition="left">
                     <p-inputIcon>
                         <i class="pi pi-search"></i>
                     </p-inputIcon>
-                    <input pInputText type="text" class="w-full text-sm sm:text-base md:text-lg py-1 sm:py-1 md:py-1"
+                    <input pInputText type="text" class="w-full text-sm lg:text-xl py-1 sm:py-1 md:py-1"
                         (input)="dt2.filterGlobal($any($event.target).value, 'contains')" placeholder="Buscar plan" />
                 </p-iconField>
             </div>
             <div>
-                <p-button label="Nuevo plan" severity="info" class="w-full text-sm sm:text-base md:text-lg py-1 sm:py-1 md:py-1" styleClass="w-full text-sm sm:text-base md:text-lg py-1 sm:py-1 md:py-1"
-                    (onClick)="redirectNuevoPlan()"></p-button>
+                <p-button label="Nuevo plan" severity="info" [styleClass]="'w-full text-sm sm:text-base md:text-lg px-3 py-1 sm:px-4 sm:py-1 md:px-5 md:py-1'" (onClick)="redirectNuevoPlan()"></p-button>
             </div>
         </div>
     </ng-template>
@@ -40,13 +38,13 @@
             <td style="width:30%"><span class="p-column-title">Especialidad</span>{{plan.especialidad.descripcion}}</td>
             <td style="width:auto"><span class="p-column-title">Acciones</span>
                 <div class="flex gap-2 justify-end">
-                    <p-button size="small" label="Generar reporte"
+                    <p-button label="Generar reporte" class="text-sm lg:text-xl"
                         (onClick)="generateReport(plan._id)"></p-button>
-                    <p-button size="small" label="Materias"
+                    <p-button label="Materias" class="text-sm lg:text-xl"
                         (onClick)="redirectToMaterias(plan._id)"></p-button>
-                    <p-button size="small" label="Editar" severity="warn"
+                    <p-button label="Editar" severity="warn" class="text-sm lg:text-xl"
                         (onClick)="redirectEditarPlan(plan._id)" />
-                    <p-button size="small" label="Borrar" severity="danger"
+                    <p-button label="Borrar" severity="danger" class="text-sm lg:text-xl"
                         (onClick)="modalConfirmar(plan)" />
                 </div>
             </td>
