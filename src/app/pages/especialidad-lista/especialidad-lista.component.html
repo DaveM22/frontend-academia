@@ -13,16 +13,7 @@
 
 <div class="flex flex-col w-full gap-2 md:flex-row justify-between">
 <div>
-    <p-iconField iconPosition="left">
-        <p-inputIcon>
-            <i class="pi pi-search"></i>
-        </p-inputIcon>
-        <input pInputText type="text" class="w-full text-sm lg:text-xl py-1 sm:py-1 md:py-1" (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
-            placeholder="Buscar especialidad" />
-    </p-iconField>
-</div>
-<div>
-    <p-button
+        <p-button
     label="Nueva especialidad"
     severity="info"
     class="w-full"
@@ -31,6 +22,16 @@
     "
     (onClick)="redirectNewEspecialidad()"
   ></p-button>
+
+</div>
+<div>
+    <p-iconField iconPosition="left">
+        <p-inputIcon>
+            <i class="pi pi-search"></i>
+        </p-inputIcon>
+        <input pInputText type="text" class="w-full text-sm lg:text-xl py-1 sm:py-1 md:py-1" (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
+            placeholder="Buscar especialidad" />
+    </p-iconField>
 </div>
 </div>
 

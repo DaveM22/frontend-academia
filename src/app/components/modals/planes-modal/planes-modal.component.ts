@@ -21,7 +21,7 @@ import { PlanFilter } from '../../../entities/filter';
   templateUrl: './planes-modal.component.html',
   styleUrl: './planes-modal.component.scss'
 })
-export class PlanesModalComponent implements OnInit {
+export class PlanesModalComponent {
   planes$:Observable<Plan[]> = this.store.select(PlanState.getPlanes);
   especialidadSelected$:Observable<Especialidad | null> = this.store.select(AppPageState.getSelectedEspecialidad);
   showModal$:Observable<boolean> = this.store.select(AppPageState.getShowModalPlanes);
@@ -29,18 +29,9 @@ export class PlanesModalComponent implements OnInit {
   dialogVisible = false;
   planes: Plan[] = [];
   filters: PlanFilter = new PlanFilter();
+  loading:boolean = false
   constructor(private store:Store){}
 
-  ngOnInit(): void {
-
-
-    this.especialidadSelected$.subscribe(x => {
-      if(x !== null){
-        this.filters.especialidadId = x!._id;
-        this.store.dispatch(new GetPlanAction(this.filters));
-      }
-    })
-  }
 
  seleccionarPlan(plan:Plan){
   this.store.dispatch(new SelectedPlanInModal(plan));
@@ -50,5 +41,13 @@ export class PlanesModalComponent implements OnInit {
   toggleOffModal(){
     this.store.dispatch(new ClearSelectedEspecialidadFilter());
     this.store.dispatch(new ShowPlanModal(false));
+  }
+
+  onEspecialidadChanged(value:any){
+      this.loading = true;
+      let filter = new PlanFilter();
+      filter.especialidadId = value._id;
+      this.store.dispatch(new GetPlanAction(filter)).subscribe(() => this.loading = false);
+      
   }
 }

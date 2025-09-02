@@ -11,10 +11,11 @@
 
 <p-table #dt2 [value]="materias"  responsiveLayout="stack" [breakpoint]="'960px'"
 [paginator]="true" [scrollable]="true" [rows]="5" scrollHeight="flex"
-styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0" 
+styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-sm lg:text-xl" 
 [globalFilterFields]="['descripcion, especialidad.descripcion']">
     <ng-template pTemplate="caption">
-        <div class="grid">
+
+<!--         <div class="grid">
             <div class="col-12 flex flex-column sm:flex-column w-full  lg:flex-row align-items-center lg:justify-content-between justify-content-center">
                 <p-iconField iconPosition="left" class="mb-4 lg:mb-0 w-full">
                     <p-inputIcon>
@@ -28,20 +29,20 @@ styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0"
                         placeholder="Buscar catedra" />
                 </p-iconField>
             </div>
-        </div>
+        </div> -->
     </ng-template>
     <ng-template pTemplate="header">
         <tr>
             <th>Catedra</th>
-            <th>Acciones</th>
+            <th class="text-center">Acciones</th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-materia>
         <tr>
-            <td style="width:70%"><span class="p-column-title">Catedra</span>{{materia.descripcion}}</td>
+            <td style="width:70%"><span class="p-column-title">Cátedra</span>{{materia.descripcion}}</td>
             <td style="width:30%"><span class="p-column-title">Acciones</span>
-                <div class="flex flex-column sm:flex-row gap-2 justify-content-center">
-                    <p-button size="small" class="w-full lg:w-4" styleClass="w-full" label="Ver comisiones" (onClick)="redirectToCursosDisponibles(materia._id)" ></p-button>
+                <div class="flex flex-column sm:flex-row gap-2 justify-center">
+                    <p-button label="Ver comisiones" (onClick)="redirectToCursosDisponibles(materia._id)" ></p-button>
                 </div>
             </td>
         </tr>

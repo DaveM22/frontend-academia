@@ -7,119 +7,141 @@ import { lastValueFrom } from "rxjs";
 import { ComisionService } from "../../../services/comision.service";
 import { AsignComisionAction } from "../../actions/pages/comision.action";
 import { ComisionFilter } from "../../../entities/filter";
+import { LoadingForm } from "../../actions/pages/app.action";
 
 @State<ComisionModelState>({
-    name: 'comisiones',
-    defaults: {
-        comisiones: [],
-        loading: true,
-        error: false,
-        errorMessage: '',
-    }
+  name: 'comisiones',
+  defaults: {
+    comisiones: [],
+    loading: true,
+    error: false,
+    errorMessage: '',
+  }
 })
 
 @Injectable()
 export class ComisionState {
-    @Selector()
-    static getComisiones(state: ComisionModelState) {
-        return state.comisiones;
+  @Selector()
+  static getComisiones(state: ComisionModelState) {
+    return state.comisiones;
+  }
+
+  @Selector()
+  static getLoading(state: ComisionModelState) {
+    return state.loading;
+  }
+
+  @Selector()
+  static getError(state: ComisionModelState) {
+    return state.error;
+  }
+
+  @Selector()
+  static getErrorMessage(state: ComisionModelState) {
+    return state.errorMessage;
+  }
+
+  constructor(private service: ComisionService) { }
+
+  @Action(GetComision)
+  async getComision(ctx: StateContext<ComisionModelState>, action: GetComision) {
+    ctx.patchState({ loading: true, error: false })
+    try {
+      const response = await lastValueFrom(this.service.get(action.filter));
+      ctx.patchState({
+        comisiones: [...response],
+        loading: false,
+        error: false
+      })
+    }
+    catch (error: any) {
+      ErrorStateHandler.handleError(error, ctx);
+    }
+    finally {
+      ctx.patchState({ loading: false })
+    }
+  }
+
+  @Action(GetByIdComisionAction)
+  async getByIdComision(ctx: StateContext<ComisionModelState>, action: GetByIdComisionAction) {
+
+    ctx.patchState({ loading: true, error: false })
+    try {
+      const response = await lastValueFrom(this.service.getById(action.id));
+      ctx.dispatch(new AsignComisionAction(response));
+    }
+    catch (error: any) {
+      ErrorStateHandler.handleError(error, ctx);
+    }
+    finally {
+      ctx.patchState({ loading: false })
     }
 
-    @Selector()
-    static getLoading(state: ComisionModelState) {
-        return state.loading;
+  }
+
+  @Action(PostComisionAction)
+  async postComisionAction(ctx: StateContext<ComisionModelState>, action: PostComisionAction) {
+    ctx.patchState({ error: false })
+    ctx.dispatch(new LoadingForm(true));
+    try {
+      const response = await lastValueFrom(this.service.post(action.comision))
+      const list = ctx.getState().comisiones;
+      ctx.patchState({
+        comisiones: [...list, response]
+      })
     }
-
-    @Selector()
-    static getError(state: ComisionModelState) {
-        return state.error;
+    catch (error) {
+      ErrorStateHandler.handleError(error, ctx);
     }
-
-    @Selector()
-    static getErrorMessage(state: ComisionModelState) {
-        return state.errorMessage;
+    finally {
+      ctx.dispatch(new LoadingForm(false));
     }
+  }
 
-    constructor(private service:ComisionService){}
-
-    @Action(GetComision)
-    async getComision(ctx:StateContext<ComisionModelState>, action:GetComision){
-        ctx.patchState({loading:true, error:false})
-        try{
-          const response = await lastValueFrom(this.service.get(action.filter));
-          ctx.patchState({
-              comisiones:[...response],
-              loading:false,
-              error:false
-          })
-        }
-        catch(error:any){
-          ErrorStateHandler.handleError(error, ctx);
-        }
-        finally{
-          ctx.patchState({loading:false})
-        }
-    }
-
-    @Action(GetByIdComisionAction)
-    async getByIdComision(ctx: StateContext<ComisionModelState>, action: GetByIdComisionAction){
-
-      ctx.patchState({loading:true, error:false})
-      try{
-        const response = await lastValueFrom(this.service.getById(action.id));
-        ctx.dispatch(new AsignComisionAction(response));
-      }
-      catch(error:any){
-        ErrorStateHandler.handleError(error, ctx);
-      }
-      finally{
-        ctx.patchState({loading:false})
-      }
-
-    }
-
-    @Action(PostComisionAction)
-    async postComisionAction(ctx:StateContext<ComisionModelState>, action: PostComisionAction){
-        const response = await lastValueFrom(this.service.post(action.comision))
-        const list = ctx.getState().comisiones;
-        ctx.patchState({
-          comisiones: [...list,response]
-        })
-    }
-
-    @Action(PutComisionAction)
-    async putComision(ctx: StateContext<ComisionModelState>, action: PutComisionAction){
+  @Action(PutComisionAction)
+  async putComision(ctx: StateContext<ComisionModelState>, action: PutComisionAction) {
+    ctx.patchState({ error: false })
+    ctx.dispatch(new LoadingForm(true));
+    try {
       const response = await lastValueFrom(this.service.put(action.comision));
       const updatedEspecialidades = ctx.getState().comisiones.map(item =>
         item._id === response._id ? response : item
       );
-
       ctx.patchState({
-        comisiones:updatedEspecialidades
+        comisiones: updatedEspecialidades
       })
-
+    }
+    catch (error) {
+      ErrorStateHandler.handleError(error, ctx);
+    }
+    finally {
+      ctx.dispatch(new LoadingForm(false));
     }
 
-    @Action(DeleteComisionAction)
-    async deleteComision(ctx:StateContext<ComisionModelState>, action: DeleteComisionAction){
-      ctx.patchState({ error: false })
-      try {
-        await lastValueFrom(this.service.delete(action.id));
-        let filter = new ComisionFilter();
-        filter.mostrarPlan = true;
-        ctx.dispatch(new GetComision(filter));
-        ctx.patchState({
-          comisiones: ctx.getState().comisiones.filter(x => x._id !== action.id)   
-        })
-      }
-      catch (error:any) {
-        console.log(error)
-        ctx.patchState({ error: true })
-        ctx.patchState({
-          error:true,
-          errorMessage: error.error.error
-        })
-      }
+
+
+  }
+
+  @Action(DeleteComisionAction)
+  async deleteComision(ctx: StateContext<ComisionModelState>, action: DeleteComisionAction) {
+    ctx.patchState({ error: false })
+    try {
+      await lastValueFrom(this.service.delete(action.id));
+      let filter = new ComisionFilter();
+      filter.mostrarPlan = true;
+      ctx.dispatch(new GetComision(filter));
+      ctx.patchState({
+        comisiones: ctx.getState().comisiones.filter(x => x._id !== action.id)
+      })
     }
+    catch (error: any) {
+      console.log(error)
+      ctx.patchState({ error: true })
+      ctx.patchState({
+        error: true,
+        errorMessage: error.error.error
+      })
+    }
+  }
 
 }

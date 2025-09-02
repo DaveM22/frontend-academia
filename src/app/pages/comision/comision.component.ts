@@ -13,11 +13,12 @@ import { PanelModule } from 'primeng/panel';
 import { ToastModule } from 'primeng/toast';
 import { ComisionFilter } from '../../entities/filter';
 import { CardModule } from 'primeng/card';
+import { BlockUiComponent } from '../../components/util/block-ui/block-ui.component';
 
 @Component({
   selector: 'app-comision',
   standalone: true,
-  imports: [CommonModule, PanelModule, RouterModule, CardModule],
+  imports: [CommonModule, PanelModule, RouterModule, CardModule, BlockUiComponent],
   templateUrl: './comision.component.html',
   styleUrl: './comision.component.scss'
 })

@@ -37,6 +37,7 @@ export class MateriaService {
   }
 
   public getById(id:string){
+    console.log(id);
     return this.http.get<Materia>(`${environment.apiUrl}/materias/${id}`);
   }
 

@@ -15,9 +15,10 @@ import { PlanPageState } from '../../store/states/page/plan.page.state';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { AppPageState } from '../../store/states/page/app.state';
 import { ShowModalConfirmationAction } from '../../store/actions/pages/app.action';
-import { DeleteMateria } from '../../store/actions/api/materia.action';
+import { DeleteMateria, GetByIdMateriaAction } from '../../store/actions/api/materia.action';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ScreenSizeService } from '../../services/screen-size.service.service';
+import { MateriaState } from '../../store/states/api/materia.state';
 
 @Component({
   selector: 'app-plan-materias',
@@ -30,7 +31,7 @@ import { ScreenSizeService } from '../../services/screen-size.service.service';
 export class PlanMateriasComponent implements OnInit {
   error$:Observable<boolean> = this.store.select(PlanState.getError);
   errorMessage$:Observable<string> = this.store.select(PlanState.getErrorMessage);
-  loading$:Observable<boolean> = this.store.select(PlanState.getLoading);
+  loading$:Observable<boolean> = this.store.select(MateriaState.getLoading);
   planSelected$:Observable<Plan | null> = this.store.select(PlanPageState.getPlanSelected);
   showConfirmation$:Observable<boolean> = this.store.select(AppPageState.showModalConfirmation)
   plan!:Plan;
@@ -77,8 +78,10 @@ export class PlanMateriasComponent implements OnInit {
     this.router.navigate([`/planes/${this.id}/materias/nuevo`]);
   }
 
-  redirectMateriaEditar(materiaId:number){
-    this.router.navigate([`/planes/${this.id}/materias/editar/${materiaId}`]);
+  redirectMateriaEditar(materiaId:string){
+    this.store.dispatch(new GetByIdMateriaAction(materiaId)).subscribe(() => {
+      this.router.navigate([`/planes/${this.id}/materias/editar/${materiaId}`]);
+    });
   }
 
   redirectPlanes(){

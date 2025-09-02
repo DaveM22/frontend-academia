@@ -1,6 +1,6 @@
 
     <p-select
-    styleClass="w-full"
+
     [options]="(especialiades$ | async)!" 
     [(ngModel)]="especialidad"
     [checkmark]="true" 
@@ -10,6 +10,7 @@
     placeholder="Seleccione una especialidad"
     (onChange)="onChangeEspecialidad()"
     (onClear)="onClear()"
-    size="small"
+    class="text-sm lg:text-xl"
+    styleClass="text-sm lg:text-xl w-full"
     appendTo="body" />
 

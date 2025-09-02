@@ -72,7 +72,7 @@ export class AlumnoListaComponent implements OnInit {
 
     this.confirmationService.confirm({
       header: 'Borrar alumno',
-      message: `¿Desea eliminar el siguiente comisión: Legajo:${this.alumnoSelected.legajo} ${this.alumnoSelected.nombre} ${this.alumnoSelected.apellido}  ?`,
+      message: `¿Desea eliminar el siguiente alumno: Legajo:${this.alumnoSelected.legajo} ${this.alumnoSelected.nombre} ${this.alumnoSelected.apellido}  ?`,
       acceptIcon: 'pi pi-check mr-2',
       rejectIcon: 'pi pi-times mr-2',
       rejectButtonStyleClass: 'p-button-sm',

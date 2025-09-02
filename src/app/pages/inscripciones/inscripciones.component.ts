@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
@@ -22,6 +22,8 @@ import { DeleteAlumnoInscripcionAction, GetOneAlumnoInscripcionAction } from '..
 import { AppPageState } from '../../store/states/page/app.state';
 import { ShowModalConfirmationAction } from '../../store/actions/pages/app.action';
 import { AlumnoInscripcionState } from '../../store/states/api/alumno-incripcion.state';
+import { ClearMateriaAction } from '../../store/actions/pages/materia.action';
+import { ClearMateriasAction } from '../../store/actions/api/materia.action';
 
 @Component({
   selector: 'app-inscripciones',
@@ -31,13 +33,16 @@ import { AlumnoInscripcionState } from '../../store/states/api/alumno-incripcion
   styleUrl: './inscripciones.component.scss',
   providers:[ConfirmationService]
 })
-export class InscripcionesComponent implements OnInit  {
+export class InscripcionesComponent implements OnInit, OnDestroy  {
   alumno$:Observable<Alumno | null> = this.store.select(PersonaPageState.getAlumnoSelected);
   loading$:Observable<boolean> = this.store.select(PersonaState.getLoading) || this.store.select(AlumnoInscripcionState.getLoading);
   alumno!:Alumno;
   inscripciones:AlumnoInscripcion[]=[]
   showConfirmation$:Observable<boolean> = this.store.select(AppPageState.showModalConfirmation)
   constructor(private store:Store,private route:Router, private router:ActivatedRoute, private messageService:MessageService, private confirmationService: ConfirmationService){}
+  ngOnDestroy(): void {
+    this.store.dispatch(new ClearMateriasAction);
+  }
   inscripcionSelected!:AlumnoInscripcion
   
   ngOnInit(): void {

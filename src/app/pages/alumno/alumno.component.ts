@@ -14,11 +14,12 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputIconModule } from 'primeng/inputicon';
 import { IconFieldModule } from 'primeng/iconfield';
 import { CardModule } from 'primeng/card';
+import { BlockUiComponent } from '../../components/util/block-ui/block-ui.component';
 
 @Component({
   selector: 'app-alumno',
   standalone: true,
-  imports: [CommonModule, PanelModule, RouterModule, CardModule],
+  imports: [CommonModule, PanelModule, RouterModule, CardModule, BlockUiComponent],
   templateUrl: './alumno.component.html',
   styleUrl: './alumno.component.scss'
 })

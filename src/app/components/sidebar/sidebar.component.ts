@@ -25,7 +25,7 @@ export class SidebarComponent implements OnInit {
   sidebarVisible: boolean = true;
   rol: string = '';
   isLogged: boolean = false;
-  constructor(private store:Store,private router: Router, private auth: AuthService) { }
+  constructor(private store: Store, private router: Router, private auth: AuthService) { }
 
 
 
@@ -60,39 +60,39 @@ export class SidebarComponent implements OnInit {
   itemsAdministrador() {
     this.items = [
       {
-        label:'Personal',
-        items:[
-          { label: 'Alumnos',styleClass:'text-sm lg:text-lg', icon: 'pi pi pi-user', command: () => this.navigate("/alumnos/lista") },
-          { label: 'Profesores',styleClass:'text-sm lg:text-lg', icon: 'pi pi pi-user', command: () => this.navigate("/profesores/lista") },
-          { label: 'Usuarios',styleClass:'text-sm lg:text-lg', icon: 'pi pi pi-user', command: () => this.navigate("/usuarios/lista") }
+        label: 'Personal',
+        items: [
+          { label: 'Alumnos', styleClass: 'text-sm lg:text-lg', icon: 'pi pi pi-user', command: () => this.navigate("/alumnos/lista") },
+          { label: 'Profesores', styleClass: 'text-sm lg:text-lg', icon: 'pi pi pi-user', command: () => this.navigate("/profesores/lista") },
+          { label: 'Usuarios', styleClass: 'text-sm lg:text-lg', icon: 'pi pi pi-user', command: () => this.navigate("/usuarios/lista") }
         ],
-        styleClass:'text-sm lg:text-lg'
+        styleClass: 'text-sm lg:text-lg'
       },
       {
-        label:'Alumnado',
-        items:[
-          { label: 'Especialidades',styleClass:'text-sm lg:text-lg', icon: 'pi pi-cog', command: () => this.navigate("/especialidades/lista") },
-          { label: 'Planes y materias',styleClass:'text-sm lg:text-lg', icon: 'pi pi-cog', command: () => this.navigate("/planes/lista") },
-          { label: 'Comisiones',styleClass:'text-sm lg:text-lg', icon: 'pi pi-cog', command: () => this.navigate("/comisiones/lista") },
-          { label: 'Cursos',styleClass:'text-sm lg:text-lg', icon: 'pi pi-cog', command: () => this.navigate("/cursos/lista") },
+        label: 'Alumnado',
+        items: [
+          { label: 'Especialidades', styleClass: 'text-sm lg:text-lg', icon: 'pi pi-cog', command: () => this.navigate("/especialidades/lista") },
+          { label: 'Planes y materias', styleClass: 'text-sm lg:text-lg', icon: 'pi pi-cog', command: () => this.navigate("/planes/lista") },
+          { label: 'Comisiones', styleClass: 'text-sm lg:text-lg', icon: 'pi pi-cog', command: () => this.navigate("/comisiones/lista") },
+          { label: 'Cursos', styleClass: 'text-sm lg:text-lg', icon: 'pi pi-cog', command: () => this.navigate("/cursos/lista") },
         ],
-         styleClass:'text-sm lg:text-lg'
+        styleClass: 'text-sm lg:text-lg'
       },
 
       {
-        label:'Inscripciones',
-        items:[
-          { label: 'Inscripciones de alumnos',styleClass:'text-sm lg:text-lg', icon: 'pi pi-pen-to-square', command: () => this.navigate("inscripciones/alumnos/lista") },
-          { label: 'Profesores en cursos',styleClass:'text-sm lg:text-lg', icon: 'pi pi-pen-to-square', command: () => this.navigate("/asignacion-docentes/seleccionar-materia") },
+        label: 'Inscripciones',
+        items: [
+          { label: 'Inscripciones de alumnos', styleClass: 'text-sm lg:text-lg', icon: 'pi pi-pen-to-square', command: () => this.navigate("inscripciones/alumnos/lista") },
+          { label: 'Profesores en cursos', styleClass: 'text-sm lg:text-lg', icon: 'pi pi-pen-to-square', command: () => this.navigate("/asignacion-docentes/seleccionar-materia") },
         ],
-        styleClass:'text-sm lg:text-lg'
+        styleClass: 'text-sm lg:text-lg'
       },
-    {
-      label:'Configuraciones',
-      items:[
-        {label:'Parametros',styleClass:'text-sm lg:text-lg', icon:'pi pi-cog', command: () => this.navigate("/parametros")}
-      ]
-    }
+      {
+        label: 'Configuraciones',
+        items: [
+          { label: 'Parametros', styleClass: 'text-sm lg:text-lg', icon: 'pi pi-cog', command: () => this.navigate("/parametros") }
+        ]
+      }
 
 
     ];
@@ -101,21 +101,26 @@ export class SidebarComponent implements OnInit {
   itemsAlumno() {
     let personaId = this.store.selectSnapshot(AppPageState.getPersonId);
     this.items = [
-      { label: 'Mis catedras', icon: 'pi pi pi-user', command: () => this.router.navigate(["alumno/catedras/"+personaId]) },
-      { label: 'Insribirse a catedra', icon: 'pi pi pi-user', command: () => this.router.navigate(["inscripcion-catedra/materias-disponibles/"+personaId]) },
+      {
+        label: 'Alumno',
+        items: [
+          { label: 'Mis catedras', styleClass: 'text-sm lg:text-lg', icon: 'pi pi pi-user', command: () => this.router.navigate(["alumno/catedras/" + personaId]) },
+          { label: 'Insribirse a cátedra', styleClass: 'text-sm lg:text-lg', icon: 'pi pi pi-user', command: () => this.router.navigate(["inscripcion-catedra/materias-disponibles/" + personaId]) }
+        ]
+      }
     ]
   }
-  
 
-  navigate(url:string){
-    this.router.navigate([url]); 
+
+  navigate(url: string) {
+    this.router.navigate([url]);
     this.store.dispatch(new ToggleMenuAction(false));
   }
 
-  itemsDocente(){
+  itemsDocente() {
     let personaId = this.store.selectSnapshot(AppPageState.getPersonId);
     this.items = [
-      { label: 'Catedras asignadas', icon: 'pi pi pi-user', command: () => this.router.navigate(["docente/"+personaId+"/cursos-asignados"]) },
+      { label: 'Catedras asignadas', icon: 'pi pi pi-user', command: () => this.router.navigate(["docente/" + personaId + "/cursos-asignados"]) },
     ]
   }
 

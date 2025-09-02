@@ -27,24 +27,30 @@
     </ng-template>
     <ng-template pTemplate="header">
         <tr>
-            <th>Nombre</th>
+            <th>Descripción</th>
             <th>Especialidad</th>
             <th class="text-center">Acciones</th>
         </tr>
     </ng-template>
+      <ng-template pTemplate="loading">
+    <div class="flex flex-col items-center justify-center p-4 text-primary">
+      <i class="pi pi-spin pi-spinner text-4xl mb-2"></i>
+      <span class="text-lg font-medium">Cargando datos de clientes...</span>
+    </div>
+  </ng-template>
     <ng-template pTemplate="body" let-plan>
         <tr>
-            <td style="width:30%"><span class="p-column-title">Descripcion</span>{{plan.descripcion}}</td>
-            <td style="width:30%"><span class="p-column-title">Especialidad</span>{{plan.especialidad.descripcion}}</td>
-            <td style="width:auto"><span class="p-column-title">Acciones</span>
-                <div class="flex gap-2 justify-end">
-                    <p-button label="Generar reporte" class="text-sm lg:text-xl"
+            <td style="width:30%"><span class="p-column-title">Descripción</span>{{plan.descripcion}}</td>
+            <td style="width:40%"><span class="p-column-title">Especialidad</span>{{plan.especialidad.descripcion}}</td>
+            <td class="text-center" style="width:auto"><span class="p-column-title">Acciones</span>
+                <div class="flex flex-col gap-2 justify-center lg:flex-row">
+                    <p-button label="Generar reporte" class="text-sm lg:text-xl w-full lg:w-auto" styleClass="w-full lg:w-auto"
                         (onClick)="generateReport(plan._id)"></p-button>
-                    <p-button label="Materias" class="text-sm lg:text-xl"
-                        (onClick)="redirectToMaterias(plan._id)"></p-button>
-                    <p-button label="Editar" severity="warn" class="text-sm lg:text-xl"
-                        (onClick)="redirectEditarPlan(plan._id)" />
-                    <p-button label="Borrar" severity="danger" class="text-sm lg:text-xl"
+                    <p-button label="Materias" class="text-sm lg:text-xl w-full lg:w-auto"
+                        (onClick)="redirectToMaterias(plan._id)" styleClass="w-full lg:w-auto"></p-button>
+                    <p-button label="Editar" severity="warn" class="text-sm lg:text-xl w-full lg:w-auto"
+                        (onClick)="redirectEditarPlan(plan._id)" styleClass="w-full lg:w-auto" />
+                    <p-button label="Borrar" severity="danger" class="text-sm lg:text-xl w-full lg:w-auto" styleClass="w-full lg:w-auto"
                         (onClick)="modalConfirmar(plan)" />
                 </div>
             </td>
@@ -54,7 +60,7 @@
 
 <p-confirmDialog #cd [closable]="false">
     <ng-template pTemplate="message" let-message>
-        <div class="flex flex-column align-items-center w-full gap-3 border-bottom-1 surface-border">
+        <div class="flex flex-col items-center w-full gap-3 border-bottom-1 surface-border">
             <i class="pi pi-exclamation-circle text-6xl text-primary-500"></i>
             <p>{{ message.message }}</p>
         </div>

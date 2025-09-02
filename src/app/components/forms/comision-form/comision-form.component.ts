@@ -35,12 +35,12 @@ import { MessageService } from 'primeng/api';
   styleUrl: './comision-form.component.scss'
 })
 export class ComisionFormComponent implements OnInit, OnDestroy {
-  @Input() title!:string;
+  @Input() title!: string;
   planSelected$: Observable<Plan | null> = this.store.select(AppPageState.getSelectedPlanInModal);
   form!: FormGroup;
-  comision!:ComisionDto;
-  plan!:Plan;
-  constructor(private store: Store,  private router:Router, private messageService:MessageService) { }
+  comision!: ComisionDto;
+  plan!: Plan;
+  constructor(private store: Store, private router: Router, private messageService: MessageService) { }
 
 
 
@@ -58,11 +58,11 @@ export class ComisionFormComponent implements OnInit, OnDestroy {
   }
 
 
-  pathValues(){
+  pathValues() {
     let comision = this.store.selectSnapshot(ComisionPageState.getComisionSelected)!
-    if(comision._id !== ""){
+    if (comision._id !== "") {
       this.form.patchValue(comision);
-      this.form.patchValue({'plan': comision.plan.descripcion, 'planId':comision.plan._id});
+      this.form.patchValue({ 'plan': comision.plan.descripcion, 'planId': comision.plan._id });
     }
   }
 
@@ -80,26 +80,28 @@ export class ComisionFormComponent implements OnInit, OnDestroy {
 
 
 
-  public onSubmit() { 
+  public onSubmit() {
     this.comision = this.form.value
     console.log(this.comision)
-    if(this.comision._id === null){
+    if (this.comision._id === null) {
       this.store.dispatch(new PostComisionAction(this.comision)).subscribe(() => {
         this.router.navigate(["/comisiones/lista"])
         this.messageService.add({ severity: 'success', summary: 'Crear comisión', detail: 'Se ha creado la comision' });
       });
 
     }
-    else{
-      this.store.dispatch(new PutComisionAction(this.comision)).subscribe(x => this.router.navigate(["/comisiones/lista"]));
-      this.store.dispatch(new ClearComisionAction());
-      this.messageService.add({ severity: 'success', summary: 'Editar comisión', detail: 'Se han guardado los cambios de la comisión' });
+    else {
+      this.store.dispatch(new PutComisionAction(this.comision)).subscribe(x => {
+        this.router.navigate(["/comisiones/lista"])
+        this.store.dispatch(new ClearComisionAction());
+        this.messageService.add({ severity: 'success', summary: 'Editar comisión', detail: 'Se han guardado los cambios de la comisión' });
+      });
     }
     this.form.reset();
 
   }
 
-  subscripcionPlanSelected(){
+  subscripcionPlanSelected() {
     this.planSelected$.subscribe(x => {
       if (x !== null) {
         this.plan = x!;

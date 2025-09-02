@@ -20,15 +20,17 @@ import { AsignarEspecialidadId } from '../../store/actions/pages/navigate.action
 import { CardModule } from 'primeng/card';
 import { BlockUI } from 'primeng/blockui';
 import { ProgressSpinner } from 'primeng/progressspinner';
+import { AppPageState } from '../../store/states/page/app.state';
+import { BlockUiComponent } from "../../components/util/block-ui/block-ui.component";
 @Component({
   selector: 'app-especialidad',
   standalone: true,
-  imports: [RouterModule,CommonModule, PanelModule, CardModule, BlockUI, ProgressSpinner],
+  imports: [RouterModule, CommonModule, PanelModule, CardModule, BlockUiComponent],
   templateUrl: './especialidad.component.html',
   styleUrl: './especialidad.component.scss'
 })
 export class EspecialidadComponent  {
-  public loading$:Observable<boolean> = this.store.select(EspecialidadState.getLoading);
+  public loading$:Observable<boolean> = this.store.select(AppPageState.getFormLoading);
 
   constructor(private store:Store){}
 }

@@ -1,12 +1,21 @@
-<div class="content" style="height: 100%;">
+<!-- <div class="content" style="height: 100%;">
     <p-panel styleClass="h-full">
         <ng-template pTemplate="header">
-            <div class="flex flex-wrap w-full pt-3 pb-3 align-items-center justify-content-center">
-            <h1 class="text-center"> Inscripción a materia </h1>
-            </div>
+                        <h2 class="text-3xl text-center font-bold text-white pb-2">Inscripción a materia</h2>
         </ng-template>
         <ng-template pTemplate="content">
             <router-outlet></router-outlet>
         </ng-template>
     </p-panel>
-</div>
+</div> -->
+
+<p-card #crd styleClass="h-full">
+  <ng-template pTemplate="header">
+    <div>
+       <h2 class="text-3xl text-center font-bold text-white pb-2">Inscripción a materia</h2>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="content">
+    <router-outlet></router-outlet>
+  </ng-template>
+</p-card>

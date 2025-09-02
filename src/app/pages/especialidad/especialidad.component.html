@@ -9,18 +9,4 @@
   </ng-template>
 </p-card>
 
-<div #crd class="relative">
-  <div class="bg-white rounded shadow">
-
-  </div>
-
-  <p-blockUI [target]="crd" [blocked]="(loading$ | async)">
-    <div class="absolute inset-0 flex flex-col items-center justify-center">
-      <p-progress-spinner ariaLabel="loading" />
-      <p class="text-gray-700 text-base text-center">
-        Un momento, estamos procesando tu solicitud...
-      </p>
-    </div>
-
-  </p-blockUI>
-</div>
+<app-block-ui [target]="crd"></app-block-ui>

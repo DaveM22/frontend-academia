@@ -1,67 +1,44 @@
-<div class="flex justify-content-center align-items-center">
-    <h3>Nueva Inscripción</h3>
+<div class="flex flex-row justify-center align-items-center">
+    <h4 class="text-xl text-center font-bold text-white pb-2">Nueva Inscripción:</h4>
   </div>
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <div class="flex overflow-hidden justify-content-center">
-        <div class="col-12 lg:col-4">
-            <div class="field">
-                <label>Alumno:</label>
-                <div class="field grid">
-                    <div class="col-12 sm:col-12 lg:col-7">
-                        <input type="text" pInputText class="w-full sm:w-full" formControlName="alumno" />
-                    </div>
+<div class="grid place-items-center">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="grid grid-cols-12 gap-4 w-full max-w-screen-lg">
 
-                </div>
-            </div>
-           
-            <div class="field">
-                <label>Curso:</label>
-                <div class="field grid">
-                    <div class="col-12 sm:col-12 lg:col-7">
-                        <input type="text" pInputText placeholder="Seleccione un curso" class="w-full sm:w-full"
-                            formControlName="curso" />
-                    </div>
-
-                    <div class="col-12 sm:col-12 lg:col-5">
-                        <p-button label="Seleccionar curso" severity="primary"
-                            styleClass="w-full mt-2 sm:w-full align-items-center lg:w-full sm:mt-2 lg:mt-0 "
-                            (onClick)="toggleModalCursos()"></p-button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="field">
-                <label>Condicion:</label>
-                <div class="field grid">
-                    <div class="col-12 sm:col-12 lg:col-7">
-                        <p-dropdown formControlName="condicion" appendTo="body" [options]="condiciones"  
-                        placeholder="Seleccionar condición" styleClass="col-12 sm:col-12 lg:col-12" />
-                    </div>
-                </div>
-            </div>
-            @if (this.form.value.condicion === 'APROBADO') 
-            {
-                <div class="field">
-                    <label>Nota:</label>
-                    <p-inputNumber inputId="integeronly" formControlName="nota" [min]="6" [max]="10" class="w-full" inputStyleClass="w-full" styleClass="w-full md:w-full lg:w-auto"    />
-                </div>
-                @if(this.form.value.condicion === 'APROBADO' && !this.form.value.nota){
-                    <small class="p-error block">
-                        El campo nota es requerido con la condición de aprobado
-                    </small>
-                }
-            }
-
+        <div class="col-span-12 lg:col-start-4 lg:col-span-6">
+            <label>Alumno:</label>
+            <input type="text" pInputText class="w-full sm:w-full" formControlName="alumno" />
         </div>
-    </div>
+        <div class="col-span-12 lg:col-start-4 lg:col-span-6 gap-2">
+            <label>Curso:</label>
+            <input type="text" pInputText placeholder="Seleccione un curso" class="w-full sm:w-full"
+                formControlName="curso" />
+            <p-button label="Seleccionar curso" severity="primary"
+                styleClass="w-full mt-2 sm:w-full align-items-center lg:w-full sm:mt-2 lg:mt-2 "
+                (onClick)="toggleModalCursos()"></p-button>
+        </div>
+        <div class="col-span-12 lg:col-start-4 lg:col-span-6 gap-2">
+            <label>Condicion:</label>
+            <p-dropdown formControlName="condicion" appendTo="body" [options]="condiciones"
+                placeholder="Seleccionar condición" styleClass="col-12 sm:col-12 lg:col-12 w-full" />
+            @if (this.form.value.condicion === 'APROBADO')
+            {
+            <div class="col-span-12 lg:col-start-4 lg:col-span-6 gap-2">
+                <label>Nota:</label>
+                <p-inputNumber inputId="integeronly" formControlName="nota" [min]="6" [max]="10" class="w-full"
+                    inputStyleClass="w-full" styleClass="w-full md:w-full lg:w-auto" />
+            </div>
+            @if(this.form.value.condicion === 'APROBADO' && !this.form.value.nota){
+            <small class="p-error block">
+                El campo nota es requerido con la condición de aprobado
+            </small>
+            }
+            }
+        </div>
+        <div class="col-span-12 lg:col-start-4 lg:col-span-6 flex justify-center gap-2">
+            <p-button label="Guardar" icon="pi pi-check" class="w-full" styleClass="w-full"></p-button>
+            <p-button label="Cancelar" severity="danger" icon="pi pi-times" class="w-full" styleClass="w-full"
+                (onClick)="redirectInscripcionesAlumno()"></p-button>
+        </div>
+    </form>
 
-
-
-    <div class="flex align-items-center justify-content-center font-bold text-white border-round m-2">
-        <button type="submit" pButton label="Guardar" icon="pi pi-check" class="p-button-success mr-2"></button>
-        <p-button label="Cancelar" severity="danger" icon="pi pi-times"
-            (onClick)="redirectInscripcionesAlumno()"></p-button>
-    </div>
-</form>
-
-<app-cursos-modal></app-cursos-modal>
+    <app-cursos-modal></app-cursos-modal>

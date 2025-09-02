@@ -93,7 +93,7 @@ export const routes: Routes = [
                     { path: 'editar/:id', pathMatch: 'full', component: PlanEditarComponent },
                     { path: ':id/materias', pathMatch: 'full', component: PlanMateriasComponent },
                     { path: ':id/materias/nuevo', component: PlanMateriasNuevoComponent },
-                    { path: 'planes/:id/materias/editar/:idMateria', component: PlanMateriasEditarComponent }
+                    { path: ':id/materias/editar/:idMateria', component: PlanMateriasEditarComponent }
                 ],
                 canActivate: [AuthGuard, adminGuard],
                 data: {

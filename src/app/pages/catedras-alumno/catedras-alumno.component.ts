@@ -20,6 +20,7 @@ import { PersonaPageState } from '../../store/states/page/persona.state';
 import { Persona } from '../../entities/persona';
 import { AlumnoInscripcion } from '../../entities/alumno-inscripcion';
 import { PanelModule } from 'primeng/panel';
+import { PersonaState } from '../../store/states/api/persona.state';
 
 @Component({
   selector: 'app-catedras-alumno',
@@ -32,6 +33,7 @@ export class CatedrasAlumnoComponent implements OnInit {
   persona$:Observable<Alumno | null> = this.store.select(PersonaPageState.getAlumnoSelected);
   personaid$:Observable<string> = this.store.select(AppPageState.getPersonId);
   persona!:Alumno;
+  loading$:Observable<boolean> = this.store.select(PersonaState.getLoading)
   inscripciones:AlumnoInscripcion[] = [];
   constructor(private store:Store){}
 

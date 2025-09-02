@@ -30,22 +30,22 @@ import { ClearSelectedPlan } from '../../../store/actions/pages/plan.action';
   imports: [ReactiveFormsModule, InputTextModule, CardModule, ButtonModule, ToastModule, RippleModule, InputMaskModule, PlanesModalComponent],
   templateUrl: './persona-form.component.html',
   styleUrl: './persona-form.component.scss',
-  providers:[DatePipe]
+  providers: [DatePipe]
 })
 export class PersonaFormComponent {
   @Input() title!: string;
   tipoPersona!: TipoPersonaEnum
   planSelected$: Observable<Plan | null> = this.store.select(AppPageState.getSelectedPlanInModal);
-  alumnoSelected$:Observable<Alumno | null> = this.store.select(PersonaPageState.getAlumnoSelected)
-  profesorSelected$:Observable<Profesor | null> = this.store.select(PersonaPageState.getProfesorSelected)
-  personaSelected$:Observable<Persona | null> = this.store.select(PersonaPageState.getPersonaSelected)
+  alumnoSelected$: Observable<Alumno | null> = this.store.select(PersonaPageState.getAlumnoSelected)
+  profesorSelected$: Observable<Profesor | null> = this.store.select(PersonaPageState.getProfesorSelected)
+  personaSelected$: Observable<Persona | null> = this.store.select(PersonaPageState.getPersonaSelected)
   form!: FormGroup;
   persona!: Persona;
-  alumno!:Alumno;
-  profesor!:Profesor;
+  alumno!: Alumno;
+  profesor!: Profesor;
   personaDto!: PersonaDto;
 
-  constructor(private store: Store, private router: Router, private messageService: MessageService, private datePipe:DatePipe) { }
+  constructor(private store: Store, private router: Router, private messageService: MessageService, private datePipe: DatePipe) { }
 
   ngOnInit(): void {
 
@@ -57,7 +57,7 @@ export class PersonaFormComponent {
       email: new FormControl(''),
       telefono: new FormControl(''),
       fechaNacimiento: new FormControl('', [Validators.required]),
-      plan: new FormControl({value:'', disabled:true}, [Validators.required]),
+      plan: new FormControl({ value: '', disabled: true }, [Validators.required]),
       planId: new FormControl('', [Validators.required])
 
     });
@@ -68,7 +68,7 @@ export class PersonaFormComponent {
       }
     })
     this.alumnoSelected$.subscribe(x => {
-      if(x !== null){
+      if (x !== null) {
         this.alumno = x;
         this.tipoPersona = this.alumno.tipoPersona;
         this.pathValues();
@@ -76,14 +76,14 @@ export class PersonaFormComponent {
     })
 
     this.personaSelected$.subscribe(x => {
-      if(x){
+      if (x) {
         this.tipoPersona = x?.tipoPersona!;
         console.log(this.tipoPersona)
       }
     })
 
     this.profesorSelected$.subscribe(x => {
-      if(x !== null){
+      if (x !== null) {
         this.profesor = x;
         this.tipoPersona = this.profesor.tipoPersona;
         this.pathValues();
@@ -113,9 +113,11 @@ export class PersonaFormComponent {
 
     }
     else {
-      this.store.dispatch(new PutAlumnoAction(alumno)).subscribe(x => this.router.navigate(["/alumnos/lista"]));
-      this.messageService.add({ severity: 'success', summary: 'Editar alumno', detail: 'Se guardaron los cambios del alumno' });
-      this.store.dispatch(new ClearSelectedPersona);
+      this.store.dispatch(new PutAlumnoAction(alumno)).subscribe(x => {
+        this.router.navigate(["/alumnos/lista"])
+        this.messageService.add({ severity: 'success', summary: 'Editar alumno', detail: 'Se guardaron los cambios del alumno' });
+        this.store.dispatch(new ClearSelectedPersona);
+      });
     }
   }
 
@@ -150,15 +152,15 @@ export class PersonaFormComponent {
   }
 
   pathValues() {
-    if(this.tipoPersona === TipoPersonaEnum.ALUMNO.toString()){
+    if (this.tipoPersona === TipoPersonaEnum.ALUMNO.toString()) {
       this.form.patchValue(this.alumno);
       console.log(this.alumno);
-      this.form.patchValue({'fechaNacimiento':this.datePipe.transform(this.alumno.fechaNacimiento, 'dd/MM/yyyy')})
+      this.form.patchValue({ 'fechaNacimiento': this.datePipe.transform(this.alumno.fechaNacimiento, 'dd/MM/yyyy') })
       this.form.patchValue({ 'plan': this.alumno.plan.descripcion, 'planId': this.alumno.plan._id });
     }
-    else{
+    else {
       this.form.patchValue(this.profesor);
-      this.form.patchValue({'fechaNacimiento':this.datePipe.transform(this.profesor.fechaNacimiento, 'dd/MM/yyyy')})
+      this.form.patchValue({ 'fechaNacimiento': this.datePipe.transform(this.profesor.fechaNacimiento, 'dd/MM/yyyy') })
       this.form.patchValue({ 'plan': this.profesor.plan.descripcion, 'planId': this.profesor.plan._id });
     }
   }

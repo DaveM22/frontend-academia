@@ -1,32 +1,31 @@
 <p-table #dt2 [value]="(profesores$ | async)!" [loading]="(loading$ | async)"
-    styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-sm lg:text-xl" responsiveLayout="stack" [breakpoint]="'960px'"
-    [paginator]="true" size="small" [scrollable]="true" [rows]="5" [scrollHeight]="scrollSize"
+    styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-sm lg:text-xl" responsiveLayout="stack"
+    [breakpoint]="'960px'" [paginator]="true" size="small" [scrollable]="true" [rows]="5" [scrollHeight]="scrollSize"
     [globalFilterFields]="['nombre', 'apellido','direccion', 'email','legajo']">
     <ng-template pTemplate="caption">
         @if (error$ | async)
         {
-            <p-message severity="error">
-                {{(errorMessage$ | async)}}
-            </p-message>
+        <p-message severity="error">
+            {{(errorMessage$ | async)}}
+        </p-message>
 
         }
-                <div class="flex flex-col w-full gap-2 md:flex-row justify-between">
+        <div class="flex flex-col w-full gap-2 md:flex-row justify-between">
             <div>
                 <p-iconField iconPosition="left" class="mb-4 lg:mb-0 w-full">
                     <p-inputIcon>
                         <i class="pi pi-search"></i>
                     </p-inputIcon>
-                    <input  pInputText type="text" class="w-full text-sm lg:text-xl py-1 sm:py-1 md:py-1" styleClass="w-full text-sm sm:text-base md:text-lg py-1 sm:py-1 md:py-1"
-                        (input)="dt2.filterGlobal($any($event.target).value, 'contains')" placeholder="Buscar profesor" />
+                    <input pInputText type="text" class="w-full text-sm lg:text-xl py-1 sm:py-1 md:py-1"
+                        styleClass="w-full text-sm sm:text-base md:text-lg py-1 sm:py-1 md:py-1"
+                        (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
+                        placeholder="Buscar profesor" />
                 </p-iconField>
             </div>
             <div>
-                <p-button label="Nuevo profesor" severity="info" 
-                class="w-full"
-                [styleClass]="
+                <p-button label="Nuevo profesor" severity="info" class="w-full" [styleClass]="
                   'w-full text-sm lg:text-xl px-3 py-1 sm:px-4 sm:py-1 md:px-5 md:py-1'
-                "
-                    (onClick)="redirecToNuevoProfesor()"></p-button>
+                " (onClick)="redirecToNuevoProfesor()"></p-button>
             </div>
         </div>
     </ng-template>
@@ -53,9 +52,10 @@
             <td><span class="p-column-title">Email</span>{{profesor.email}}</td>
             <td><span class="p-column-title">Plan</span>{{profesor.plan.descripcion}}</td>
             <td><span class="p-column-title">Acciones</span>
-                <div class="flex gap-2 justify-content-center">
-                    <p-button size="small" label="Editar" severity="warn" (onClick)="redirectToEditarProfesor(profesor._id)"></p-button>
-                    <p-button size="small" label="Borrar" severity="danger" (onClick)="modalConfirmar(profesor)" />
+                <div class="flex gap-2 justify-center">
+                    <p-button  label="Editar" severity="warn" class="text-sm lg:text-xl"
+                        (onClick)="redirectToEditarProfesor(profesor._id)"></p-button>
+                    <p-button  label="Borrar" class="text-sm lg:text-xl" severity="danger" (onClick)="modalConfirmar(profesor)" />
                 </div>
             </td>
         </tr>
@@ -63,12 +63,13 @@
     <ng-template pTemplate="emptymessage">
         @if ((profesores$ | async)!.length === 0) {
         <tr>
-            <td class="text-center" colspan="8">No se han registrado profesores</td>
+            <td class="text-center text-sm lg:text-xl" colspan="8">No se han registrado profesores</td>
         </tr>
         }
         @else {
         <tr>
-            <td class="text-center" colspan="8">No se encontraron profesores con el filtro aplicado</td>
+            <td class="text-center text-sm lg:text-xl" colspan="8">No se encontraron profesores con el filtro aplicado
+            </td>
         </tr>
         }
     </ng-template>
@@ -76,15 +77,18 @@
 
 <p-confirmDialog #cd [closable]="false">
     <ng-template pTemplate="message" let-message>
-        <div class="flex flex-column align-items-center w-full gap-3 border-bottom-1 surface-border">
+        <div class="flex flex-col items-center w-full gap-3 border-bottom-1 surface-border">
             <i class="pi pi-exclamation-circle text-6xl text-primary-500"></i>
             <p>{{ message.message }}</p>
         </div>
     </ng-template>
     <ng-template pTemplate="footer" let-reject="reject">
-        <p-button type="button" icon="pi pi-check" label="Aceptar" severity="success" class="text-sm lg:text-xl" (click)="cd.onAccept()"
-            class="ui-button-success"></p-button>
-        <p-button type="button" icon="pi pi-times" label="Cancelar" severity="danger" class="text-sm lg:text-xl" (click)="cd.onReject()"
-            class="ui-button-secondary"></p-button>
+        <div class="flex gap-2 justify-center">
+            <p-button icon="pi pi-check" label="Aceptar" severity="success" class="text-sm lg:text-xl"
+                (click)="cd.onAccept()"></p-button>
+            <p-button icon="pi pi-times" label="Cancelar" severity="danger" class="text-sm lg:text-xl"
+                (click)="cd.onReject()"></p-button>
+        </div>
+
     </ng-template>
 </p-confirmDialog>

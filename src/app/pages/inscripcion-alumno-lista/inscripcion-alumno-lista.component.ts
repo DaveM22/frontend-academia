@@ -23,11 +23,13 @@ import { GetPlanAction } from '../../store/actions/api/planes.action';
 import { ClearSelectedPersona } from '../../store/actions/pages/persona.action';
 import { ClearSelectedPlanFilter, SelectedEspecialidadFilterAction, SelectedPlanFilter } from '../../store/actions/pages/app.action';
 import { AsignSelectedPlan } from '../../store/actions/pages/plan.action';
+import { ClearMateriasAction } from '../../store/actions/api/materia.action';
+import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'app-inscripcion-alumno-lista',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, IconFieldModule, InputIconModule, MessagesModule, InputTextModule,EspecialidadFilterComponent, PlanFilterComponent],
+  imports: [CommonModule, TableModule, ButtonModule, IconFieldModule,MessageModule, InputIconModule, MessagesModule, InputTextModule,EspecialidadFilterComponent, PlanFilterComponent],
   templateUrl: './inscripcion-alumno-lista.component.html',
   styleUrl: './inscripcion-alumno-lista.component.scss'
 })
@@ -39,6 +41,7 @@ export class InscripcionAlumnoListaComponent implements OnInit, OnDestroy {
     planSelected$:Observable<Plan | null> = this.store.select(AppPageState.getSelectedPlanInFilter);
     disablePlanDropDown:boolean = true;
   errorMessage$:Observable<string> = this.store.select(PersonaState.getErrorMessage);
+  mostrarTip: boolean = true;
   constructor(private store:Store, private router:Router){}
 
 
@@ -69,6 +72,7 @@ export class InscripcionAlumnoListaComponent implements OnInit, OnDestroy {
 
     onPlanChanged(value:Plan){
       this.store.dispatch(new SelectedPlanFilter(value));
+      this.mostrarTip = false;
 /*       if(value){
         const filter = new AlumnoFilter();
         filter.planId = value._id;
@@ -105,5 +109,7 @@ export class InscripcionAlumnoListaComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.store.dispatch(new ClearAlumnoListAction);
+    this.store.dispatch(new ClearSelectedPlanFilter);
+    this.store.dispatch(new ClearMateriasAction);
   }
 }

@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { AppModelState } from "../../modelstate/pages/app.modelstate";
-import { ClearDocenteInModal, ClearSelectedComisionInModal, ClearSelectedCursoInModal, ClearSelectedEspecialidadFilter, ClearSelectedMateriaInFilter, ClearSelectedMateriaInModal, ClearSelectedPlanFilter, ClearSelectedPlanInModal, SelectedComisionInModal, SelectedCursoInModal, SelectedDocenteInModal, SelectedEspecialidadFilterAction, SelectedMateriaInFilter, SelectedMateriaForCurso as SelectedMateriaInModal, SelectedPlanFilter, SelectedPlanInModal, SetPersonaId, ShowComisionesModal, ShowCursoModal, ShowDocenteModal, ShowMateriaModal, ShowModalConfirmationAction, ShowPersonaModal, ShowPlanModal, ToggleMenuAction } from "../../actions/pages/app.action";
+import { ClearDocenteInModal, ClearSelectedComisionInModal, ClearSelectedCursoInModal, ClearSelectedEspecialidadFilter, ClearSelectedMateriaInFilter, ClearSelectedMateriaInModal, ClearSelectedPlanFilter, ClearSelectedPlanInModal, LoadingForm, SelectedComisionInModal, SelectedCursoInModal, SelectedDocenteInModal, SelectedEspecialidadFilterAction, SelectedMateriaInFilter, SelectedMateriaForCurso as SelectedMateriaInModal, SelectedPlanFilter, SelectedPlanInModal, SetPersonaId, ShowComisionesModal, ShowCursoModal, ShowDocenteModal, ShowMateriaModal, ShowModalConfirmationAction, ShowPersonaModal, ShowPlanModal, ToggleMenuAction } from "../../actions/pages/app.action";
 import { ClearSelectedCursoAction } from "../../actions/pages/curso.action";
 
 @State<AppModelState>({
@@ -23,7 +23,8 @@ import { ClearSelectedCursoAction } from "../../actions/pages/curso.action";
         showComisionModal: false,
         showCursoModal: false,
         showProfesorModal:false,
-        showPersonaModal:false
+        showPersonaModal:false,
+        formLoading:false
     }
 })
 
@@ -115,6 +116,11 @@ export class AppPageState {
     @Selector()
     static showModalConfirmation(state:AppModelState){
         return state.showModalConfirmation;
+    }
+
+    @Selector()
+    static getFormLoading(state:AppModelState){
+        return state.formLoading;
     }
 
     @Action(ShowModalConfirmationAction)
@@ -295,6 +301,13 @@ export class AppPageState {
         ctx.patchState({
             selectedProfesorInModal:null
         })
+    }
+
+    @Action(LoadingForm)
+    loadingForm(ctx: StateContext<AppModelState>, action: LoadingForm) {
+        ctx.patchState({
+            formLoading:action.loading
+        });
     }
 
 

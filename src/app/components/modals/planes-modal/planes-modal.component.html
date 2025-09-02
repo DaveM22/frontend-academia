@@ -7,14 +7,13 @@
     [maximizable]="true" 
     appendTo="body" 
     [closable]="false"
-    
     [visible]="(showModal$ | async)!" 
     [style]="{width: '95%'}" 
     [contentStyle]="{height: '50vh'}">
     <p-toolbar styleClass="mb-4 gap-2">
         <ng-template pTemplate="left">
             <div class="sm:flex justify-content-center">
-                <app-especialidad-filter></app-especialidad-filter>
+                <app-especialidad-filter (selectionChange)="onEspecialidadChanged($event)"></app-especialidad-filter>
             </div>
         </ng-template>
 
@@ -28,6 +27,7 @@
             scrollHeight="flex" 
             styleClass="p-datatable-gridlines p-datatable-striped" 
             responsiveLayout="stack" 
+            [loading]="loading"
 >
                 <ng-template pTemplate="header">
                     <tr>

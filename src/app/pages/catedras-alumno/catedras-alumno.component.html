@@ -9,36 +9,36 @@
 
 } -->
 
+
 <div class="content" style="height: 100%;">
     <p-panel styleClass="h-full">
-        <ng-template pTemplate="header">
-            <div class="flex flex-wrap w-full pt-3 pb-3 align-items-center justify-content-center">
-                <h1 class="text-center"> Estado de catedras inscriptas </h1>
-            </div>
-        </ng-template>
         <ng-template pTemplate="content">
             <p-table #dt2 [value]="inscripciones" responsiveLayout="stack" [breakpoint]="'960px'" [paginator]="true"
-                [scrollable]="true" [rows]="5" scrollHeight="flex"
-                styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0"
+                [scrollable]="true" [rows]="5" scrollHeight="flex" [loading]="(loading$ | async)"
+                styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-sm lg:text-xl"
                 [globalFilterFields]="['descripcion, especialidad.descripcion']">
                 <ng-template pTemplate="caption">
-                    <div class="grid">
-                        <div
-                            class="col-12 flex flex-column sm:flex-column w-full  lg:flex-row align-items-center lg:justify-content-between justify-content-center">
-                            <p-iconField iconPosition="left" class="mb-4 lg:mb-0 w-full">
-                                <p-inputIcon>
-                                    <i class="pi pi-search"></i>
-                                </p-inputIcon>
-                                <input pInputText type="text" class="w-full lg:w-4"
-                                    (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
-                                    placeholder="Buscar catedra" />
-                            </p-iconField>
+                    <h2 class="text-3xl text-center font-bold text-white pb-2">Estado de cátedras inscriptas
+                    </h2>
+                    <div class="grid ">
+                        <div class="grid grid-cols-8 w-full">
+                            <div class="col-span-12 text-center lg:text-start lg:col-span-2 lg:col-start-4">
+                                <p-iconField iconPosition="left" class="mb-4 lg:mb-0 w-full">
+                                    <p-inputIcon>
+                                        <i class="pi pi-search"></i>
+                                    </p-inputIcon>
+                                    <input pInputText type="text" class="w-full"
+                                        (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
+                                        placeholder="Buscar cátedra" />
+                                </p-iconField>
+                            </div>
                         </div>
                     </div>
+
                 </ng-template>
                 <ng-template pTemplate="header">
                     <tr>
-                        <th>Catedra</th>
+                        <th>Cátedra</th>
                         <th>Comisión</th>
                         <th>Condición</th>
                     </tr>
@@ -55,12 +55,14 @@
                 <ng-template pTemplate="emptymessage">
                     @if (inscripciones.length === 0) {
                     <tr>
-                        <td class="text-center" colspan="3">No se han registrado catedras inscriptas del alumno</td>
+                        <td class="text-center text-sm lg:text-xl" colspan="3">No se han registrado catedras inscriptas
+                            del alumno</td>
                     </tr>
                     }
                     @else {
                     <tr>
-                        <td class="text-center" colspan="3">No se encontraron catedras con el filtro aplicado</td>
+                        <td class="text-center text-sm lg:text-xl" colspan="3">No se encontraron catedras con el filtro
+                            aplicado</td>
                     </tr>
                     }
                 </ng-template>
@@ -69,5 +71,3 @@
 
     </p-panel>
 </div>
-
-

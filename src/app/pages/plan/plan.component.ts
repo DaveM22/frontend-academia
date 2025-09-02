@@ -5,7 +5,7 @@ import { MessagesModule } from 'primeng/messages';
 import { TableModule } from 'primeng/table';
 import { Observable } from 'rxjs';
 import { Plan } from '../../entities/plan';
-import { GetPlanAction, GetPlanByIdWithMateriasAction } from '../../store/actions/api/planes.action';
+import { GetByIdPlanAction, GetPlanAction, GetPlanByIdWithMateriasAction } from '../../store/actions/api/planes.action';
 import { PlanState } from '../../store/states/api/plan.state';
 import { Store } from '@ngxs/store';
 import { Router, RouterModule } from '@angular/router';
@@ -18,26 +18,29 @@ import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 import { PlanFilter } from '../../entities/filter';
 import { CardModule } from 'primeng/card';
+import { BlockUI } from 'primeng/blockui';
+import { ProgressSpinner } from 'primeng/progressspinner';
+import { BlockUiComponent } from '../../components/util/block-ui/block-ui.component';
 
 @Component({
   selector: 'app-plan',
   standalone: true,
-  imports: [CommonModule, RouterModule, PanelModule, CardModule],
+  imports: [CommonModule, RouterModule, PanelModule, CardModule, BlockUiComponent],
   templateUrl: './plan.component.html',
   styleUrl: './plan.component.scss'
 })
 export class PlanComponent implements OnInit {
   public planes$: Observable<Plan[]> = this.store.select(PlanState.getPlanes)
 
-  public loading$:Observable<boolean> = this.store.select(PlanState.getLoading);
+  public loading$: Observable<boolean> = this.store.select(PlanState.getLoading);
 
-  public error$:Observable<boolean> = this.store.select(PlanState.getError);
+  public error$: Observable<boolean> = this.store.select(PlanState.getError);
 
-  public errorMessage$:Observable<string> = this.store.select(PlanState.getErrorMessage);
+  public errorMessage$: Observable<string> = this.store.select(PlanState.getErrorMessage);
 
-  public plan!:Plan;
-  constructor(private store:Store, private router:Router){
-    
+  public plan!: Plan;
+  constructor(private store: Store, private router: Router) {
+
   }
 
 
@@ -49,21 +52,24 @@ export class PlanComponent implements OnInit {
   }
 
 
-  showModal(plan:Plan){
+  showModal(plan: Plan) {
     this.plan = plan;
 
   }
 
-  redirectToMaterias(id:string){
-    this.store.dispatch(new GetPlanByIdWithMateriasAction(id)).subscribe(() => this.router.navigate(["/planes/"+id+"/materias"]));
+  redirectToMaterias(id: string) {
+    this.store.dispatch(new GetPlanByIdWithMateriasAction(id)).subscribe(() => this.router.navigate(["/planes/" + id + "/materias"]));
   }
 
-  redirectNuevoPlan(){
+  redirectNuevoPlan() {
     this.router.navigate(["/planes/nuevo"]);
   }
 
-  redirectEditarPlan(id:string){
-    this.router.navigate(["/planes/editar/" + id])
+  redirectEditarPlan(id: string) {
+    this.store.dispatch(new GetByIdPlanAction(id, new PlanFilter())).subscribe(() => {
+      this.router.navigate(["/planes/editar/" + id])
+    })
+
   }
 
   planes!: Plan[];

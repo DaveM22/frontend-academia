@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { ErrorHandler, Injectable } from "@angular/core";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { MateriaPageModelState } from "../../modelstate/pages/materia.modelstate";
 import { GetByIdMateriaAction, PutMateriaAction, PostMateriaAction, GetMateriasAction, GetByIdForInscripcion, DeleteMateria as DeleteMateriaAction, ClearMateriasAction } from "../../actions/api/materia.action";
@@ -10,6 +10,8 @@ import { AsignMateriaAction, ClearMateriaAction } from "../../actions/pages/mate
 import { MessageService } from "primeng/api";
 import { GetByIdPlanAction } from "../../actions/api/planes.action";
 import { PlanFilter } from "../../../entities/filter";
+import { LoadingForm } from "../../actions/pages/app.action";
+import { ErrorStateHandler } from "../../../util/ErrorStateHandler";
 
 @State<MateriaModelState>({
   name: 'materias',
@@ -86,24 +88,31 @@ async clearMaterias(ctx: StateContext<MateriaModelState>, action: ClearMateriasA
   @Action(PostMateriaAction)
   async postMateriaAction(ctx: StateContext<MateriaModelState>, action: PostMateriaAction) {
     ctx.patchState({ error: false })
+    ctx.dispatch(new LoadingForm(true))
     try {
       await lastValueFrom(this.service.postMateria(action.materia));
     }
     catch (error) {
-      ctx.patchState({ error: true })
+      ErrorStateHandler.handleError(error, ctx);
+    }
+    finally{
+      ctx.dispatch(new LoadingForm(false));
     }
 
   }
 
   @Action(GetByIdMateriaAction)
   async getByIdMateriaAction(ctx: StateContext<MateriaModelState>, action: GetByIdMateriaAction) {
-    ctx.patchState({ error: false })
+    ctx.patchState({ error: false, loading: true })
     try {
       const response = await lastValueFrom(this.service.getById(action.id));
       await lastValueFrom(ctx.dispatch(new AsignMateriaAction(response)));
     }
     catch (error) {
       ctx.patchState({ error: true })
+    }
+    finally{
+      ctx.patchState({loading:false})
     }
   }
 

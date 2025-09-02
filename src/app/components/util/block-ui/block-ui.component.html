@@ -1,0 +1,15 @@
+<div class="relative">
+  <div class="bg-white rounded shadow">
+
+  </div>
+
+  <p-blockUI [target]="target" [blocked]="(loading$ | async)">
+    <div class="absolute inset-0 flex flex-col items-center justify-center">
+      <p-progress-spinner ariaLabel="loading" />
+      <p class="text-gray-700 text-base text-center">
+        Un momento, estamos procesando tu solicitud...
+      </p>
+    </div>
+
+  </p-blockUI>
+</div>

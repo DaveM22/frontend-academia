@@ -1,14 +1,38 @@
-<p-table #dt2 [value]="(cursos$ | async)!" [loading]="(loading$ | async)" styleClass="p-datatable-gridlines p-datatable-striped h-full"
-    responsiveLayout="stack" [breakpoint]="'960px'" [paginator]="true" [scrollable]="true"
-    [rows]="5" scrollHeight="flex" [globalFilterFields]="['nombre', 'apellido', 'direccion', 'email', 'legajo']">
+<p-table #dt2 [value]="(cursos$ | async)!" [loading]="(loading$ | async)"
+    styleClass="p-datatable-gridlines p-datatable-striped h-full text-sm lg:text-2xl" responsiveLayout="stack"
+    [breakpoint]="'960px'" [paginator]="true" [scrollable]="true" [rows]="5" scrollHeight="flex"
+    [globalFilterFields]="['nombre', 'apellido', 'direccion', 'email', 'legajo']">
     <ng-template pTemplate="caption">
-        <div class="flex align-items-center justify-content-center pb-4">
-           <h2> Seleccione un curso</h2>
+        <div class="grid ">
+            <div class="grid grid-cols-12 w-full gap-2">
+                <div class="col-span-12 text-center lg:text-start lg:col-span-2">
+                    Seleccione un curso
+                </div>
+                <div class="col-span-12 lg:col-span-2 lg:col-start-6">
+                    <p-button label="Volver a planes" severity="primary" class="w-full text-sm lg:text-xl"
+                        styleClass="w-full" (onClick)="redirectSeleccionarMateria()"></p-button>
+                </div>
+                <div class="col-span-12 lg:col-span-3 lg:col-start-10">
+                    <p-iconField iconPosition="left" class="text-sm lg:text-xl">
+                        <p-inputIcon>
+                            <i class="pi pi-search"></i>
+                        </p-inputIcon>
+                        <input pInputText type="text" (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
+                            placeholder="Buscar curso" class="w-full" />
+                    </p-iconField>
+                </div>
+            </div>
         </div>
+        <!--         <div class="flex align-items-center justify-content-center pb-4">
+            <h2></h2>
+        </div>
+        <p-button label="Volver a planes" severity="primary" class="w-full mb-4 lg:mb-0 lg:w-2" styleClass="w-full"
+            (onClick)="redirectSeleccionarMateria()"></p-button>
 
         <div class="grid">
-            <div class="col-12 flex flex-column sm:flex-column w-full  lg:flex-row align-items-center lg:justify-content-between justify-content-center">
-                <p-button label="Volver a planes" severity="primary" class="w-full mb-4 lg:mb-0 lg:w-2" styleClass="w-full" (onClick)="redirectSeleccionarMateria()"  ></p-button>
+            <div
+                class="col-12 flex flex-column sm:flex-column w-full  lg:flex-row align-items-center lg:justify-content-between justify-content-center">
+
                 <p-iconField iconPosition="left" class="mb-4 lg:mb-0">
                     <p-inputIcon>
                         <i class="pi pi-search"></i>
@@ -17,7 +41,7 @@
                         placeholder="Buscar curso" />
                 </p-iconField>
             </div>
-        </div>
+        </div> -->
 
     </ng-template>
     <ng-template pTemplate="header">
@@ -30,9 +54,9 @@
         <tr>
             <td><span class="p-column-title">Curso</span>{{curso.descripcion}}</td>
             <td><span class="p-column-title">Acciones</span>
-                <div class="flex gap-2 justify-content-center">
-                    <p-button size="small" label="Ver Docentes"
-                        (onClick)="redirectDocentesCursos(curso._id)"></p-button>
+                <div class="flex gap-2 justify-center">
+                    <p-button label="Ver Docentes" (onClick)="redirectDocentesCursos(curso._id)"
+                        class="text-sm lg:text-2xl"></p-button>
                 </div>
             </td>
         </tr>
@@ -40,12 +64,12 @@
     <ng-template pTemplate="emptymessage">
         @if ((cursos$ | async)!.length === 0) {
         <tr>
-            <td class="text-center" colspan="2">No se han registrado cursos para esta materia</td>
+            <td class="text-center text-sm lg:text-2xl" colspan="2">No se han registrado cursos para esta materia</td>
         </tr>
         }
         @else {
         <tr>
-            <td class="text-center" colspan="2">No se encontraron cursos con el filtro aplicado</td>
+            <td class="text-center text-sm lg:text-2xl" colspan="2">No se encontraron cursos con el filtro aplicado</td>
         </tr>
         }
     </ng-template>

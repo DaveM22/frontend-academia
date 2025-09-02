@@ -4,7 +4,7 @@ import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { PlanFilter } from '../../entities/filter';
 import { Plan } from '../../entities/plan';
-import { DeletePlanAction, GenerateReport, GetPlanAction, GetPlanByIdWithMateriasAction } from '../../store/actions/api/planes.action';
+import { DeletePlanAction, GenerateReport, GetByIdPlanAction, GetPlanAction, GetPlanByIdWithMateriasAction } from '../../store/actions/api/planes.action';
 import { PlanState } from '../../store/states/api/plan.state';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
@@ -72,7 +72,9 @@ export class PlanListaComponent implements OnInit {
   }
 
   redirectEditarPlan(id: string) {
-    this.router.navigate(["planes/editar/" + id])
+   this.store.dispatch(new GetByIdPlanAction(id, new PlanFilter())).subscribe(() => {
+      this.router.navigate(["/planes/editar/" + id])
+    })
   }
 
   generateReport(id: string) {

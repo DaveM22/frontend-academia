@@ -142,3 +142,8 @@ export class ClearPersonaInModal{
     static type = "[Page] clear persona selected in filter";
     constructor(){}
 }
+
+export class LoadingForm {
+    static type = "[Page] Loading form state";
+    constructor(public loading:boolean){}
+}

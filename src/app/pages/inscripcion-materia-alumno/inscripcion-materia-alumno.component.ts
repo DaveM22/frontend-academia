@@ -21,11 +21,12 @@ import { MateriaState } from '../../store/states/api/materia.state';
 import { Materia } from '../../entities/materia';
 import { RouterModule } from '@angular/router';
 import { PanelModule } from 'primeng/panel';
+import { CardModule } from 'primeng/card';
 
 @Component({
   selector: 'app-inscripcion-materia-alumno',
   standalone: true,
-  imports: [CommonModule,RouterModule, PanelModule],
+  imports: [CommonModule,RouterModule, PanelModule, CardModule],
   templateUrl: './inscripcion-materia-alumno.component.html',
   styleUrl: './inscripcion-materia-alumno.component.scss'
 })
