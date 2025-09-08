@@ -10,7 +10,7 @@ import { AsignMateriaAction, ClearMateriaAction } from "../../actions/pages/mate
 import { MessageService } from "primeng/api";
 import { GetByIdPlanAction } from "../../actions/api/planes.action";
 import { PlanFilter } from "../../../entities/filter";
-import { LoadingForm } from "../../actions/pages/app.action";
+import { GeneralLoadingAction, LoadingForm } from "../../actions/pages/app.action";
 import { ErrorStateHandler } from "../../../util/ErrorStateHandler";
 
 @State<MateriaModelState>({
@@ -18,7 +18,7 @@ import { ErrorStateHandler } from "../../../util/ErrorStateHandler";
   defaults: {
     materias:[],
     error: false,
-    loading:false
+    loading:true
   }
 })
 

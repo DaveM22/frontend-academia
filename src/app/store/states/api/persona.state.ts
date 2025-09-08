@@ -14,7 +14,7 @@ import { LoadingForm } from "../../actions/pages/app.action";
     defaults: {
         alumnos: [],
         profesores: [],
-        loading: false,
+        loading: true,
         error: false,
         errorMessage: '',
     }

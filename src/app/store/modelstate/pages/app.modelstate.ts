@@ -23,5 +23,6 @@ export interface AppModelState{
     showCursoModal:boolean,
     showProfesorModal:boolean,
     showPersonaModal:boolean,
-    formLoading:boolean
+    formLoading:boolean,
+    generalLoading:boolean
 }

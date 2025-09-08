@@ -9,8 +9,9 @@
 
 } -->
 
-<p-table #dt2 [value]="materias"  responsiveLayout="stack" [breakpoint]="'960px'"
+<p-table #dt2 [value]="(materias$ | async)!"  responsiveLayout="stack" [breakpoint]="'960px'"
 [paginator]="true" [scrollable]="true" [rows]="5" scrollHeight="flex"
+[loading]="(loading$ | async)!"
 styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-sm lg:text-xl" 
 [globalFilterFields]="['descripcion, especialidad.descripcion']">
     <ng-template pTemplate="caption">
@@ -48,14 +49,14 @@ styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-sm lg:tex
         </tr>
     </ng-template>
     <ng-template pTemplate="emptymessage">
-        @if (materias.length === 0) {
+        @if ((materias$ | async)!.length === 0) {
         <tr>
-            <td class="text-center" colspan="3">No se han registrado catedras disponibles para el alumno</td>
+            <td class="text-center" colspan="3">No se han registrado cátedras disponibles para el alumno</td>
         </tr>
         }
         @else {
         <tr>
-            <td class="text-center" colspan="3">No se encontraron catedras disponibles con el filtro aplicado</td>
+            <td class="text-center" colspan="3">No se encontraron cátedras disponibles con el filtro aplicado</td>
         </tr>
         }
     </ng-template>

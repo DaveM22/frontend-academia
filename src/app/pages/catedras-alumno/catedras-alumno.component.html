@@ -9,17 +9,17 @@
 
 } -->
 
-
-<div class="content" style="height: 100%;">
-    <p-panel styleClass="h-full">
-        <ng-template pTemplate="content">
-            <p-table #dt2 [value]="inscripciones" responsiveLayout="stack" [breakpoint]="'960px'" [paginator]="true"
-                [scrollable]="true" [rows]="5" scrollHeight="flex" [loading]="(loading$ | async)"
+<p-card styleClass="h-full">
+    <ng-template pTemplate="header">
+            <h2 class="text-3xl text-center font-bold text-white pb-2">Estado de cátedras inscriptas</h2>
+    </ng-template>
+    <ng-template pTemplate="content" class="pt-0">
+   <p-table #dt2 [value]="inscripciones" responsiveLayout="stack" [breakpoint]="'960px'" [paginator]="true"
+                [scrollable]="true" [rows]="5" scrollHeight="flex" [loading]="(loading$ | async)!"
                 styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-sm lg:text-xl"
                 [globalFilterFields]="['descripcion, especialidad.descripcion']">
                 <ng-template pTemplate="caption">
-                    <h2 class="text-3xl text-center font-bold text-white pb-2">Estado de cátedras inscriptas
-                    </h2>
+
                     <div class="grid ">
                         <div class="grid grid-cols-8 w-full">
                             <div class="col-span-12 text-center lg:text-start lg:col-span-2 lg:col-start-4">
@@ -67,7 +67,16 @@
                     }
                 </ng-template>
             </p-table>
+    </ng-template>
+</p-card>
+
+
+
+<!-- <div class="content" style="height: 100%;">
+    <p-panel styleClass="h-full">
+        <ng-template pTemplate="content">
+         
         </ng-template>
 
     </p-panel>
-</div>
+</div> -->

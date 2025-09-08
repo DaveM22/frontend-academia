@@ -19,7 +19,8 @@ import { MateriaState } from '../../store/states/api/materia.state';
 import { AppPageState } from '../../store/states/page/app.state';
 import { PersonaPageState } from '../../store/states/page/persona.state';
 import { Router } from '@angular/router';
-
+import { GeneralLoadingAction } from '../../store/actions/pages/app.action';
+import { filter, distinctUntilChanged } from 'rxjs/operators';
 @Component({
   selector: 'app-inscripcion-materia-alumno-materias',
   standalone: true,
@@ -33,16 +34,20 @@ export class InscripcionMateriaAlumnoMateriasComponent implements OnInit {
   materias$:Observable<Materia[]> = this.store.select(MateriaState.getMaterias);
   persona!:Alumno;
   materias:Materia[] = [];
+  loading$:Observable<boolean> = this.store.select(MateriaState.getLoading);
   constructor(private store:Store, private router:Router){}
 
   ngOnInit(): void {
-    this.personaid$.subscribe(x => {
-      if(x !== ''){
-        let personId = x;
+    // Evitar disparos múltiples usando filter y distinctUntilChanged
+    this.personaid$
+      .pipe(
+        filter((x: string) => x !== ''),
+        distinctUntilChanged()
+      )
+      .subscribe((personId: string) => {
         let filters = new AlumnoFilter();
-        this.store.dispatch(new GetAlumnoByIdAction(personId,filters))
-      }
-    })
+        this.store.dispatch(new GetAlumnoByIdAction(personId, filters));
+      });
 
     this.persona$.subscribe(x => {
       if(x !== null){

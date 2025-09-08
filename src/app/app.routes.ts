@@ -55,6 +55,8 @@ import { InscripcionAlumnoListaComponent } from './pages/inscripcion-alumno-list
 import { InscripcionAlumnoEditarComponent } from './pages/inscripcion-alumno-editar/inscripcion-alumno-editar.component';
 import { CursoEditarComponent } from './pages/curso-editar/curso-editar.component';
 import { ParameterComponent } from './pages/parameter/parameter.component';
+import { ParametroListaComponent } from './pages/parametro-lista/parametro-lista.component';
+import { ParametroComponent } from './pages/parametro/parametro.component';
 
 export const routes: Routes = [
     {
@@ -62,14 +64,7 @@ export const routes: Routes = [
         component: ApplayoutComponent,
         canActivate: [AuthGuard],
         children: [
-            {
-                path:'parametros',
-                component: ParameterComponent,
-                canActivate: [AuthGuard, adminGuard],
-                data:{
-                    role:'Administrador'
-                }
-            },
+
             {
                 path: 'especialidades',
                 component: EspecialidadComponent,
@@ -232,6 +227,17 @@ export const routes: Routes = [
                     role: 'Administrador'
                 }
             },
+            {
+                path: 'parametros',
+                component: ParametroComponent,
+                children:[
+                    {path:'lista', pathMatch:'full', component:ParametroListaComponent}
+                ],
+                canActivate: [AuthGuard, adminGuard],
+                data: {
+                    role: 'Administrador'
+                }
+            }
         ]
     },
     {

@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { AppModelState } from "../../modelstate/pages/app.modelstate";
-import { ClearDocenteInModal, ClearSelectedComisionInModal, ClearSelectedCursoInModal, ClearSelectedEspecialidadFilter, ClearSelectedMateriaInFilter, ClearSelectedMateriaInModal, ClearSelectedPlanFilter, ClearSelectedPlanInModal, LoadingForm, SelectedComisionInModal, SelectedCursoInModal, SelectedDocenteInModal, SelectedEspecialidadFilterAction, SelectedMateriaInFilter, SelectedMateriaForCurso as SelectedMateriaInModal, SelectedPlanFilter, SelectedPlanInModal, SetPersonaId, ShowComisionesModal, ShowCursoModal, ShowDocenteModal, ShowMateriaModal, ShowModalConfirmationAction, ShowPersonaModal, ShowPlanModal, ToggleMenuAction } from "../../actions/pages/app.action";
+import { ClearDocenteInModal, ClearSelectedComisionInModal, ClearSelectedCursoInModal, ClearSelectedEspecialidadFilter, ClearSelectedMateriaInFilter, ClearSelectedMateriaInModal, ClearSelectedPlanFilter, ClearSelectedPlanInModal, GeneralLoadingAction, LoadingForm, SelectedComisionInModal, SelectedCursoInModal, SelectedDocenteInModal, SelectedEspecialidadFilterAction, SelectedMateriaInFilter, SelectedMateriaForCurso as SelectedMateriaInModal, SelectedPlanFilter, SelectedPlanInModal, SetPersonaId, ShowComisionesModal, ShowCursoModal, ShowDocenteModal, ShowMateriaModal, ShowModalConfirmationAction, ShowPersonaModal, ShowPlanModal, ToggleMenuAction } from "../../actions/pages/app.action";
 import { ClearSelectedCursoAction } from "../../actions/pages/curso.action";
 
 @State<AppModelState>({
@@ -24,7 +24,8 @@ import { ClearSelectedCursoAction } from "../../actions/pages/curso.action";
         showCursoModal: false,
         showProfesorModal:false,
         showPersonaModal:false,
-        formLoading:false
+        formLoading:false,
+        generalLoading:true
     }
 })
 
@@ -123,6 +124,11 @@ export class AppPageState {
         return state.formLoading;
     }
 
+    @Selector()
+    static getGeneralLoading(state:AppModelState){
+        return state.generalLoading;
+    }   
+
     @Action(ShowModalConfirmationAction)
     showModalDelete(ctx: StateContext<AppModelState>, action: ShowModalConfirmationAction){
         ctx.patchState({
@@ -132,7 +138,7 @@ export class AppPageState {
 
     @Action(SetPersonaId)
     setPersonaId(ctx: StateContext<AppModelState>, action: SetPersonaId){
-        ctx.patchState({
+        return ctx.patchState({
             personId: action.personId
         })
     }
@@ -307,6 +313,13 @@ export class AppPageState {
     loadingForm(ctx: StateContext<AppModelState>, action: LoadingForm) {
         ctx.patchState({
             formLoading:action.loading
+        });
+    }
+
+    @Action(GeneralLoadingAction)
+    generalLoading(ctx: StateContext<AppModelState>, action: GeneralLoadingAction) {
+        ctx.patchState({
+            generalLoading:action.loading
         });
     }
 

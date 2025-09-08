@@ -21,11 +21,12 @@ import { Persona } from '../../entities/persona';
 import { AlumnoInscripcion } from '../../entities/alumno-inscripcion';
 import { PanelModule } from 'primeng/panel';
 import { PersonaState } from '../../store/states/api/persona.state';
+import { CardModule } from 'primeng/card';
 
 @Component({
   selector: 'app-catedras-alumno',
   standalone: true,
-  imports: [CommonModule,ToolbarModule,PanelModule, TableModule, ButtonModule, IconFieldModule, InputIconModule, MessagesModule, InputTextModule],
+  imports: [CommonModule,ToolbarModule,PanelModule, TableModule, ButtonModule, IconFieldModule, InputIconModule, MessagesModule, InputTextModule, CardModule],
   templateUrl: './catedras-alumno.component.html',
   styleUrl: './catedras-alumno.component.scss'
 })

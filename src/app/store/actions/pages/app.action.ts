@@ -147,3 +147,8 @@ export class LoadingForm {
     static type = "[Page] Loading form state";
     constructor(public loading:boolean){}
 }
+
+export class GeneralLoadingAction {
+    static type = "[Page] General loading state";
+    constructor(public loading:boolean){} 
+}

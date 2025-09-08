@@ -1,21 +1,29 @@
-<!-- <div class="content" style="height: 100%;">
-    <p-panel styleClass="h-full">
-        <ng-template pTemplate="header">
-                        <h2 class="text-3xl text-center font-bold text-white pb-2">Inscripción a materia</h2>
-        </ng-template>
-        <ng-template pTemplate="content">
-            <router-outlet></router-outlet>
-        </ng-template>
-    </p-panel>
-</div> -->
 
-<p-card #crd styleClass="h-full">
+  <p-card #crdd styleClass="h-full">
   <ng-template pTemplate="header">
     <div>
-       <h2 class="text-3xl text-center font-bold text-white pb-2">Inscripción a materia</h2>
+       <h2 class="text-3xl text-center font-bold text-white pb-2">Inscripción a cátedra</h2>
     </div>
   </ng-template>
   <ng-template pTemplate="content">
+@if ((generalLoading$ | async)! === false) 
+{
+
+      @if ((loading$| async) === false && (parametro$ | async)!.activo === false) {
+    <p-message severity="warn" class="mb-2">
+        El sistema de inscripción a materias se encuentra deshabilitado. Por favor, contacte con un administrador.
+    </p-message>  
+    }
+    @else {
     <router-outlet></router-outlet>
+    }
+}
+
+
   </ng-template>
 </p-card>
+
+  <app-block-ui-general [target]="crdd"></app-block-ui-general>
+
+
+

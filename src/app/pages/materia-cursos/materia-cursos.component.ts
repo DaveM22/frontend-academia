@@ -29,11 +29,20 @@ export class MateriaCursosComponent implements OnInit {
 
 
   ngOnInit(): void {
+        this.cursos$.subscribe(x => {
+      console.log(x);
+    })
+    
     this.materiaId = this.activateRouter.snapshot.params['id'];
     let filter = new CursoFilter();
     filter.materiaId = this.materiaId;
     this.store.dispatch(new GetCursoAction(filter));
+
+
+
   }
+
+
 
   redirectDocentesCursos(id:string){
     this.route.navigate([`asignacion-docentes/${this.materiaId}/${id}/docentes`]);

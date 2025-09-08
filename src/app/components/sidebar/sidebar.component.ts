@@ -13,6 +13,7 @@ import { SetPersonaId, ToggleMenuAction } from '../../store/actions/pages/app.ac
 import { AppPageState } from '../../store/states/page/app.state';
 import { environment } from '../../../environments/environment';
 import { DrawerModule } from 'primeng/drawer';
+    import { combineLatest } from 'rxjs';
 @Component({
   selector: 'sidebar',
   standalone: true,
@@ -30,15 +31,17 @@ export class SidebarComponent implements OnInit {
 
 
   async ngOnInit(): Promise<void> {
-    this.auth.isAuthenticated$.subscribe(x => {
-      this.isLogged = x;
-      this.auth.idTokenClaims$.subscribe(claims => {
-        this.store.dispatch(new SetPersonaId(claims!["personaId"]));
-        this.rol = claims![environment.roleLogin][0]
+    combineLatest([
+      this.auth.isAuthenticated$,
+      this.auth.idTokenClaims$
+    ]).pipe(take(1)).subscribe(([isLogged, claims]) => {
+      this.isLogged = isLogged;
+      if (claims) {
+        this.store.dispatch(new SetPersonaId(claims["personaId"]));
+        this.rol = claims[environment.roleLogin][0];
         this.renderItems(this.rol);
-      })
-    })
-
+      }
+    });
   }
 
   renderItems(rol: string) {
@@ -90,7 +93,7 @@ export class SidebarComponent implements OnInit {
       {
         label: 'Configuraciones',
         items: [
-          { label: 'Parametros', styleClass: 'text-sm lg:text-lg', icon: 'pi pi-cog', command: () => this.navigate("/parametros") }
+          { label: 'Parametros', styleClass: 'text-sm lg:text-lg', icon: 'pi pi-cog', command: () => this.navigate("/parametros/lista") }
         ]
       }
 
