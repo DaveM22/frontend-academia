@@ -39,7 +39,7 @@ import { ProfesorListaComponent } from './pages/profesor-lista/profesor-lista.co
 import { LoginComponent } from './pages/login/login.component';
 import { AuthGuard, authGuardFn } from '@auth0/auth0-angular';
 import { CallbackComponent } from './pages/callback/callback.component';
-import { adminGuard, alumnoGuard } from './admin.guard';
+import { adminGuard, alumnoGuard, docenteGuard } from './admin.guard';
 import { UsuarioComponent } from './pages/usuario/usuario.component';
 import { UsuarioListaComponent } from './pages/usuario-lista/usuario-lista.component';
 import { UsuarioNuevoComponent } from './pages/usuario-nuevo/usuario-nuevo.component';
@@ -57,6 +57,7 @@ import { CursoEditarComponent } from './pages/curso-editar/curso-editar.componen
 import { ParameterComponent } from './pages/parameter/parameter.component';
 import { ParametroListaComponent } from './pages/parametro-lista/parametro-lista.component';
 import { ParametroComponent } from './pages/parametro/parametro.component';
+import { InscripcionFormComponent } from './components/forms/inscripcion-form/inscripcion-form.component';
 
 export const routes: Routes = [
     {
@@ -184,11 +185,12 @@ export const routes: Routes = [
                 component: CatedrasDocenteComponent,
                 children: [
                     { path: 'cursos-asignados', component: CatedrasDocenteCursosComponent },
-                    { path: 'cursos-inscripciones/:idCurso', component: CatedrasDocenteInscripcionesComponent }
+                    { path: 'cursos-inscripciones/:idCurso', component: CatedrasDocenteInscripcionesComponent },
+                    { path: 'cursos-inscripciones/:idCurso/inscripciones/:idInscripcion', component: InscripcionFormComponent }
                 ],
-                canActivate: [AuthGuard, adminGuard],
+                canActivate: [AuthGuard, docenteGuard],
                 data: {
-                    role: 'Administrador'
+                    role: 'Docente'
                 }
             },
             {

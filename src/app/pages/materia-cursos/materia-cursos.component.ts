@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngxs/store';
-import { Observable } from 'rxjs';
+import { Observable, lastValueFrom } from 'rxjs';
 import { Curso } from '../../entities/curso';
 import { CursoState } from '../../store/states/api/curso.state';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -28,19 +28,17 @@ export class MateriaCursosComponent implements OnInit {
   constructor(private store:Store, private activateRouter:ActivatedRoute, private route:Router){}
 
 
-  ngOnInit(): void {
-        this.cursos$.subscribe(x => {
-      console.log(x);
-    })
-    
+  async ngOnInit(): Promise<void> {
     this.materiaId = this.activateRouter.snapshot.params['id'];
     let filter = new CursoFilter();
     filter.materiaId = this.materiaId;
     this.store.dispatch(new GetCursoAction(filter));
-
-
-
+    
+    // Si necesitas hacer algo con los cursos después de cargarlos
+    const cursos = await lastValueFrom(this.cursos$);
+    console.log(cursos);
   }
+
 
 
 

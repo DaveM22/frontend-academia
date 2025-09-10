@@ -123,7 +123,12 @@ export class SidebarComponent implements OnInit {
   itemsDocente() {
     let personaId = this.store.selectSnapshot(AppPageState.getPersonId);
     this.items = [
-      { label: 'Catedras asignadas', icon: 'pi pi pi-user', command: () => this.router.navigate(["docente/" + personaId + "/cursos-asignados"]) },
+      {
+        label: 'Docente',
+        items: [
+          { label: 'Mis cátedras', styleClass: 'text-sm lg:text-lg', icon: 'pi pi pi-user', command: () => this.router.navigate(["docente/" + personaId + "/cursos-asignados"]) },
+        ]
+      }
     ]
   }
 

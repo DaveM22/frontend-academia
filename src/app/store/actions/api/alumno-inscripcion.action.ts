@@ -10,6 +10,16 @@ export class GetOneAlumnoInscripcionAction{
     constructor(public id:string){}
 }
 
+export class GetInscripcionByCursoAction{
+    static type = "[AlumnoInscripcion Api] Get inscripciones by curso";
+    constructor(public cursoId:string){}        
+}
+
+export class AsignAlumnoInscripcionAction{
+    static type = "[AlumnoInscripcion Api] Asign alumno inscripcion";
+    constructor(public inscripcion:AlumnoInscripcion){}
+}
+
 export class PutAlumnoInscripcionAction {
     static type = "[Comision API] Put alumno inscripcion";
     constructor(public id:string,public alumnoInscripcion:AlumnoInscripcionDto){}

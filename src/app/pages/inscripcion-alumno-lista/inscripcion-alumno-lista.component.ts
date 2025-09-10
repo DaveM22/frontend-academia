@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { PersonaState } from '../../store/states/api/persona.state';
-import { Observable } from 'rxjs';
+import { filter, firstValueFrom, Observable } from 'rxjs';
 import { Alumno } from '../../entities/alumno';
 import { Store } from '@ngxs/store';
 
@@ -29,81 +29,56 @@ import { MessageModule } from 'primeng/message';
 @Component({
   selector: 'app-inscripcion-alumno-lista',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, IconFieldModule,MessageModule, InputIconModule, MessagesModule, InputTextModule,EspecialidadFilterComponent, PlanFilterComponent],
+  imports: [CommonModule, TableModule, ButtonModule, IconFieldModule, MessageModule, InputIconModule, MessagesModule, InputTextModule, EspecialidadFilterComponent, PlanFilterComponent],
   templateUrl: './inscripcion-alumno-lista.component.html',
   styleUrl: './inscripcion-alumno-lista.component.scss'
 })
 export class InscripcionAlumnoListaComponent implements OnInit, OnDestroy {
-  alumnos$:Observable<Alumno[]> = this.store.select(PersonaState.getAlumnos);
-  loading$:Observable<boolean> = this.store.select(PersonaState.getLoading);
-  error$:Observable<boolean> = this.store.select(PersonaState.getError);
-    especialidadSelected$:Observable<Especialidad | null> = this.store.select(AppPageState.getSelectedEspecialidad);
-    planSelected$:Observable<Plan | null> = this.store.select(AppPageState.getSelectedPlanInFilter);
-    disablePlanDropDown:boolean = true;
-  errorMessage$:Observable<string> = this.store.select(PersonaState.getErrorMessage);
+  alumnos$: Observable<Alumno[]> = this.store.select(PersonaState.getAlumnos);
+  loading$: Observable<boolean> = this.store.select(PersonaState.getLoading);
+  error$: Observable<boolean> = this.store.select(PersonaState.getError);
+  especialidadSelected$: Observable<Especialidad | null> = this.store.select(AppPageState.getSelectedEspecialidad);
+  planSelected$: Observable<Plan | null> = this.store.select(AppPageState.getSelectedPlanInFilter);
+  disablePlanDropDown: boolean = true;
+  errorMessage$: Observable<string> = this.store.select(PersonaState.getErrorMessage);
   mostrarTip: boolean = true;
-  constructor(private store:Store, private router:Router){}
+  constructor(private store: Store, private router: Router) { }
 
 
-  ngOnInit(): void {
-    this.especialidadSelected$.subscribe(x => {
-      if(x !== null){
-        this.disablePlanDropDown = false;
-        let filter = new PlanFilter();
-        filter.especialidadId = x._id;
-        this.store.dispatch(new GetPlanAction(filter))
-      }
-      else{
-        this.store.dispatch(new ClearSelectedPlanFilter);
-        this.disablePlanDropDown = true;
-      }
-    })
+  async ngOnInit(): Promise<void> {
+    const especialidadSelected = await firstValueFrom(this.especialidadSelected$.pipe(filter(x => x !== null)));
+    if (especialidadSelected) {
+      this.disablePlanDropDown = false;
+      let filter = new PlanFilter();
+      filter.especialidadId = especialidadSelected!._id;
+      this.store.dispatch(new GetPlanAction(filter))
+    }
+    else {
+      this.store.dispatch(new ClearSelectedPlanFilter);
+      this.disablePlanDropDown = true;
+    }
 
-    this.planSelected$.subscribe(x => {
-      if(x){
-        const filter = new AlumnoFilter();
-        filter.planId = x._id;
-        this.store.dispatch(new GetAlumnosAction(filter));
-      }
-    })
-/*       */
+    const planSelected = await firstValueFrom(this.planSelected$.pipe(filter(x => x !== null)));
+    if (planSelected) {
+      const filter = new AlumnoFilter();
+      filter.planId = planSelected!._id;
+      this.store.dispatch(new GetAlumnosAction(filter));
+    }
+
   }
 
 
-    onPlanChanged(value:Plan){
-      this.store.dispatch(new SelectedPlanFilter(value));
-      this.mostrarTip = false;
-/*       if(value){
-        const filter = new AlumnoFilter();
-        filter.planId = value._id;
-        this.store.dispatch(new GetAlumnosAction(filter));
-        this.store.dispatch(new SelectedPlanFilter(value));
-      }
-      else{
-        this.store.dispatch(new ClearSelectedPlanFilter);
-        this.store.dispatch(new ClearAlumnoListAction);
-      } */
-    }
-  
-  
-    onEspecialidadChanged(value: Especialidad) {
+  onPlanChanged(value: Plan) {
+    this.store.dispatch(new SelectedPlanFilter(value));
+    this.mostrarTip = false;
+  }
 
-      this.store.dispatch(new SelectedEspecialidadFilterAction(value))
-   /*    console.log(value);
-      if(value){
-        this.disablePlanDropDown = false;
-        let filter = new PlanFilter();
-        filter.especialidadId = value._id;
-        this.store.dispatch(new GetPlanAction(filter))
-      }
-      else{
-        this.disablePlanDropDown = true;
-        this.store.dispatch(new ClearSelectedPlanFilter);
-        this.store.dispatch(new ClearAlumnoListAction);
-      } */
-    }
 
-  redirectToInscripciones(id:string){
+  onEspecialidadChanged(value: Especialidad) {
+    this.store.dispatch(new SelectedEspecialidadFilterAction(value))
+  }
+
+  redirectToInscripciones(id: string) {
     this.router.navigate([`/inscripciones/alumnos/${id}`]);
   }
 

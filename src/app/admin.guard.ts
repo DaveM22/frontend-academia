@@ -36,3 +36,19 @@ export const alumnoGuard: CanActivateFn = (route, state) => {
     })
   );
 };
+
+export const docenteGuard: CanActivateFn = (route, state) => {
+  const authService = inject(AuthService);
+  const router = inject(Router);
+  const expectedRole = "Docente";
+
+  return authService.idTokenClaims$.pipe(
+    take(1),
+    map((idToken: any) => idToken[environment.roleLogin].includes(expectedRole)),
+    tap(hasRole => {
+      if (!hasRole) {
+        router.navigate(['/']);
+      }
+    })
+  );
+};

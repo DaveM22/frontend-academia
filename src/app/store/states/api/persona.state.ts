@@ -101,8 +101,24 @@ export class PersonaState {
 
     @Action(GetProfesorByIdAction)
     async getProfesorById(ctx: StateContext<PersonaModelState>, action: GetProfesorByIdAction) {
-        const response = await lastValueFrom(this.service.getByIdProfesor(action.id, action.filter));
-        ctx.dispatch(new AsignSelectedProfesor(response));
+       ctx.patchState({
+            loading: true,
+            error: false
+        })
+        try {
+            const response = await lastValueFrom(this.service.getByIdProfesor(action.id, action.filter));
+            ctx.dispatch(new AsignSelectedProfesor(response));
+        }
+        catch (error) {
+            ctx.patchState({
+                error: true
+            })
+        }
+        finally {
+            ctx.patchState({
+                loading: false
+            })
+        }
     }
 
     @Action(GetProfesoresAction)

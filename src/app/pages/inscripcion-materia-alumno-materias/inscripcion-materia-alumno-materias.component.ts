@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { EspecialidadFilterComponent } from '../../components/filters/especialidad-filter/especialidad-filter.component';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
@@ -9,7 +9,7 @@ import { MessagesModule } from 'primeng/messages';
 import { TableModule } from 'primeng/table';
 import { ToolbarModule } from 'primeng/toolbar';
 import { Store } from '@ngxs/store';
-import { Observable } from 'rxjs';
+import { firstValueFrom, lastValueFrom, Observable, Subject } from 'rxjs';
 import { Alumno } from '../../entities/alumno';
 import { AlumnoFilter, MateriaFilter } from '../../entities/filter';
 import { Materia } from '../../entities/materia';
@@ -20,50 +20,70 @@ import { AppPageState } from '../../store/states/page/app.state';
 import { PersonaPageState } from '../../store/states/page/persona.state';
 import { Router } from '@angular/router';
 import { GeneralLoadingAction } from '../../store/actions/pages/app.action';
-import { filter, distinctUntilChanged } from 'rxjs/operators';
+import { filter, distinctUntilChanged, takeUntil, concatMap, last, take, first } from 'rxjs/operators';
+import { MessageModule } from 'primeng/message';
 @Component({
   selector: 'app-inscripcion-materia-alumno-materias',
   standalone: true,
-  imports: [CommonModule,ToolbarModule, TableModule, ButtonModule, IconFieldModule, InputIconModule, MessagesModule, InputTextModule],
+  imports: [CommonModule,ToolbarModule, TableModule, ButtonModule, IconFieldModule, InputIconModule, MessageModule, InputTextModule],
   templateUrl: './inscripcion-materia-alumno-materias.component.html',
   styleUrl: './inscripcion-materia-alumno-materias.component.scss'
 })
-export class InscripcionMateriaAlumnoMateriasComponent implements OnInit {
+export class InscripcionMateriaAlumnoMateriasComponent implements OnInit, OnDestroy {
   persona$:Observable<Alumno | null> = this.store.select(PersonaPageState.getAlumnoSelected);
   personaid$:Observable<string> = this.store.select(AppPageState.getPersonId);
   materias$:Observable<Materia[]> = this.store.select(MateriaState.getMaterias);
   persona!:Alumno;
   materias:Materia[] = [];
-  loading$:Observable<boolean> = this.store.select(MateriaState.getLoading);
+  loading$: boolean = true;
   constructor(private store:Store, private router:Router){}
 
-  ngOnInit(): void {
-    // Evitar disparos múltiples usando filter y distinctUntilChanged
-    this.personaid$
-      .pipe(
-        filter((x: string) => x !== ''),
-        distinctUntilChanged()
-      )
-      .subscribe((personId: string) => {
-        let filters = new AlumnoFilter();
-        this.store.dispatch(new GetAlumnoByIdAction(personId, filters));
-      });
 
-    this.persona$.subscribe(x => {
-      if(x !== null){
-        let filter = new MateriaFilter();
-        filter.alumnnoId = x._id;
-        filter.planId = x.plan._id;
-        this.store.dispatch(new GetByIdForInscripcion(filter))
-      }
-    })
+private destroy$ = new Subject<void>();
 
-    this.materias$.subscribe(x => {
-      this.materias = x;
-    })
+async ngOnInit(): Promise<void> {
+    try {
+ 
+      const personId = await firstValueFrom(
+        this.personaid$.pipe(
+          filter(id => id !== '')
+        )
+      );
+      const filters = new AlumnoFilter();
+      await firstValueFrom(this.store.dispatch(new GetAlumnoByIdAction(personId, filters)));
+
+      const persona = await firstValueFrom(
+        this.persona$.pipe(
+          filter(p => p !== null)
+        )
+      );
+
+      const materiaFilter = new MateriaFilter();
+      materiaFilter.alumnnoId = persona!._id;
+      materiaFilter.planId = persona!.plan._id;
+      await firstValueFrom(this.store.dispatch(new GetByIdForInscripcion(materiaFilter)));
+
+      this.materias = await firstValueFrom(
+        this.materias$.pipe(
+          filter(p => p !== null)
+        )
+      );
+      this.loading$ = false;
+
+    } catch (err) {
+      console.error('Error en el flujo', err);
+    }
   }
+
+ngOnDestroy() {
+  this.destroy$.next();
+  this.destroy$.complete();
+
+}
 
   redirectToCursosDisponibles(materiaId:string){
     this.router.navigate([`inscripcion-catedra/cursos-disponibles/${materiaId}`])
   }
+
+
 }

@@ -65,13 +65,13 @@ export class CursoState {
     }
 
     @Action(DeleteCursoAction)
-    async deleteEspecialidadAction(ctx: StateContext<CursoModelState>, action: DeleteCursoAction){
-      await lastValueFrom(this.service.delete(action.id));
-      ctx.patchState({
-        cursos: ctx.getState().cursos.filter(x => x._id !== action.id)
-      })
+    async deleteEspecialidadAction(ctx: StateContext<CursoModelState>, action: DeleteCursoAction) {
+        await lastValueFrom(this.service.delete(action.id));
+        ctx.patchState({
+            cursos: ctx.getState().cursos.filter(x => x._id !== action.id)
+        })
     }
-    
+
     @Action(PostCursoAction)
     async postEspecialidadAction(ctx: StateContext<CursoModelState>, action: PostCursoAction) {
         const response = await lastValueFrom(await this.service.post(action.curso));
@@ -103,25 +103,26 @@ export class CursoState {
     }
 
 
-    
+
     @Action(ClearCursos)
-    clearPlanes(ctx: StateContext<CursoModelState>, action: ClearCursos){
-      ctx.patchState({
-        cursos:[]
-      })
+    clearPlanes(ctx: StateContext<CursoModelState>, action: ClearCursos) {
+        ctx.patchState({
+            cursos: []
+        })
     }
 
     @Action(GenerateReport)
-    async generateReport(ctx: StateContext<CursoModelState>, action: GenerateReport){
+    async generateReport(ctx: StateContext<CursoModelState>, action: GenerateReport) {
 
-        ctx.patchState({ loading: true, error: false })
+        ctx.patchState({ loading: true, error: false });
         try {
-    
-            const reponse = await lastValueFrom(this.service.generateReport(action.id));
-            const filename = 'reporte-curso.pdf';
-            saveAs(reponse, filename);
+            const response = await lastValueFrom(this.service.generateReport(action.id));
+         
+            const blob = new Blob([response.body as ArrayBuffer], { type: 'application/pdf' });
+            saveAs(blob, 'reporte-curso.pdf');
         }
         catch (error: any) {
+   console.log(error)
             ErrorStateHandler.handleError(error, ctx);
         }
         finally {

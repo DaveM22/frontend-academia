@@ -51,7 +51,7 @@ export class InscripcionMateriaAlumnoComponent implements OnInit {
   ngOnInit(): void {
    this.store.dispatch(new GetByNombreParametroAction('HabilitarInscripciones'));
 
-   // Evitar disparos múltiples usando distinctUntilChanged y filter
+   
 
    this.loading$
      .pipe(

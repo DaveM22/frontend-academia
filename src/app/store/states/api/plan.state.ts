@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Action, Select, Selector, State, StateContext } from "@ngxs/store";
+import { HttpErrorResponse } from '@angular/common/http';
 import { PlanModelState } from "../../modelstate/api/plan.modelstate";
 import { ClearPlanes, DeletePlanAction, GenerateReport, GetByIdPlanAction, GetByIdPlanForCursoAction, GetPlanAction, GetPlanByIdWithMateriasAction, GetPlanesByEspecialidad, PostPlanAction, PutPlanAction } from "../../actions/api/planes.action";
 import { lastValueFrom } from "rxjs";
@@ -192,16 +193,18 @@ export class PlanState {
   async generateReport(ctx: StateContext<PlanModelState>, action: GenerateReport) {
     ctx.patchState({ loading: true, error: false });
     try {
-      const reponse = await lastValueFrom(this.service.generateReport(action.id));
-      const filename = 'reporte.pdf';
-      saveAs(reponse, filename);
+      const response = await lastValueFrom(this.service.generateReport(action.id));
+      const blob = new Blob([response.body!], { type: 'application/pdf' });
+      saveAs(blob, 'archivo.pdf');
     }
-    catch (error: any) {
-      ErrorStateHandler.handleError(error, ctx);
+    catch (error:any) {
+       const text = error.error.error.text();      // Convierte Blob a texto
+        const errorCached = JSON.parse(text);     
+        ErrorStateHandler.handleError(errorCached, ctx);
+
     }
     finally {
       ctx.patchState({ loading: false })
     }
-
   }
 }

@@ -9,7 +9,7 @@ import { MessagesModule } from 'primeng/messages';
 import { PanelModule } from 'primeng/panel';
 import { TableModule } from 'primeng/table';
 import { ToolbarModule } from 'primeng/toolbar';
-import { Observable } from 'rxjs';
+import { filter, firstValueFrom, Observable } from 'rxjs';
 import { DocenteCurso } from '../../entities/docente-curso';
 import { DocenteFilter } from '../../entities/filter';
 import { Profesor } from '../../entities/profesor';
@@ -30,26 +30,20 @@ export class CatedrasDocenteCursosComponent {
   personaid$:Observable<string> = this.store.select(AppPageState.getPersonId);
   persona!:Profesor;
   cursos:DocenteCurso[] = [];
+  loading$:boolean = true;
   constructor(private store:Store, private route:Router){}
 
-  ngOnInit(): void {
-    this.personaid$.subscribe(x => {
-      if(x !== ''){
-        let personId = x;
-        let filters = new DocenteFilter();
-        filters.incluirAsignaciones = true;
-    
-         this.store.dispatch(new GetProfesorByIdAction(personId,filters))
-      }
-    })
+  async ngOnInit(): Promise<void> {
 
-    this.persona$.subscribe(x => {
-      if(x !== null){
-        this.persona = x;
-        this.cursos = this.persona.cursos_asignados;
-      }
-    })
+    const personaId = await firstValueFrom(this.personaid$.pipe(filter(id => id !== '')));
+    let filters = new DocenteFilter();
+    filters.incluirAsignaciones = true;
+    this.store.dispatch(new GetProfesorByIdAction(personaId,filters))
 
+    const personaResponse = await firstValueFrom(this.persona$.pipe(filter(p => p !== null)));
+    this.persona = personaResponse!;
+    this.cursos = this.persona.cursos_asignados;
+    this.loading$ = false;
   }
 
   redirectToCatedrasDocenteInscripciones(idCurso:string){

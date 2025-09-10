@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
@@ -6,7 +6,7 @@ import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
 import { ToastModule } from 'primeng/toast';
-import { Observable } from 'rxjs';
+import { filter, firstValueFrom, Observable } from 'rxjs';
 import { Alumno } from '../../../entities/alumno';
 import { Store } from '@ngxs/store';
 import { PersonaState } from '../../../store/states/api/persona.state';
@@ -26,119 +26,124 @@ import { Condicion, CondicionList } from '../../../entities/enums';
 import { DropdownModule } from 'primeng/dropdown';
 import { KeyValuePipe } from '@angular/common';
 import { AlumnoInscripcion, AlumnoInscripcionDto } from '../../../entities/alumno-inscripcion';
-import { PostAlumnoInscripcionAction, PutAlumnoInscripcionAction } from '../../../store/actions/api/alumno-inscripcion.action';
+import { GetOneAlumnoInscripcionAction, PostAlumnoInscripcionAction, PutAlumnoInscripcionAction } from '../../../store/actions/api/alumno-inscripcion.action';
 import { AlumnoInscripcionPageState } from '../../../store/states/page/alumno-inscripcion.state';
 import { InputNumber, InputNumberModule } from 'primeng/inputnumber';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { MessageService } from 'primeng/api';
 import { MessagesModule } from 'primeng/messages';
+import { AuthService } from '@auth0/auth0-angular';
+import { environment } from '../../../../environments/environment';
+import { ClearAlumnoInscripcionAction } from '../../../store/actions/pages/alumno-inscripcion.action';
 @Component({
   selector: 'app-inscripcion-form',
   standalone: true,
-  imports: [ReactiveFormsModule, InputTextModule,InputNumberModule, CardModule, ButtonModule,ToastModule, MessagesModule , RippleModule, CursosModalComponent, DropdownModule, 
+  imports: [ReactiveFormsModule, InputTextModule, InputNumberModule, CardModule, ButtonModule, ToastModule, MessagesModule, RippleModule, CursosModalComponent, DropdownModule,
     InputGroupModule],
   templateUrl: './inscripcion-form.component.html',
   styleUrl: './inscripcion-form.component.scss'
 })
-export class InscripcionFormComponent implements OnInit {
-  alumno$:Observable<Alumno | null> = this.store.select(PersonaPageState.getAlumnoSelected);
-  alumnoInscripcion$:Observable<AlumnoInscripcion | null> = this.store.select(AlumnoInscripcionPageState.getAlumnoInscripcionSelected);
-  especialidadSelected$:Observable<Especialidad | null> = this.store.select(AppPageState.getSelectedEspecialidad);
-  planSelected$:Observable<Plan | null> = this.store.select(AppPageState.getSelectedPlanInFilter);
-  cursoSelectedModal$:Observable<Curso | null> = this.store.select(AppPageState.getSelectedCursoInModal);
-  alumno!:Alumno;
-  alumnoId!:string;
-  alumnoInscripcion!:AlumnoInscripcion
-  alumnoInscripcionDto!:AlumnoInscripcionDto
+export class InscripcionFormComponent implements OnInit , OnDestroy {
+  alumno$: Observable<Alumno | null> = this.store.select(PersonaPageState.getAlumnoSelected);
+  alumnoInscripcion$: Observable<AlumnoInscripcion | null> = this.store.select(AlumnoInscripcionPageState.getAlumnoInscripcionSelected);
+  especialidadSelected$: Observable<Especialidad | null> = this.store.select(AppPageState.getSelectedEspecialidad);
+  planSelected$: Observable<Plan | null> = this.store.select(AppPageState.getSelectedPlanInFilter);
+  cursoSelectedModal$: Observable<Curso | null> = this.store.select(AppPageState.getSelectedCursoInModal);
+  alumno!: Alumno;
+  alumnoId!: string;
+  alumnoInscripcion!: AlumnoInscripcion
+  alumnoInscripcionDto!: AlumnoInscripcionDto
   form!: FormGroup;
-  condiciones:any[] = CondicionList;
-  constructor(private store:Store, private router:Router, private messageService:MessageService, private activatedRoute:ActivatedRoute){}
+  role : string = 'Administrador';
+  condiciones: any[] = CondicionList;
+  constructor(private store: Store, private router: Router, private messageService: MessageService, private activatedRoute: ActivatedRoute, private authService:AuthService) { }
+  ngOnDestroy(): void {
+    this.store.dispatch(new ClearAlumnoInscripcionAction());
+  }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.condiciones = [Condicion.INSCRIPTO.toString(), Condicion.APROBADO.toString(), Condicion.REGULAR.toString()];
-    this.especialidadSelected$.subscribe(x =>{
-        if(x !== null){
-          let filter = new PlanFilter();
-          filter.especialidadId = x._id;
-          this.store.dispatch(new GetPlanAction(filter));
-        }
-    })
-
-    this.planSelected$.subscribe(x =>{
-     if(x !== null){
-      let filter = new CursoFilter();
-      filter.planId = x!._id;
-      this.store.dispatch(new GetCursoAction(filter));
-     }
-    })
-
-
-
-    this.cursoSelectedModal$.subscribe(x => {
-      if(x !== null){
-        this.form.patchValue({'curso':x.descripcion, 'cursoId':x._id})
-      }
-    })
-
- 
-
 
     this.form = new FormGroup({
       _id: new FormControl(null),
-      alumno:new FormControl({value:'', disabled:true}, [Validators.required]),
-      alumnoId:new FormControl('', [Validators.required]),
-      curso: new FormControl({value:'', disabled:true}, [Validators.required]),
+      alumno: new FormControl({ value: '', disabled: true }, [Validators.required]),
+      alumnoId: new FormControl('', [Validators.required]),
+      curso: new FormControl({ value: '', disabled: true }, [Validators.required]),
       cursoId: new FormControl('', [Validators.required]),
       condicion: new FormControl('', [Validators.required]),
       nota: new FormControl('')
     });
 
-    this.alumno$.subscribe(x => {
-      if(x !== null){
-        this.alumno = x;
-        this.form.patchValue({'alumno':`${this.alumno.apellido} ${this.alumno.nombre}`, 'alumnoId':this.alumno._id})
-      }
-    })
+    const role = await firstValueFrom(this.authService.idTokenClaims$.pipe(filter(u => u !== undefined)));
+    if(role && (role[environment.roleLogin] as Array<string>).some(r => r === 'Docente')){
+      this.role = 'Docente';
+    }
 
-    this.alumnoInscripcion$.subscribe(x => {
-      if(x){
-        this.alumnoInscripcion = x;
-        this.form.patchValue({'_id':x._id,'alumno':`${x.alumno!.apellido} ${x.alumno!.nombre}`, 'alumnoId':x.alumno!._id, 'condicion': x.condicion, nota:x.nota, 'curso':x.curso?.descripcion, 'cursoId': x.curso?._id})
-      }
-    })
+    
+    let alumnoInscripcionSelected = await firstValueFrom(this.alumnoInscripcion$.pipe(filter(ai => ai !== null)));
+    if (alumnoInscripcionSelected) {
+      this.alumnoInscripcion = alumnoInscripcionSelected;
+      this.form.patchValue({ '_id': this.alumnoInscripcion._id, 'alumno': `${this.alumnoInscripcion.alumno!.apellido} ${this.alumnoInscripcion.alumno!.nombre}`, 'alumnoId': this.alumnoInscripcion.alumno!._id, 'condicion': this.alumnoInscripcion.condicion, nota: this.alumnoInscripcion.nota, 'curso': this.alumnoInscripcion.curso?.descripcion, 'cursoId': this.alumnoInscripcion.curso?._id })
+    }
 
-    this.alumnoId = this.activatedRoute.snapshot.params['id']
-    let filter = new AlumnoFilter();
-    filter.incluirInscripciones = false;
-    this.store.dispatch(new GetAlumnoByIdAction(this.alumnoId, filter));
+
+    let alumnoSelected = await firstValueFrom(this.alumno$.pipe(filter(a => a !== null)));
+    if (alumnoSelected) {
+      this.alumno = alumnoSelected;
+      this.form.patchValue({ 'alumno': `${this.alumno.apellido} ${this.alumno.nombre}`, 'alumnoId': this.alumno._id })
+    }
+
+    this.alumnoId = this.activatedRoute.snapshot.params['id'] === undefined ? this.store.selectSnapshot(AppPageState.getPersonId) : this.activatedRoute.snapshot.params['id'];
+    let alumnoFilter = new AlumnoFilter();
+    alumnoFilter.incluirInscripciones = false;
+    this.store.dispatch(new GetAlumnoByIdAction(this.alumnoId, alumnoFilter));
+
+    const especialidadSelected = await firstValueFrom(this.especialidadSelected$.pipe(filter(e => e !== null)));
+
+    let planFilter = new PlanFilter();
+    planFilter.especialidadId = especialidadSelected._id;
+    this.store.dispatch(new GetPlanAction(planFilter));
+
+    const planSelected = await firstValueFrom(this.planSelected$.pipe(filter(p => p !== null)));
+    let cursoFilter = new CursoFilter();
+    cursoFilter.planId = planSelected._id;
+    this.store.dispatch(new GetCursoAction(cursoFilter));
+
+    const cursoSelected = await firstValueFrom(this.cursoSelectedModal$.pipe(filter(c => c !== null)));
+    if (cursoSelected) {
+      this.form.patchValue({ 'curso': cursoSelected.descripcion, 'cursoId': cursoSelected._id });
+    }
+
   }
 
-  onSubmit(){
+  onSubmit() {
     this.alumnoInscripcion = this.form.value
-   if(this.alumnoInscripcion._id === ''){
-    this.alumnoInscripcionDto = this.form.value;
-    this.store.dispatch(new PostAlumnoInscripcionAction(this.alumnoInscripcionDto)).subscribe(() => {
-      this.router.navigate([`/inscripciones/alumnos/${this.alumnoId}`]);
-      this.messageService.add({ severity: 'success', summary: 'Crear inscripción', detail: 'Se ha registrado la inscripción' });
-    });
-   }
-   else{
-    this.alumnoInscripcionDto = this.form.value;
-    this.store.dispatch(new PutAlumnoInscripcionAction(this.alumnoInscripcion._id,this.alumnoInscripcionDto)).subscribe(() => {
-      this.router.navigate([`/inscripciones/alumnos/${this.alumnoId}`]);
-      this.messageService.add({ severity: 'success', summary: 'Editar inscripción', detail: 'Se han guardado los cambios de la inscripción' });
-    });
-   }
+    if (this.alumnoInscripcion._id === '') {
+      this.alumnoInscripcionDto = this.form.value;
+      this.store.dispatch(new PostAlumnoInscripcionAction(this.alumnoInscripcionDto)).subscribe(() => {
+        this.router.navigate([`/inscripciones/alumnos/${this.alumnoId}`]);
+        this.messageService.add({ severity: 'success', summary: 'Crear inscripción', detail: 'Se ha registrado la inscripción' });
+      });
+    }
+    else {
+      this.alumnoInscripcionDto = this.form.value;
+      this.store.dispatch(new PutAlumnoInscripcionAction(this.alumnoInscripcion._id, this.alumnoInscripcionDto)).subscribe(() => {
+        this.router.navigate([`/inscripciones/alumnos/${this.alumnoId}`]);
+        this.messageService.add({ severity: 'success', summary: 'Editar inscripción', detail: 'Se han guardado los cambios de la inscripción' });
+      });
+    }
   }
 
-  toggleModalCursos(){
+  toggleModalCursos() {
     this.store.dispatch(new ShowCursoModal(true));
   }
 
-  redirectInscripcionesAlumno(){
-    this.router.navigate([`/inscripciones/alumnos/${this.alumnoId}`]);
+  redirect() {
+    if(this.role === 'Docente'){
+      this.router.navigate([`docente/${this.activatedRoute.snapshot.params['id']}/cursos-inscripciones/${this.alumnoInscripcion.curso?._id}`]);
+    } else {
+      this.router.navigate([`/inscripciones/alumnos/${this.alumnoId}`]);
+    }
   }
-
-
 
 }

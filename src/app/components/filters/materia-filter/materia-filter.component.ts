@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { filter, firstValueFrom, Observable } from 'rxjs';
 import { Materia } from '../../../entities/materia';
 import { MateriaState } from '../../../store/states/api/materia.state';
 import { Store } from '@ngxs/store';
@@ -27,15 +27,14 @@ export class MateriaFilterComponent implements OnInit {
   constructor(private store:Store){
 
   }
-  ngOnInit(): void {
-    this.alumno$.subscribe(x => {
-      if(x !== null){
-        let materiaFilter = new MateriaFilter();
-        materiaFilter.alumnnoId = x._id;
-        materiaFilter.planId = x.plan._id;
-        this.store.dispatch(new GetByIdForInscripcion(materiaFilter));
-      }
-    })
+  async ngOnInit(): Promise<void> {
+    const alumnoSelected = await firstValueFrom( this.alumno$.pipe(filter(x => x !== null)));
+    if (alumnoSelected) {
+      let materiaFilter = new MateriaFilter();
+      materiaFilter.alumnnoId = alumnoSelected._id;
+      materiaFilter.planId = alumnoSelected.plan._id;
+      this.store.dispatch(new GetByIdForInscripcion(materiaFilter));
+    }
   }
 
   onChangeEspecialidad(){

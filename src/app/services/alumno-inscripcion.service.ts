@@ -20,6 +20,10 @@ export class AlumnoInscripcionService {
     return this.http.get<AlumnoInscripcion>(`${environment.apiUrl}/alumnos-inscripciones/${id}`);
   }
 
+  getByCurso(cursoId:string){
+    return this.http.get<AlumnoInscripcion[]>(`${environment.apiUrl}/alumnos-inscripciones/curso/${cursoId}`);
+  }
+
   put(id:string,inscripcion:AlumnoInscripcionDto){
     return this.http.put<AlumnoInscripcion>(`${environment.apiUrl}/alumnos-inscripciones/${id}`, inscripcion);
   }

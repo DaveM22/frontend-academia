@@ -18,7 +18,7 @@ import { ErrorStateHandler } from "../../../util/ErrorStateHandler";
   defaults: {
     materias:[],
     error: false,
-    loading:true
+    loading:false
   }
 })
 

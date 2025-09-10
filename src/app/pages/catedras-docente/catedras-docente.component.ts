@@ -19,11 +19,12 @@ import { PersonaPageState } from '../../store/states/page/persona.state';
 import { Profesor } from '../../entities/profesor';
 import { DocenteCurso } from '../../entities/docente-curso';
 import { RouterModule } from '@angular/router';
+import { CardModule } from 'primeng/card';
 
 @Component({
   selector: 'app-catedras-docente',
   standalone: true,
-  imports: [CommonModule,PanelModule, RouterModule],
+  imports: [CommonModule, RouterModule, CardModule],
   templateUrl: './catedras-docente.component.html',
   styleUrl: './catedras-docente.component.scss'
 })

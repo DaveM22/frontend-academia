@@ -14,7 +14,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AlumnoFilter } from '../../entities/filter';
 import { GetAlumnoByIdAction } from '../../store/actions/api/persona.action';
 import { AppPageState } from '../../store/states/page/app.state';
-import { Observable } from 'rxjs';
+import { firstValueFrom, Observable } from 'rxjs';
 import { Alumno } from '../../entities/alumno';
 import { PersonaPageState } from '../../store/states/page/persona.state';
 import { Persona } from '../../entities/persona';
@@ -22,39 +22,34 @@ import { AlumnoInscripcion } from '../../entities/alumno-inscripcion';
 import { PanelModule } from 'primeng/panel';
 import { PersonaState } from '../../store/states/api/persona.state';
 import { CardModule } from 'primeng/card';
+import { filter, distinctUntilChanged, takeUntil, concatMap, last, take, first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-catedras-alumno',
   standalone: true,
-  imports: [CommonModule,ToolbarModule,PanelModule, TableModule, ButtonModule, IconFieldModule, InputIconModule, MessagesModule, InputTextModule, CardModule],
+  imports: [CommonModule, ToolbarModule, PanelModule, TableModule, ButtonModule, IconFieldModule, InputIconModule, MessagesModule, InputTextModule, CardModule],
   templateUrl: './catedras-alumno.component.html',
   styleUrl: './catedras-alumno.component.scss'
 })
 export class CatedrasAlumnoComponent implements OnInit {
-  persona$:Observable<Alumno | null> = this.store.select(PersonaPageState.getAlumnoSelected);
-  personaid$:Observable<string> = this.store.select(AppPageState.getPersonId);
-  persona!:Alumno;
-  loading$:Observable<boolean> = this.store.select(PersonaState.getLoading)
-  inscripciones:AlumnoInscripcion[] = [];
-  constructor(private store:Store){}
+  persona$: Observable<Alumno | null> = this.store.select(PersonaPageState.getAlumnoSelected);
+  personaid$: Observable<string> = this.store.select(AppPageState.getPersonId);
+  persona!: Alumno;
+  loading$: Observable<boolean> = this.store.select(PersonaState.getLoading)
+  inscripciones: AlumnoInscripcion[] = [];
+  constructor(private store: Store) { }
 
-  ngOnInit(): void {
-    this.personaid$.subscribe(x => {
-      if(x !== ''){
-        let personId = x;
-        let filters = new AlumnoFilter();
-        filters.incluirInscripciones = true;
-    
-         this.store.dispatch(new GetAlumnoByIdAction(personId,filters))
-      }
-    })
+  async ngOnInit(): Promise<void> {
 
-    this.persona$.subscribe(x => {
-      if(x !== null){
-        this.persona = x;
-        this.inscripciones = this.persona.inscripciones;
-      }
-    })
+    const personaId = await firstValueFrom(this.personaid$.pipe(filter(id => id !== '')));
+    let filters = new AlumnoFilter();
+    filters.incluirInscripciones = true;
+
+    this.store.dispatch(new GetAlumnoByIdAction(personaId, filters))
+
+    const persona = await firstValueFrom(this.persona$.pipe(filter(p => p !== null)));
+    this.persona = persona!;
+    this.inscripciones = this.persona.inscripciones;
 
   }
 

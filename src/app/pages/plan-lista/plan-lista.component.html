@@ -5,7 +5,7 @@
     <ng-template pTemplate="caption">
         @if (error$ | async)
 {
-<p-message severity="error" class="mb-2">
+<p-message severity="error" class="flex mb-2 w-auto" styleClass="w-full">
     {{(errorMessage$ | async)}}
 </p-message>
 

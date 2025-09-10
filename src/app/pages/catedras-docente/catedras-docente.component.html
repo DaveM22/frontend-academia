@@ -1,12 +1,10 @@
-<div class="content" style="height: 100%;">
-    <p-panel styleClass="h-full">
-        <ng-template pTemplate="header">
-            <div class="flex flex-wrap w-full pt-3 pb-3 align-items-center justify-content-center">
-            <h1 class="text-center"> Cursos asignados </h1>
-            </div>
-        </ng-template>
-        <ng-template pTemplate="content">
-            <router-outlet></router-outlet>
-        </ng-template>
-    </p-panel>
-</div>
+<p-card #crd styleClass="h-full">
+  <ng-template pTemplate="header">
+    <div>
+      <h2 class="text-3xl text-center font-bold text-white pb-2">Cursos asignados</h2>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="content">
+    <router-outlet></router-outlet>
+  </ng-template>
+</p-card>

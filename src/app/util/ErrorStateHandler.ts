@@ -4,6 +4,12 @@ export class ErrorStateHandler{
 
     static handleError(error:any, ctx: StateContext<any>){
       switch(error.status){
+        case 400:
+          ctx.patchState({
+            error:true,
+            errorMessage: error.error.error
+          })
+          break;
         case 403:
           ctx.patchState({
             error:true,

@@ -4,7 +4,7 @@ import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { DocenteFilter } from '../../entities/filter';
 import { Profesor } from '../../entities/profesor';
-import { DeleteProfesorAction, GetProfesoresAction } from '../../store/actions/api/persona.action';
+import { DeleteProfesorAction, GetProfesorByIdAction, GetProfesoresAction } from '../../store/actions/api/persona.action';
 import { PersonaState } from '../../store/states/api/persona.state';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
@@ -85,6 +85,10 @@ export class ProfesorListaComponent implements OnInit {
   }
 
   redirectToEditarProfesor(id: string) {
-    this.router.navigate([`profesores/editar/${id}`]);
+     
+     const docenteFilter = new DocenteFilter();
+     this.store.dispatch(new GetProfesorByIdAction(id, docenteFilter)).subscribe(() => {
+          this.router.navigate([`profesores/editar/${id}`]);
+     });
   }
 }

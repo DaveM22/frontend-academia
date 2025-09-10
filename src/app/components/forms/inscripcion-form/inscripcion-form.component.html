@@ -1,5 +1,5 @@
 <div class="flex flex-row justify-center align-items-center">
-    <h4 class="text-xl text-center font-bold text-white pb-2">Nueva Inscripción:</h4>
+    <h4 class="text-xl text-center font-bold text-white pb-2">{{alumnoInscripcion ? 'Actualizar Inscripción:' : 'Nueva Inscripción:'}}</h4>
   </div>
 <div class="grid place-items-center">
     <form [formGroup]="form" (ngSubmit)="onSubmit()" class="grid grid-cols-12 gap-4 w-full max-w-screen-lg">
@@ -35,9 +35,9 @@
             }
         </div>
         <div class="col-span-12 lg:col-start-4 lg:col-span-6 flex justify-center gap-2">
-            <p-button label="Guardar" icon="pi pi-check" class="w-full" styleClass="w-full"></p-button>
-            <p-button label="Cancelar" severity="danger" icon="pi pi-times" class="w-full" styleClass="w-full"
-                (onClick)="redirectInscripcionesAlumno()"></p-button>
+            <p-button label="Guardar" icon="pi pi-check" class="text-sm lg:text-2xl w-full" styleClass="w-full" [disabled]="form.invalid" severity="success"></p-button>
+            <p-button label="Cancelar" severity="danger" icon="pi pi-times" class="text-sm lg:text-2xl w-full" styleClass="w-full"
+                (onClick)="redirect()"></p-button>
         </div>
     </form>
 
