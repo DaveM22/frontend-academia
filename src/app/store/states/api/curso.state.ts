@@ -116,14 +116,14 @@ export class CursoState {
 
         ctx.patchState({ loading: true, error: false });
         try {
-            const response = await lastValueFrom(this.service.generateReport(action.id));
-         
-            const blob = new Blob([response.body as ArrayBuffer], { type: 'application/pdf' });
-            saveAs(blob, 'reporte-curso.pdf');
+              const response = await lastValueFrom(this.service.generateReport(action.id));
+              saveAs(response, 'archivo.pdf');
         }
         catch (error: any) {
-   console.log(error)
-            ErrorStateHandler.handleError(error, ctx);
+            let errort = await error.error.text().then((t: any) => JSON.parse(t));
+            let err = { error: errort, status: error.status }
+            console.log(err)
+            ErrorStateHandler.handleError(err, ctx);
         }
         finally {
             ctx.patchState({ loading: false })

@@ -4,7 +4,7 @@ import { routes } from './app.routes';
 import { provideStore } from '@ngxs/store';
 import { EspecialidadState } from './store/states/api/especialidad.state';
 import { provideHttpClient, withInterceptors, withInterceptorsFromDi, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { PdfInterceptor } from './interceptors/pdf.interceptor';
+
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { EspecialidadPageState } from './store/states/page/especialidad.state';
 import { PlanState } from './store/states/api/plan.state';
@@ -5257,11 +5257,6 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: PdfInterceptor,
-      multi: true
-    },
     MessageService,
     provideHttpClient(withInterceptors([authHttpInterceptorFn])),
     provideAnimationsAsync(),

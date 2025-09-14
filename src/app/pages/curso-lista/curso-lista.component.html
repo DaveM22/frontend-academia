@@ -5,12 +5,9 @@
     <ng-template pTemplate="caption">
         @if (error$ | async)
         {
-        <p-messages severity="error">
-            <ng-template pTemplate>
-
-                <div class="ml-2">{{(errorMessage$ | async)}}</div>
-            </ng-template>
-        </p-messages>
+<p-message icon="pi pi-exclamation-circle" severity="error" class="flex mb-2 w-auto" styleClass="w-full">
+    {{(errorMessage$ | async)}}
+</p-message>
 
         }
         <div class="flex flex-col w-full gap-2 md:flex-row justify-between">

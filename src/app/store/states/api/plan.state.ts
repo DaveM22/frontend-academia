@@ -194,14 +194,12 @@ export class PlanState {
     ctx.patchState({ loading: true, error: false });
     try {
       const response = await lastValueFrom(this.service.generateReport(action.id));
-      const blob = new Blob([response.body!], { type: 'application/pdf' });
-      saveAs(blob, 'archivo.pdf');
+      saveAs(response, 'archivo.pdf');
     }
     catch (error:any) {
-       const text = error.error.error.text();      // Convierte Blob a texto
-        const errorCached = JSON.parse(text);     
-        ErrorStateHandler.handleError(errorCached, ctx);
-
+      let errort = await error.error.text().then((t:any) => JSON.parse(t));
+      let err = {error: errort, status:error.status}
+      ErrorStateHandler.handleError(err, ctx);
     }
     finally {
       ctx.patchState({ loading: false })

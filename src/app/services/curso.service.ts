@@ -53,7 +53,7 @@ export class CursoService {
   }
 
   public generateReport(cursoId:string){
-    return this.http.get(`${environment.apiUrl}/cursos/${cursoId}/reporte`, { observe: 'response' })
+    return this.http.get(`${environment.apiUrl}/cursos/${cursoId}/reporte`, { responseType:'blob' })
   }
 
 }

@@ -59,7 +59,7 @@ export class PlanService {
 
   public generateReport(planId:string){
     return this.http.get(`${environment.apiUrl}/planes/${planId}/reporte`, { 
-      responseType: 'arraybuffer', observe: 'response' }
+      responseType: 'blob' }
     )
   }
 }
