@@ -20,15 +20,28 @@ import { Profesor } from '../../entities/profesor';
 import { DocenteCurso } from '../../entities/docente-curso';
 import { RouterModule } from '@angular/router';
 import { CardModule } from 'primeng/card';
+import { ParametroState } from '../../store/states/api/parametro.state';
+import { Parametro } from '../../entities/parametro';
+import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'app-catedras-docente',
   standalone: true,
-  imports: [CommonModule, RouterModule, CardModule],
+  imports: [CommonModule, RouterModule, CardModule, MessageModule],
   templateUrl: './catedras-docente.component.html',
   styleUrl: './catedras-docente.component.scss'
 })
 export class CatedrasDocenteComponent {
  
+    public parametro$:Observable<Parametro | null> = this.store.select(ParametroState.getParameterSelected);
+
+    public loading$:Observable<boolean> = this.store.select(ParametroState.getLoading);
+
+    public generalLoading$:Observable<boolean> = this.store.select(AppPageState.getGeneralLoading);
+
+    constructor(private store:Store)
+    {
+
+    }
 
 }

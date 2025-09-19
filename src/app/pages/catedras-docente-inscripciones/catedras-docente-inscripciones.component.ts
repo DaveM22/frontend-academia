@@ -22,16 +22,20 @@ import { CursoPageState } from '../../store/states/page/curso.state';
 import { GetByIdCursoAction } from '../../store/actions/api/curso.action';
 import { Materia } from '../../entities/materia';
 import { Comision } from '../../entities/comision';
+import { MessageModule } from 'primeng/message';
+import { GetByNombreParametroAction, GetParametrosAction } from '../../store/actions/api/parametros.action';
+import { ParametroState } from '../../store/states/api/parametro.state';
+import { Parametro } from '../../entities/parametro';
 
 @Component({
   selector: 'app-catedras-docente-inscripciones',
   standalone: true,
-  imports: [CommonModule, ToolbarModule, PanelModule, TableModule, ButtonModule, IconFieldModule, InputIconModule, MessagesModule, InputTextModule, Skeleton],
+  imports: [CommonModule, ToolbarModule, PanelModule, TableModule, ButtonModule, IconFieldModule, InputIconModule, MessagesModule, InputTextModule, Skeleton, MessageModule],
   templateUrl: './catedras-docente-inscripciones.component.html',
   styleUrl: './catedras-docente-inscripciones.component.scss'
 })
 export class CatedrasDocenteInscripcionesComponent implements OnInit {
-
+  parametro$: Observable<Parametro | null> = this.store.select(ParametroState.getParameterSelected);
   inscripciones$: Observable<AlumnoInscripcion[]> = this.store.select(AlumnoInscripcionState.getInscripciones);
   curso$: Observable<Curso | null> = this.store.select(CursoPageState.getCursoSelected);
   inscripciones: AlumnoInscripcion[] = [];
@@ -39,10 +43,15 @@ export class CatedrasDocenteInscripcionesComponent implements OnInit {
   cursoId: string = '';
   materia: Materia | null = null;
   comision: Comision | null = null;
+  parametroHabilitado: boolean = false;
+  mostrarAviso: boolean = false;  
   constructor(private store: Store, private router: ActivatedRoute, private route: Router) { }
 
   async ngOnInit(): Promise<void> {
     this.loading$ = true;
+    this.store.dispatch(new GetByNombreParametroAction("HabilitarCargaNotas"));
+    const parametroHabilitado = await firstValueFrom(this.parametro$.pipe(filter(param => param !== null)));
+    this.parametroHabilitado = parametroHabilitado.activo;
     this.cursoId = this.router.snapshot.params['idCurso'];
     this.store.dispatch(new GetByIdCursoAction(this.cursoId));
     const cursoSelected = await firstValueFrom(this.curso$.pipe(filter(curso => curso !== null)));
@@ -56,10 +65,16 @@ export class CatedrasDocenteInscripcionesComponent implements OnInit {
 
 
   redirectToInscripcionForm(idInscripcion: string) {
-    this.loading$ = true;
-    this.store.dispatch(new GetOneAlumnoInscripcionAction(idInscripcion)).subscribe(() => {
-      this.route.navigate([`docente/${this.router.snapshot.params['id']}/cursos-inscripciones/${this.cursoId}/inscripciones/${idInscripcion}`]);
-    })
+    if(this.parametroHabilitado){
+      this.loading$ = true;
+      this.store.dispatch(new GetOneAlumnoInscripcionAction(idInscripcion)).subscribe(() => {
+        this.route.navigate([`docente/${this.router.snapshot.params['id']}/cursos-inscripciones/${this.cursoId}/inscripciones/${idInscripcion}`]);
+      });
+    }
+    else{
+      this.mostrarAviso = true;
+    }
+
 
   }
 
