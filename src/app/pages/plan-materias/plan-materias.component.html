@@ -9,8 +9,8 @@
 
 }
 
-<p-table [value]="materias" [loading]="(loading$ | async)"     styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-sm lg:text-xl" responsiveLayout="stack" [breakpoint]="'960px'"
-    [paginator]="true" [scrollable]="true" size="small" [rows]="5" [scrollHeight]="scrollSize" [globalFilterFields]="['descripcion']">
+<p-table [value]="materias" [loading]="loading$"     styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-sm lg:text-xl" responsiveLayout="stack" [breakpoint]="'960px'"
+    [paginator]="true"  [scrollable]="true" size="small" [rows]="5" [scrollHeight]="scrollSize" [globalFilterFields]="['descripcion']">
 
     
     <ng-template pTemplate="caption">

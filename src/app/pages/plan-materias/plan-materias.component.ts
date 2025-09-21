@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { MessagesModule } from 'primeng/messages';
 import { TableModule } from 'primeng/table';
-import { Observable } from 'rxjs';
+import { filter, firstValueFrom, Observable } from 'rxjs';
 import { PlanState } from '../../store/states/api/plan.state';
 import { Plan } from '../../entities/plan';
 import { GetByIdPlanAction, GetPlanByIdWithMateriasAction } from '../../store/actions/api/planes.action';
@@ -19,6 +19,7 @@ import { DeleteMateria, GetByIdMateriaAction } from '../../store/actions/api/mat
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ScreenSizeService } from '../../services/screen-size.service.service';
 import { MateriaState } from '../../store/states/api/materia.state';
+import { ClearSelectedPlan } from '../../store/actions/pages/plan.action';
 
 @Component({
   selector: 'app-plan-materias',
@@ -29,66 +30,64 @@ import { MateriaState } from '../../store/states/api/materia.state';
   providers: [ConfirmationService]
 })
 export class PlanMateriasComponent implements OnInit {
-  error$:Observable<boolean> = this.store.select(PlanState.getError);
-  errorMessage$:Observable<string> = this.store.select(PlanState.getErrorMessage);
-  loading$:Observable<boolean> = this.store.select(MateriaState.getLoading);
-  planSelected$:Observable<Plan | null> = this.store.select(PlanPageState.getPlanSelected);
-  showConfirmation$:Observable<boolean> = this.store.select(AppPageState.showModalConfirmation)
-  plan!:Plan;
-  materias:Materia[]=[]
-  header!:string;
-  id!:string;
-  materiaSelected!:Materia;
+  error$: Observable<boolean> = this.store.select(PlanState.getError);
+  errorMessage$: Observable<string> = this.store.select(PlanState.getErrorMessage);
+  loading$: boolean = true;
+  planSelected$: Observable<Plan | null> = this.store.select(PlanPageState.getPlanSelected);
+  showConfirmation$: Observable<boolean> = this.store.select(AppPageState.showModalConfirmation)
+  plan!: Plan;
+  materias: Materia[] = []
+  header!: string;
+  id!: string;
+  materiaSelected!: Materia;
   scrollSize: string = "flex";
   constructor(
-    private store:Store,
-    private activadedRoute:ActivatedRoute, 
-    private router:Router, 
-    private confimationService:ConfirmationService,
-    private messageService:MessageService,
-    private screenService:ScreenSizeService){
+    private store: Store,
+    private activadedRoute: ActivatedRoute,
+    private router: Router,
+    private confimationService: ConfirmationService,
+    private messageService: MessageService,
+    private screenService: ScreenSizeService) {
 
   }
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.id = this.activadedRoute.snapshot.params['id'];
-    const filter = new PlanFilter();
-    filter.incluirMaterias = true;
-    this.store.dispatch(new GetByIdPlanAction(this.id, filter));
-    this.planSelected$.subscribe(x => {
-      if(x !== null){
-        this.plan = x;
-        this.materias = this.plan.materias;
-        this.header = this.plan.descripcion;
-      }
-    })
+    const planFilter = new PlanFilter();
+    planFilter.incluirMaterias = true;
+    this.store.dispatch(new GetByIdPlanAction(this.id, planFilter));
+    const planSelected = await firstValueFrom(this.planSelected$.pipe(filter(x => x !== null)));
+    this.plan = planSelected;
+    this.materias = this.plan.materias;
+    this.header = this.plan.descripcion;
 
     this.showConfirmation$.subscribe(x => {
-      if(x  && this.materiaSelected){
+      if (x && this.materiaSelected) {
         this.confirm();
       }
     })
 
-    this.screenService.screenSize$.subscribe((x:any) => {
+    this.screenService.screenSize$.subscribe((x: any) => {
       this.scrollSize = x.currentTarget.innerWidth > 992 ? 'flex' : '50vh'
-   })
-
+    })
+    this.loading$ = false;
   }
 
-  redirectMateriaNuevo(){
+  redirectMateriaNuevo() {
     this.router.navigate([`/planes/${this.id}/materias/nuevo`]);
   }
 
-  redirectMateriaEditar(materiaId:string){
+  redirectMateriaEditar(materiaId: string) {
     this.store.dispatch(new GetByIdMateriaAction(materiaId)).subscribe(() => {
       this.router.navigate([`/planes/${this.id}/materias/editar/${materiaId}`]);
     });
   }
 
-  redirectPlanes(){
+  redirectPlanes() {
+    this.store.dispatch(new ClearSelectedPlan);
     this.router.navigate(['/planes/lista']);
   }
 
-  
+
   confirm() {
 
     this.confimationService.confirm({
@@ -98,22 +97,22 @@ export class PlanMateriasComponent implements OnInit {
       rejectIcon: 'pi pi-times mr-2',
       rejectButtonStyleClass: 'p-button-sm',
       acceptButtonStyleClass: 'p-button-outlined p-button-sm',
-        accept: () => {
-          this.store.dispatch(new DeleteMateria(this.materiaSelected))
+      accept: () => {
+        this.store.dispatch(new DeleteMateria(this.materiaSelected))
           .subscribe(() => {
             this.store.dispatch(new ShowModalConfirmationAction(false))
             this.messageService.add({ severity: 'success', summary: 'Borrar materia', detail: `Se ha borrado la materia: ${this.materiaSelected.descripcion}` });
-          })       
-        },
-        reject: () => {
-          this.store.dispatch(new ShowModalConfirmationAction(false))
-        }
+          })
+      },
+      reject: () => {
+        this.store.dispatch(new ShowModalConfirmationAction(false))
+      }
     });
-}
+  }
 
-modalConfirmar(materia:Materia){
-  this.materiaSelected = materia;
-  this.store.dispatch(new ShowModalConfirmationAction(true));
-}
+  modalConfirmar(materia: Materia) {
+    this.materiaSelected = materia;
+    this.store.dispatch(new ShowModalConfirmationAction(true));
+  }
 
 }

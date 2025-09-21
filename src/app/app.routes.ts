@@ -58,6 +58,7 @@ import { ParameterComponent } from './pages/parameter/parameter.component';
 import { ParametroListaComponent } from './pages/parametro-lista/parametro-lista.component';
 import { ParametroComponent } from './pages/parametro/parametro.component';
 import { InscripcionFormComponent } from './components/forms/inscripcion-form/inscripcion-form.component';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 export const routes: Routes = [
     {
@@ -70,6 +71,11 @@ export const routes: Routes = [
                 path: 'especialidades',
                 component: EspecialidadComponent,
                 children: [
+                    {
+                        path: '',
+                        pathMatch: 'full',
+                        redirectTo: 'lista'
+                    },
                     { path: 'lista', pathMatch: 'full', component: EspecialidadListaComponent },
                     { path: 'nuevo', pathMatch: 'full', component: EspecialidadNuevoComponent },
                     { path: 'editar/:id', pathMatch: 'full', component: EspecialidadEditarComponent }
@@ -84,6 +90,11 @@ export const routes: Routes = [
                 path: 'planes',
                 component: PlanComponent,
                 children: [
+                    {
+                        path: '',
+                        pathMatch: 'full',
+                        redirectTo: 'lista'
+                    },
                     { path: 'lista', pathMatch: 'full', component: PlanListaComponent },
                     { path: 'nuevo', pathMatch: 'full', component: PlanNuevoComponent },
                     { path: 'editar/:id', pathMatch: 'full', component: PlanEditarComponent },
@@ -100,6 +111,11 @@ export const routes: Routes = [
                 path: 'comisiones',
                 component: ComisionComponent,
                 children: [
+                    {
+                        path: '',
+                        pathMatch: 'full',
+                        redirectTo: 'lista'
+                    },
                     { path: 'lista', component: ComisionListaComponent },
                     { path: 'nuevo', component: ComisionNuevoComponent },
                     { path: 'editar/:id', component: ComisionEditarComponent }
@@ -113,6 +129,11 @@ export const routes: Routes = [
                 path: 'cursos',
                 component: CursoComponent,
                 children: [
+                    {
+                        path: '',
+                        pathMatch: 'full',
+                        redirectTo: 'lista'
+                    },
                     { path: 'lista', component: CursoListaComponent },
                     { path: 'nuevo', component: CursoNuevoComponent },
                     { path: 'editar/:id', component: CursoEditarComponent }
@@ -126,6 +147,11 @@ export const routes: Routes = [
                 path: 'alumnos',
                 component: AlumnoComponent,
                 children: [
+                    {
+                        path: '',
+                        pathMatch: 'full',
+                        redirectTo: 'lista'
+                    },
                     { path: 'lista', component: AlumnoListaComponent },
                     { path: 'nuevo', component: AlumnoNuevoComponent },
                     { path: 'editar/:id', component: AlumnoEditarComponent }
@@ -139,6 +165,11 @@ export const routes: Routes = [
                 path: 'profesores',
                 component: ProfesorComponent,
                 children: [
+                    {
+                        path: '',
+                        pathMatch: 'full',
+                        redirectTo: 'lista'
+                    },
                     { path: 'lista', pathMatch: 'full', component: ProfesorListaComponent },
                     { path: 'nuevo', pathMatch: 'full', component: ProfesorNuevoComponent },
                     { path: 'editar/:id', pathMatch: 'full', component: ProfesorEditarComponent }
@@ -153,8 +184,13 @@ export const routes: Routes = [
                 component: InscripcionAlumnoComponent,
                 children: [
                     {
-                        path:'lista',
-                        component:InscripcionAlumnoListaComponent
+                        path: '',
+                        pathMatch: 'full',
+                        redirectTo: 'lista'
+                    },
+                    {
+                        path: 'lista',
+                        component: InscripcionAlumnoListaComponent
                     },
                     {
                         path: ':id',
@@ -184,6 +220,11 @@ export const routes: Routes = [
                 path: 'docente/:id',
                 component: CatedrasDocenteComponent,
                 children: [
+                    {
+                        path: '',
+                        pathMatch: 'full',
+                        redirectTo: 'cursos-asignados'
+                    },
                     { path: 'cursos-asignados', component: CatedrasDocenteCursosComponent },
                     { path: 'cursos-inscripciones/:idCurso', component: CatedrasDocenteInscripcionesComponent },
                     { path: 'cursos-inscripciones/:idCurso/inscripciones/:idInscripcion', component: InscripcionFormComponent }
@@ -197,6 +238,11 @@ export const routes: Routes = [
                 path: 'inscripcion-catedra',
                 component: InscripcionMateriaAlumnoComponent,
                 children: [
+                    {
+                        path: '',
+                        pathMatch: 'full',
+                        redirectTo: 'materias-disponibles/:id'
+                    },
                     { path: 'materias-disponibles/:id', component: InscripcionMateriaAlumnoMateriasComponent },
                     { path: 'cursos-disponibles/:id', component: CursosDisponiblesComponent }
                 ],
@@ -209,6 +255,11 @@ export const routes: Routes = [
                 path: 'usuarios',
                 component: UsuarioComponent,
                 children: [
+                    {
+                        path: '',
+                        pathMatch: 'full',
+                        redirectTo: 'lista'
+                    },
                     { path: 'lista', component: UsuarioListaComponent },
                     { path: 'nuevo', component: UsuarioNuevoComponent },
                     { path: 'editar/:id', component: UsuarioEditarComponent }
@@ -219,6 +270,11 @@ export const routes: Routes = [
                 path: 'asignacion-docentes',
                 component: AsignacionProfesorComponent,
                 children: [
+                    {
+                        path: '',
+                        pathMatch: 'full',
+                        redirectTo: 'seleccionar-materia'
+                    },
                     { path: 'seleccionar-materia', pathMatch: 'full', component: MateriasAsignacionComponent },
                     { path: ':id/seleccionar-curso', pathMatch: 'full', component: MateriaCursosComponent },
                     { path: ':idMateria/:idCurso/docentes', pathMatch: 'full', component: DocentesCursosComponent },
@@ -232,8 +288,13 @@ export const routes: Routes = [
             {
                 path: 'parametros',
                 component: ParametroComponent,
-                children:[
-                    {path:'lista', pathMatch:'full', component:ParametroListaComponent}
+                children: [
+                    {
+                        path: '',
+                        pathMatch: 'full',
+                        redirectTo: 'lista'
+                    },
+                    { path: 'lista', pathMatch: 'full', component: ParametroListaComponent }
                 ],
                 canActivate: [AuthGuard, adminGuard],
                 data: {
@@ -249,6 +310,10 @@ export const routes: Routes = [
     {
         path: 'callback',
         component: CallbackComponent
+    },
+    {
+        path: '**',
+        component: NotFoundComponent
     }
 
 

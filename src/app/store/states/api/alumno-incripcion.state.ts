@@ -11,7 +11,7 @@ import { ErrorStateHandler } from "../../../util/ErrorStateHandler";
   name: 'alumno_inscripciones',
   defaults: {
     inscripciones: [],
-    loading: true,
+    loading: false,
     error: false,
     errorMessage: ''
 

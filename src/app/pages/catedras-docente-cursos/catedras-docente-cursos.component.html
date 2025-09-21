@@ -1,5 +1,6 @@
 <p-table #dt2 [value]="cursos" responsiveLayout="stack" [breakpoint]="'960px'" [paginator]="true" [scrollable]="true"
     [rows]="5" scrollHeight="flex" styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-sm lg:text-xl"
+    [loading]="loading$"
     [globalFilterFields]="['descripcion, especialidad.descripcion']">
     <ng-template pTemplate="caption">
         <div class="grid">

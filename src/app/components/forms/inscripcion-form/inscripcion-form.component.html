@@ -35,7 +35,7 @@
             }
         </div>
         <div class="col-span-12 lg:col-start-4 lg:col-span-6 flex justify-center gap-2">
-            <p-button label="Guardar" icon="pi pi-check" class="text-sm lg:text-2xl w-full" styleClass="w-full" [disabled]="form.invalid" severity="success"></p-button>
+            <p-button label="Guardar" icon="pi pi-check" class="text-sm lg:text-2xl w-full" styleClass="w-full" [disabled]="form.invalid" severity="success" (onClick)="onSubmit()"></p-button>
             <p-button label="Cancelar" severity="danger" icon="pi pi-times" class="text-sm lg:text-2xl w-full" styleClass="w-full"
                 (onClick)="redirect()"></p-button>
         </div>

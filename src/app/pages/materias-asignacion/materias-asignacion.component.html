@@ -1,7 +1,7 @@
 <div style="height: 100%;">
     <p-table #dt2  [value]="materias" 
     [loading]="(loading$ | async)" 
-    styleClass="p-datatable-gridlines p-datatable-striped pt-0 h-full text-sm lg:text-xl" responsiveLayout="stack"
+    styleClass="p-datatable-gridlines p-datatable-striped pt-0 h-full text-sm lg:text-2xl" responsiveLayout="stack"
     [breakpoint]="'960px'" [paginator]="true" [scrollable]="true" [rows]="5" scrollHeight="flex"
     [globalFilterFields]="['nombre', 'apellido', 'direccion', 'email', 'legajo']"
     size="small"
