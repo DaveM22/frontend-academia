@@ -5281,6 +5281,8 @@ export const appConfig: ApplicationConfig = {
         redirect_uri: window.location.origin,
         audience:environment.audicence
       }, 
+      useRefreshTokens:true,
+      cacheLocation:'memory',
       httpInterceptor:{
         allowedList:[
           {
