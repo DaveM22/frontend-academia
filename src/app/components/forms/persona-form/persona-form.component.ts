@@ -57,14 +57,14 @@ export class PersonaFormComponent {
       email: new FormControl(''),
       telefono: new FormControl(''),
       fechaNacimiento: new FormControl('', [Validators.required]),
-      plan: new FormControl({ value: '', disabled: true }, [Validators.required]),
-      planId: new FormControl('', [Validators.required])
+      planDescription: new FormControl({ value: '', disabled: true }, [Validators.required]),
+      plan: new FormControl('', [Validators.required])
 
     });
 
     this.planSelected$.subscribe(x => {
       if (x !== null) {
-        this.form.patchValue({ 'plan': x.descripcion, 'planId': x._id });
+        this.form.patchValue({ 'planDescription': x.descripcion, 'plan': x._id });
       }
     })
     this.alumnoSelected$.subscribe(x => {
@@ -156,12 +156,12 @@ export class PersonaFormComponent {
       this.form.patchValue(this.alumno);
       console.log(this.alumno);
       this.form.patchValue({ 'fechaNacimiento': this.datePipe.transform(this.alumno.fechaNacimiento, 'dd/MM/yyyy') })
-      this.form.patchValue({ 'plan': this.alumno.plan.descripcion, 'planId': this.alumno.plan._id });
+      this.form.patchValue({ 'planDescription': this.alumno.plan.descripcion, 'plan': this.alumno.plan._id });
     }
     else {
       this.form.patchValue(this.profesor);
       this.form.patchValue({ 'fechaNacimiento': this.datePipe.transform(this.profesor.fechaNacimiento, 'dd/MM/yyyy') })
-      this.form.patchValue({ 'plan': this.profesor.plan.descripcion, 'planId': this.profesor.plan._id });
+      this.form.patchValue({ 'planDescription': this.profesor.plan.descripcion, 'plan': this.profesor.plan._id });
     }
   }
 

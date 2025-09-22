@@ -1,75 +1,78 @@
+<div class="flex flex-row justify-center align-items-center">
+    <h4 class="text-xl text-center font-bold text-white pb-2">{{title}}</h4>
+</div>
+<div class="grid place-items-center">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="grid grid-cols-12 gap-4 w-full max-w-screen-lg">
+        <div class="col-span-12 lg:col-start-4 lg:col-span-6">
+            <label for="nombreUsuario">Usuario:</label>
+            <input id="nombreUsuario" pInputText formControlName="nombreUsuario" type="text" class="w-full">
+            @if(form.get('nombreUsuario')?.invalid && form.get('nombreUsuario')?.dirty){
+            <small class="p-error block">
+                El campo Usuario es requerido
+            </small>
+            }
+        </div>
+        <div class="col-span-12 lg:col-start-4 lg:col-span-6">
+            <label for="nombreYapellido">Nombre y apellido:</label>
+            <input id="nombreYapellido" pInputText formControlName="nombreYapellido" type="text" class="w-full">
+            @if(form.get('descripcion')?.invalid && form.get('nombreYapellido')?.dirty){
+            <small class="p-error block">
+                El campo Nombre y Apellido es requerido
+            </small>
+            }
+        </div>
+        <div class="col-span-12 lg:col-start-4 lg:col-span-6">
+            <label for="email">Email:</label>
+            <input id="email" pInputText formControlName="email" type="text" class="w-full">
+            @if(form.get('email')?.invalid && form.get('email')?.dirty){
+            <small class="p-error block">
+                El campo Email es requerido
+            </small>
+            }
+        </div>
 
-<p-card [header]="title" styleClass="h-full">
+        <div class="col-span-12 lg:col-start-4 lg:col-span-6">
+            <label for="role">Rol:</label>
+            <p-select id="role" name="role" formControlName="role" [options]="roles" optionLabel="name" optionValue="code" appendTo="body"
+                placeholder="Seleccionar rol" styleClass="col-12 sm:col-12 lg:col-12 w-full" />
+            @if(form.get('role')?.invalid && form.get('role')?.dirty){
+            <small class="p-error block">
+                El campo Rol es requerido
+            </small>
+            }
+        </div>
 
-    <ng-template pTemplate="content">
-        
-        <form [formGroup]="form" (ngSubmit)="onSubmit()">
-            <div class="flex overflow-hidden justify-content-center">
-                <div class="col-12 lg:col-4">
 
-                    <div class="field">
-                        <label for="nombreUsuario">Usuario:</label>
-                        <input id="nombreUsuario" pInputText formControlName="nombreUsuario" type="text" class="w-full">
-                        @if(form.get('nombreUsuario')?.invalid && form.get('nombreUsuario')?.dirty){
-                        <small class="p-error block">
-                            El campo Usuario es requerido
-                        </small>
-                        }
-                    </div>
-                    <div class="field">
-                        <label for="nombreYapellido">Nombre y apellido:</label>
-                        <input id="nombreYapellido" pInputText formControlName="nombreYapellido" type="text" class="w-full">
-                        @if(form.get('descripcion')?.invalid && form.get('nombreYapellido')?.dirty){
-                        <small class="p-error block">
-                            El campo Nombre y Apellido es requerido
-                        </small>
-                        }
-                    </div>
-                    <div class="field">
-                        <label for="email">Email:</label>
-                        <input id="email" pInputText formControlName="email" type="text" class="w-full">
-                        @if(form.get('email')?.invalid && form.get('email')?.dirty){
-                        <small class="p-error block">
-                            El campo Email es requerido
-                        </small>
-                        }
-                    </div>
-                    <div class="field">
-                        <label for="nombreYapellido">Clave:</label>
-                        <p-password formControlName="clave" [feedback]="false" class="w-full" styleClass="w-full" />
-                        @if(form.get('descripcion')?.invalid && form.get('clave')?.dirty){
-                        <small class="p-error block">
-                            El campo clave es requerido
-                        </small>
-                        }
-                    </div>
-                    <div class="field">
-                        <label for="rol">Rol:</label>
-                        <p-select formControlName="role" [options]="roles" optionLabel="name" optionValue="code" appendTo="body" placeholder="Seleccionar role" class="w-full md:w-56" />
-                    </div>
-                    <div class="field">
-                        <label>Plan:</label>
-                        <div class="field grid">
-                            <div class="col-12 sm:col-12 lg:col-7">
-                                <input type="text" pInputText placeholder="Seleccione una persona" class="w-full sm:w-full"
-                                    formControlName="persona" />
-                            </div>
 
-                            <div class="col-12 sm:col-12 lg:col-5">
-                                <p-button label="Seleccionar persona" severity="primary"
-                                    styleClass="w-full mt-2 sm:w-full align-items-center lg:w-full sm:mt-2 lg:mt-0 "
-                                    (onClick)="toggleModalPersonas()"></p-button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="col-span-12 lg:col-start-4 lg:col-span-6">
+            <label for="clave">Clave:</label>
+            <p-password formControlName="clave" [feedback]="false" styleClass="col-12 sm:col-12 lg:col-12 w-full" />
+            @if(form.get('descripcion')?.invalid && form.get('clave')?.dirty){
+            <small class="p-error block">
+                El campo clave es requerido
+            </small>
+            }
+        </div>
 
-            <div class="flex align-items-center justify-content-center font-bold text-white border-round m-2">
-                <button type="submit" pButton label="Guardar" icon="pi pi-check" class="p-button-success mr-2" [disabled]="form.invalid"></button>
-                <p-button label="Cancelar" severity="danger" icon="pi pi-times" (onClick)="redirectEspecialidades()"></p-button>
-            </div>
-        </form>
-    </ng-template>
-</p-card>
+        <div class="col-span-12 lg:col-start-4 lg:col-span-6">
+            <label class="text-sm lg:text-xl">Persona:</label>
+            <input type="text" pInputText placeholder="Seleccione una persona" class="form-disabled w-full sm:w-full"
+                formControlName="personaDescripcion" readonly style="cursor: not-allowed;" />
+            <p-button label="Seleccionar persona" severity="primary"
+                styleClass="w-full mt-2 w-full align-items-center  " (onClick)="toggleModalPersonas()"></p-button>
+        </div>
+
+        <div class="col-span-12 lg:col-start-4 lg:col-span-6 flex justify-center">
+            <p-button type="submit" label="Guardar" icon="pi pi-check" class="text-sm w-full lg:text-2xl mr-2"
+                styleClass="w-full" severity="success" [disabled]="form.invalid" (onClick)="onSubmit()"></p-button>
+            <p-button label="Cancelar" severity="danger" class="text-sm w-full lg:text-2xl mr-2" styleClass="w-full"
+                (onClick)="redirectUsuarios()"></p-button>
+        </div>
+
+
+    </form>
+</div>
+
+@if ((modalPersonas$ | async)!) {
 <app-personas-modal></app-personas-modal>
+}

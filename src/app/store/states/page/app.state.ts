@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { AppModelState } from "../../modelstate/pages/app.modelstate";
-import { ClearDocenteInModal, ClearSelectedComisionInModal, ClearSelectedCursoInModal, ClearSelectedEspecialidadFilter, ClearSelectedMateriaInFilter, ClearSelectedMateriaInModal, ClearSelectedPlanFilter, ClearSelectedPlanInModal, GeneralLoadingAction, LoadingForm, SelectedComisionInModal, SelectedCursoInModal, SelectedDocenteInModal, SelectedEspecialidadFilterAction, SelectedMateriaInFilter, SelectedMateriaForCurso as SelectedMateriaInModal, SelectedPlanFilter, SelectedPlanInModal, SetPersonaId, ShowComisionesModal, ShowCursoModal, ShowDocenteModal, ShowMateriaModal, ShowModalConfirmationAction, ShowPersonaModal, ShowPlanModal, ToggleMenuAction } from "../../actions/pages/app.action";
+import { ClearDocenteInModal, ClearSelectedComisionInModal, ClearSelectedCursoInModal, ClearSelectedEspecialidadFilter, ClearSelectedMateriaInFilter, ClearSelectedMateriaInModal, ClearSelectedPlanFilter, ClearSelectedPlanInModal, GeneralLoadingAction, LoadingForm, SelectedComisionInModal, SelectedCursoInModal, SelectedDocenteInModal, SelectedEspecialidadFilterAction, SelectedMateriaInFilter, SelectedMateriaForCurso as SelectedMateriaInModal, SelectedPersonaInModalAction, SelectedPlanFilter, SelectedPlanInModal, SetPersonaId, ShowComisionesModal, ShowCursoModal, ShowDocenteModal, ShowMateriaModal, ShowModalConfirmationAction, ShowPersonaModal, ShowPlanModal, ToggleMenuAction } from "../../actions/pages/app.action";
 import { ClearSelectedCursoAction } from "../../actions/pages/curso.action";
 
 @State<AppModelState>({
@@ -25,7 +25,8 @@ import { ClearSelectedCursoAction } from "../../actions/pages/curso.action";
         showProfesorModal:false,
         showPersonaModal:false,
         formLoading:false,
-        generalLoading:true
+        generalLoading:true,
+        selectedPersonaInModal:null
     }
 })
 
@@ -71,6 +72,11 @@ export class AppPageState {
     @Selector()
     static getSelectedCursoInModal(state:AppModelState){
         return state.selectedCursoInModal;
+    }
+
+    @Selector()
+    static getSelectedPersonaInModal(state:AppModelState){
+        return state.selectedPersonaInModal;
     }
 
     @Selector()
@@ -140,6 +146,13 @@ export class AppPageState {
     setPersonaId(ctx: StateContext<AppModelState>, action: SetPersonaId){
         return ctx.patchState({
             personId: action.personId
+        })
+    }
+
+    @Action(SelectedPersonaInModalAction)
+    selectedPersonaInModal(ctx: StateContext<AppModelState>, action: SelectedPersonaInModalAction) {
+        ctx.patchState({
+            selectedPersonaInModal: action.persona
         })
     }
 

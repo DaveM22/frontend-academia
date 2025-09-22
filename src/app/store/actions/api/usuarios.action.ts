@@ -19,3 +19,8 @@ export class DeleteUsuarioAction {
     static type = "[Usuario API] Delete usuario";
     constructor(public id:string){}
 }
+
+export class PutUsuarioAction {
+    static type = "[Usuario API] Put Usuario";
+    constructor(public usr:Usuario){}
+}

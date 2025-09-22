@@ -1,33 +1,34 @@
 
 
 <p-table #dt2 [value]="(usuarios$ | async)!" [loading]="(loading$ | async)"
-    styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0" responsiveLayout="stack"
+    styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-sm lg:text-2xl" responsiveLayout="stack"
     [breakpoint]="'960px'" [paginator]="true" [scrollable]="true" [rows]="5" scrollHeight="flex"
     [globalFilterFields]="['nombre', 'apellido','direccion', 'email','legajo']">
     <ng-template pTemplate="caption">
-        @if (error$ | async) 
-{
-    <p-messages  severity="error">
-        <ng-template pTemplate>
-    
-            <div class="ml-2">{{(errorMessage$ | async)}}</div>
-        </ng-template>
-    </p-messages>
+        @if (error$ | async)
+        {
+        <p-message severity="error" styleClass="mb-2">
+            {{(errorMessage$ | async)}}
+        </p-message>
 
-}
-        <div class="grid">
-            <div
-                class="col-12 flex flex-column sm:flex-column md:flex-row lg:flex-row align-items-center lg:justify-content-between justify-content-center">
-                <p-iconField iconPosition="left" class="mb-4 lg:mb-0">
-                    <p-inputIcon>
-                        <i class="pi pi-search"></i>
-                    </p-inputIcon>
-                    <input pInputText type="text" (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
-                        placeholder="Buscar usuario" />
-                </p-iconField>
-                <p-button label="Nuevo usuario" (onClick)="redirigirNuevoUsuario()" severity="primary"></p-button>
+
+        }
+
+        <div class="flex flex-col w-full gap-2 md:flex-row justify-between">
+            <div>
+            <p-iconField iconPosition="left" class="mb-4 lg:mb-0 w-full">
+                <p-inputIcon>
+                    <i class="pi pi-search"></i>
+                </p-inputIcon>
+                <input pSize="small" pInputText type="text" class="w-full text-sm lg:text-xl py-1 sm:py-1 md:py-1" (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
+                    placeholder="Buscar usuario" />
+            </p-iconField>
+            </div>
+            <div>
+                <p-button label="Nuevo usuario" severity="info" class="w-full text-sm lg:text-xl py-1 sm:py-1 md:py-1" styleClass="w-full text-sm sm:text-base md:text-lg py-1 sm:py-1 md:py-1" (onClick)="redirigirNuevoUsuario()"></p-button>
             </div>
         </div>
+
     </ng-template>
     <ng-template pTemplate="header">
         <tr>
@@ -41,9 +42,9 @@
             <td><span class="p-column-title">Nombre</span>{{usuario.nombreUsuario}}</td>
             <td><span class="p-column-title">Apellido</span>{{usuario.nombreYapellido}}</td>
             <td><span class="p-column-title">Acciones</span>
-                <div class="flex gap-2 justify-content-center">
-                    <p-button size="small" label="Editar" (onClick)="redirigirEditarUsuario(usuario._id)"></p-button>
-                    <p-button size="small" label="Borrar" severity="danger" icon="pi pi-times" (onClick)="modalConfirmar(usuario)" ></p-button>
+                <div class="flex gap-2 justify-center">
+                    <p-button class="text-sm lg:text-lg"label="Editar" (onClick)="redirigirEditarUsuario(usuario._id)"></p-button>
+                    <p-button class="text-sm lg:text-lg" label="Borrar" severity="danger" icon="pi pi-times" (onClick)="modalConfirmar(usuario)" ></p-button>
                 </div>
             </td>
         </tr>

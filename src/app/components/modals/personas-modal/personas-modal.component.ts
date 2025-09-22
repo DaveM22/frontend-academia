@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy } from '@angular/core';
-import { filter, Observable } from 'rxjs';
+import { filter, firstValueFrom, Observable } from 'rxjs';
 import { PersonaState } from '../../../store/states/api/persona.state';
 import { Persona } from '../../../entities/persona';
 import { AppPageState } from '../../../store/states/page/app.state';
@@ -7,7 +7,7 @@ import { Store } from '@ngxs/store';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { TableModule } from 'primeng/table';
-import { ClearSelectedEspecialidadFilter, ClearSelectedPlanFilter, SelectedPersonaInModal, ShowPersonaModal, ShowPlanModal } from '../../../store/actions/pages/app.action';
+import { ClearSelectedEspecialidadFilter, ClearSelectedPlanFilter, SelectedEspecialidadFilterAction, SelectedPersonaInModalAction, SelectedPlanFilter, ShowPersonaModal, ShowPlanModal } from '../../../store/actions/pages/app.action';
 import { CommonModule } from '@angular/common';
 import { AlumnoFilter, DocenteFilter, PlanFilter } from '../../../entities/filter';
 import { PlanFilterComponent } from '../../filters/plan-filter/plan-filter.component';
@@ -19,9 +19,10 @@ import { Plan } from '../../../entities/plan';
 import { PlanState } from '../../../store/states/api/plan.state';
 import { Especialidad } from '../../../entities/especialidad';
 import { ClearSelectedPersona } from '../../../store/actions/pages/persona.action';
-import { GetAlumnosAction, GetProfesoresAction } from '../../../store/actions/api/persona.action';
+import { ClearAlumnoListAction, ClearProfesorListAction, GetAlumnosAction, GetProfesoresAction } from '../../../store/actions/api/persona.action';
 import { ClearPlanes, GetPlanAction } from '../../../store/actions/api/planes.action';
 import { FormsModule } from '@angular/forms';
+import { ClearSelectedEspecialidad } from '../../../store/actions/pages/especialidad.action';
 
 @Component({
   selector: 'app-personas-modal',
@@ -31,91 +32,103 @@ import { FormsModule } from '@angular/forms';
 })
 export class PersonasModalComponent implements OnDestroy {
 
-  profesores$:Observable<Persona[]> = this.store.select(PersonaState.getProfesores);
-  alumnos$:Observable<Persona[]> = this.store.select(PersonaState.getAlumnos);
-  showModal$:Observable<boolean> = this.store.select(AppPageState.getShowModalPersonas);
-  planes$:Observable<Plan[]> = this.store.select(PlanState.getPlanes);
+  profesores$: Observable<Persona[]> = this.store.select(PersonaState.getProfesores);
+  alumnos$: Observable<Persona[]> = this.store.select(PersonaState.getAlumnos);
+  showModal$: Observable<boolean> = this.store.select(AppPageState.getShowModalPersonas);
+  planes$: Observable<Plan[]> = this.store.select(PlanState.getPlanes);
   especiliadadSelected$: Observable<Especialidad | null> = this.store.select(AppPageState.getSelectedEspecialidad);
-  planSelected$:Observable<Plan | null> = this.store.select(AppPageState.getSelectedPlanInFilter);
-  personas:Persona[] = []
-  disableTipos:boolean = true;
-  tiposUsuarios:object[] = [{name:'Alumno', val:"ALUMNO"}, {name:'Profesor', val:"PROFESOR"}];
-  tipoUsuarioSelected!:any
-
-  plan!:Plan;
-  constructor(private store:Store){}
+  planSelected$: Observable<Plan | null> = this.store.select(AppPageState.getSelectedPlanInFilter);
+  personas: Persona[] = []
+  disableTipos: boolean = true;
+  tiposUsuarios: object[] = [{ name: 'Alumno', val: "ALUMNO" }, { name: 'Profesor', val: "PROFESOR" }];
+  tipoUsuarioSelected!: any
+  disablePlanDropDown: boolean = true;
+  especialidad: Especialidad | null = null;
+  plan: Plan | null = null;
+  constructor(private store: Store) { }
 
 
   ngOnDestroy(): void {
     this.store.dispatch(new ClearSelectedPersona);
     this.store.dispatch(new ClearSelectedPlanFilter);
     this.store.dispatch(new ClearSelectedEspecialidadFilter);
+    this.store.dispatch(new ClearAlumnoListAction);
+    this.store.dispatch(new ClearProfesorListAction);
   }
 
-  ngOnInit(): void {
-    this.alumnos$.subscribe(x => {
-      if(x){
-        this.personas = x;
-      }
-    })
+  async ngOnInit(): Promise<void> {
+    const especialidad = await firstValueFrom(this.especiliadadSelected$.pipe(filter(x => x !== null)));
+    if (especialidad) {
+      this.disablePlanDropDown = false;
+      let filter = new PlanFilter();
+      filter.especialidadId = especialidad!._id;
+      this.store.dispatch(new GetPlanAction(filter))
+    }
+    else {
+      this.store.dispatch(new ClearSelectedPlanFilter);
+      this.disablePlanDropDown = true;
+    }
 
-    this.profesores$.subscribe(x => {
-      if(x){
-        this.personas = x;
-      }
-    })
+    this.plan = await firstValueFrom(this.planSelected$.pipe(filter(x => x !== null)));
+    if (this.plan) {
+      const filter = new AlumnoFilter();
+      filter.planId = this.plan!._id;
+      this.store.dispatch(new GetAlumnosAction(filter));
+      this.disableTipos = false;
+    }
 
-    this.especiliadadSelected$.subscribe(x => {
-      if(x){
-        let planFilter = new PlanFilter();
-        planFilter.especialidadId = x._id;
-        this.store.dispatch(new GetPlanAction(planFilter))
-      }
-      else{
-        this.disableTipos = true;
-        this.store.dispatch(new ClearSelectedPlanFilter)
-        this.personas = [];
-      }
-    })
 
-    this.planSelected$.subscribe(x => {
-      if(x){
-        this.plan = x;
-        this.disableTipos = false;
-      }
-      else{
-        this.disableTipos = true;
-        this.personas = [];
-      }
-    })
   }
 
-  selectProfesor(per:Persona){
-    this.store.dispatch(new SelectedPersonaInModal(per));
-    this.store.dispatch(new ShowPlanModal(false));
+  selectProfesor(per: Persona) {
+    this.store.dispatch(new SelectedPersonaInModalAction(per));
+    this.store.dispatch(new ShowPersonaModal(false));
   }
 
-  onChangeTipo(){
+  async onChangeTipo(): Promise<void> {
     let tipoUsuario = this.tipoUsuarioSelected;
-    if(tipoUsuario === "ALUMNO"){
+    if (tipoUsuario === "ALUMNO") {
       let filter = new AlumnoFilter();
-      filter.planId = this.plan._id;
+      filter.planId = this.plan!._id;
       this.store.dispatch(new GetAlumnosAction(filter));
     }
-    if(tipoUsuario === "PROFESOR"){
+    if (tipoUsuario === "PROFESOR") {
       let filter = new DocenteFilter();
-      filter.planId = this.plan._id;
+      filter.planId = this.plan!._id;
       this.store.dispatch(new GetProfesoresAction(filter));
     }
-    this.personas = [];
+    this.personas = await firstValueFrom(this.profesores$.pipe(filter(x => x !== null)));
+    this.personas = await firstValueFrom(this.alumnos$.pipe(filter(x => x !== null)));
   }
 
-  onClear(){
+  onClear() {
     this.store.dispatch(new ClearSelectedPersona);
   }
 
+  onEspecialidadChanged(value: Especialidad) {
+    this.store.dispatch(new SelectedEspecialidadFilterAction(value))
+  }
 
-  toggleOffModal(){
+  onPlanChanged(value: Plan) {
+    this.store.dispatch(new SelectedPlanFilter(value));
+
+  }
+
+  onClose(){
+    this.toggleOffModal();
+  }
+
+  toggleOffModal() {
+    this.personas = []
+    this.disablePlanDropDown = true;
+    this.especialidad = null;
+    this.plan = null;
+    this.store.dispatch(new ClearSelectedEspecialidad);
+    this.store.dispatch(new ClearSelectedPersona);
+    this.store.dispatch(new ClearSelectedPlanFilter);
+    this.store.dispatch(new ClearSelectedEspecialidadFilter);
+    this.store.dispatch(new ClearAlumnoListAction);
+    this.store.dispatch(new ClearProfesorListAction);
     this.store.dispatch(new ShowPersonaModal(false));
   }
 }

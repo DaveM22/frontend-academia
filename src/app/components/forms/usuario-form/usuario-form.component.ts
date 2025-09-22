@@ -16,82 +16,100 @@ import { UsuarioPageState } from '../../../store/states/page/usuario.state';
 import { Usuario } from '../../../entities/usuario';
 import { PasswordModule } from 'primeng/password';
 import { SelectModule } from 'primeng/select';
-import { PostUsuarioAction } from '../../../store/actions/api/usuarios.action';
+import { PostUsuarioAction, PutUsuarioAction } from '../../../store/actions/api/usuarios.action';
 import { Persona } from '../../../entities/persona';
 import { PersonaPageState } from '../../../store/states/page/persona.state';
 import { Observable } from 'rxjs';
 import { ShowPersonaModal } from '../../../store/actions/pages/app.action';
 import { PersonasModalComponent } from "../../modals/personas-modal/personas-modal.component";
+import { AppPageState } from '../../../store/states/page/app.state';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-usuario-form',
   standalone: true,
-  imports: [ReactiveFormsModule, InputTextModule, CardModule, ButtonModule, PersonasModalComponent, ToastModule, RippleModule, PasswordModule, SelectModule, PersonasModalComponent],
+  imports: [CommonModule, ReactiveFormsModule, InputTextModule, CardModule, ButtonModule, PersonasModalComponent, ToastModule, RippleModule, PasswordModule, SelectModule, PersonasModalComponent],
   templateUrl: './usuario-form.component.html',
   styleUrl: './usuario-form.component.scss'
 })
 export class UsuarioFormComponent {
-  personaSelected$:Observable<Persona | null> = this.store.select(PersonaPageState.getPersonaSelected)
+  personaSelected$: Observable<Persona | null> = this.store.select(AppPageState.getSelectedPersonaInModal)
+  modalPersonas$: Observable<boolean> = this.store.select(AppPageState.getShowModalPersonas);
   form!: FormGroup;
-  @Input() usuario!:Usuario;
-  @Input() title!:string;
+  @Input() usuario!: Usuario;
+  @Input() title!: string;
   roles: object[] | undefined;
   personaSelected!: Persona;
-  constructor(private store:Store, private router:Router, private messageService:MessageService){}
+  constructor(private store: Store, private router: Router, private messageService: MessageService) { }
 
   ngOnInit(): void {
     this.form = new FormGroup({
       _id: new FormControl(null),
-      email:new FormControl('', [Validators.required]),
+      email: new FormControl('', [Validators.required]),
       nombreUsuario: new FormControl('', [Validators.required]),
       nombreYapellido: new FormControl('', [Validators.required]),
-      clave: new FormControl('',[Validators.required]),
+      clave: new FormControl('', [Validators.required]),
       role: new FormControl('', [Validators.required]),
-      persona: new FormControl('', [Validators.required]),
-      personaId: new FormControl('', [Validators.required])
+      personaDescripcion: new FormControl('', [Validators.required]),
+      persona: new FormControl('', [Validators.required])
     });
     this.form.patchValue(this.store.selectSnapshot(UsuarioPageState.getUsuarioSelected)!);
 
     this.roles = [
-      {name:'Docente', code:'rol_7dAr6i1DwSZLKsrh'},
-      {name:'Alumnno', code:'rol_QNzSR8heCdXENPon'}
-  ];
+      { name: 'Docente', code: 'rol_7dAr6i1DwSZLKsrh' },
+      { name: 'Alumnno', code: 'rol_QNzSR8heCdXENPon' }
+    ];
+
+    this.personaSelected$.subscribe(x => {
+      if (x !== null) {
+        this.personaSelected = x!;
+        this.form.patchValue({ 'personaDescripcion': this.personaSelected.legajo, 'persona': this.personaSelected._id });
+      }
+    })
+
   }
 
 
-    pathValues(){
-      let persona = this.store.selectSnapshot(PersonaPageState.getPersonaSelected)!
-      if(persona._id !== ""){
-        this.form.patchValue(persona);
-        this.form.patchValue({'plan': persona.plan.descripcion, 'planId':persona.plan._id});
-      }
+  pathValues() {
+    let persona = this.store.selectSnapshot(PersonaPageState.getPersonaSelected)!
+    if (persona._id !== "") {
+      this.form.patchValue(persona);
+      this.form.patchValue({ 'plan': persona.plan.descripcion, 'planId': persona.plan._id });
     }
+  }
 
-  public onSubmit(){
-    if(this.form.value._id === null){
-      this.usuario = this.form.value;
+  public onSubmit() {
+    this.usuario = this.form.value;
+    if (this.form.value._id === null) {
       this.store.dispatch(new PostUsuarioAction(this.usuario)).subscribe(() => {
         this.router.navigate(["/usuarios/lista"])
       })
     }
+    else{
+      if (this.form.value._id !== null) {
+        this.store.dispatch(new PutUsuarioAction(this.usuario)).subscribe(() => {
+          this.router.navigate(["/usuarios/lista"])
+        })
+      }
+    }
 
   }
 
-  subscripcionUsuarioSelected(){
+  subscripcionUsuarioSelected() {
     this.personaSelected$.subscribe(x => {
       if (x !== null) {
         this.personaSelected = x!;
-        this.form.patchValue({ 'persona': this.personaSelected.legajo , 'personaId': this.personaSelected._id });
+        this.form.patchValue({ 'persona': this.personaSelected.legajo, 'personaId': this.personaSelected._id });
       }
     })
   }
 
 
-  toggleModalPersonas(){
+  toggleModalPersonas() {
     this.store.dispatch(new ShowPersonaModal(true));
   }
 
-  public redirectEspecialidades(){
+  public redirectUsuarios() {
     this.store.dispatch(new ClearSelectedEspecialidad);
     this.router.navigate(["/usuarios/lista"]);
   }

@@ -45,7 +45,7 @@
                         <p-inputIcon>
                             <i class="pi pi-search"></i>
                         </p-inputIcon>
-                        <input pInputText class="text-sm lg:text-xl mb-0 w-full" type="text"
+                        <input pInputText pSize="large" class="text-sm lg:text-xl mb-0 w-full" type="text"
                             (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
                             placeholder="Buscar alumno" />
                     </p-iconField>

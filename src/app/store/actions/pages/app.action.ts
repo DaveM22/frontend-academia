@@ -133,8 +133,8 @@ export class ShowPersonaModal {
 }
 
 
-export class SelectedPersonaInModal{
-    static typer = "[Page] Persona selected in modal";
+export class SelectedPersonaInModalAction{
+    static type = "[Page] Persona selected in modal";
     constructor(public persona:Persona){}
 }
 

@@ -2,7 +2,7 @@ import { ErrorHandler, Injectable } from "@angular/core";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { PersonaModelState } from "../../modelstate/api/persona.modelstate";
 import { PersonaService } from "../../../services/persona.service";
-import { ClearAlumnoListAction, DeleteAlumnoAction, DeleteProfesorAction, GetAlumnoByIdAction, GetAlumnoByIdWithInscripcionesAction, GetAlumnosAction, GetProfesorByIdAction, GetProfesoresAction, PostAlumnoAction, PostProfesorAction, PutAlumnoAction, PutProfesorAction, UpdateManualLoading as UpdateManualLoadingAction } from "../../actions/api/persona.action";
+import { ClearAlumnoListAction, ClearProfesorListAction, DeleteAlumnoAction, DeleteProfesorAction, GetAlumnoByIdAction, GetAlumnoByIdWithInscripcionesAction, GetAlumnosAction, GetProfesorByIdAction, GetProfesoresAction, PostAlumnoAction, PostProfesorAction, PutAlumnoAction, PutProfesorAction, UpdateManualLoading as UpdateManualLoadingAction } from "../../actions/api/persona.action";
 import { lastValueFrom } from "rxjs";
 import { AsignSelectedAlumno, AsignSelectedPersona, AsignSelectedProfesor } from "../../actions/pages/persona.action";
 import { MessageService } from "primeng/api";
@@ -101,7 +101,7 @@ export class PersonaState {
 
     @Action(GetProfesorByIdAction)
     async getProfesorById(ctx: StateContext<PersonaModelState>, action: GetProfesorByIdAction) {
-       ctx.patchState({
+        ctx.patchState({
             loading: true,
             error: false
         })
@@ -241,6 +241,13 @@ export class PersonaState {
     async clearAlumno(ctx: StateContext<PersonaModelState>, action: ClearAlumnoListAction) {
         ctx.patchState({
             alumnos: []
+        })
+    }
+
+    @Action(ClearProfesorListAction)
+    async clearProfesor(ctx: StateContext<PersonaModelState>, action: ClearProfesorListAction) {
+        ctx.patchState({
+            profesores: []
         })
     }
 

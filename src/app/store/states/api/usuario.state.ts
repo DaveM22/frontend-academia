@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { UsuarioModelState } from "../../modelstate/api/usuario.modelstate";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
-import { DeleteUsuarioAction, GetByIdUsuarioAction, GetUsuarioListaAction, PostUsuarioAction } from "../../actions/api/usuarios.action";
+import { DeleteUsuarioAction, GetByIdUsuarioAction, GetUsuarioListaAction, PostUsuarioAction, PutUsuarioAction } from "../../actions/api/usuarios.action";
 import { UsuarioService } from "../../../services/usuario.service";
 import { lastValueFrom, Observable } from "rxjs";
 import { Usuario } from "../../../entities/usuario";
@@ -106,6 +106,7 @@ export class UsuarioState{
 
         @Action(PostUsuarioAction)
         async postPlanAction(ctx: StateContext<UsuarioModelState>, action: PostUsuarioAction){
+          ctx.patchState({loading:true, error:false});
           try{
             const response = await lastValueFrom(this.service.postUsuario(action.usr));
           }
@@ -113,9 +114,22 @@ export class UsuarioState{
             ErrorStateHandler.handleError(error, ctx);
           }
           finally{
-            ctx.patchState({loading:false})
+            ctx.patchState({loading:false, error:false})
           }
         }
 
+        @Action(PutUsuarioAction)
+        async putUsuarioAction(ctx: StateContext<UsuarioModelState>, action: PutUsuarioAction){
+          ctx.patchState({loading:true, error:false}); 
+          try{
+            const response = await lastValueFrom(this.service.putUsuario(action.usr));
+          }
+          catch(error:any){
+            ErrorStateHandler.handleError(error, ctx);
+          }
+          finally{
+            ctx.patchState({loading:false, error:false})
+          }
+        }
 }
 

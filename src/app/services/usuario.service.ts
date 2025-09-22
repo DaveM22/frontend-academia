@@ -23,6 +23,10 @@ export class UsuarioService {
     return this.http.post<Usuario>(`${environment.apiUrl}/usuarios`, usr);
   }
 
+  public putUsuario(usr:Usuario){
+    return this.http.put<Usuario>(`${environment.apiUrl}/usuarios/${usr._id}`, usr);
+  }
+
   public deleteUsuario(id:string){
     return this.http.delete<Usuario>(`${environment.apiUrl}/usuarios/${id}`)
   }

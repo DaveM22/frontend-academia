@@ -1,10 +1,12 @@
-<p-card styleClass="h-full">
-    <ng-template pTemplate="header">
-        <div class="flex p-0 m-0 gap-0 justify-content-center align-items-center">
-          <h2>Usuarios</h2>
-        </div>
-      </ng-template>
-    <ng-template pTemplate="content" class="pt-0">
-        <router-outlet></router-outlet>
-    </ng-template>
- </p-card>
+<p-card #crd styleClass="h-full">
+  <ng-template pTemplate="header">
+    <div>
+      <h2 class="text-3xl text-center font-bold text-white pb-2">Usuarios</h2>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="content">
+    <router-outlet></router-outlet>
+  </ng-template>
+</p-card>
+<!-- 
+<app-block-ui [target]="crd"></app-block-ui> -->

@@ -2,6 +2,7 @@ import { Comision } from "../../../entities/comision";
 import { Curso } from "../../../entities/curso";
 import { Especialidad } from "../../../entities/especialidad";
 import { Materia } from "../../../entities/materia";
+import { Persona } from "../../../entities/persona";
 import { Plan } from "../../../entities/plan";
 import { Profesor } from "../../../entities/profesor";
 
@@ -17,6 +18,7 @@ export interface AppModelState{
     selectedComisionInModal:Comision | null,
     selectedCursoInModal:Curso | null,
     selectedProfesorInModal:Profesor | null,
+    selectedPersonaInModal:Persona | null,
     showPlanModal:boolean,
     showMateriaModal:boolean,
     showComisionModal:boolean,

@@ -19,11 +19,12 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { AppPageState } from '../../store/states/page/app.state';
 import { ShowModalConfirmationAction } from '../../store/actions/pages/app.action';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'app-usuario-lista',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule,ConfirmDialogModule, MessagesModule, PanelModule, ToastModule, IconFieldModule, InputTextModule, InputIconModule],
+  imports: [CommonModule, TableModule, ButtonModule,ConfirmDialogModule, MessageModule, PanelModule, ToastModule, IconFieldModule, InputTextModule, InputIconModule],
   templateUrl: './usuario-lista.component.html',
   styleUrl: './usuario-lista.component.scss',
   providers:[ConfirmationService]

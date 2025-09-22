@@ -68,4 +68,9 @@ export class ClearAlumnoListAction{
     constructor(){}
 }
 
+export class ClearProfesorListAction{
+    static type = "[Internal] Clear profesor data";
+    constructor(){}
+}
+
 
