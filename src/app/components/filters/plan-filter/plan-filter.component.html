@@ -1,5 +1,4 @@
 <p-select
-styleClass="w-full"
     [options]="(planes$ | async)!" 
     [(ngModel)]="plan"
     [checkmark]="true" 
@@ -9,7 +8,7 @@ styleClass="w-full"
     placeholder="Seleccione un plan"
     (onChange)="onChangePlan()"
     (onClear)="onClear()"
-    class="text-sm lg:text-xl"
-    styleClass="text-sm lg:text-xl w-full"
+    class="text-sm 2xl:text-2xl"
+    styleClass="text-sm 2xl:text-2xl w-full"
     [ngModelOptions]="{standalone: true}"
     appendTo="body" />

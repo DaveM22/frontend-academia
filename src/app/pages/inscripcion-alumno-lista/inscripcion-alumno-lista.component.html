@@ -10,7 +10,7 @@
 }
 
 <p-table #dt2 [value]="(alumnos$ | async)!" [loading]="(loading$ | async)"
-    styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-sm xl:text-2xl" responsiveLayout="stack"
+    styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-sm 2xl:text-2xl" responsiveLayout="stack"
     [breakpoint]="'960px'" [paginator]="true" [scrollable]="true" [rows]="5" scrollHeight="flex"
     [globalFilterFields]="['nombre', 'apellido', 'direccion', 'email', 'legajo']" size="small">
     <ng-template pTemplate="caption">
@@ -22,35 +22,39 @@
         </p-message>
         }
 
-        <div class="grid ">
-            <div class="grid grid-cols-12 w-full gap-2">
-
-                <div class="col-span-12 xl:col-span-4">
-                    <label>Especialidad:</label>
-
+        <div class="grid">
+            <div class="grid grid-cols-12 w-full gap-4">
+                <div class="col-span-12 xl:col-span-4 flex flex-col">
+                    <label class="mb-2">Especialidad:</label>
                     <app-especialidad-filter
-                        (selectionChange)="onEspecialidadChanged($event)"></app-especialidad-filter>
+                        class="h-full"
+                        (selectionChange)="onEspecialidadChanged($event)">
+                    </app-especialidad-filter>
                 </div>
 
-                <div class="col-span-12 gap-2 xl:col-span-4">
-                    <label>Plan:</label>
-
-                    <app-plan-filter (selectionChange)="onPlanChanged($event!)"
-                        [disable]="disablePlanDropDown"></app-plan-filter>
+                <div class="col-span-12 xl:col-span-4 flex flex-col">
+                    <label class="mb-2">Plan:</label>
+                    <app-plan-filter
+                        class="h-full"
+                        (selectionChange)="onPlanChanged($event!)"
+                        [disable]="disablePlanDropDown">
+                    </app-plan-filter>
                 </div>
 
-                <div class="col-span-12 lg:col-span-3 lg:col-start-10">
-                    <label>Búsqueda: </label>
-                    <p-iconField iconPosition="left">
+                <div class="col-span-12 xl:col-span-4 flex flex-col">
+                    <label class="mb-2">Búsqueda:</label>
+                    <p-iconField iconPosition="left" class="h-full">
                         <p-inputIcon>
                             <i class="pi pi-search"></i>
                         </p-inputIcon>
-                        <input pInputText pSize="large" class="text-sm lg:text-xl mb-0 w-full" type="text"
+                        <input pInputText
+                            
+                            class="w-full text-sm 2xl:text-2xl"
+                            type="text"
                             (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
                             placeholder="Buscar alumno" />
                     </p-iconField>
                 </div>
-
             </div>
         </div>
     </ng-template>
@@ -71,7 +75,7 @@
             <td><span class="p-column-title">Plan</span>{{alumno.plan.descripcion}}</td>
             <td><span class="p-column-title">Acciones</span>
                 <div class="flex gap-2 justify-center">
-                    <p-button label="Inscripciones" class="text-sm lg:text-xl"
+                    <p-button label="Inscripciones" class="text-sm 2xl:text-2xl" styleClass="text-sm 2xl:text-2xl"
                         (onClick)="redirectToInscripciones(alumno._id)"></p-button>
                 </div>
             </td>
