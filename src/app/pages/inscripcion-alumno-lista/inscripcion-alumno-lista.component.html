@@ -10,7 +10,7 @@
 }
 
 <p-table #dt2 [value]="(alumnos$ | async)!" [loading]="(loading$ | async)"
-    styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-sm lg:text-2xl" responsiveLayout="stack"
+    styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-sm xl:text-2xl" responsiveLayout="stack"
     [breakpoint]="'960px'" [paginator]="true" [scrollable]="true" [rows]="5" scrollHeight="flex"
     [globalFilterFields]="['nombre', 'apellido', 'direccion', 'email', 'legajo']" size="small">
     <ng-template pTemplate="caption">
@@ -25,14 +25,14 @@
         <div class="grid ">
             <div class="grid grid-cols-12 w-full gap-2">
 
-                <div class="col-span-12 lg:col-span-2 gap-2">
+                <div class="col-span-12 xl:col-span-4">
                     <label>Especialidad:</label>
 
                     <app-especialidad-filter
                         (selectionChange)="onEspecialidadChanged($event)"></app-especialidad-filter>
                 </div>
 
-                <div class="col-span-12 gap-2 lg:col-span-2">
+                <div class="col-span-12 gap-2 xl:col-span-4">
                     <label>Plan:</label>
 
                     <app-plan-filter (selectionChange)="onPlanChanged($event!)"

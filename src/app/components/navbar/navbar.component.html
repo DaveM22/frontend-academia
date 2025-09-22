@@ -1,88 +1,35 @@
-<!-- <div class="card">
-
-</div> -->
-
-    <div class="shadow-8">
-        <p-menubar>
-            <ng-template pTemplate="start">
-                <!-- Botón personalizado que reemplaza al botón nativo -->
-                <button 
-                  class="p-button p-button-rounded p-button-text not-sr-only lg:sr-only" 
-                  (click)="toggleAction()">
-                  <i class="pi pi-bars"></i>
-                </button>
-
-              </ng-template>
-              <ng-template pTemplate="end">
-                <!-- Botón personalizado que reemplaza al botón nativo -->
-                @if ((this.auth.isAuthenticated$ | async)) {
-
-                    <p-button (click)="menu.toggle($event)" rounded="true" [outlined]="true">
-                        <p-avatar image="https://cdn.auth0.com/avatars/um.png" class="mr-2" shape="circle" />
-                        <div class="flex flex-col">
-                            <div>
-                                <strong class="text-xs">{{name}}</strong>
-                            </div>
-                            <div>
-                                <span class="text-xs">{{rol}}</span>
-                            </div>
-                          </div>
- <!--                        <div class="flex flex-col gap-">
-
-                            <div>
-                       
-                       
-                            </div>
-                            <div>
-              
-                            </div>
-                          </div> -->
-                    </p-button>
-                    <p-menu #menu [model]="logItems" [popup]="true" />
-<!-- 
-                    
-                    <button   pRipple class="relative overflow-hidden w-full p-link flex align-items-center p-2 pl-3 text-color hover:surface-200 border-noround" (click)="menu.toggle($event)">
-                        <p-avatar image="https://cdn.auth0.com/avatars/um.png" class="mr-2" shape="circle" />
-                        <span class="inline-flex flex-column">
-                            <span class="font-bold">{{name}}</span>
-                            <span class="text-sm">{{rol}}</span>
-                        </span>
-                    </button>
-                    <p-menu #menu [model]="logItems" [popup]="true" /> -->
-        
-                }
-                @else {
-                    <p-button icon="pi pi-user" label="Ingresar" [rounded]="true"  (onClick)="login()" ></p-button>
-                }
-                
-              </ng-template>
-        </p-menubar>
-    </div>
-
-<!--  <div class="flex align-items-center bg-primary justify-content-between font-bold text-left lg:p-1 border-round m-3 static h-full">
-    <p-button icon="pi pi-bars" (onClick)="toggleAction()"   ></p-button>
-    <div>
-        @if ((this.auth.isAuthenticated$ | async)) {
-
-            <button  pRipple class="relative overflow-hidden w-full p-link flex align-items-center p-2 pl-3 text-color hover:surface-200 border-noround" (click)="menu.toggle($event)">
-                <p-avatar image="https://cdn.auth0.com/avatars/um.png" class="mr-2" shape="circle" />
-                <span class="inline-flex flex-column">
-                    <span class="font-bold">{{name}}</span>
-                    <span class="text-sm">{{rol}}</span>
-                </span>
+<div class="shadow-8">
+    <p-menubar>
+        <ng-template pTemplate="start">
+            <button class="p-button p-button-rounded p-button-text not-sr-only lg:sr-only" (click)="toggleAction()">
+                <i class="pi pi-bars"></i>
             </button>
+
+        </ng-template>
+        <ng-template pTemplate="end">
+            @if ((this.auth.isAuthenticated$ | async)) {
+
+            <p-button (click)="menu.toggle($event)" rounded="true" [outlined]="true">
+                <p-avatar image="https://cdn.auth0.com/avatars/um.png" class="mr-2" shape="circle" />
+                <div class="flex flex-col">
+                    <div>
+                        <strong class="text-xs">{{name}}</strong>
+                    </div>
+                    <div>
+                        <span class="text-xs">{{rol}}</span>
+                    </div>
+                </div>
+            </p-button>
             <p-menu #menu [model]="logItems" [popup]="true" />
+            }
+            @else {
+            <p-button icon="pi pi-user" label="Ingresar" [rounded]="true" (onClick)="login()"></p-button>
+            }
 
-        }
-        @else {
-            <p-button icon="pi pi-user" label="Ingresar" (onClick)="login()" ></p-button>
-        }
-    </div>
- </div>
+        </ng-template>
+    </p-menubar>
+</div>
 
- <p-sidebar [(visible)]="toggle" (onHide)="onHide()" closeOnEscape="true">
-    <sidebar></sidebar>
-</p-sidebar> -->
 
 <p-sidebar [(visible)]="toggle" (onHide)="onHide()" closeOnEscape="true">
     <sidebar></sidebar>

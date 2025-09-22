@@ -2,12 +2,12 @@
     <h3 class="text-xl text-center font-bold text-white pb-2">{{title}}</h3>
 </div>
 <div class="grid place-items-center">
-    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="grid grid-cols-12 gap-4 w-full max-w-screen-lg">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="grid grid-cols-12 gap-2 w-full max-w-screen-lg">
 
         <div class="col-span-12 lg:col-start-4 lg:col-span-6">
-            <label for="descripcion" class="text-sm lg:text-xl">Descripcion:</label>
+            <label for="descripcion" class="text-sm 2xl:text-2xl">Descripcion:</label>
             <input id="descripcion" pInputText formControlName="descripcion" type="text"
-                class="text-sm lg:text-xl w-full">
+                class="text-sm 2xl:text-2xl w-full" styleClass="text-sm 2xl:text-2xl">
             @if(form.get('descripcion')?.invalid && form.get('descripcion')?.dirty){
             <small class="p-error block">
                 El campo descripcion es requerido
@@ -16,9 +16,9 @@
         </div>
 
         <div class="col-span-12 lg:col-start-4 lg:col-span-6">
-            <label class="text-sm lg:text-xl" for="anioCalendario">Año calendario:</label>
-            <p-inputNumber inputId="integeronly" formControlName="anioEspecialidad" class="w-full"
-                inputStyleClass="w-full" styleClass="w-full md:w-full lg:w-auto" />
+            <label class="text-sm 2xl:text-2xl" for="anioCalendario">Año calendario:</label>
+            <p-inputNumber inputId="integeronly" formControlName="anioEspecialidad" class="text-sm 2xl:text-2xl w-full"
+                inputStyleClass="w-full" styleClass="w-full md:w-full lg:w-auto text-sm 2xl:text-2xl" />
             @if(form.get('anioEspecialidad')?.invalid && form.get('anioEspecialidad')?.dirty){
             <small class="p-error block">
                 El campo Año especialidad es requerido
@@ -27,16 +27,16 @@
         </div>
 
         <div class="col-span-12 lg:col-start-4 lg:col-span-6">
-            <label class="text-sm lg:text-xl">Plan:</label>
-            <input type="text" pInputText placeholder="Seleccione un plan" class="form-disabled w-full sm:w-full"
+            <label class="text-sm 2xl:text-2xl">Plan:</label>
+            <input type="text" pInputText placeholder="Seleccione un plan" class="form-disabled w-full sm:w-full text-sm 2xl:text-2xl" styleClass="text-sm 2xl:text-2xl"
                 formControlName="plan" readonly style="cursor: not-allowed;" />
-            <p-button label="Seleccionar plan" severity="primary" styleClass="w-full mt-2 w-full align-items-center  "
+            <p-button label="Seleccionar plan" severity="primary" styleClass="w-full mt-2 w-full align-items-center text-sm 2xl:text-2xl "
                 (onClick)="toggleModalPlanes()"></p-button>
         </div>
         <div class="col-span-12 lg:col-start-4 lg:col-span-6 flex justify-center">
-            <p-button type="submit" label="Guardar" icon="pi pi-check" class="text-sm w-full lg:text-2xl mr-2" styleClass="w-full"
+            <p-button type="submit" label="Guardar" icon="pi pi-check" class="text-sm 2xl:text-2xl w-full mr-2" styleClass="w-full"
                 severity="success" [disabled]="form.invalid"></p-button>
-            <p-button label="Cancelar" severity="danger" class="text-sm w-full lg:text-2xl mr-2" styleClass="w-full"
+            <p-button label="Cancelar" severity="danger" class="text-sm 2xl:text-2xl w-full mr-2" styleClass="w-full"
                 (onClick)="redirectComisiones()"></p-button>
         </div>
 

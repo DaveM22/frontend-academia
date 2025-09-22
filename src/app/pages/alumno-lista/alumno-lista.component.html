@@ -1,5 +1,5 @@
 <p-table #dt2 [value]="(alumnos$ | async)!" [loading]="(loading$ | async)"
-    styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-sm lg:text-2xl" responsiveLayout="stack"
+    styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-sm 2xl:text-2xl" responsiveLayout="stack"
     [breakpoint]="'960px'" [paginator]="true" size="small" [scrollable]="true" [rows]="5" [scrollHeight]="scrollSize"
     [globalFilterFields]="['nombre', 'apellido', 'direccion', 'email', 'legajo']">
     <ng-template pTemplate="caption">
@@ -20,14 +20,14 @@
                     <p-inputIcon>
                         <i class="pi pi-search"></i>
                     </p-inputIcon>
-                    <input pInputText type="text" class="w-full text-sm lg:text-xl py-1 sm:py-1 md:py-1"
+                    <input pInputText pSize="large" type="text" class="w-full text-sm 2xl:text-2xl py-1 sm:py-1 md:py-1"
                         styleClass="w-full text-sm sm:text-base md:text-lg py-1 sm:py-1 md:py-1"
                         (input)="dt2.filterGlobal($any($event.target).value, 'contains')" placeholder="Buscar alumno" />
                 </p-iconField>
             </div>
             <div>
                 <p-button size="small" label="Nuevo alumno" severity="info" class="w-full" [styleClass]="
-                  'w-full text-sm lg:text-xl px-3 py-1 sm:px-4 sm:py-1 md:px-5 md:py-1'
+                  'w-full text-sm 2xl:text-2xl px-3 py-1 sm:px-4 sm:py-1 md:px-5 md:py-1'
                 " (onClick)="redirecToNuevoAlumno()"></p-button>
             </div>
         </div>
@@ -60,9 +60,9 @@
             <td><span class="p-column-title">Acciones</span>
                 <div class="flex gap-2 justify-center">
                     <p-button label="Editar" severity="warn" (onClick)="redirectToEditarAlumno(alumno._id)"
-                        class="text-sm lg:text-xl"></p-button>
+                        styleClass="text-sm 2xl:text-2xl"></p-button>
                     <p-button label="Borrar" severity="danger" (onClick)="modalConfirmar(alumno)"
-                        class="text-sm lg:text-xl" />
+                        styleClass="text-sm 2xl:text-2xl" />
                 </div>
             </td>
         </tr>

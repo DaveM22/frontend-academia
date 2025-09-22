@@ -1,6 +1,6 @@
 <p-table #dt2 [value]="planes" [loading]="(loading$ | async)" responsiveLayout="stack" [breakpoint]="'960px'"
     [paginator]="true" [scrollable]="true" [rows]="5" scrollHeight="flex" size="small"
-    styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-sm lg:text-2xl" responsiveLayout="stack"
+    styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-sm 2xl:text-2xl" responsiveLayout="stack"
     [breakpoint]="'960px'" [globalFilterFields]="['descripcion, especialidad.descripcion']">
     <ng-template pTemplate="caption">
         @if (error$ | async)
@@ -16,12 +16,12 @@
                     <p-inputIcon>
                         <i class="pi pi-search"></i>
                     </p-inputIcon>
-                    <input pSize="large" pInputText type="text" class="w-full text-sm lg:text-xl py-1 sm:py-1 md:py-1"
+                    <input pSize="large" pInputText type="text" class="w-full text-sm 2xl:text-2xl py-1 sm:py-1 md:py-1"
                         (input)="dt2.filterGlobal($any($event.target).value, 'contains')" placeholder="Buscar plan" />
                 </p-iconField>
             </div>
             <div>
-                <p-button label="Nuevo plan" severity="info" [styleClass]="'w-full text-sm sm:text-base md:text-lg px-3 py-1 sm:px-4 sm:py-1 md:px-5 md:py-1'" (onClick)="redirectNuevoPlan()"></p-button>
+                <p-button label="Nuevo plan" severity="info" [styleClass]="'w-full text-sm 2xl:text-2xl px-3 py-1 sm:px-4 sm:py-1 md:px-5 md:py-1'" (onClick)="redirectNuevoPlan()"></p-button>
             </div>
         </div>
     </ng-template>
@@ -46,11 +46,11 @@
                 <div class="flex flex-col gap-2 justify-center lg:flex-row">
                     <p-button label="Generar reporte" class="text-sm lg:text-xl w-full lg:w-auto" styleClass="w-full lg:w-auto"
                         (onClick)="generateReport(plan._id)"></p-button>
-                    <p-button label="Materias" class="text-sm lg:text-xl w-full lg:w-auto"
-                        (onClick)="redirectToMaterias(plan._id)" styleClass="w-full lg:w-auto"></p-button>
-                    <p-button label="Editar" severity="warn" class="text-sm lg:text-xl w-full lg:w-auto"
-                        (onClick)="redirectEditarPlan(plan._id)" styleClass="w-full lg:w-auto" />
-                    <p-button label="Borrar" severity="danger" class="text-sm lg:text-xl w-full lg:w-auto" styleClass="w-full lg:w-auto"
+                    <p-button label="Materias"
+                        (onClick)="redirectToMaterias(plan._id)" styleClass="w-full lg:w-auto text-sm 2xl:text-2xl"></p-button>
+                    <p-button label="Editar" severity="warn" styleClass="text-sm 2xl:text-2xl w-full lg:w-auto"
+                        (onClick)="redirectEditarPlan(plan._id)" />
+                    <p-button label="Borrar" severity="danger" styleClass="text-sm 2xl:text-2xl w-full lg:w-auto"
                         (onClick)="modalConfirmar(plan)" />
                 </div>
             </td>

@@ -16,7 +16,7 @@
                     <p-inputIcon>
                         <i class="pi pi-search"></i>
                     </p-inputIcon>
-                    <input pInputText type="text" class="w-full text-sm lg:text-xl py-1 sm:py-1 md:py-1"
+                    <input pInputText pSize="large" type="text" class="w-full text-sm lg:text-xl py-1 sm:py-1 md:py-1"
                         styleClass="w-full text-sm sm:text-base md:text-lg py-1 sm:py-1 md:py-1"
                         (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
                         placeholder="Buscar profesor" />

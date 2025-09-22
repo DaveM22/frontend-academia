@@ -1,14 +1,4 @@
-<!-- @if (error$ | async) 
-{
-    <p-messages  severity="error">
-        <ng-template pTemplate>
-    
-            <div class="ml-2">{{(errorMessage$ | async)}}</div>
-        </ng-template>
-    </p-messages>
 
-}
- -->
 <p-table #dt2 [value]="inscripciones" [loading]="(loading$ | async)"
     styleClass="p-datatable-gridlines p-datatable-striped text-sm lg:text-xl" responsiveLayout="stack"
     [breakpoint]="'960px'" [paginator]="true" [scrollable]="true" [rows]="5" scrollHeight="48vh"
