@@ -11,6 +11,7 @@
 
 }
         <div class="flex flex-col w-full gap-2 md:flex-row justify-between">
+
             <div>
                 <p-iconField iconPosition="left">
                     <p-inputIcon>
@@ -19,6 +20,12 @@
                     <input pSize="large" pInputText type="text" class="w-full text-sm 2xl:text-2xl py-1 sm:py-1 md:py-1"
                         (input)="dt2.filterGlobal($any($event.target).value, 'contains')" placeholder="Buscar plan" />
                 </p-iconField>
+            </div>
+                        <div>
+                                 <app-especialidad-filter
+                        class="h-full"
+                        (selectionChange)="onEspecialidadChanged($event)">
+                    </app-especialidad-filter>
             </div>
             <div>
                 <p-button label="Nuevo plan" severity="info" [styleClass]="'w-full text-sm 2xl:text-2xl px-3 py-1 sm:px-4 sm:py-1 md:px-5 md:py-1'" (onClick)="redirectNuevoPlan()"></p-button>

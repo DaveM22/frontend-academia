@@ -17,14 +17,16 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { EspecialidadFilterComponent } from '../../components/filters/especialidad-filter/especialidad-filter.component';
 import { PlanFilterComponent } from '../../components/filters/plan-filter/plan-filter.component';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { ShowModalConfirmationAction } from '../../store/actions/pages/app.action';
+import { SelectedEspecialidadFilterAction, ShowModalConfirmationAction } from '../../store/actions/pages/app.action';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { AppPageState } from '../../store/states/page/app.state';
+import e from 'express';
+import { Especialidad } from '../../entities/especialidad';
 
 @Component({
   selector: 'app-plan-lista',
   standalone: true,
-  imports: [ButtonModule, TableModule, CommonModule, MessageModule, IconFieldModule, InputIconModule, ConfirmDialogModule, InputTextModule],
+  imports: [ButtonModule, TableModule, CommonModule, MessageModule, IconFieldModule, InputIconModule, ConfirmDialogModule, InputTextModule, EspecialidadFilterComponent],
   templateUrl: './plan-lista.component.html',
   styleUrl: './plan-lista.component.scss',
   providers: [ConfirmationService]
@@ -34,6 +36,7 @@ export class PlanListaComponent implements OnInit {
   public loading$: Observable<boolean> = this.store.select(PlanState.getLoading);
   public error$: Observable<boolean> = this.store.select(PlanState.getError);
   public errorMessage$: Observable<string> = this.store.select(PlanState.getErrorMessage);
+  public especialidadSelected$ = this.store.select(AppPageState.getSelectedEspecialidad);
   showConfirmation$: Observable<boolean> = this.store.select(AppPageState.showModalConfirmation)
   public planSelected!: Plan;
   public plan!: Plan;
@@ -57,6 +60,16 @@ export class PlanListaComponent implements OnInit {
         this.confirm();
       }
     })
+
+    this.especialidadSelected$.subscribe(especialidad => {
+      if (especialidad) {
+        let filter = new PlanFilter();
+        filter.mostrarEspecialidad = true;
+        filter.especialidadId = especialidad._id!;
+        this.store.dispatch(new GetPlanAction(filter));
+      }
+    });
+
   }
 
   showModal(plan: Plan) {
@@ -72,9 +85,13 @@ export class PlanListaComponent implements OnInit {
   }
 
   redirectEditarPlan(id: string) {
-   this.store.dispatch(new GetByIdPlanAction(id, new PlanFilter())).subscribe(() => {
+    this.store.dispatch(new GetByIdPlanAction(id, new PlanFilter())).subscribe(() => {
       this.router.navigate(["/planes/editar/" + id])
     })
+  }
+
+  onEspecialidadChanged(value: Especialidad) {
+    this.store.dispatch(new SelectedEspecialidadFilterAction(value))
   }
 
   generateReport(id: string) {
@@ -100,7 +117,7 @@ export class PlanListaComponent implements OnInit {
               this.messageService.add({ severity: 'success', summary: 'Borrar plan', detail: `Se ha borrado el plan: ${this.planSelected.descripcion}` });
             }
           })
-          this.store.dispatch(new ShowModalConfirmationAction(false))
+        this.store.dispatch(new ShowModalConfirmationAction(false))
       },
       reject: () => {
         this.store.dispatch(new ShowModalConfirmationAction(false))
