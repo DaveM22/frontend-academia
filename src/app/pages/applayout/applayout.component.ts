@@ -1,23 +1,24 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { SidebarComponent } from '../../components/sidebar/sidebar.component';
 import { RouterOutlet } from '@angular/router';
 import { PanelModule } from 'primeng/panel';
 import { Menubar, MenubarModule } from 'primeng/menubar';
 import { CardModule } from 'primeng/card';
+import { SidebarModule } from 'primeng/sidebar';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-applayout',
   standalone: true,
-  imports: [RouterOutlet,CommonModule, NavbarComponent, SidebarComponent, CardModule],
+  imports: [RouterOutlet, CommonModule, SidebarComponent, CardModule, SidebarModule, ButtonModule],
   templateUrl: './applayout.component.html',
   styleUrl: './applayout.component.scss'
 })
 export class ApplayoutComponent {
-  isSidebarVisible: boolean = true;
+  sidebarVisible: boolean = false;
 
   toggleSidebar() {
-    this.isSidebarVisible = !this.isSidebarVisible;
+    this.sidebarVisible = !this.sidebarVisible;
   }
 }

@@ -13,24 +13,37 @@ import { SetPersonaId, ToggleMenuAction } from '../../store/actions/pages/app.ac
 import { AppPageState } from '../../store/states/page/app.state';
 import { environment } from '../../../environments/environment';
 import { DrawerModule } from 'primeng/drawer';
-    import { combineLatest } from 'rxjs';
+import { combineLatest } from 'rxjs';
+import { AvatarModule } from 'primeng/avatar';
+import { ButtonModule } from 'primeng/button';
 @Component({
   selector: 'sidebar',
   standalone: true,
-  imports: [MenuModule, DrawerModule, PanelMenuModule],
+  imports: [MenuModule, DrawerModule, PanelMenuModule, AvatarModule, ButtonModule],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss'
 })
 export class SidebarComponent implements OnInit {
   items: MenuItem[] | undefined;
+  userMenuItems: MenuItem[] | undefined;
   sidebarVisible: boolean = true;
   rol: string = '';
   isLogged: boolean = false;
+  picture: string = '';
+  name: string = '';
   constructor(private store: Store, private router: Router, private auth: AuthService) { }
 
 
 
   async ngOnInit(): Promise<void> {
+    this.userMenuItems = [
+      {
+        label: 'Cerrar Sesión',
+        icon: 'pi pi-power-off',
+        command: () => this.logout()
+      }
+    ];
+
     combineLatest([
       this.auth.isAuthenticated$,
       this.auth.idTokenClaims$
@@ -39,9 +52,15 @@ export class SidebarComponent implements OnInit {
       if (claims) {
         this.store.dispatch(new SetPersonaId(claims["personaId"]));
         this.rol = claims[environment.roleLogin][0];
+        this.picture = claims.picture || '';
+        this.name = claims.name || '';
         this.renderItems(this.rol);
       }
     });
+  }
+
+  logout() {
+    this.auth.logout();
   }
 
   renderItems(rol: string) {
