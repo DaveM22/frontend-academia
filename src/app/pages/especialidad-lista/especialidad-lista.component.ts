@@ -28,6 +28,8 @@ import { ScreenSizeService } from '../../services/screen-size.service.service';
 })
 export class EspecialidadListaComponent implements OnInit {
   screenSize = { width: 0, height: 0 };
+
+    rowsPerPage = 5;
   public especialidades$: Observable<Especialidad[]> = this.store.select(EspecialidadState.getEspecialidades)
 
   public loading$:Observable<boolean> = this.store.select(EspecialidadState.getLoading);
@@ -48,7 +50,7 @@ export class EspecialidadListaComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.dispatch(new GetEspecialidadAction());
-  
+  this.updateRowsPerPage(); 
   }
 
 
@@ -70,5 +72,27 @@ export class EspecialidadListaComponent implements OnInit {
 
   especialidades!: Especialidad[];
   title = 'academia';
+
+
+  
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.updateRowsPerPage();
+  }
+
+    private updateRowsPerPage() {
+    const width = window.innerWidth;
+    if (width < 600) {
+      this.rowsPerPage = 6;
+    } else if (width < 960) {
+      this.rowsPerPage = 5;
+    } else if (width < 1280) {
+      this.rowsPerPage = 8;
+    } else if (width < 1920) {
+      this.rowsPerPage = 10; 
+    } else {
+      this.rowsPerPage = 10;
+    }
+  }
 
 }
