@@ -5,7 +5,7 @@
     <ng-template pTemplate="content" class="pt-0">
         <p-table #dt2 [value]="inscripciones" responsiveLayout="stack" [breakpoint]="'960px'" [paginator]="true"
             [scrollable]="true" [rows]="5" scrollHeight="flex" [loading]="(loading$ | async)!"
-            styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-sm lg:text-xl"
+            styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl"
             [globalFilterFields]="['descripcion, especialidad.descripcion']">
             <ng-template pTemplate="caption">
 

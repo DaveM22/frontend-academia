@@ -1,7 +1,7 @@
 <div style="height: 100%;">
     <p-table #dt2  [value]="materias" 
     [loading]="(loading$ | async)" 
-    styleClass="p-datatable-gridlines p-datatable-striped pt-0 h-full text-sm lg:text-2xl" responsiveLayout="stack"
+    styleClass="p-datatable-gridlines p-datatable-striped pt-0 h-full text-xs sm:text-sm md:text-base lg:text-base xl:text-base" responsiveLayout="stack"
     [breakpoint]="'960px'" [paginator]="true" [scrollable]="true" [rows]="5" scrollHeight="flex"
     [globalFilterFields]="['nombre', 'apellido', 'direccion', 'email', 'legajo']"
     size="small"
@@ -48,7 +48,7 @@
                 <td><span class="p-column-title">Legajo</span>{{materia.descripcion}}</td>
                 <td><span  class="p-column-title">Acciones</span>
                     <div class="flex gap-2 justify-center">
-                        <p-button label="Ver cursos" (onClick)="redirectSeleccionarCurso(materia._id)" class="text-sm lg:text-xl"></p-button>
+                        <p-button label="Ver cursos" (onClick)="redirectSeleccionarCurso(materia._id)" class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base" styleClass="px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2"></p-button>
                     </div>
                 </td>
             </tr>

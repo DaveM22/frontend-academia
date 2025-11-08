@@ -1,5 +1,5 @@
 <p-table #dt2 [value]="(cursos$ | async)!" [loading]="(loading$ | async)"
-    styleClass="p-datatable-gridlines p-datatable-striped h-full text-sm lg:text-2xl" responsiveLayout="stack"
+    styleClass="p-datatable-gridlines p-datatable-striped h-full text-xs sm:text-sm md:text-base lg:text-base xl:text-base" responsiveLayout="stack"
     [breakpoint]="'960px'" [paginator]="true" [scrollable]="true" [rows]="5" scrollHeight="flex"
     [globalFilterFields]="['nombre', 'apellido', 'direccion', 'email', 'legajo']">
     <ng-template pTemplate="caption">
@@ -9,16 +9,16 @@
                     Seleccione un curso
                 </div>
                 <div class="col-span-12 lg:col-span-2 lg:col-start-6">
-                    <p-button label="Volver a planes" severity="primary" class="w-full text-sm lg:text-xl"
-                        styleClass="w-full" (onClick)="redirectSeleccionarMateria()"></p-button>
+                    <p-button label="Volver a planes" severity="primary" class="w-full text-xs sm:text-sm md:text-base lg:text-base xl:text-base"
+                        styleClass="w-full px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2" (onClick)="redirectSeleccionarMateria()"></p-button>
                 </div>
                 <div class="col-span-12 lg:col-span-3 lg:col-start-10">
-                    <p-iconField iconPosition="left" class="text-sm lg:text-xl">
+                    <p-iconField iconPosition="left">
                         <p-inputIcon>
                             <i class="pi pi-search"></i>
                         </p-inputIcon>
                         <input pInputText type="text" (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
-                            placeholder="Buscar curso" class="w-full" />
+                            placeholder="Buscar curso" class="w-full text-xs sm:text-sm md:text-base lg:text-base xl:text-base py-1 sm:py-2 md:py-2 lg:py-2" />
                     </p-iconField>
                 </div>
             </div>
@@ -56,7 +56,7 @@
             <td><span class="p-column-title">Acciones</span>
                 <div class="flex gap-2 justify-center">
                     <p-button label="Ver Docentes" (onClick)="redirectDocentesCursos(curso._id)"
-                        class="text-sm lg:text-2xl"></p-button>
+                        class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base" styleClass="px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2"></p-button>
                 </div>
             </td>
         </tr>

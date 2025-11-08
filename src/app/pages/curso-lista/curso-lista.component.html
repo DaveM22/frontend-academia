@@ -1,6 +1,6 @@
 <p-table #dt2 [value]="(cursos$ | async)!" [loading]="(loading$ | async)"
     [globalFilterFields]="['descripcion','anioCalendario','comision.descripcion','materia.descripcion']"
-    styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-sm lg:text-2xl" responsiveLayout="stack" [breakpoint]="'960px'"
+    styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-xs sm:text-sm md:text-base lg:text-base xl:text-base" responsiveLayout="stack" [breakpoint]="'960px'"
     [paginator]="true" size="small" [scrollable]="true" scrollHeight="flex" [rows]="5">
     <ng-template pTemplate="caption">
         @if (error$ | async)
@@ -17,15 +17,12 @@
                     <p-inputIcon>
                         <i class="pi pi-search"></i>
                     </p-inputIcon>
-                    <input pInputText pSize="large"  type="text" class="w-full text-sm sm:text-base md:text-lg py-1 sm:py-1 md:py-1" styleClass="w-full text-sm sm:text-base md:text-lg py-1 sm:py-1 md:py-1" (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
+                    <input pInputText pSize="large"  type="text" class="w-full text-xs sm:text-sm md:text-base lg:text-base xl:text-base py-1 sm:py-2 md:py-2 lg:py-2" (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
                         placeholder="Buscar curso" />
                 </p-iconField>
             </div>
             <div>
-                <p-button label="Nuevo curso"  severity="info"   class="w-full"
-                [styleClass]="
-                  'w-full text-sm lg:text-xl px-3 py-1 sm:px-4 sm:py-1 md:px-5 md:py-1'
-                " (onClick)="redirectNewCurso()"></p-button>
+                <p-button label="Nuevo curso"  severity="info"   class="w-full text-xs sm:text-sm md:text-base lg:text-base xl:text-base" styleClass="w-full px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2" (onClick)="redirectNewCurso()"></p-button>
             </div>
         </div>
 
@@ -50,11 +47,11 @@
             <td style="width:auto"><span class="p-column-title">Acciones</span>
 
                 <div class="flex flex-col gap-2 justify-center lg:flex-row">
-                        <p-button  label="Reporte de Inscripciones" class="text-nowrap text-sm lg:text-xl w-full lg:w-auto" severity="primary" (onClick)="generateReport(curso._id)"
+                        <p-button  label="Reporte de Inscripciones" class="text-nowrap text-xs sm:text-sm md:text-base lg:text-base xl:text-base w-full lg:w-auto" severity="primary" styleClass="px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2" (onClick)="generateReport(curso._id)"
                         />
-                        <p-button label="Editar" severity="warn" class="text-sm lg:text-xl w-full lg:w-auto" styleClass="w-full lg:w-auto"
+                        <p-button label="Editar" severity="warn" class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base w-full lg:w-auto" styleClass="w-full lg:w-auto px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2"
                             (onClick)="redirectEditCurso(curso._id)" />
-                        <p-button label="Borrar" severity="danger" class="text-sm lg:text-xl w-full lg:w-auto" styleClass="w-full lg:w-auto"
+                        <p-button label="Borrar" severity="danger" class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base w-full lg:w-auto" styleClass="w-full lg:w-auto px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2"
                             (onClick)="modalConfirmar(curso)" />
                 </div>
             </td>

@@ -1,7 +1,7 @@
 <p-table #dt2 [value]="(materias$ | async)!"  responsiveLayout="stack" [breakpoint]="'960px'"
 [paginator]="true" [scrollable]="true" [rows]="5" scrollHeight="flex"
 [loading]="loading$"
-styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-sm lg:text-xl" 
+styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-xs sm:text-sm md:text-base lg:text-base xl:text-base" 
 [globalFilterFields]="['descripcion, especialidad.descripcion']">
     <ng-template pTemplate="caption">
 
@@ -18,7 +18,7 @@ styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-sm lg:tex
             <td style="width:70%"><span class="p-column-title">Cátedra</span>{{materia.descripcion}}</td>
             <td style="width:30%"><span class="p-column-title">Acciones</span>
                 <div class="flex flex-column sm:flex-row gap-2 justify-center">
-                    <p-button label="Ver comisiones" (onClick)="redirectToCursosDisponibles(materia._id)" ></p-button>
+                    <p-button label="Ver comisiones" (onClick)="redirectToCursosDisponibles(materia._id)" class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base" styleClass="px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2"></p-button>
                 </div>
             </td>
         </tr>

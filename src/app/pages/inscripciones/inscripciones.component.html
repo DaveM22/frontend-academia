@@ -1,6 +1,6 @@
 
 <p-table #dt2 [value]="inscripciones" [loading]="(loading$ | async)"
-    styleClass="p-datatable-gridlines p-datatable-striped text-sm lg:text-xl" responsiveLayout="stack"
+    styleClass="p-datatable-gridlines p-datatable-striped text-xs sm:text-sm md:text-base lg:text-base xl:text-base" responsiveLayout="stack"
     [breakpoint]="'960px'" [paginator]="true" [scrollable]="true" [rows]="5" scrollHeight="48vh"
     [globalFilterFields]="['nota','condicion', 'curso.descripcion']">
     <ng-template pTemplate="caption">
@@ -13,19 +13,19 @@
                     }
                 </div>
                 <div class="col-span-12 lg:col-span-2 lg:col-start-5 gap-2 mb-0">
-                    <p-button label="Volver a inscripciones" severity="primary" styleClass="w-full" class="text-sm lg:text-xl w-full text-nowrap"
+                    <p-button label="Volver a inscripciones" severity="primary" styleClass="w-full px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2" class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base w-full text-nowrap"
                         (onClick)="redirectToInscripcionesalumnos()"></p-button>
                 </div>
                 <div class="col-span-12 lg:col-span-2 ">
-                    <p-button label="Nueva inscripción" severity="primary" class="text-sm lg:text-xl w-full text-nowrap"
-                       styleClass="w-full" (onClick)="redirectToNuevaInscripcion()"></p-button>
+                    <p-button label="Nueva inscripción" severity="primary" class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base w-full text-nowrap"
+                       styleClass="w-full px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2" (onClick)="redirectToNuevaInscripcion()"></p-button>
                 </div>
                 <div class="col-span-12 lg:col-span-3 lg:col-start-10">
-                    <p-iconField iconPosition="left" class="text-sm lg:text-xl w-full">
+                    <p-iconField iconPosition="left" class="w-full">
                         <p-inputIcon>
                             <i class="pi pi-search"></i>
                         </p-inputIcon>
-                        <input pInputText type="text" class="w-full" (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
+                        <input pInputText type="text" class="w-full text-xs sm:text-sm md:text-base lg:text-base xl:text-base py-1 sm:py-2 md:py-2 lg:py-2" (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
                             placeholder="Buscar alumno" />
                     </p-iconField>
                 </div>
@@ -47,7 +47,7 @@
             <td><span class="p-column-title">Nota</span>{{inscripcion.nota || 'Sin especificar'}}</td>
             <td><span class="p-column-title">Acciones</span>
                 <div class="flex gap-2 justify-center">
-                    <p-button label="Actualizar" severity="primary"
+                    <p-button label="Actualizar" severity="primary" class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base" styleClass="px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2"
                         (onClick)="redirectActualizarInscripcion(inscripcion._id)" />
                 </div>
             </td>

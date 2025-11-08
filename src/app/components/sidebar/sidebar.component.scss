@@ -3,7 +3,6 @@
   display: block;
 }
 
-/* Estilos para el scrollbar personalizado */
 .scrollbar-thin {
   scrollbar-width: thin;
 }
@@ -25,24 +24,22 @@
   background-color: rgba(156, 163, 175, 0.8);
 }
 
-/* Asegurar que el contenido scrolleable use toda la altura disponible */
 .flex-1.overflow-y-auto.min-h-0 {
-  height: 0; /* Hack para hacer que flex-1 funcione correctamente con overflow */
+  height: 0; 
 }
 
-/* Efectos de glassmorphism para el header */
+
 .backdrop-blur-sm {
   backdrop-filter: blur(4px);
 }
 
-/* Transiciones suaves */
+
 .transform.transition-transform {
   transition-property: transform;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 200ms;
 }
 
-/* Animación para el indicador de conexión */
 @keyframes pulse {
   0%, 100% {
     opacity: 1;
@@ -56,12 +53,48 @@
   animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
-/* Mejora visual para el menú */
+
 :host ::ng-deep {
   .p-menu {
     background: transparent !important;
     border: none !important;
     box-shadow: none !important;
+  }
+  
+
+  .p-menu.p-menu-overlay {
+    background: rgba(17, 24, 39, 0.95) !important;
+    border: 1px solid rgba(75, 85, 99, 0.3) !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5) !important;
+    border-radius: 8px !important;
+    min-width: 200px !important;
+    z-index: 9999 !important;
+    backdrop-filter: blur(8px) !important;
+  }
+  
+  .p-menu.p-menu-overlay .p-menuitem {
+    background: transparent !important;
+  }
+  
+  .p-menu.p-menu-overlay .p-menuitem-link {
+    color: rgba(243, 244, 246, 0.9) !important; 
+    background: transparent !important;
+    padding: 0.75rem 1rem !important;
+    border-radius: 6px !important;
+    margin: 2px 4px !important;
+    transition: all 0.2s ease !important;
+    font-weight: 500 !important;
+  }
+  
+  .p-menu.p-menu-overlay .p-menuitem-link:hover {
+    background: rgba(79, 70, 229, 0.2) !important; 
+    color: rgba(255, 255, 255, 1) !important;
+    transform: none !important;
+  }
+  
+  .p-menu.p-menu-overlay .p-menuitem-link:focus {
+    box-shadow: 0 0 0 2px rgba(129, 140, 248, 0.5) !important;
+    outline: none !important;
   }
   
   .p-menuitem-link {

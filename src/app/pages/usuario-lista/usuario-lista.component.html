@@ -1,7 +1,7 @@
 
 
 <p-table #dt2 [value]="(usuarios$ | async)!" [loading]="(loading$ | async)"
-    styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-sm lg:text-2xl" responsiveLayout="stack"
+    styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-xs sm:text-sm md:text-base lg:text-base xl:text-base" responsiveLayout="stack"
     [breakpoint]="'960px'" [paginator]="true" [scrollable]="true" [rows]="5" scrollHeight="flex"
     [globalFilterFields]="['nombre', 'apellido','direccion', 'email','legajo']">
     <ng-template pTemplate="caption">
@@ -20,12 +20,12 @@
                 <p-inputIcon>
                     <i class="pi pi-search"></i>
                 </p-inputIcon>
-                <input pSize="small" pInputText type="text" class="w-full text-sm lg:text-xl py-1 sm:py-1 md:py-1" (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
+                <input pSize="small" pInputText type="text" class="w-full text-xs sm:text-sm md:text-base lg:text-base xl:text-base py-1 sm:py-2 md:py-2 lg:py-2" (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
                     placeholder="Buscar usuario" />
             </p-iconField>
             </div>
             <div>
-                <p-button label="Nuevo usuario" severity="info" class="w-full text-sm lg:text-xl py-1 sm:py-1 md:py-1" styleClass="w-full text-sm sm:text-base md:text-lg py-1 sm:py-1 md:py-1" (onClick)="redirigirNuevoUsuario()"></p-button>
+                <p-button label="Nuevo usuario" severity="info" class="w-full" styleClass="w-full text-xs sm:text-sm md:text-base lg:text-base xl:text-base px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2" (onClick)="redirigirNuevoUsuario()"></p-button>
             </div>
         </div>
 
@@ -43,8 +43,8 @@
             <td><span class="p-column-title">Apellido</span>{{usuario.nombreYapellido}}</td>
             <td><span class="p-column-title">Acciones</span>
                 <div class="flex gap-2 justify-center">
-                    <p-button class="text-sm lg:text-lg"label="Editar" (onClick)="redirigirEditarUsuario(usuario._id)"></p-button>
-                    <p-button class="text-sm lg:text-lg" label="Borrar" severity="danger" icon="pi pi-times" (onClick)="modalConfirmar(usuario)" ></p-button>
+                    <p-button class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base" styleClass="px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2" label="Editar" (onClick)="redirigirEditarUsuario(usuario._id)"></p-button>
+                    <p-button class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base" styleClass="px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2" label="Borrar" severity="danger" icon="pi pi-times" (onClick)="modalConfirmar(usuario)" ></p-button>
                 </div>
             </td>
         </tr>
