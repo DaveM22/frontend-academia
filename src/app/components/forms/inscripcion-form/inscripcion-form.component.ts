@@ -6,7 +6,7 @@ import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
 import { ToastModule } from 'primeng/toast';
-import { filter, firstValueFrom, Observable } from 'rxjs';
+import { filter, firstValueFrom, lastValueFrom, Observable } from 'rxjs';
 import { Alumno } from '../../../entities/alumno';
 import { Store } from '@ngxs/store';
 import { PersonaState } from '../../../store/states/api/persona.state';
@@ -18,7 +18,7 @@ import { Especialidad } from '../../../entities/especialidad';
 import { EspecialidadPageState } from '../../../store/states/page/especialidad.state';
 import { AppPageState } from '../../../store/states/page/app.state';
 import { AlumnoFilter, CursoFilter, PlanFilter } from '../../../entities/filter';
-import { GetPlanAction } from '../../../store/actions/api/planes.action';
+import { GetByIdPlanAction, GetPlanAction } from '../../../store/actions/api/planes.action';
 import { Plan } from '../../../entities/plan';
 import { GetCursoAction } from '../../../store/actions/api/curso.action';
 import { Curso } from '../../../entities/curso';
@@ -35,6 +35,7 @@ import { MessagesModule } from 'primeng/messages';
 import { AuthService } from '@auth0/auth0-angular';
 import { environment } from '../../../../environments/environment';
 import { ClearAlumnoInscripcionAction } from '../../../store/actions/pages/alumno-inscripcion.action';
+import { PlanState } from '../../../store/states/api/plan.state';
 @Component({
   selector: 'app-inscripcion-form',
   standalone: true,
@@ -43,20 +44,20 @@ import { ClearAlumnoInscripcionAction } from '../../../store/actions/pages/alumn
   templateUrl: './inscripcion-form.component.html',
   styleUrl: './inscripcion-form.component.scss'
 })
-export class InscripcionFormComponent implements OnInit , OnDestroy {
+export class InscripcionFormComponent implements OnInit, OnDestroy {
   alumno$: Observable<Alumno | null> = this.store.select(PersonaPageState.getAlumnoSelected);
   alumnoInscripcion$: Observable<AlumnoInscripcion | null> = this.store.select(AlumnoInscripcionPageState.getAlumnoInscripcionSelected);
   especialidadSelected$: Observable<Especialidad | null> = this.store.select(AppPageState.getSelectedEspecialidad);
-  planSelected$: Observable<Plan | null> = this.store.select(AppPageState.getSelectedPlanInFilter);
+  planSelected$: Observable<Plan | null> = this.store.select(PlanState.getPlanSelected);
   cursoSelectedModal$: Observable<Curso | null> = this.store.select(AppPageState.getSelectedCursoInModal);
   alumno!: Alumno;
   alumnoId!: string;
   alumnoInscripcion!: AlumnoInscripcion
   alumnoInscripcionDto!: AlumnoInscripcionDto
   form!: FormGroup;
-  role : string = 'Administrador';
+  role: string = 'Administrador';
   condiciones: any[] = CondicionList;
-  constructor(private store: Store, private router: Router, private messageService: MessageService, private activatedRoute: ActivatedRoute, private authService:AuthService) { }
+  constructor(private store: Store, private router: Router, private messageService: MessageService, private activatedRoute: ActivatedRoute, private authService: AuthService) { }
   ngOnDestroy(): void {
     this.store.dispatch(new ClearAlumnoInscripcionAction());
   }
@@ -74,23 +75,9 @@ export class InscripcionFormComponent implements OnInit , OnDestroy {
       nota: new FormControl('')
     });
 
-    const role = await firstValueFrom(this.authService.idTokenClaims$.pipe(filter(u => u !== undefined)));
-    if(role && (role[environment.roleLogin] as Array<string>).some(r => r === 'Docente')){
+    const role = await firstValueFrom(this.authService.idTokenClaims$.pipe(filter(u => u !== null && u !== undefined)));
+    if (role && (role[environment.roleLogin] as Array<string>).some(r => r === 'Docente')) {
       this.role = 'Docente';
-    }
-
-    
-    let alumnoInscripcionSelected = await firstValueFrom(this.alumnoInscripcion$.pipe(filter(ai => ai !== null)));
-    if (alumnoInscripcionSelected) {
-      this.alumnoInscripcion = alumnoInscripcionSelected;
-      this.form.patchValue({ '_id': this.alumnoInscripcion._id, 'alumno': `${this.alumnoInscripcion.alumno!.apellido} ${this.alumnoInscripcion.alumno!.nombre}`, 'alumnoId': this.alumnoInscripcion.alumno!._id, 'condicion': this.alumnoInscripcion.condicion, nota: this.alumnoInscripcion.nota, 'curso': this.alumnoInscripcion.curso?.descripcion, 'cursoId': this.alumnoInscripcion.curso?._id })
-    }
-
-
-    let alumnoSelected = await firstValueFrom(this.alumno$.pipe(filter(a => a !== null)));
-    if (alumnoSelected) {
-      this.alumno = alumnoSelected;
-      this.form.patchValue({ 'alumno': `${this.alumno.apellido} ${this.alumno.nombre}`, 'alumnoId': this.alumno._id })
     }
 
     this.alumnoId = this.activatedRoute.snapshot.params['id'] === undefined ? this.store.selectSnapshot(AppPageState.getPersonId) : this.activatedRoute.snapshot.params['id'];
@@ -98,27 +85,40 @@ export class InscripcionFormComponent implements OnInit , OnDestroy {
     alumnoFilter.incluirInscripciones = false;
     this.store.dispatch(new GetAlumnoByIdAction(this.alumnoId, alumnoFilter));
 
-    const especialidadSelected = await firstValueFrom(this.especialidadSelected$.pipe(filter(e => e !== null)));
-
-    let planFilter = new PlanFilter();
-    planFilter.especialidadId = especialidadSelected._id;
-    this.store.dispatch(new GetPlanAction(planFilter));
-
-    const planSelected = await firstValueFrom(this.planSelected$.pipe(filter(p => p !== null)));
-    let cursoFilter = new CursoFilter();
-    cursoFilter.planId = planSelected._id;
-    this.store.dispatch(new GetCursoAction(cursoFilter));
-
-    const cursoSelected = await firstValueFrom(this.cursoSelectedModal$.pipe(filter(c => c !== null)));
-    if (cursoSelected) {
-      this.form.patchValue({ 'curso': cursoSelected.descripcion, 'cursoId': cursoSelected._id });
+    const alumnoSelected = await firstValueFrom(this.alumno$.pipe(filter(a => a !== null)));
+    if (alumnoSelected) {
+      this.alumno = alumnoSelected;
+      this.form.patchValue({ 'alumno': `${this.alumno.apellido} ${this.alumno.nombre}`, 'alumnoId': this.alumno._id })
     }
 
+    if (this.activatedRoute.snapshot.params['idInscripcion'] !== undefined) {
+      this.store.dispatch(new GetOneAlumnoInscripcionAction(this.activatedRoute.snapshot.params['inscripcionId']));
+      const alumnoInscripcionSelected = await firstValueFrom(this.alumnoInscripcion$.pipe(filter(ai => ai !== null)));
+      if (alumnoInscripcionSelected) {
+        this.alumnoInscripcion = alumnoInscripcionSelected;
+        this.form.patchValue({ '_id': this.alumnoInscripcion._id, 'alumno': `${this.alumnoInscripcion.alumno!.apellido} ${this.alumnoInscripcion.alumno!.nombre}`, 'alumnoId': this.alumnoInscripcion.alumno!._id, 'condicion': this.alumnoInscripcion.condicion, nota: this.alumnoInscripcion.nota, 'curso': this.alumnoInscripcion.curso?.descripcion, 'cursoId': this.alumnoInscripcion.curso?._id })
+      }
+
+
+      const cursoSelected = await firstValueFrom(this.cursoSelectedModal$.pipe(filter(c => c !== null)));
+      if (cursoSelected) {
+        this.form.patchValue({ 'curso': cursoSelected.descripcion, 'cursoId': cursoSelected._id });
+      }
+    }
+
+    this.cursoSelectedModal$.subscribe(curso => {
+      if (curso) {
+        this.form.patchValue({ 'curso': curso.descripcion, 'cursoId': curso._id });
+      }
+    });
+
+    console.log('fin')
   }
 
   onSubmit() {
     this.alumnoInscripcion = this.form.value
-    if (this.alumnoInscripcion._id === '') {
+    console.log(this.alumnoInscripcion);
+    if (this.alumnoInscripcion._id === null) {
       this.alumnoInscripcionDto = this.form.value;
       this.store.dispatch(new PostAlumnoInscripcionAction(this.alumnoInscripcionDto)).subscribe(() => {
         this.router.navigate([`/inscripciones/alumnos/${this.alumnoId}`]);
@@ -139,7 +139,7 @@ export class InscripcionFormComponent implements OnInit , OnDestroy {
   }
 
   redirect() {
-    if(this.role === 'Docente'){
+    if (this.role === 'Docente') {
       this.router.navigate([`docente/${this.activatedRoute.snapshot.params['id']}/cursos-inscripciones/${this.alumnoInscripcion.curso?._id}`]);
     } else {
       this.router.navigate([`/inscripciones/alumnos/${this.alumnoId}`]);

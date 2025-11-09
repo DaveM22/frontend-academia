@@ -20,11 +20,12 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputIconModule } from 'primeng/inputicon';
 import { MessageModule } from 'primeng/message';
+import { DialogModule } from 'primeng/dialog';
 
 @Component({
   selector: 'app-curso-lista',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, MessageModule, PanelModule, ToastModule, ConfirmDialogModule, IconFieldModule, InputTextModule, InputIconModule],
+  imports: [CommonModule, TableModule, ButtonModule, MessageModule, PanelModule, ToastModule, ConfirmDialogModule, IconFieldModule, InputTextModule, InputIconModule, DialogModule],
   templateUrl: './curso-lista.component.html',
   styleUrl: './curso-lista.component.scss',
   providers: [ConfirmationService]
@@ -41,6 +42,10 @@ export class CursoListaComponent implements OnInit {
   curso!: Curso;
 
   cursoSelected!: Curso;
+  
+  // Propiedades para el modal de detalles
+  showModal: boolean = false;
+  selectedCurso: Curso | null = null;
 
   showConfirmation$:Observable<boolean> = this.store.select(AppPageState.showModalConfirmation)
 
@@ -122,6 +127,19 @@ export class CursoListaComponent implements OnInit {
   modalConfirmar(curso:Curso){
     this.cursoSelected = curso;
     this.store.dispatch(new ShowModalConfirmationAction(true));
+  }
+
+  showCursoModal(curso: Curso) {
+    console.log('Curso seleccionado:', curso);
+    this.selectedCurso = curso;
+    this.showModal = true;
+    console.log('selectedCurso después de asignar:', this.selectedCurso);
+    console.log('showModal:', this.showModal);
+  }
+
+  closeModal() {
+    this.showModal = false;
+    this.selectedCurso = null;
   }
 
 }

@@ -14,18 +14,26 @@
 
         }
 
-        <div class="flex flex-col w-full gap-2 md:flex-row justify-between">
-            <div>
-                <p-iconField iconPosition="left" class="mb-4 lg:mb-0 w-full">
+        <div class="grid grid-cols-12 gap-4 w-full">
+            <div class="col-span-12 md:col-span-4 md:col-start-5 flex justify-center">
+                <p-button 
+                    label="Nuevo alumno" 
+                    severity="info" 
+                    class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base" 
+                    styleClass="px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2" 
+                    (onClick)="redirecToNuevoAlumno()">
+                </p-button>
+            </div>
+            <div class="col-span-12 md:col-span-4">
+                <p-iconField iconPosition="left" class="w-full">
                     <p-inputIcon>
                         <i class="pi pi-search"></i>
                     </p-inputIcon>
-                    <input pInputText pSize="large" type="text" class="w-full text-xs sm:text-sm md:text-base lg:text-base xl:text-base py-1 sm:py-2 md:py-2 lg:py-2"
-                        (input)="dt2.filterGlobal($any($event.target).value, 'contains')" placeholder="Buscar alumno" />
+                    <input pInputText pSize="large" type="text" 
+                        class="w-full text-xs sm:text-sm md:text-base lg:text-base xl:text-base py-1 sm:py-2 md:py-2 lg:py-2"
+                        (input)="dt2.filterGlobal($any($event.target).value, 'contains')" 
+                        placeholder="Buscar alumno" />
                 </p-iconField>
-            </div>
-            <div>
-                <p-button size="small" label="Nuevo alumno" severity="info" class="w-full text-xs sm:text-sm md:text-base lg:text-base xl:text-base" styleClass="w-full px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2" (onClick)="redirecToNuevoAlumno()"></p-button>
             </div>
         </div>
 

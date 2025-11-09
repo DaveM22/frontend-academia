@@ -1,34 +1,44 @@
 <p-table #dt2 [value]="(docenteCursos$ | async)!" [loading]="(loading$ | async)"
-    styleClass="p-datatable-gridlines p-datatable-striped text-sm lg:text-2xl" responsiveLayout="stack"
-    [breakpoint]="'960px'" [paginator]="true" [scrollable]="true" [rows]="5" size="small" scrollHeight="48vh"
+    styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-xs sm:text-sm md:text-base lg:text-base xl:text-base" responsiveLayout="stack"
+    [breakpoint]="'960px'" [paginator]="true" [scrollable]="true" [rows]="5" size="small" scrollHeight="flex"
     [globalFilterFields]="['nombre', 'apellido', 'direccion', 'email', 'legajo']">
     <ng-template pTemplate="caption">
         
-        <div class="grid ">
-            <div class="grid grid-cols-12 w-full gap-2">
-                <div class="col-span-12 text-center lg:text-start lg:col-span-2">
-                    @if (curso) {
-                    <h2 class="pt-0 col-12 flex justify-content-center"> Docentes del curso: {{curso.descripcion}}</h2>
-                    }
-                </div>
-                <div class="col-span-12 lg:col-span-2 lg:lg:col-start-5">
-                    <p-button label="Volver hacia atras" severity="primary" styleClass="w-full"
-                        (onClick)="redirectBackToCourses()"></p-button>
-                </div>
-                <div class="col-span-12 lg:col-span-2">
-                    <p-button label="Nueva asignación" severity="primary" styleClass="w-full"
-                        (onClick)="redirectNewDocenteCurso()"></p-button>
-                </div>
-                <div class="col-span-12 lg:col-span-3 lg:lg:col-start-10">
+        @if (curso) {
+        <div class="mb-4 text-center">
+            <h2 class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base font-semibold mb-4">
+                Docentes del curso: {{curso.descripcion}}
+            </h2>
+        </div>
+        }
 
-                    <p-iconField iconPosition="left" class="text-sm lg:text-xl w-full">
-                        <p-inputIcon>
-                            <i class="pi pi-search"></i>
-                        </p-inputIcon>
-                        <input pInputText type="text" class="w-full" (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
-                            placeholder="Buscar curso" />
-                    </p-iconField>
-                </div>
+        <div class="grid grid-cols-12 gap-4 w-full">
+            <div class="col-span-12 md:col-span-3 flex justify-center">
+                <p-button 
+                    label="Volver hacia atras" 
+                    severity="primary" 
+                    styleClass="text-xs sm:text-sm md:text-base lg:text-base xl:text-base px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2"
+                    (onClick)="redirectBackToCourses()">
+                </p-button>
+            </div>
+            <div class="col-span-12 md:col-span-4 md:col-start-5 flex justify-center">
+                <p-button 
+                    label="Nueva asignación" 
+                    severity="info" 
+                    styleClass="text-xs sm:text-sm md:text-base lg:text-base xl:text-base px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2"
+                    (onClick)="redirectNewDocenteCurso()">
+                </p-button>
+            </div>
+            <div class="col-span-12 md:col-span-4">
+                <p-iconField iconPosition="left" class="w-full">
+                    <p-inputIcon>
+                        <i class="pi pi-search"></i>
+                    </p-inputIcon>
+                    <input pInputText type="text" 
+                        class="w-full text-xs sm:text-sm md:text-base lg:text-base xl:text-base py-1 sm:py-2 md:py-2 lg:py-2" 
+                        (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
+                        placeholder="Buscar docente" />
+                </p-iconField>
             </div>
         </div>
     </ng-template>
@@ -47,8 +57,12 @@
             <td><span class="p-column-title">Cargo</span>{{docenteCurso.cargo}}</td>
             <td><span class="p-column-title">Acciones</span>
                 <div class="flex gap-2 justify-center">
-                    <p-button class="text-sm lg:text-2xl" label="Quitar" severity="danger"
-                        (onClick)="modalConfirmar(docenteCurso)"></p-button>
+                    <p-button 
+                        label="Quitar" 
+                        severity="danger"
+                        styleClass="text-xs sm:text-sm md:text-base lg:text-base xl:text-base px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2"
+                        (onClick)="modalConfirmar(docenteCurso)">
+                    </p-button>
                 </div>
             </td>
         </tr>
@@ -56,14 +70,16 @@
     <ng-template pTemplate="emptymessage">
         @if ((docenteCursos$ | async)!.length === 0) {
         <tr>
-            <td class="text-center text-sm lg:text-2xl" colspan="4">No se han registrado docentes vinculados al curso
+            <td class="text-center text-xs sm:text-sm md:text-base lg:text-base xl:text-base" colspan="4">
+                No se han registrado docentes vinculados al curso
             </td>
         </tr>
         }
         @else {
         <tr>
-            <td class="text-center text-sm lg:text-2xl" colspan="4">No se encontraron docentes asignados con el filtro
-                aplicado</td>
+            <td class="text-center text-xs sm:text-sm md:text-base lg:text-base xl:text-base" colspan="4">
+                No se encontraron docentes asignados con el filtro aplicado
+            </td>
         </tr>
         }
     </ng-template>

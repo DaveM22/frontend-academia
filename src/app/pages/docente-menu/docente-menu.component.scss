@@ -1,0 +1,27 @@
+::ng-deep .user-menu {
+  min-width: 200px;
+}
+
+::ng-deep .user-menu .p-menu-list {
+  padding: 0.5rem 0;
+}
+
+::ng-deep .user-menu .p-menuitem-link {
+  padding: 0.75rem 1rem;
+  color: #374151;
+  transition: all 0.2s;
+}
+
+::ng-deep .user-menu .p-menuitem-link:hover {
+  background-color: #4f46e5;
+  color: white;
+}
+
+::ng-deep .user-menu .p-menuitem-icon {
+  color: #6b7280;
+  margin-right: 0.75rem;
+}
+
+::ng-deep .user-menu .p-menuitem-link:hover .p-menuitem-icon {
+  color: white;
+}

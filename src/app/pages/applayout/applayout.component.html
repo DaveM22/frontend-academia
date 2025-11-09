@@ -1,22 +1,17 @@
-<div class="h-screen flex flex-col overflow-hidden">
+@if (isAlumno) {
+  <app-alumno-menu>
+    <router-outlet></router-outlet>
+  </app-alumno-menu>
+}
 
-  <div class="xl:hidden flex items-center justify-between px-4 py-3 bg-gray-900 border-b border-gray-700">
-    <button pButton icon="pi pi-bars" class="p-button-text text-gray-100 hover:text-white hover:bg-indigo-600" (click)="toggleSidebar()"></button>
-    <span class="font-semibold text-lg text-gray-100">Academia</span>
-    <div class="w-10"></div>
-  </div>
+@else if (isDocente) {
+  <app-docente-menu>
+    <router-outlet></router-outlet>
+  </app-docente-menu>
+}
 
-  <div class="flex flex-1 overflow-hidden">
-    <div class="w-64 flex-shrink-0 sr-only xl:not-sr-only">
-      <sidebar></sidebar>
-    </div>
-
-    <div class="flex-1 overflow-y-auto p-4">
-      <router-outlet></router-outlet>
-    </div>
-  </div>
-</div>
-
-<p-sidebar [(visible)]="sidebarVisible" position="left" [modal]="true" styleClass="w-64">
-  <sidebar></sidebar>
-</p-sidebar>
+@else {
+  <app-admin-menu>
+    <router-outlet></router-outlet>
+  </app-admin-menu>
+}

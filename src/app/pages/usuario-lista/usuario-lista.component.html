@@ -2,7 +2,7 @@
 
 <p-table #dt2 [value]="(usuarios$ | async)!" [loading]="(loading$ | async)"
     styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-xs sm:text-sm md:text-base lg:text-base xl:text-base" responsiveLayout="stack"
-    [breakpoint]="'960px'" [paginator]="true" [scrollable]="true" [rows]="5" scrollHeight="flex"
+     size="small" [breakpoint]="'960px'" [paginator]="true" [scrollable]="true" [rows]="5" scrollHeight="flex"
     [globalFilterFields]="['nombre', 'apellido','direccion', 'email','legajo']">
     <ng-template pTemplate="caption">
         @if (error$ | async)
@@ -14,18 +14,25 @@
 
         }
 
-        <div class="flex flex-col w-full gap-2 md:flex-row justify-between">
-            <div>
-            <p-iconField iconPosition="left" class="mb-4 lg:mb-0 w-full">
-                <p-inputIcon>
-                    <i class="pi pi-search"></i>
-                </p-inputIcon>
-                <input pSize="small" pInputText type="text" class="w-full text-xs sm:text-sm md:text-base lg:text-base xl:text-base py-1 sm:py-2 md:py-2 lg:py-2" (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
-                    placeholder="Buscar usuario" />
-            </p-iconField>
+        <div class="grid grid-cols-12 gap-4 w-full">
+            <div class="col-span-12 md:col-span-4 md:col-start-5 flex justify-center">
+                <p-button 
+                    label="Nuevo usuario" 
+                    severity="info" 
+                    styleClass="text-xs sm:text-sm md:text-base lg:text-base xl:text-base px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2" 
+                    (onClick)="redirigirNuevoUsuario()">
+                </p-button>
             </div>
-            <div>
-                <p-button label="Nuevo usuario" severity="info" class="w-full" styleClass="w-full text-xs sm:text-sm md:text-base lg:text-base xl:text-base px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2" (onClick)="redirigirNuevoUsuario()"></p-button>
+            <div class="col-span-12 md:col-span-4">
+                <p-iconField iconPosition="left" class="w-full">
+                    <p-inputIcon>
+                        <i class="pi pi-search"></i>
+                    </p-inputIcon>
+                    <input pSize="small" pInputText type="text" 
+                        class="w-full text-xs sm:text-sm md:text-base lg:text-base xl:text-base py-1 sm:py-2 md:py-2 lg:py-2" 
+                        (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
+                        placeholder="Buscar usuario" />
+                </p-iconField>
             </div>
         </div>
 

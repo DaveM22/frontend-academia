@@ -9,7 +9,7 @@ import { TableModule } from 'primeng/table';
 import { PersonaPageState } from '../../store/states/page/persona.state';
 import { Alumno } from '../../entities/alumno';
 import { Store } from '@ngxs/store';
-import { Observable } from 'rxjs';
+import { firstValueFrom, Observable, filter } from 'rxjs';
 import { Persona } from '../../entities/persona';
 import { PersonaState } from '../../store/states/api/persona.state';
 import { AlumnoInscripcion } from '../../entities/alumno-inscripcion';
@@ -31,18 +31,18 @@ import { ClearMateriasAction } from '../../store/actions/api/materia.action';
   imports: [CommonModule, TableModule, ButtonModule, IconFieldModule, InputIconModule, MessagesModule, InputTextModule, ConfirmDialogModule],
   templateUrl: './inscripciones.component.html',
   styleUrl: './inscripciones.component.scss',
-  providers:[ConfirmationService]
+  providers: [ConfirmationService]
 })
-export class InscripcionesComponent implements OnInit, OnDestroy  {
-  alumno$:Observable<Alumno | null> = this.store.select(PersonaPageState.getAlumnoSelected);
-  loading$:Observable<boolean> = this.store.select(PersonaState.getLoading) || this.store.select(AlumnoInscripcionState.getLoading);
-  alumno!:Alumno;
-  inscripciones:AlumnoInscripcion[]=[]
-  showConfirmation$:Observable<boolean> = this.store.select(AppPageState.showModalConfirmation)
+export class InscripcionesComponent implements OnInit, OnDestroy {
+  alumno$: Observable<Alumno | null> = this.store.select(PersonaPageState.getAlumnoSelected);
+  loading$: Observable<boolean> = this.store.select(PersonaState.getLoading) || this.store.select(AlumnoInscripcionState.getLoading);
+  alumno!: Alumno;
+  inscripciones: AlumnoInscripcion[] = []
+  showConfirmation$: Observable<boolean> = this.store.select(AppPageState.showModalConfirmation)
   rowsPerPage: number = 6;
 
-  constructor(private store:Store,private route:Router, private router:ActivatedRoute, private messageService:MessageService, private confirmationService: ConfirmationService){}
-  
+  constructor(private store: Store, private route: Router, private router: ActivatedRoute, private messageService: MessageService, private confirmationService: ConfirmationService) { }
+
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
     this.updateRowsPerPage();
@@ -64,24 +64,22 @@ export class InscripcionesComponent implements OnInit, OnDestroy  {
   ngOnDestroy(): void {
     this.store.dispatch(new ClearMateriasAction);
   }
-  inscripcionSelected!:AlumnoInscripcion
-  
-  ngOnInit(): void {
+  inscripcionSelected!: AlumnoInscripcion
+
+  async ngOnInit(): Promise<void> {
     this.updateRowsPerPage();
-    let filter = new AlumnoFilter();
-    filter.incluirInscripciones = true;
-    this.store.dispatch(new GetAlumnoByIdAction(this.router.snapshot.params['id'], filter));
+    let filterAlumno = new AlumnoFilter();
+    filterAlumno.incluirInscripciones = true;
 
-    this.alumno$.subscribe(x => {
+    await firstValueFrom(this.store.dispatch(new GetAlumnoByIdAction(this.router.snapshot.params['id'], filterAlumno)));
 
-      if(x !== null){
-        this.alumno = x;
-        this.inscripciones = this.alumno.inscripciones;
-        this.loading$.subscribe(x => false);
-      }
-    })
+    const alumno = await firstValueFrom(this.alumno$.pipe(filter(a => a !== null)));
+    this.alumno = alumno;
+    this.inscripciones = this.alumno.inscripciones;
+    this.loading$.subscribe(x => false);
 
-    
+
+
   }
 
 
@@ -106,15 +104,16 @@ export class InscripcionesComponent implements OnInit, OnDestroy  {
     });
   }
 
-  redirectToNuevaInscripcion(){
+  redirectToNuevaInscripcion() {
+    console.log(this.alumno._id);
     this.route.navigate([`inscripciones/alumnos/${this.alumno._id}/nuevo`]);
   }
 
-  redirectToInscripcionesalumnos(){
+  redirectToInscripcionesalumnos() {
     this.route.navigate([`inscripciones/alumnos/lista`]);
   }
 
-  redirectActualizarInscripcion(inscripcionId:string){
+  redirectActualizarInscripcion(inscripcionId: string) {
     this.store.dispatch(new UpdateManualLoading(true)).subscribe(() => {
       this.store.dispatch(new GetOneAlumnoInscripcionAction(inscripcionId)).subscribe(() => {
         this.store.dispatch(new UpdateManualLoading(false)).subscribe(() => {
@@ -125,6 +124,6 @@ export class InscripcionesComponent implements OnInit, OnDestroy  {
 
   }
 
-  
+
 
 }

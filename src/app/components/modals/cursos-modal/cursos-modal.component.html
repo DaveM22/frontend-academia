@@ -49,7 +49,7 @@
                     <td class="text-center" colspan="2">No se han registrado cursos para esta materia</td>
                 </tr>
                 }
-                @else {
+                @else if((cursos$ | async)!.length > 0) {
                 <tr>
                     <td class="text-center" colspan="2">No se encontraron cursos con el filtro aplicado</td>
                 </tr>

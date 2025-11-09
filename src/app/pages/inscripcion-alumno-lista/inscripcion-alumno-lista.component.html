@@ -24,7 +24,7 @@
 
         <div class="grid">
             <div class="grid grid-cols-12 w-full gap-4">
-                <div class="col-span-12 xl:col-span-4 flex flex-col">
+                <div class="col-span-12 xl:col-span-3 flex flex-col">
                     <label class="mb-2">Especialidad:</label>
                     <app-especialidad-filter
                         class="h-full"
@@ -32,7 +32,7 @@
                     </app-especialidad-filter>
                 </div>
 
-                <div class="col-span-12 xl:col-span-4 flex flex-col">
+                <div class="col-span-12 xl:col-span-3 flex flex-col">
                     <label class="mb-2">Plan:</label>
                     <app-plan-filter
                         class="h-full"
@@ -41,14 +41,14 @@
                     </app-plan-filter>
                 </div>
 
-                <div class="col-span-12 xl:col-span-4 flex flex-col">
+                <div class="col-span-12 xl:col-span-3 xl:col-start-10 flex flex-col">
                     <label class="mb-2">Búsqueda:</label>
                     <p-iconField iconPosition="left" class="h-full">
                         <p-inputIcon>
                             <i class="pi pi-search"></i>
                         </p-inputIcon>
                         <input pInputText pSize="large"
-                            class="w-full text-xs sm:text-sm md:text-base lg:text-base xl:text-base h-[38px]"
+                            class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base w-full h-[50px]"
                             type="text"
                             (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
                             placeholder="Buscar alumno" />

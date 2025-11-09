@@ -11,28 +11,28 @@
 
     }
 
-<div class="flex flex-col w-full gap-2 md:flex-row justify-between">
-<div>
+<div class="grid grid-cols-12 gap-4 w-full">
+    <div class="col-span-12 md:col-span-4 md:col-start-5 flex justify-center">
         <p-button
-    label="Nueva especialidad"
-    severity="info"
-    class="w-full"
-    [styleClass]="
-      'w-full text-xs sm:text-sm md:text-base lg:text-base xl:text-base px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2'
-    "
-    (onClick)="redirectNewEspecialidad()"
-  ></p-button>
-
-</div>
-<div>
-    <p-iconField iconPosition="left">
-        <p-inputIcon>
-            <i class="pi pi-search"></i>
-        </p-inputIcon>
-        <input pSize="large" pInputText type="text" class="w-full text-xs sm:text-sm md:text-base lg:text-base xl:text-base py-1 sm:py-2 md:py-2 lg:py-2" (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
-            placeholder="Buscar especialidad" />
-    </p-iconField>
-</div>
+            label="Nueva especialidad"
+            severity="info"
+            [styleClass]="
+              'text-xs sm:text-sm md:text-base lg:text-base xl:text-base px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2'
+            "
+            (onClick)="redirectNewEspecialidad()"
+        ></p-button>
+    </div>
+    <div class="col-span-12 md:col-span-4">
+        <p-iconField iconPosition="left">
+            <p-inputIcon>
+                <i class="pi pi-search"></i>
+            </p-inputIcon>
+            <input pSize="large" pInputText type="text" 
+                class="w-full text-xs sm:text-sm md:text-base lg:text-base xl:text-base py-1 sm:py-2 md:py-2 lg:py-2" 
+                (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
+                placeholder="Buscar especialidad" />
+        </p-iconField>
+    </div>
 </div>
 
     </ng-template>
