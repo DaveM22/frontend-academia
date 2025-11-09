@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
@@ -32,6 +32,7 @@ import { DialogModule } from 'primeng/dialog';
   providers:[ConfirmationService]
 })
 export class ProfesorListaComponent implements OnInit {
+  rowsPerPage = 5;
   profesores$: Observable<Profesor[]> = this.store.select(PersonaState.getProfesores);
   loading$: Observable<boolean> = this.store.select(PersonaState.getLoading);
   error$: Observable<boolean> = this.store.select(PersonaState.getError)
@@ -46,6 +47,7 @@ export class ProfesorListaComponent implements OnInit {
   ngOnInit(): void {
     let filter = new DocenteFilter();
     this.store.dispatch(new GetProfesoresAction(filter))
+    this.updateRowsPerPage();
     this.showConfirmation$.subscribe(x => {
       if (x && this.profesorSelected) {
         this.confirm();
@@ -55,6 +57,26 @@ export class ProfesorListaComponent implements OnInit {
     this.screenService.screenSize$.subscribe((x:any) => {
       this.scrollSize = x.currentTarget.innerWidth > 992 ? 'flex' : '50vh'
    })
+  }
+
+  @HostListener('window:resize')
+  onResize() {
+    this.updateRowsPerPage();
+  }
+
+  private updateRowsPerPage() {
+    const width = window.innerWidth;
+    if (width < 600) {
+      this.rowsPerPage = 6;
+    } else if (width < 960) {
+      this.rowsPerPage = 5;
+    } else if (width < 1280) {
+      this.rowsPerPage = 8;
+    } else if (width < 1920) {
+      this.rowsPerPage = 10;
+    } else {
+      this.rowsPerPage = 10;
+    }
   }
 
   confirm() {

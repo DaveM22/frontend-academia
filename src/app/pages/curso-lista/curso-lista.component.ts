@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
@@ -30,6 +30,7 @@ import { MessageModule } from 'primeng/message';
   providers: [ConfirmationService]
 })
 export class CursoListaComponent implements OnInit {
+  rowsPerPage = 5;
   public cursos$: Observable<Curso[]> = this.store.select(CursoState.getCursos)
 
   public loading$: Observable<boolean> = this.store.select(CursoState.getLoading);
@@ -48,6 +49,7 @@ export class CursoListaComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.updateRowsPerPage();
     const filters = new CursoFilter();
     filters.mostrarComision = true;
     filters.mostrarMateria = true;
@@ -75,6 +77,26 @@ export class CursoListaComponent implements OnInit {
 
   cursos!: Curso[];
   title = 'academia';
+
+  @HostListener('window:resize')
+  onResize() {
+    this.updateRowsPerPage();
+  }
+
+  private updateRowsPerPage() {
+    const width = window.innerWidth;
+    if (width < 600) {
+      this.rowsPerPage = 6;
+    } else if (width < 960) {
+      this.rowsPerPage = 5;
+    } else if (width < 1280) {
+      this.rowsPerPage = 8;
+    } else if (width < 1920) {
+      this.rowsPerPage = 10;
+    } else {
+      this.rowsPerPage = 10;
+    }
+  }
 
   confirm() {
     this.confirmationService.confirm({

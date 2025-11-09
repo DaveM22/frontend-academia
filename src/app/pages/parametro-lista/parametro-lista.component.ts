@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
@@ -27,6 +27,7 @@ import { FormsModule } from '@angular/forms';
 export class ParametroListaComponent implements OnInit {
 
   screenSize = { width: 0, height: 0 };
+  rowsPerPage = 5;
 
   public parametros$: Observable<Parametro[]> = this.store.select(ParametroState.getParametros)
 
@@ -38,8 +39,28 @@ export class ParametroListaComponent implements OnInit {
 
   constructor(private store:Store){}
   ngOnInit(): void {
- 
+    this.updateRowsPerPage();
        this.store.dispatch(new GetParametrosAction());
+  }
+
+  @HostListener('window:resize')
+  onResize() {
+    this.updateRowsPerPage();
+  }
+
+  private updateRowsPerPage() {
+    const width = window.innerWidth;
+    if (width < 600) {
+      this.rowsPerPage = 6;
+    } else if (width < 960) {
+      this.rowsPerPage = 5;
+    } else if (width < 1280) {
+      this.rowsPerPage = 8;
+    } else if (width < 1920) {
+      this.rowsPerPage = 10;
+    } else {
+      this.rowsPerPage = 10;
+    }
   }
 
   parametros!: Parametro[];

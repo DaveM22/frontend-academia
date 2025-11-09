@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
@@ -30,7 +30,7 @@ import { ScreenSizeService } from '../../services/screen-size.service.service';
   providers:[ConfirmationService]
 })
 export class ComisionListaComponent implements OnInit {
-
+  rowsPerPage = 5;
   public comisiones$: Observable<Comision[]> = this.store.select(ComisionState.getComisiones)
 
   public loading$:Observable<boolean> = this.store.select(ComisionState.getLoading);
@@ -53,6 +53,7 @@ export class ComisionListaComponent implements OnInit {
     let filters = new ComisionFilter();
     filters.mostrarPlan = true;
     this.store.dispatch(new GetComision(filters));
+    this.updateRowsPerPage();
     this.error$.subscribe(x => this.error = x);
     this.showConfirmation$.subscribe(x => {
       if(x  && this.comisionSelected){
@@ -78,6 +79,26 @@ export class ComisionListaComponent implements OnInit {
 
   Comisiones!: Comision[];
   title = 'academia';
+
+  @HostListener('window:resize')
+  onResize() {
+    this.updateRowsPerPage();
+  }
+
+  private updateRowsPerPage() {
+    const width = window.innerWidth;
+    if (width < 600) {
+      this.rowsPerPage = 6;
+    } else if (width < 960) {
+      this.rowsPerPage = 5;
+    } else if (width < 1280) {
+      this.rowsPerPage = 8;
+    } else if (width < 1920) {
+      this.rowsPerPage = 10;
+    } else {
+      this.rowsPerPage = 10;
+    }
+  }
 
   confirm() {
 

@@ -33,6 +33,7 @@ import { DialogModule } from 'primeng/dialog';
 })
 export class AlumnoListaComponent implements OnInit {
   screenSize = { width: 0, height: 0 };
+  rowsPerPage = 5;
   alumnos$:Observable<Alumno[]> = this.store.select(PersonaState.getAlumnos);
   loading$:Observable<boolean> = this.store.select(PersonaState.getLoading);
   error$:Observable<boolean> = this.store.select(PersonaState.getError)
@@ -60,6 +61,7 @@ export class AlumnoListaComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.dispatch(new GetAlumnosAction(new AlumnoFilter()));
+    this.updateRowsPerPage();
     this.showConfirmation$.subscribe(x => {
       if(x  && this.alumnoSelected){
         this.confirm();
@@ -69,6 +71,26 @@ export class AlumnoListaComponent implements OnInit {
     this.screenService.screenSize$.subscribe((x:any) => {
        this.scrollSize = x.currentTarget.innerWidth > 992 ? 'flex' : '50vh'
     })
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.updateRowsPerPage();
+  }
+
+  private updateRowsPerPage() {
+    const width = window.innerWidth;
+    if (width < 600) {
+      this.rowsPerPage = 6;
+    } else if (width < 960) {
+      this.rowsPerPage = 5;
+    } else if (width < 1280) {
+      this.rowsPerPage = 8;
+    } else if (width < 1920) {
+      this.rowsPerPage = 10;
+    } else {
+      this.rowsPerPage = 10;
+    }
   }
 
   confirm() {

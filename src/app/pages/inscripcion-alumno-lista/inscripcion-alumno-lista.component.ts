@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { PersonaState } from '../../store/states/api/persona.state';
 import { filter, firstValueFrom, Observable } from 'rxjs';
 import { Alumno } from '../../entities/alumno';
@@ -34,6 +34,7 @@ import { MessageModule } from 'primeng/message';
   styleUrl: './inscripcion-alumno-lista.component.scss'
 })
 export class InscripcionAlumnoListaComponent implements OnInit, OnDestroy {
+  rowsPerPage = 5;
   alumnos$: Observable<Alumno[]> = this.store.select(PersonaState.getAlumnos);
   loading$: Observable<boolean> = this.store.select(PersonaState.getLoading);
   error$: Observable<boolean> = this.store.select(PersonaState.getError);
@@ -46,6 +47,7 @@ export class InscripcionAlumnoListaComponent implements OnInit, OnDestroy {
 
 
   async ngOnInit(): Promise<void> {
+    this.updateRowsPerPage();
     const especialidadSelected = await firstValueFrom(this.especialidadSelected$.pipe(filter(x => x !== null)));
     if (especialidadSelected) {
       this.disablePlanDropDown = false;
@@ -71,6 +73,26 @@ export class InscripcionAlumnoListaComponent implements OnInit, OnDestroy {
   onPlanChanged(value: Plan) {
     this.store.dispatch(new SelectedPlanFilter(value));
     this.mostrarTip = false;
+  }
+
+  @HostListener('window:resize')
+  onResize() {
+    this.updateRowsPerPage();
+  }
+
+  private updateRowsPerPage() {
+    const width = window.innerWidth;
+    if (width < 600) {
+      this.rowsPerPage = 6;
+    } else if (width < 960) {
+      this.rowsPerPage = 5;
+    } else if (width < 1280) {
+      this.rowsPerPage = 8;
+    } else if (width < 1920) {
+      this.rowsPerPage = 10;
+    } else {
+      this.rowsPerPage = 10;
+    }
   }
 
 

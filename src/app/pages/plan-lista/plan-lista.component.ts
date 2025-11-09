@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
@@ -32,6 +32,7 @@ import { Especialidad } from '../../entities/especialidad';
   providers: [ConfirmationService]
 })
 export class PlanListaComponent implements OnInit {
+  rowsPerPage = 5;
   public planes$: Observable<Plan[]> = this.store.select(PlanState.getPlanes)
   public loading$: Observable<boolean> = this.store.select(PlanState.getLoading);
   public error$: Observable<boolean> = this.store.select(PlanState.getError);
@@ -50,6 +51,7 @@ export class PlanListaComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.updateRowsPerPage();
     this.planes$.subscribe(x => this.planes = x);
     let filter = new PlanFilter();
     filter.mostrarEspecialidad = true
@@ -100,6 +102,26 @@ export class PlanListaComponent implements OnInit {
 
   planes!: Plan[];
   title = 'academia';
+
+  @HostListener('window:resize')
+  onResize() {
+    this.updateRowsPerPage();
+  }
+
+  private updateRowsPerPage() {
+    const width = window.innerWidth;
+    if (width < 600) {
+      this.rowsPerPage = 6;
+    } else if (width < 960) {
+      this.rowsPerPage = 5;
+    } else if (width < 1280) {
+      this.rowsPerPage = 8;
+    } else if (width < 1920) {
+      this.rowsPerPage = 10;
+    } else {
+      this.rowsPerPage = 10;
+    }
+  }
 
   confirm() {
     this.confirmationService.confirm({
