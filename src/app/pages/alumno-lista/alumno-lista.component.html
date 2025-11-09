@@ -122,11 +122,11 @@
             <p>{{ message.message }}</p>
         </div>
     </ng-template>
-    <ng-template pTemplate="footer" let-reject="reject">
+    <ng-template pTemplate="footer" let-message>
         <div class="flex gap-2 justify-center">
-            <button type="button" pButton icon="pi pi-check" label="Aceptar" severity="success" (click)="cd.onAccept()"
+            <button type="button" pButton icon="pi pi-check" label="Aceptar" severity="success" (click)="message.accept()"
                 class="ui-button-success"></button>
-            <button type="button" pButton icon="pi pi-times" label="Cancelar" severity="danger" (click)="cd.onReject()"
+            <button type="button" pButton icon="pi pi-times" label="Cancelar" severity="danger" (click)="message.reject()"
                 class="ui-button-secondary"></button>
         </div>
 

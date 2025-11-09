@@ -75,7 +75,7 @@ export class EspecialidadListaComponent implements OnInit {
 
 
   
-  @HostListener('window:resize', ['$event'])
+  @HostListener('window:resize')
   onResize() {
     this.updateRowsPerPage();
   }
