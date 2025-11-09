@@ -1,31 +1,38 @@
 
 <p-table #dt2 [value]="inscripciones" [loading]="(loading$ | async)"
     styleClass="p-datatable-gridlines p-datatable-striped text-xs sm:text-sm md:text-base lg:text-base xl:text-base" responsiveLayout="stack"
-    [breakpoint]="'960px'" [paginator]="true" [scrollable]="true" [rows]="5" scrollHeight="48vh"
+    [breakpoint]="'960px'" [paginator]="true" size="small" [scrollable]="true" [rows]="rowsPerPage" scrollHeight="48vh"
     [globalFilterFields]="['nota','condicion', 'curso.descripcion']">
     <ng-template pTemplate="caption">
-        <div class="grid ">
-            <div class="grid grid-cols-12 w-full gap-2">
-                <div class="col-span-12 text-center lg:text-start lg:col-span-2">
-                    @if (alumno) {
-                    <h2> Catedras del alumno: ({{alumno.legajo}}) {{alumno.apellido}} {{alumno.nombre}} Plan:
-                        {{alumno.plan.descripcion}} </h2>
-                    }
+        <div class="flex flex-col gap-3">
+            <div class="w-full text-center">
+                @if (alumno) {
+                <h2 class="m-0 text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl">
+                    Catedras del alumno: ({{alumno.legajo}}) {{alumno.apellido}} {{alumno.nombre}} - Plan: {{alumno.plan.descripcion}}
+                </h2>
+                }
+            </div>
+            <div class="grid grid-cols-12 gap-2 w-full items-center">
+                <div class="col-span-12 lg:col-span-4">
+                    <p-button label="Volver a inscripciones" icon="pi pi-arrow-left" severity="primary" 
+                        styleClass="w-full text-xs sm:text-sm md:text-base lg:text-base xl:text-base px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2" 
+                        (onClick)="redirectToInscripcionesalumnos()">
+                    </p-button>
                 </div>
-                <div class="col-span-12 lg:col-span-2 lg:col-start-5 gap-2 mb-0">
-                    <p-button label="Volver a inscripciones" severity="primary" styleClass="w-full px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2" class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base w-full text-nowrap"
-                        (onClick)="redirectToInscripcionesalumnos()"></p-button>
-                </div>
-                <div class="col-span-12 lg:col-span-2 ">
-                    <p-button label="Nueva inscripción" severity="primary" class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base w-full text-nowrap"
-                       styleClass="w-full px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2" (onClick)="redirectToNuevaInscripcion()"></p-button>
+                <div class="col-span-12 lg:col-span-3">
+                    <p-button label="Nueva inscripción" icon="pi pi-plus" severity="primary" 
+                        styleClass="w-full text-xs sm:text-sm md:text-base lg:text-base xl:text-base px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2" 
+                        (onClick)="redirectToNuevaInscripcion()">
+                    </p-button>
                 </div>
                 <div class="col-span-12 lg:col-span-3 lg:col-start-10">
                     <p-iconField iconPosition="left" class="w-full">
                         <p-inputIcon>
                             <i class="pi pi-search"></i>
                         </p-inputIcon>
-                        <input pInputText type="text" class="w-full text-xs sm:text-sm md:text-base lg:text-base xl:text-base py-1 sm:py-2 md:py-2 lg:py-2" (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
+                        <input pInputText type="text" 
+                            class="w-full text-xs sm:text-sm md:text-base lg:text-base xl:text-base py-1 sm:py-2 md:py-2 lg:py-2" 
+                            (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
                             placeholder="Buscar alumno" />
                     </p-iconField>
                 </div>

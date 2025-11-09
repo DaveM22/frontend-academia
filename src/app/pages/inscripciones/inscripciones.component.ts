@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
@@ -39,13 +39,35 @@ export class InscripcionesComponent implements OnInit, OnDestroy  {
   alumno!:Alumno;
   inscripciones:AlumnoInscripcion[]=[]
   showConfirmation$:Observable<boolean> = this.store.select(AppPageState.showModalConfirmation)
+  rowsPerPage: number = 6;
+
   constructor(private store:Store,private route:Router, private router:ActivatedRoute, private messageService:MessageService, private confirmationService: ConfirmationService){}
+  
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.updateRowsPerPage();
+  }
+
+  updateRowsPerPage() {
+    const width = window.innerWidth;
+    if (width < 600) {
+      this.rowsPerPage = 6;
+    } else if (width < 960) {
+      this.rowsPerPage = 5;
+    } else if (width < 1280) {
+      this.rowsPerPage = 8;
+    } else {
+      this.rowsPerPage = 10;
+    }
+  }
+
   ngOnDestroy(): void {
     this.store.dispatch(new ClearMateriasAction);
   }
   inscripcionSelected!:AlumnoInscripcion
   
   ngOnInit(): void {
+    this.updateRowsPerPage();
     let filter = new AlumnoFilter();
     filter.incluirInscripciones = true;
     this.store.dispatch(new GetAlumnoByIdAction(this.router.snapshot.params['id'], filter));
