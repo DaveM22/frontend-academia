@@ -10,7 +10,7 @@
 }
 
 <p-table #dt2 [value]="(alumnos$ | async)!" [loading]="(loading$ | async)"
-    styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl" responsiveLayout="stack"
+    styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-xs sm:text-sm md:text-base lg:text-base xl:text-base" responsiveLayout="stack"
     [breakpoint]="'960px'" [paginator]="true" [scrollable]="true" [rows]="5" scrollHeight="flex"
     [globalFilterFields]="['nombre', 'apellido', 'direccion', 'email', 'legajo']" size="small">
     <ng-template pTemplate="caption">
@@ -47,9 +47,8 @@
                         <p-inputIcon>
                             <i class="pi pi-search"></i>
                         </p-inputIcon>
-                        <input pInputText
-                            
-                            class="w-full text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl py-1 sm:py-2 md:py-2 lg:py-3"
+                        <input pInputText pSize="large"
+                            class="w-full text-xs sm:text-sm md:text-base lg:text-base xl:text-base h-[38px]"
                             type="text"
                             (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
                             placeholder="Buscar alumno" />
@@ -75,7 +74,7 @@
             <td><span class="p-column-title">Plan</span>{{alumno.plan.descripcion}}</td>
             <td><span class="p-column-title">Acciones</span>
                 <div class="flex gap-2 justify-center">
-                    <p-button label="Inscripciones" class="text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl" styleClass="text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2"
+                    <p-button label="Inscripciones" styleClass="text-xs sm:text-sm md:text-base lg:text-base xl:text-base px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2"
                         (onClick)="redirectToInscripciones(alumno._id)"></p-button>
                 </div>
             </td>
@@ -84,12 +83,12 @@
     <ng-template pTemplate="emptymessage">
         @if ((alumnos$ | async)!.length === 0) {
         <tr>
-            <td class="text-center text-sm lg:text-xl" colspan="5">No se han registrado inscripciones</td>
+            <td class="text-center" colspan="5">No se han registrado inscripciones</td>
         </tr>
         }
         @else {
         <tr>
-            <td class="text-center text-sm lg:text-xl" colspan="5">No se encontraron inscripciones con el filtro
+            <td class="text-center" colspan="5">No se encontraron inscripciones con el filtro
                 aplicado</td>
         </tr>
         }

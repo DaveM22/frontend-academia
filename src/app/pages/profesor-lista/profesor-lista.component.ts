@@ -21,11 +21,12 @@ import { ShowModalConfirmationAction } from '../../store/actions/pages/app.actio
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ScreenSizeService } from '../../services/screen-size.service.service';
+import { DialogModule } from 'primeng/dialog';
 
 @Component({
   selector: 'app-profesor-lista',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule,ConfirmDialogModule, MessageModule, PanelModule, ToastModule, IconFieldModule, InputTextModule, InputIconModule],
+  imports: [CommonModule, TableModule, ButtonModule,ConfirmDialogModule, MessageModule, PanelModule, ToastModule, IconFieldModule, InputTextModule, InputIconModule, DialogModule],
   templateUrl: './profesor-lista.component.html',
   styleUrl: './profesor-lista.component.scss',
   providers:[ConfirmationService]
@@ -38,6 +39,8 @@ export class ProfesorListaComponent implements OnInit {
   showConfirmation$: Observable<boolean> = this.store.select(AppPageState.showModalConfirmation)
   profesorSelected!: Profesor;
   scrollSize: string = 'flex';
+  displayProfesorInfo: boolean = false;
+  selectedProfesor: Profesor | null = null;
   constructor(private store: Store, private router: Router, private messageService: MessageService, private confirmationService: ConfirmationService, private screenService:ScreenSizeService) {}
 
   ngOnInit(): void {
@@ -90,5 +93,10 @@ export class ProfesorListaComponent implements OnInit {
      this.store.dispatch(new GetProfesorByIdAction(id, docenteFilter)).subscribe(() => {
           this.router.navigate([`profesores/editar/${id}`]);
      });
+  }
+
+  showProfesorInfo(profesor: Profesor) {
+    this.selectedProfesor = profesor;
+    this.displayProfesorInfo = true;
   }
 }

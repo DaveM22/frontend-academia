@@ -7,6 +7,7 @@ export class Persona {
     public apellido:string = '';
     public email:string = '';
     public telefono:string = '';
+    public direccion:string = '';
     public fechaNacimiento:Date = new Date();
     public legajo:number = 0;
     public plan!:Plan;

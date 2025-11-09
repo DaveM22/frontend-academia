@@ -21,11 +21,12 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ScreenSizeService } from '../../services/screen-size.service.service';
 import { AlumnoFilter } from '../../entities/filter';
+import { DialogModule } from 'primeng/dialog';
 
 @Component({
   selector: 'app-alumno-lista',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule,ConfirmDialogModule, MessagesModule, PanelModule, ToastModule, IconFieldModule, InputTextModule, InputIconModule],
+  imports: [CommonModule, TableModule, ButtonModule,ConfirmDialogModule, MessagesModule, PanelModule, ToastModule, IconFieldModule, InputTextModule, InputIconModule, DialogModule],
   templateUrl: './alumno-lista.component.html',
   styleUrl: './alumno-lista.component.scss',
   providers:[ConfirmationService]
@@ -39,6 +40,8 @@ export class AlumnoListaComponent implements OnInit {
   showConfirmation$:Observable<boolean> = this.store.select(AppPageState.showModalConfirmation)
   alumnoSelected!:Alumno
   scrollSize:string = "flex";
+  displayAlumnoInfo: boolean = false;
+  selectedAlumno: Alumno | null = null;
   constructor(private store:Store, private router:Router, private confirmationService:ConfirmationService, private messageService:MessageService, private screenService:ScreenSizeService){}
 
 
@@ -93,6 +96,11 @@ export class AlumnoListaComponent implements OnInit {
   modalConfirmar(alumno:Alumno){
     this.alumnoSelected = alumno;
     this.store.dispatch(new ShowModalConfirmationAction(true));
+  }
+
+  showAlumnoInfo(alumno: Alumno) {
+    this.selectedAlumno = alumno;
+    this.displayAlumnoInfo = true;
   }
 
 }
