@@ -1,8 +1,8 @@
 @if(isLogged){
-<div class="h-screen flex flex-col surface-card shadow-2 border-right-1 surface-border" style="min-width: 280px; max-width: 320px;">
+<div class="h-full w-full flex flex-col bg-gray-900 shadow-2 border-right-1 border-gray-700">
   
 
-  <div class="flex-shrink-0 p-4 bg-gray-900 relative overflow-hidden">
+  <div class="flex-shrink-0 p-4 bg-gray-950 relative overflow-hidden w-full">
     <div class="absolute inset-0 bg-black/10"></div>
     <div class="relative flex items-center space-x-3">
       <div class="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
@@ -15,20 +15,20 @@
   </div>
 
 
-  <div class="flex-shrink-0 flex items-center gap-3 px-4 py-3 border-bottom-1 surface-border surface-section cursor-pointer hover:surface-hover transition-colors transition-duration-150" (click)="menu.toggle($event)">
+  <div class="flex-shrink-0 flex items-center gap-3 px-4 py-3 border-bottom-1 border-gray-700 bg-gray-800 cursor-pointer hover:bg-gray-750 transition-colors transition-duration-150 w-full" (click)="menu.toggle($event)">
     <p-avatar [image]="picture" size="normal" shape="circle" class="shadow-md" />
     <div class="flex-1 overflow-hidden">
-      <div class="text-sm font-semibold text-color truncate">{{name}}</div>
-      <div class="text-xs text-color-secondary truncate">{{rol}}</div>
+      <div class="text-sm font-semibold text-gray-100 truncate">{{name}}</div>
+      <div class="text-xs text-gray-400 truncate">{{rol}}</div>
     </div>
-    <i class="pi pi-chevron-down text-xs text-color-secondary transform transition-transform duration-200 hover:rotate-180"></i>
+    <i class="pi pi-chevron-down text-xs text-gray-400 transform transition-transform duration-200 hover:rotate-180"></i>
   </div>
   
   <p-menu #menu [model]="userMenuItems" [popup]="true" />
   
 
-  <div class="flex-1 overflow-y-auto min-h-0 scrollbar-thin scrollbar-thumb-gray-300 hover:scrollbar-thumb-gray-400 scrollbar-track-transparent">
-    <div class="p-3">
+  <div class="flex-1 overflow-y-auto min-h-0 scrollbar-thin scrollbar-thumb-gray-600 hover:scrollbar-thumb-gray-500 scrollbar-track-transparent w-full">
+    <div class="p-3 w-full">
       <p-menu [model]="items" styleClass="w-full border-none bg-transparent" />
     </div>
   </div>

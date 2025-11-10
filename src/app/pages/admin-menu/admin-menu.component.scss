@@ -1,0 +1,29 @@
+::ng-deep .sidebar-full-height {
+  width: 85vw !important;
+  max-width: 400px !important;
+  background-color: #111827 !important; // bg-gray-900
+
+  .p-sidebar-content {
+    height: 100%;
+    padding: 0 !important;
+    width: 100%;
+    background-color: #111827 !important; // bg-gray-900
+  }
+
+  sidebar {
+    height: 100%;
+    width: 100%;
+    display: block;
+  }
+}
+
+// Cambiar el color del overlay/backdrop del modal
+::ng-deep .p-sidebar-mask {
+  background-color: rgba(17, 24, 39, 0.75) !important; // bg-gray-900 con transparencia
+}
+
+@media (min-width: 640px) {
+  ::ng-deep .sidebar-full-height {
+    width: 400px !important;
+  }
+}

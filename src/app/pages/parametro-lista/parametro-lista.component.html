@@ -17,7 +17,7 @@
                 <i class="pi pi-search"></i>
             </p-inputIcon>
             <input pInputText pSize="large" type="text" 
-                class="w-full text-xs sm:text-sm md:text-base lg:text-base xl:text-base py-1 sm:py-2 md:py-2 lg:py-2" 
+                class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base w-full h-[50px]" 
                 (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
                 placeholder="Buscar parametro" />
         </p-iconField>
