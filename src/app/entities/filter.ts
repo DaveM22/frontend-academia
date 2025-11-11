@@ -4,6 +4,7 @@ export class Filter {
 
 export class ComisionFilter{
     mostrarPlan:boolean = false;
+    planId:string = '';
 }
 
 export class PlanFilter{

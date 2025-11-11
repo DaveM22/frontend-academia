@@ -12,6 +12,12 @@
         }
 
         <div class="grid grid-cols-12 gap-4 w-full">
+            <div class="col-span-12 md:col-span-3">
+                <app-plan-filter
+                    class="h-full"
+                    (selectionChange)="onPlanChanged($event)">
+                </app-plan-filter>
+            </div>
             <div class="col-span-12 md:col-span-4 md:col-start-5 flex justify-center">
                 <p-button 
                     label="Nueva comisión" 

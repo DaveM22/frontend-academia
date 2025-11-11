@@ -8,8 +8,8 @@
     appendTo="body" 
     [closable]="false"
     [visible]="(showModal$ | async)!" 
-    [style]="{width: '95%'}" 
-    [contentStyle]="{height: '50vh'}">
+    [style]="{width: '95%', height: '100vh', top: '0'}" 
+    [contentStyle]="{height: 'calc(100vh - 150px)'}">
     <p-toolbar styleClass="mb-4 gap-2">
         <ng-template pTemplate="left">
             <div class="sm:flex justify-content-center">

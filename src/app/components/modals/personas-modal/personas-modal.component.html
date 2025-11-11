@@ -1,6 +1,6 @@
 <p-dialog header="Seleccionar persona a vincular usuario" [closable]="false" [resizable]="false" [modal]="true" showHeader="false"
-    [maximizable]="true" appendTo="body" [visible]="(showModal$ | async)!" [style]="{width: '95%'}"
-    [contentStyle]="{height: '75vh'}">
+    [maximizable]="true" appendTo="body" [visible]="(showModal$ | async)!" [style]="{width: '95%', height: '100vh', top: '0'}"
+    [contentStyle]="{height: 'calc(100vh - 150px)'}">
     <p-toolbar styleClass="mb-4 gap-2">
         <ng-template pTemplate="left">
             <div class="sm:flex justify-content-center">

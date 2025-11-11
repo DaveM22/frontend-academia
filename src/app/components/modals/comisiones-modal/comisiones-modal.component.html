@@ -1,5 +1,5 @@
 <p-dialog header="Seleccionar comision" [resizable]="false" [modal]="true" [maximizable]="true" appendTo="body"
-    [visible]="(showModal$ | async)!" [style]="{width: '95%'}" [contentStyle]="{height: '75vh'}">
+    [visible]="(showModal$ | async)!" [style]="{width: '95%', height: '100vh', top: '0'}" [contentStyle]="{height: 'calc(100vh - 150px)'}">
     <p-table #table [value]="comisiones" [scrollable]="true" scrollHeight="flex"
         styleClass="p-datatable-gridlines p-datatable-striped" responsiveLayout="stack">
         <ng-template pTemplate="header">

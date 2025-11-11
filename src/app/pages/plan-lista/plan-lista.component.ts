@@ -70,6 +70,11 @@ export class PlanListaComponent implements OnInit {
         filter.especialidadId = especialidad._id!;
         this.store.dispatch(new GetPlanAction(filter));
       }
+      else{
+        let filter = new PlanFilter();
+        filter.mostrarEspecialidad = true;
+        this.store.dispatch(new GetPlanAction(filter));
+      }
     });
 
   }

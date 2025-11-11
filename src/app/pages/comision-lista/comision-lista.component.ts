@@ -20,32 +20,38 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 import { ScreenSizeService } from '../../services/screen-size.service.service';
+import { PlanFilterComponent } from '../../components/filters/plan-filter/plan-filter.component';
+import { Plan } from '../../entities/plan';
+import { GetPlanAction } from '../../store/actions/api/planes.action';
+import { PlanFilter } from '../../entities/filter';
+import { SelectedPlanFilter } from '../../store/actions/pages/app.action';
 
 @Component({
   selector: 'app-comision-lista',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, MessageModule, PanelModule, ToastModule, ConfirmDialogModule,  IconFieldModule, InputTextModule, InputIconModule],
+  imports: [CommonModule, TableModule, ButtonModule, MessageModule, PanelModule, ToastModule, ConfirmDialogModule, IconFieldModule, InputTextModule, InputIconModule, PlanFilterComponent],
   templateUrl: './comision-lista.component.html',
   styleUrl: './comision-lista.component.scss',
-  providers:[ConfirmationService]
+  providers: [ConfirmationService]
 })
 export class ComisionListaComponent implements OnInit {
   rowsPerPage = 5;
   public comisiones$: Observable<Comision[]> = this.store.select(ComisionState.getComisiones)
 
-  public loading$:Observable<boolean> = this.store.select(ComisionState.getLoading);
+  public loading$: Observable<boolean> = this.store.select(ComisionState.getLoading);
 
-  public error$:Observable<boolean> = this.store.select(ComisionState.getError);
+  public error$: Observable<boolean> = this.store.select(ComisionState.getError);
 
-  public errorMessage$:Observable<string> = this.store.select(ComisionState.getErrorMessage);
+  public errorMessage$: Observable<string> = this.store.select(ComisionState.getErrorMessage);
 
-  public Comision!:Comision;
-  showConfirmation$:Observable<boolean> = this.store.select(AppPageState.showModalConfirmation)
-  public comisionSelected!:Comision;
-  public error:boolean = false;
+  public Comision!: Comision;
+  showConfirmation$: Observable<boolean> = this.store.select(AppPageState.showModalConfirmation)
+  public comisionSelected!: Comision;
+  public planSelected$ = this.store.select(AppPageState.getSelectedPlanInFilter);
+  public error: boolean = false;
   scrollSize: string = "flex";
-  constructor(private store:Store, private router:Router, private confirmationService:ConfirmationService,private  messageService:MessageService, private screenService:ScreenSizeService){
-    
+  constructor(private store: Store, private router: Router, private confirmationService: ConfirmationService, private messageService: MessageService, private screenService: ScreenSizeService) {
+
   }
 
 
@@ -53,25 +59,53 @@ export class ComisionListaComponent implements OnInit {
     let filters = new ComisionFilter();
     filters.mostrarPlan = true;
     this.store.dispatch(new GetComision(filters));
+
+    // Cargar planes para el filtro
+    let planFilter = new PlanFilter();
+    planFilter.mostrarEspecialidad = true;
+    this.store.dispatch(new GetPlanAction(planFilter));
+
     this.updateRowsPerPage();
     this.error$.subscribe(x => this.error = x);
     this.showConfirmation$.subscribe(x => {
-      if(x  && this.comisionSelected){
+      if (x && this.comisionSelected) {
         this.confirm();
       }
     })
 
-    this.screenService.screenSize$.subscribe((x:any) => {
+    this.screenService.screenSize$.subscribe((x: any) => {
       this.scrollSize = x.currentTarget.innerWidth > 992 ? 'flex' : '50vh'
-   })
+    })
+
+
+    this.planSelected$.subscribe(plan => {
+      if (plan) {
+        let filter = new ComisionFilter();
+        filter.mostrarPlan = true;
+        filter.planId = plan._id!;
+        this.store.dispatch(new GetComision(filter));
+      } else {
+        let filter = new ComisionFilter();
+        filter.mostrarPlan = true;
+        this.store.dispatch(new GetComision(filter));
+      }
+    });
   }
 
 
-  redirectNuevaComision(){
+  redirectNuevaComision() {
     this.router.navigate(["/comisiones/nuevo"]);
   }
 
-  redirectEditarComision(id:string){
+  onPlanChanged(plan: Plan | null) {
+    if (plan) {
+      this.store.dispatch(new SelectedPlanFilter(plan));
+    } else {
+      this.store.dispatch(new SelectedPlanFilter(plan!));
+    }
+  }
+
+  redirectEditarComision(id: string) {
     this.store.dispatch(new GetByIdComisionAction(id)).subscribe(() => {
       this.router.navigate(["/comisiones/editar/" + id]);
     })
@@ -107,28 +141,28 @@ export class ComisionListaComponent implements OnInit {
       message: `¿Desea eliminar la siguiente comisión: ${this.comisionSelected!.descripcion!} ?`,
       acceptIcon: 'pi pi-check mr-2',
       rejectIcon: 'pi pi-times mr-2',
-      acceptLabel:'Borrar',
-      rejectLabel:'Cancelar',
+      acceptLabel: 'Borrar',
+      rejectLabel: 'Cancelar',
       rejectButtonStyleClass: 'p-button-sm',
       acceptButtonStyleClass: 'p-button-outlined p-button-sm',
-        accept: () => {
-          this.store.dispatch(new DeleteComisionAction(this.comisionSelected._id))
+      accept: () => {
+        this.store.dispatch(new DeleteComisionAction(this.comisionSelected._id))
           .subscribe(() => {
-            if(!this.error){
+            if (!this.error) {
               this.store.dispatch(new ShowModalConfirmationAction(false))
               this.messageService.add({ severity: 'success', summary: 'Borrar comisión', detail: `Se ha borrado la comisión: ${this.comisionSelected.descripcion}` });
             }
             this.store.dispatch(new ShowModalConfirmationAction(false));
-          })       
-        },
-        reject: () => {
-          this.store.dispatch(new ShowModalConfirmationAction(false));
-        }
+          })
+      },
+      reject: () => {
+        this.store.dispatch(new ShowModalConfirmationAction(false));
+      }
     });
-}
+  }
 
-modalConfirmar(comision:Comision){
-  this.comisionSelected = comision;
-  this.store.dispatch(new ShowModalConfirmationAction(true));
-}
+  modalConfirmar(comision: Comision) {
+    this.comisionSelected = comision;
+    this.store.dispatch(new ShowModalConfirmationAction(true));
+  }
 }

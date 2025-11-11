@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
-import { MenuModule } from 'primeng/menu';
+import { Menu, MenuModule } from 'primeng/menu';
 import { SidebarModule } from 'primeng/sidebar';
 import { PanelMenuModule } from 'primeng/panelmenu';
 import { RolService } from '../../services/rol.service';
@@ -24,6 +24,7 @@ import { ButtonModule } from 'primeng/button';
   styleUrl: './sidebar.component.scss'
 })
 export class SidebarComponent implements OnInit {
+  @ViewChild('menu') menu!: Menu;
   items: MenuItem[] | undefined;
   userMenuItems: MenuItem[] | undefined;
   sidebarVisible: boolean = true;
@@ -40,7 +41,12 @@ export class SidebarComponent implements OnInit {
       {
         label: 'Cerrar Sesión',
         icon: 'pi pi-power-off',
-        command: () => this.logout()
+        command: (event) => {
+          if (event.originalEvent) {
+            event.originalEvent.stopPropagation();
+          }
+          this.logout();
+        }
       }
     ];
 
@@ -61,6 +67,11 @@ export class SidebarComponent implements OnInit {
 
   logout() {
     this.auth.logout();
+  }
+
+  toggleUserMenu(event: Event) {
+    event.stopPropagation();
+    this.menu.toggle(event);
   }
 
   renderItems(rol: string) {

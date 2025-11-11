@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Comision, ComisionDto } from '../entities/comision';
 import { ComisionFilter } from '../entities/filter';
@@ -12,7 +12,12 @@ export class ComisionService {
   constructor(private http:HttpClient) { }
 
   get(filters:ComisionFilter){
-    return this.http.get<Comision[]>(`${environment.apiUrl}/comisiones?mostrarPlan=${filters.mostrarPlan}`);
+        let params = new HttpParams();
+        params = params.set('mostrarPlan', filters.mostrarPlan)
+        if(filters.planId !== ''){
+          params = params.set('planId', filters.planId)
+        }
+    return this.http.get<Comision[]>(`${environment.apiUrl}/comisiones`, { params: params });
   }
 
   getById(id:string){
