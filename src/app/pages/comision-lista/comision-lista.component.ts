@@ -13,7 +13,7 @@ import { PanelModule } from 'primeng/panel';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { ShowModalConfirmationAction } from '../../store/actions/pages/app.action';
+import { LoadingForm, ShowModalConfirmationAction } from '../../store/actions/pages/app.action';
 import { AppPageState } from '../../store/states/page/app.state';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { IconFieldModule } from 'primeng/iconfield';
@@ -106,7 +106,9 @@ export class ComisionListaComponent implements OnInit {
   }
 
   redirectEditarComision(id: string) {
+    this.store.dispatch(new LoadingForm(true));
     this.store.dispatch(new GetByIdComisionAction(id)).subscribe(() => {
+      this.store.dispatch(new LoadingForm(false));
       this.router.navigate(["/comisiones/editar/" + id]);
     })
   }

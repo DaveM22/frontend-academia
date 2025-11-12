@@ -6,6 +6,7 @@ import { AlumnoInscripcionService } from "../../../services/alumno-inscripcion.s
 import { lastValueFrom } from "rxjs";
 import { AsignAlumnoInscripcionAction } from "../../actions/pages/alumno-inscripcion.action";
 import { ErrorStateHandler } from "../../../util/ErrorStateHandler";
+import { LoadingForm } from "../../actions/pages/app.action";
 
 @State<AlumnoInscripcionModelState>({
   name: 'alumno_inscripciones',
@@ -36,12 +37,22 @@ export class AlumnoInscripcionState {
   @Action(PostAlumnoInscripcionAction)
   async postAlumnoInscripcion(ctx: StateContext<AlumnoInscripcionModelState>, action: PostAlumnoInscripcionAction) {
     ctx.patchState({ loading: true, error: false })
-    const response = await lastValueFrom(this.service.post(action.inscripcion));
-    const list = ctx.getState().inscripciones;
-    ctx.patchState({
-      inscripciones: [...list, response],
-      loading: false
-    })
+    ctx.dispatch(new LoadingForm(true))
+    try {
+      const response = await lastValueFrom(this.service.post(action.inscripcion));
+      const list = ctx.getState().inscripciones;
+      ctx.patchState({
+        inscripciones: [...list, response],
+        loading: false
+      })
+    }
+    catch (error) {
+      ErrorStateHandler.handleError(error, ctx);
+    }
+    finally {
+      ctx.dispatch(new LoadingForm(false))
+    }
+
   }
 
   @Action(GetOneAlumnoInscripcionAction)
@@ -71,32 +82,41 @@ export class AlumnoInscripcionState {
   @Action(PutAlumnoInscripcionAction)
   async putAlumnoInscripcion(ctx: StateContext<AlumnoInscripcionModelState>, action: PutAlumnoInscripcionAction) {
     ctx.patchState({ loading: true, error: false })
-    const response = await lastValueFrom(this.service.put(action.id, action.alumnoInscripcion));
-
-    const updatedAlumnoInscripcion = ctx.getState().inscripciones.map(item => item =
-      item._id === response._id ? response : item
-    );
-    ctx.patchState({
-      inscripciones: updatedAlumnoInscripcion,
-      loading: false
-    })
-
-  }
-
-  @Action(DeleteAlumnoInscripcionAction)
-  async deleteComision(ctx: StateContext<AlumnoInscripcionModelState>, action: DeleteAlumnoInscripcionAction) {
-    ctx.patchState({
-      error: false,
-      errorMessage: ''
-    })
+    ctx.dispatch(new LoadingForm(true))
     try {
-      await lastValueFrom(this.service.delete(action.id));
+      const response = await lastValueFrom(this.service.put(action.id, action.alumnoInscripcion));
+
+      const updatedAlumnoInscripcion = ctx.getState().inscripciones.map(item => item =
+        item._id === response._id ? response : item
+      );
       ctx.patchState({
-        inscripciones: ctx.getState().inscripciones.filter(x => x._id !== action.id)
+        inscripciones: updatedAlumnoInscripcion,
+        loading: false
       })
-    }
-    catch (error: any) {
+    } catch (error) {
       ErrorStateHandler.handleError(error, ctx);
     }
+    finally {
+      ctx.dispatch(new LoadingForm(false))
+    }
   }
+
+
+
+@Action(DeleteAlumnoInscripcionAction)
+async deleteComision(ctx: StateContext<AlumnoInscripcionModelState>, action: DeleteAlumnoInscripcionAction) {
+  ctx.patchState({
+    error: false,
+    errorMessage: ''
+  })
+  try {
+    await lastValueFrom(this.service.delete(action.id));
+    ctx.patchState({
+      inscripciones: ctx.getState().inscripciones.filter(x => x._id !== action.id)
+    })
+  }
+  catch (error: any) {
+    ErrorStateHandler.handleError(error, ctx);
+  }
+}
 }

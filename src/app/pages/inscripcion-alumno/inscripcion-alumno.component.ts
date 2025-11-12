@@ -16,11 +16,12 @@ import { EspecialidadFilterComponent } from "../../components/filters/especialid
 import { PanelModule } from 'primeng/panel';
 import { CardModule } from 'primeng/card';
 import { AlumnoFilter } from '../../entities/filter';
+import { BlockUiComponent } from '../../components/util/block-ui/block-ui.component';
 
 @Component({
   selector: 'app-inscripcion-alumno',
   standalone: true,
-  imports: [CommonModule, PanelModule, RouterModule, CardModule],
+  imports: [CommonModule, PanelModule, RouterModule, CardModule, BlockUiComponent],
   templateUrl: './inscripcion-alumno.component.html',
   styleUrl: './inscripcion-alumno.component.scss'
 })

@@ -7,6 +7,7 @@ import { lastValueFrom } from "rxjs";
 import { ErrorStateHandler } from "../../../util/ErrorStateHandler";
 import { AsignSelectedCursoAction } from "../../actions/pages/curso.action";
 import saveAs from "file-saver";
+import { LoadingForm } from "../../actions/pages/app.action";
 
 @State<CursoModelState>({
     name: 'cursos',
@@ -74,32 +75,50 @@ export class CursoState {
 
     @Action(PostCursoAction)
     async postEspecialidadAction(ctx: StateContext<CursoModelState>, action: PostCursoAction) {
-        const response = await lastValueFrom(await this.service.post(action.curso));
-        const list = ctx.getState().cursos;
-        ctx.patchState({
-            cursos: [...list, response]
-        })
+        ctx.dispatch(new LoadingForm(true));
+        try {
+            const response = await lastValueFrom(await this.service.post(action.curso));
+            const list = ctx.getState().cursos;
+            ctx.patchState({
+                cursos: [...list, response]
+            })
+        } catch (error) {
+            ErrorStateHandler.handleError(error, ctx);
+        }
+        finally {
+            ctx.dispatch(new LoadingForm(false));
+        }
     }
 
     @Action(GetByIdCursoAction)
     async getByIdEspecialidad(ctx: StateContext<CursoModelState>, action: GetByIdCursoAction) {
+        ctx.patchState({ loading: true, error: false })
         const response = await lastValueFrom(this.service.getById(action.id));
-        console.log(response);
         ctx.dispatch(new AsignSelectedCursoAction(response));
+        ctx.patchState({ loading: false, error: false })
     }
 
     @Action(PutCursoAction)
     async putEspecialidad(ctx: StateContext<CursoModelState>, action: PutCursoAction) {
-        const response = await lastValueFrom(await this.service.put(action.curso));
-        const state = ctx.getState();
-        const updatedEspecialidades = ctx.getState().cursos.map(item =>
-            item._id === response._id ? response : item
-        );
+        ctx.dispatch(new LoadingForm(true));
+        try {
+            const response = await lastValueFrom(await this.service.put(action.curso));
+            const state = ctx.getState();
+            const updatedEspecialidades = ctx.getState().cursos.map(item =>
+                item._id === response._id ? response : item
+            );
 
-        ctx.patchState({
-            cursos: updatedEspecialidades
-        })
+            ctx.patchState({
+                cursos: updatedEspecialidades
+            })
 
+        }
+        catch (error: any) {
+            ErrorStateHandler.handleError(error, ctx);
+        }
+        finally {
+            ctx.dispatch(new LoadingForm(false));
+        }
     }
 
 
@@ -116,8 +135,8 @@ export class CursoState {
 
         ctx.patchState({ loading: true, error: false });
         try {
-              const response = await lastValueFrom(this.service.generateReport(action.id));
-              saveAs(response, 'archivo.pdf');
+            const response = await lastValueFrom(this.service.generateReport(action.id));
+            saveAs(response, 'archivo.pdf');
         }
         catch (error: any) {
             let errort = await error.error.text().then((t: any) => JSON.parse(t));

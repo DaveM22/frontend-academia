@@ -14,6 +14,7 @@ import { ToastModule } from 'primeng/toast';
 import { ComisionFilter } from '../../entities/filter';
 import { CardModule } from 'primeng/card';
 import { BlockUiComponent } from '../../components/util/block-ui/block-ui.component';
+import { AppPageState } from '../../store/states/page/app.state';
 
 @Component({
   selector: 'app-comision',
@@ -23,5 +24,7 @@ import { BlockUiComponent } from '../../components/util/block-ui/block-ui.compon
   styleUrl: './comision.component.scss'
 })
 export class ComisionComponent {
+  public loading$:Observable<boolean> = this.store.select(AppPageState.getFormLoading);
 
+  constructor(private store:Store){}
 }

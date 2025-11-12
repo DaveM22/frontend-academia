@@ -14,7 +14,7 @@ import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { ShowModalConfirmationAction } from '../../store/actions/pages/app.action';
+import { LoadingForm, ShowModalConfirmationAction } from '../../store/actions/pages/app.action';
 import { AppPageState } from '../../store/states/page/app.state';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputTextModule } from 'primeng/inputtext';
@@ -42,12 +42,12 @@ export class CursoListaComponent implements OnInit {
   curso!: Curso;
 
   cursoSelected!: Curso;
-  
+
   // Propiedades para el modal de detalles
   showModal: boolean = false;
   selectedCurso: Curso | null = null;
 
-  showConfirmation$:Observable<boolean> = this.store.select(AppPageState.showModalConfirmation)
+  showConfirmation$: Observable<boolean> = this.store.select(AppPageState.showModalConfirmation)
 
   constructor(private store: Store, private router: Router, private confirmationService: ConfirmationService, private messageService: MessageService) {
 
@@ -60,7 +60,7 @@ export class CursoListaComponent implements OnInit {
     filters.mostrarMateria = true;
     this.store.dispatch(new GetCursoAction(filters));
     this.showConfirmation$.subscribe(x => {
-      if(x  && this.cursoSelected){
+      if (x && this.cursoSelected) {
         this.confirm();
       }
     })
@@ -71,7 +71,9 @@ export class CursoListaComponent implements OnInit {
   }
 
   redirectEditCurso(id: string) {
+    this.store.dispatch(new LoadingForm(true));
     this.store.dispatch(new GetByIdCursoAction(id)).subscribe(() => {
+      this.store.dispatch(new LoadingForm(false));
       this.router.navigate(["/cursos/editar/" + id]);
     })
   }
@@ -124,7 +126,7 @@ export class CursoListaComponent implements OnInit {
     });
   }
 
-  modalConfirmar(curso:Curso){
+  modalConfirmar(curso: Curso) {
     this.cursoSelected = curso;
     this.store.dispatch(new ShowModalConfirmationAction(true));
   }

@@ -1,4 +1,4 @@
-<p-card styleClass="h-full">
+<p-card #crd styleClass="h-full">
     <ng-template pTemplate="header">
         <div>
           <h2 class="text-3xl text-center font-bold text-white pb-2">Cursos</h2>
@@ -8,3 +8,5 @@
         <router-outlet></router-outlet>
     </ng-template>
  </p-card>
+
+  <app-block-ui [target]="crd"></app-block-ui>

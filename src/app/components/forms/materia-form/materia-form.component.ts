@@ -12,6 +12,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { PostPlanAction } from '../../../store/actions/api/planes.action';
 import { PutMateriaAction, PostMateriaAction } from '../../../store/actions/api/materia.action';
 import { ClearMateriaAction } from '../../../store/actions/pages/materia.action';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-materia-form',
@@ -22,11 +23,11 @@ import { ClearMateriaAction } from '../../../store/actions/pages/materia.action'
 })
 export class MateriaFormComponent {
   form!: FormGroup;
-  @Input() title!:string;
+  @Input() title!: string;
   materia!: Materia;
   planId!: string;
 
-  constructor(private store:Store, private router:Router, private activatedRoute:ActivatedRoute){}
+  constructor(private store: Store, private router: Router, private activatedRoute: ActivatedRoute, private messageService: MessageService) { }
 
   ngOnInit(): void {
     this.planId = this.activatedRoute.snapshot.params['id'];
@@ -38,23 +39,29 @@ export class MateriaFormComponent {
       planId: new FormControl('', [Validators.required]),
     });
     this.form.patchValue(this.store.selectSnapshot(MateriaPageState.getMateriaSelected)!);
-    this.form.patchValue({'planId': this.planId});
+    this.form.patchValue({ 'planId': this.planId });
   }
 
-  public onSubmit(){
+  public onSubmit() {
     this.materia = this.form.value
-    if(this.form.value._id === ''){
-      this.store.dispatch(new PostMateriaAction(this.materia!)).subscribe(x =>this.router.navigate([`/planes/${this.planId}/materias`]));
-      
+    if (this.form.value._id === '') {
+      this.store.dispatch(new PostMateriaAction(this.materia!)).subscribe(x => {
+        this.router.navigate([`/planes/${this.planId}/materias`])
+        this.messageService.add({ severity: 'success', summary: 'Crear materia', detail: 'Se ha creado la materia: ' + this.materia.descripcion });
+      });
+
     }
-    else{
-      this.store.dispatch(new PutMateriaAction(this.materia!)).subscribe(x =>this.router.navigate([`/planes/${this.planId}/materias`]));
+    else {
+      this.store.dispatch(new PutMateriaAction(this.materia!)).subscribe(x => {
+        this.router.navigate([`/planes/${this.planId}/materias`])
+        this.messageService.add({ severity: 'success', summary: 'Actualizar materia', detail: 'Se ha actualizado la materia: ' + this.materia.descripcion });
+      });
       this.store.dispatch(new ClearMateriaAction);
     }
-    this.form.reset(); 
+    this.form.reset();
   }
 
-  public redirectPlanMaterias(){
+  public redirectPlanMaterias() {
     this.store.dispatch(new ClearMateriaAction);
     this.router.navigate([`/planes/${this.planId}/materias`]);
   }

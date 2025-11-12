@@ -17,7 +17,7 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { EspecialidadFilterComponent } from '../../components/filters/especialidad-filter/especialidad-filter.component';
 import { PlanFilterComponent } from '../../components/filters/plan-filter/plan-filter.component';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { SelectedEspecialidadFilterAction, ShowModalConfirmationAction } from '../../store/actions/pages/app.action';
+import { LoadingForm, SelectedEspecialidadFilterAction, ShowModalConfirmationAction } from '../../store/actions/pages/app.action';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { AppPageState } from '../../store/states/page/app.state';
 import e from 'express';
@@ -70,7 +70,7 @@ export class PlanListaComponent implements OnInit {
         filter.especialidadId = especialidad._id!;
         this.store.dispatch(new GetPlanAction(filter));
       }
-      else{
+      else {
         let filter = new PlanFilter();
         filter.mostrarEspecialidad = true;
         this.store.dispatch(new GetPlanAction(filter));
@@ -92,7 +92,9 @@ export class PlanListaComponent implements OnInit {
   }
 
   redirectEditarPlan(id: string) {
+    this.store.dispatch(new LoadingForm(true));
     this.store.dispatch(new GetByIdPlanAction(id, new PlanFilter())).subscribe(() => {
+      this.store.dispatch(new LoadingForm(false));
       this.router.navigate(["/planes/editar/" + id])
     })
   }

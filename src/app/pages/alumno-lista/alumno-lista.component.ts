@@ -16,7 +16,7 @@ import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
 import { EspecialidadBorrarComponent } from '../especialidad-borrar/especialidad-borrar.component';
 import { AppPageState } from '../../store/states/page/app.state';
-import { ShowModalConfirmationAction } from '../../store/actions/pages/app.action';
+import { LoadingForm, ShowModalConfirmationAction } from '../../store/actions/pages/app.action';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ScreenSizeService } from '../../services/screen-size.service.service';
@@ -51,9 +51,11 @@ export class AlumnoListaComponent implements OnInit {
   }
 
   redirectToEditarAlumno(id:string){
+    this.store.dispatch(new LoadingForm(true));
     let filter = new AlumnoFilter();
     filter.incluirInscripciones = false;
     this.store.dispatch(new GetAlumnoByIdAction(id, filter)).subscribe(() => {
+      this.store.dispatch(new LoadingForm(false));
       this.router.navigate([`/alumnos/editar/${id}`]);
     })
 

@@ -17,7 +17,7 @@ import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
 import { EspecialidadBorrarComponent } from '../especialidad-borrar/especialidad-borrar.component';
 import { AppPageState } from '../../store/states/page/app.state';
-import { ShowModalConfirmationAction } from '../../store/actions/pages/app.action';
+import { LoadingForm, ShowModalConfirmationAction } from '../../store/actions/pages/app.action';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ScreenSizeService } from '../../services/screen-size.service.service';
@@ -110,9 +110,10 @@ export class ProfesorListaComponent implements OnInit {
   }
 
   redirectToEditarProfesor(id: string) {
-     
+     this.store.dispatch(new LoadingForm(true));
      const docenteFilter = new DocenteFilter();
      this.store.dispatch(new GetProfesorByIdAction(id, docenteFilter)).subscribe(() => {
+          this.store.dispatch(new LoadingForm(false));
           this.router.navigate([`profesores/editar/${id}`]);
      });
   }

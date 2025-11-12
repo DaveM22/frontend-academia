@@ -16,16 +16,16 @@ import { ErrorStateHandler } from "../../../util/ErrorStateHandler";
 @State<MateriaModelState>({
   name: 'materias',
   defaults: {
-    materias:[],
+    materias: [],
     error: false,
-    loading:false
+    loading: false
   }
 })
 
 @Injectable()
 export class MateriaState {
 
-  constructor(private service: MateriaService) {}
+  constructor(private service: MateriaService) { }
 
 
   @Selector()
@@ -34,55 +34,55 @@ export class MateriaState {
   }
 
   @Selector()
-  static getLoading(state: MateriaModelState){
+  static getLoading(state: MateriaModelState) {
     return state.loading;
   }
 
   @Action(GetMateriasAction)
   async getMateriasAction(ctx: StateContext<MateriaModelState>, action: GetMateriasAction) {
-    ctx.patchState({ error: false, loading:true })
+    ctx.patchState({ error: false, loading: true })
     try {
       const response = await lastValueFrom(this.service.getMateria(action.filter));
       ctx.patchState({
-        materias:[...response],
-        loading:false,
-        error:false
-    })
+        materias: [...response],
+        loading: false,
+        error: false
+      })
     }
     catch (error) {
       ctx.patchState({ error: true })
     }
-    finally{
+    finally {
       ctx.patchState({
-        loading:false
+        loading: false
       })
     }
   }
 
   @Action(GetByIdForInscripcion)
-  async getByIdForInscripcion(ctx: StateContext<MateriaModelState>, action: GetByIdForInscripcion){
-    ctx.patchState({ error: false, loading:true })
+  async getByIdForInscripcion(ctx: StateContext<MateriaModelState>, action: GetByIdForInscripcion) {
+    ctx.patchState({ error: false, loading: true })
     try {
       const response = await lastValueFrom(this.service.getForInscripcion(action.filters));
       ctx.patchState({
-        materias:[...response],
-    })
+        materias: [...response],
+      })
     }
     catch (error) {
       ctx.patchState({ error: true })
     }
-    finally{
+    finally {
       ctx.patchState({
-        loading:false
+        loading: false
       })
     }
   }
 
 
-@Action(ClearMateriasAction)
-async clearMaterias(ctx: StateContext<MateriaModelState>, action: ClearMateriasAction){
-  return ctx.patchState({materias:[]})
-}
+  @Action(ClearMateriasAction)
+  async clearMaterias(ctx: StateContext<MateriaModelState>, action: ClearMateriasAction) {
+    return ctx.patchState({ materias: [] })
+  }
 
 
   @Action(PostMateriaAction)
@@ -95,7 +95,7 @@ async clearMaterias(ctx: StateContext<MateriaModelState>, action: ClearMateriasA
     catch (error) {
       ErrorStateHandler.handleError(error, ctx);
     }
-    finally{
+    finally {
       ctx.dispatch(new LoadingForm(false));
     }
 
@@ -111,14 +111,15 @@ async clearMaterias(ctx: StateContext<MateriaModelState>, action: ClearMateriasA
     catch (error) {
       ctx.patchState({ error: true })
     }
-    finally{
-      ctx.patchState({loading:false})
+    finally {
+      ctx.patchState({ loading: false })
     }
   }
 
   @Action(PutMateriaAction)
   async putMateriaAction(ctx: StateContext<MateriaModelState>, action: PutMateriaAction) {
     ctx.patchState({ error: false })
+    ctx.dispatch(new LoadingForm(true))
     try {
       const response = await lastValueFrom(this.service.putMateria(action.materia));
       await lastValueFrom(ctx.dispatch(new AsignMateriaAction(response)));
@@ -126,10 +127,13 @@ async clearMaterias(ctx: StateContext<MateriaModelState>, action: ClearMateriasA
     catch (error) {
       ctx.patchState({ error: true })
     }
+    finally {
+      ctx.dispatch(new LoadingForm(false));
+    }
   }
 
   @Action(DeleteMateriaAction)
-  async DeleteMateria(ctx:StateContext<MateriaModelState>, action: DeleteMateriaAction){
+  async DeleteMateria(ctx: StateContext<MateriaModelState>, action: DeleteMateriaAction) {
     ctx.patchState({ error: false })
     try {
       await lastValueFrom(this.service.delete(action.materia._id));

@@ -14,7 +14,7 @@ import { PlanFilter } from '../../entities/filter';
 import { PlanPageState } from '../../store/states/page/plan.page.state';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { AppPageState } from '../../store/states/page/app.state';
-import { ShowModalConfirmationAction } from '../../store/actions/pages/app.action';
+import { LoadingForm, ShowModalConfirmationAction } from '../../store/actions/pages/app.action';
 import { DeleteMateria, GetByIdMateriaAction } from '../../store/actions/api/materia.action';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ScreenSizeService } from '../../services/screen-size.service.service';
@@ -77,7 +77,9 @@ export class PlanMateriasComponent implements OnInit {
   }
 
   redirectMateriaEditar(materiaId: string) {
+    this.store.dispatch(new LoadingForm(true));
     this.store.dispatch(new GetByIdMateriaAction(materiaId)).subscribe(() => {
+      this.store.dispatch(new LoadingForm(false));
       this.router.navigate([`/planes/${this.id}/materias/editar/${materiaId}`]);
     });
   }

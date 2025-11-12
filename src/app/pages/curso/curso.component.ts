@@ -13,18 +13,20 @@ import { Router, RouterModule } from '@angular/router';
 import { GetCursoAction } from '../../store/actions/api/curso.action';
 import { CursoFilter } from '../../entities/filter';
 import { CardModule } from 'primeng/card';
+import { BlockUiComponent } from '../../components/util/block-ui/block-ui.component';
+import { AppPageState } from '../../store/states/page/app.state';
 
 @Component({
   selector: 'app-curso',
   standalone: true,
-  imports: [CommonModule, PanelModule, RouterModule, CardModule],
+  imports: [CommonModule, PanelModule, RouterModule, CardModule, BlockUiComponent],
   templateUrl: './curso.component.html',
   styleUrl: './curso.component.scss'
 })
 export class CursoComponent {
   public cursos$: Observable<Curso[]> = this.store.select(CursoState.getCursos)
+  public loading$:Observable<boolean> = this.store.select(AppPageState.getFormLoading);
 
-  public loading$:Observable<boolean> = this.store.select(CursoState.getLoading);
 
   public error$:Observable<boolean> = this.store.select(CursoState.getError);
 

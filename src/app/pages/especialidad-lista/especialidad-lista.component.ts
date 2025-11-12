@@ -18,6 +18,7 @@ import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
 import { EspecialidadBorrarComponent } from '../especialidad-borrar/especialidad-borrar.component';
 import { ScreenSizeService } from '../../services/screen-size.service.service';
+import { LoadingForm } from '../../store/actions/pages/app.action';
 
 @Component({
   selector: 'app-especialidad-lista',
@@ -29,42 +30,44 @@ import { ScreenSizeService } from '../../services/screen-size.service.service';
 export class EspecialidadListaComponent implements OnInit {
   screenSize = { width: 0, height: 0 };
 
-    rowsPerPage = 5;
+  rowsPerPage = 5;
   public especialidades$: Observable<Especialidad[]> = this.store.select(EspecialidadState.getEspecialidades)
 
-  public loading$:Observable<boolean> = this.store.select(EspecialidadState.getLoading);
+  public loading$: Observable<boolean> = this.store.select(EspecialidadState.getLoading);
 
-  public error$:Observable<boolean> = this.store.select(EspecialidadState.getError);
+  public error$: Observable<boolean> = this.store.select(EspecialidadState.getError);
 
-  public errorMessage$:Observable<string> = this.store.select(EspecialidadState.getErrorMessage);
-
-
+  public errorMessage$: Observable<string> = this.store.select(EspecialidadState.getErrorMessage);
 
 
-  public especialidad!:Especialidad;
+
+
+  public especialidad!: Especialidad;
   scrollSize: string = "flex";
-  constructor(private store:Store, private router:Router, private screenService:ScreenSizeService){
-    
+  constructor(private store: Store, private router: Router, private screenService: ScreenSizeService) {
+
   }
 
 
   ngOnInit(): void {
     this.store.dispatch(new GetEspecialidadAction());
-  this.updateRowsPerPage(); 
+    this.updateRowsPerPage();
   }
 
 
-  showModal(esp:Especialidad){
+  showModal(esp: Especialidad) {
     this.especialidad = esp;
     this.store.dispatch(new ShowModalDelete(true));
   }
 
-  redirectNewEspecialidad(){
+  redirectNewEspecialidad() {
     this.router.navigate(["especialidades/nuevo"]);
   }
 
-  redirectEditEspecialidad(id:string){
+  redirectEditEspecialidad(id: string) {
+    this.store.dispatch(new LoadingForm(true));
     this.store.dispatch(new GetByIdEspecialidadAction(id)).subscribe(() => {
+      this.store.dispatch(new LoadingForm(false));
       this.router.navigate([`especialidades/editar/${id}`])
     });
 
@@ -74,13 +77,13 @@ export class EspecialidadListaComponent implements OnInit {
   title = 'academia';
 
 
-  
+
   @HostListener('window:resize')
   onResize() {
     this.updateRowsPerPage();
   }
 
-    private updateRowsPerPage() {
+  private updateRowsPerPage() {
     const width = window.innerWidth;
     if (width < 600) {
       this.rowsPerPage = 6;
@@ -89,7 +92,7 @@ export class EspecialidadListaComponent implements OnInit {
     } else if (width < 1280) {
       this.rowsPerPage = 8;
     } else if (width < 1920) {
-      this.rowsPerPage = 10; 
+      this.rowsPerPage = 10;
     } else {
       this.rowsPerPage = 10;
     }

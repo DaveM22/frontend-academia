@@ -36,6 +36,7 @@ export class DocentesCursosComponent implements OnInit {
   showConfirmation$:Observable<boolean> = this.store.select(AppPageState.showModalConfirmation)
   curso$:Observable<Curso | null> = this.store.select(CursoPageState.getCursoSelected);
   loading$: Observable<boolean> = this.store.select(DocenteCursoState.getLoading);
+  error$: Observable<boolean> = this.store.select(DocenteCursoState.getError);
   docenteCursoSelected!:DocenteCurso
   materiaId:string='';
   cursoId:string='';
@@ -84,8 +85,23 @@ export class DocentesCursosComponent implements OnInit {
       accept: () => {
         this.store.dispatch(new DeleteDocenteCursoAction(this.docenteCursoSelected._id))
           .subscribe(() => {
-            this.store.dispatch(new ShowModalConfirmationAction(false))
-            this.messageService.add({ severity: 'success', summary: 'Borrar asignación de profesor a curso', detail: `Se ha borrado la asignación al curso` });
+            this.store.dispatch(new ShowModalConfirmationAction(false));
+            
+            this.error$.subscribe(hasError => {
+              if (hasError) {
+                this.messageService.add({ 
+                  severity: 'error', 
+                  summary: 'Error', 
+                  detail: `No se pudo borrar la asignación del profesor` 
+                });
+              } else {
+                this.messageService.add({ 
+                  severity: 'success', 
+                  summary: 'Borrar asignación de profesor a curso', 
+                  detail: `Se ha borrado la asignación al curso` 
+                });
+              }
+            }).unsubscribe();
           })
       },
       reject: () => {

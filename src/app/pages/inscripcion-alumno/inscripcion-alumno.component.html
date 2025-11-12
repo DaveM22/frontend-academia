@@ -1,4 +1,4 @@
-<p-card styleClass="h-full">
+<p-card #crd styleClass="h-full">
     <ng-template pTemplate="header">
             <h2 class="text-3xl text-center font-bold text-white pb-2">Inscripciones de alumno</h2>
     </ng-template>
@@ -6,4 +6,6 @@
         <router-outlet></router-outlet>
     </ng-template>
 </p-card>
+
+<app-block-ui [target]="crd"></app-block-ui>
 

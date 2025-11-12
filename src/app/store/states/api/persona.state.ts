@@ -186,22 +186,38 @@ export class PersonaState {
 
     @Action(PostProfesorAction)
     async postProfesorAction(ctx: StateContext<PersonaModelState>, action: PostProfesorAction) {
-        const response = await lastValueFrom(this.service.postProfesor(action.profesor));
-        const list = ctx.getState().profesores;
-        ctx.patchState({
-            profesores: [...list, response]
-        })
+        ctx.dispatch(new LoadingForm(true));
+        try {
+            const response = await lastValueFrom(this.service.postProfesor(action.profesor));
+            const list = ctx.getState().profesores;
+            ctx.patchState({
+                profesores: [...list, response]
+            })
+        } catch (error) {
+            ErrorStateHandler.handleError(error, ctx);
+        }
+        finally {
+            ctx.dispatch(new LoadingForm(false));
+        }
     }
 
     @Action(PutProfesorAction)
     async putProfesor(ctx: StateContext<PersonaModelState>, action: PutProfesorAction) {
-        const response = await lastValueFrom(this.service.putProfesor(action.profesor));
-        const updatedProfesores = ctx.getState().profesores.map(item =>
-            item._id === response._id ? response : item
-        );
-        ctx.patchState({
-            profesores: updatedProfesores
-        })
+        ctx.dispatch(new LoadingForm(true));
+        try {
+            const response = await lastValueFrom(this.service.putProfesor(action.profesor));
+            const updatedProfesores = ctx.getState().profesores.map(item =>
+                item._id === response._id ? response : item
+            );
+            ctx.patchState({
+                profesores: updatedProfesores
+            })
+        } catch (error) {
+            ErrorStateHandler.handleError(error, ctx);
+        }
+        finally {
+            ctx.dispatch(new LoadingForm(false));
+        }
     }
 
     @Action(DeleteAlumnoAction)
