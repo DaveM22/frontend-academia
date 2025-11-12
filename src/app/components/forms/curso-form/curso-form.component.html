@@ -6,51 +6,47 @@
         <div class="col-span-12 grid grid-cols-12 gap-4">
 
             <div class="col-span-12 xl:col-span-6 2xl:col-start-4 2xl:col-span-6">
-
                 <div class="w-full h-full">
-                    <label class="text-sm 2xl:text-2xl" for="anioCalendario">Año calendario:</label>
+                    <label class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl" for="anioCalendario">Año calendario:</label>
                     <p-inputNumber inputId="integeronly" formControlName="anioCalendario" class="w-full"
-                        styleClass="w-full text-sm 2xl:text-2xl" />
+                        styleClass="w-full text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl" inputStyleClass="h-[50px]" />
                     @if(form.get('anioCalendario')?.invalid && form.get('anioCalendario')?.dirty){
                     <small class="p-error block">El campo Año Calendario es requerido</small>
                     }
                 </div>
             </div>
             <div class="col-span-12 xl:col-span-6 2xl:col-start-4 2xl:col-span-6">
-
                 <div class="w-full h-full">
-                    <label class="text-sm 2xl:text-2xl">Plan:</label>
+                    <label class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl">Plan:</label>
                     <p-inputGroup>
-                        <input type="text" pInputText placeholder="Seleccione un plan" class="text-sm 2xl:text-2xl"
+                        <input type="text" pInputText placeholder="Seleccione un plan" class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl h-[50px]"
                             formControlName="plan" />
-                        <p-button label="Seleccionar" severity="primary" styleClass="text-sm 2xl:text-2xl"
+                        <p-button label="Seleccionar" severity="primary" 
+                            [styleClass]="'text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl'"
                             (onClick)="toggleModalPlanes()">
                         </p-button>
                     </p-inputGroup>
                 </div>
             </div>
 
-
             <div class="col-span-12 xl:col-span-6 2xl:col-start-4 2xl:col-span-6">
-
                 <div class="w-full h-full">
-                    <label class="text-sm 2xl:text-2xl" for="descripcion">Descripcion:</label>
+                    <label class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl" for="descripcion">Descripcion:</label>
                     <input id="descripcion" pInputText formControlName="descripcion" type="text"
-                        class="w-full text-sm 2xl:text-2xl">
+                        class="w-full text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl h-[50px]">
                     @if(form.get('descripcion')?.invalid && form.get('descripcion')?.dirty){
                     <small class="p-error block">El campo descripcion es requerido</small>
                     }
                 </div>
             </div>
             <div class="col-span-12 xl:col-span-6 2xl:col-start-4 2xl:col-span-6">
-
                 <div class="w-full h-full">
-                    <label class="text-sm 2xl:text-2xl">Materia:</label>
+                    <label class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl">Materia:</label>
                     <p-inputGroup>
-                        <input type="text" pInputText placeholder="Seleccione una materia" class="text-sm 2xl:text-2xl"
+                        <input type="text" pInputText placeholder="Seleccione una materia" class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl h-[50px]"
                             formControlName="materia" />
                         <p-button label="Seleccionar" [disabled]="!(planSelected$ | async)" severity="primary"
-                            styleClass="text-sm 2xl:text-2xl" (onClick)="toggleModalMaterias()">
+                            [styleClass]="'text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl'" (onClick)="toggleModalMaterias()">
                         </p-button>
                     </p-inputGroup>
                     @if (!(planSelected$ | async)) {
@@ -59,27 +55,24 @@
                 </div>
             </div>
 
-
             <div class="col-span-12 xl:col-span-6 2xl:col-start-4 2xl:col-span-6">
-
                 <div class="w-full h-full">
-                    <label class="text-sm 2xl:text-2xl" for="anioCalendario">Cupo:</label>
-                    <p-inputNumber inputId="integeronly" formControlName="cupo" class="w-full text-sm 2xl:text-2xl"
-                        styleClass="w-full" />
+                    <label class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl" for="anioCalendario">Cupo:</label>
+                    <p-inputNumber inputId="integeronly" formControlName="cupo" class="w-full"
+                        styleClass="w-full text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl" inputStyleClass="h-[50px]" />
                     @if(form.get('cupo')?.invalid && form.get('cupo')?.dirty){
                     <small class="p-error block">El campo cupo es requerido</small>
                     }
                 </div>
             </div>
             <div class="col-span-12 xl:col-span-6 2xl:col-start-4 2xl:col-span-6">
-                <!-- Comisión -->
                 <div class="w-full h-full">
-                    <label class="text-sm 2xl:text-2xl">Comisión:</label>
+                    <label class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl">Comisión:</label>
                     <p-inputGroup>
-                        <input type="text" pInputText placeholder="Seleccione una comisión" class="text-sm 2xl:text-2xl"
+                        <input type="text" pInputText placeholder="Seleccione una comisión" class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl h-[50px]"
                             formControlName="comision" />
                         <p-button label="Seleccionar" [disabled]="!(planSelected$ | async)" severity="primary"
-                            styleClass="text-sm 2xl:text-2xl" (onClick)="toggleModalComisiones()">
+                            [styleClass]="'text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl'" (onClick)="toggleModalComisiones()">
                         </p-button>
                     </p-inputGroup>
                     @if (!(planSelected$ | async)) {
@@ -88,11 +81,12 @@
                 </div>
             </div>
         </div>
-        <div class="col-span-12 xl:col-span-12 2xl:col-start-4 2xl:col-span-6 flex justify-center gap-4">
+        <div class="col-span-12 xl:col-span-12 2xl:col-start-4 2xl:col-span-6 grid grid-cols-2 gap-2 mt-4">
             <p-button type="submit" label="Guardar" icon="pi pi-check" severity="success"
-                styleClass="w-full text-sm 2xl:text-2xl"></p-button>
-            <p-button label="Cancelar" severity="danger" (onClick)="redirectCursos()"
-                styleClass="w-full text-sm 2xl:text-2xl"></p-button>
+                [styleClass]="'text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl px-4 py-3 sm:px-5 sm:py-3 md:px-6 md:py-3 lg:px-6 lg:py-3 w-full'"></p-button>
+            <p-button label="Cancelar" icon="pi pi-times" severity="danger" 
+                [styleClass]="'text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl px-4 py-3 sm:px-5 sm:py-3 md:px-6 md:py-3 lg:px-6 lg:py-3 w-full'"
+                (onClick)="redirectCursos()"></p-button>
         </div>
     </form>
 </div>

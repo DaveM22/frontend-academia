@@ -24,6 +24,7 @@ export class DocenteMenuComponent implements OnInit {
   userMenuItems: MenuItem[] = [];
   userName: string = '';
   userPicture: string = '';
+  userRole: string = '';
   mobileMenuVisible: boolean = false;
 
   constructor(
@@ -47,6 +48,7 @@ export class DocenteMenuComponent implements OnInit {
       if (claims) {
         this.userName = claims.name || '';
         this.userPicture = claims.picture || '';
+        this.userRole = (claims[environment.roleLogin] as string[])?.[0] || 'Docente';
         this.setupDocenteMenu();
         this.setupUserMenu();
       }

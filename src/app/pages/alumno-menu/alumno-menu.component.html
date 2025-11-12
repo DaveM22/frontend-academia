@@ -36,9 +36,14 @@
             </p-avatar>
           }
           
-          <span class="text-white font-medium text-sm">
-            {{userName}}
-          </span>
+          <div class="flex flex-col">
+            <span class="text-white font-medium text-sm">
+              {{userName}}
+            </span>
+            <span class="text-gray-400 text-xs">
+              {{userRole}}
+            </span>
+          </div>
           
           <p-menu 
             #userMenuDesktop 
