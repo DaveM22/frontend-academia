@@ -85,7 +85,7 @@ export class CursoFormComponent implements OnDestroy {
   ngOnDestroy(): void {
     this.store.dispatch(new ClearSelectedPlanInModal);
     this.store.dispatch(new ClearSelectedMateriaInModal);
-    this.store.dispatch(new ClearSelectedComisionInModal)11111111111111111111111111111
+    this.store.dispatch(new ClearSelectedComisionInModal)
   }
 
 
