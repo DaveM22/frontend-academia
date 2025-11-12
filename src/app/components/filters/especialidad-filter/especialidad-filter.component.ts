@@ -6,7 +6,7 @@ import { Especialidad } from '../../../entities/especialidad';
 import { EspecialidadState } from '../../../store/states/api/especialidad.state';
 import { GetEspecialidadAction } from '../../../store/actions/api/especialidad.action';
 import { CommonModule } from '@angular/common';
-import { ClearSelectedEspecialidadFilter, SelectedEspecialidadFilterAction } from '../../../store/actions/pages/app.action';
+import { ClearSelectedEspecialidadFilter, ClearSelectedPlanInModal, SelectedEspecialidadFilterAction } from '../../../store/actions/pages/app.action';
 import { FormsModule } from '@angular/forms';
 import { ClearPlanes } from '../../../store/actions/api/planes.action';
 import { SelectModule } from 'primeng/select';
@@ -30,7 +30,7 @@ export class EspecialidadFilterComponent {
 
 
   onChangeEspecialidad(){
-    this.selectionChange.emit(this.especialidad)
+    this.store.dispatch(new SelectedEspecialidadFilterAction(this.especialidad));
   }
 
   onClear(){
@@ -38,6 +38,7 @@ export class EspecialidadFilterComponent {
     this.store.dispatch(new ClearPlanes);
     this.store.dispatch(new ClearMateriaAction);
     this.store.dispatch(new ClearAlumnoListAction);
+    this.store.dispatch(new ClearSelectedPlanInModal);
   }
 
 }

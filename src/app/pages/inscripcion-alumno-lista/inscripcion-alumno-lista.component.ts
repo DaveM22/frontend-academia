@@ -21,7 +21,7 @@ import { Plan } from '../../entities/plan';
 import { AppPageState } from '../../store/states/page/app.state';
 import { GetPlanAction } from '../../store/actions/api/planes.action';
 import { ClearSelectedPersona } from '../../store/actions/pages/persona.action';
-import { ClearSelectedPlanFilter, SelectedEspecialidadFilterAction, SelectedPlanFilter } from '../../store/actions/pages/app.action';
+import { ClearSelectedPlanFilter, ClearSelectedPlanInModal, SelectedEspecialidadFilterAction, SelectedPlanFilter } from '../../store/actions/pages/app.action';
 import { AsignSelectedPlan } from '../../store/actions/pages/plan.action';
 import { ClearMateriasAction } from '../../store/actions/api/materia.action';
 import { MessageModule } from 'primeng/message';
@@ -48,17 +48,32 @@ export class InscripcionAlumnoListaComponent implements OnInit, OnDestroy {
 
   async ngOnInit(): Promise<void> {
     this.updateRowsPerPage();
-    const especialidadSelected = await firstValueFrom(this.especialidadSelected$.pipe(filter(x => x !== null)));
-    if (especialidadSelected) {
-      this.disablePlanDropDown = false;
-      let filter = new PlanFilter();
-      filter.especialidadId = especialidadSelected!._id;
-      this.store.dispatch(new GetPlanAction(filter))
-    }
-    else {
-      this.store.dispatch(new ClearSelectedPlanFilter);
-      this.disablePlanDropDown = true;
-    }
+    this.especialidadSelected$.subscribe(x => {
+      if (x) {
+        this.disablePlanDropDown = false;
+        let filter = new PlanFilter();
+        filter.especialidadId = x!._id;
+        this.store.dispatch(new GetPlanAction(filter));
+      }
+      else {
+        this.store.dispatch(new ClearSelectedPlanFilter);
+        this.disablePlanDropDown = true;
+      }
+    });
+
+    this.planSelected$.subscribe(x => {
+      if (x) {
+        let filter = new AlumnoFilter();
+        filter.planId = x._id;
+        this.store.dispatch(new GetAlumnosAction(filter));
+      }
+      else{
+        this.store.dispatch(new ClearSelectedPlanFilter());
+      }
+    })
+
+
+
 
     const planSelected = await firstValueFrom(this.planSelected$.pipe(filter(x => x !== null)));
     if (planSelected) {
@@ -66,6 +81,7 @@ export class InscripcionAlumnoListaComponent implements OnInit, OnDestroy {
       filter.planId = planSelected!._id;
       this.store.dispatch(new GetAlumnosAction(filter));
     }
+
 
   }
 
@@ -108,5 +124,6 @@ export class InscripcionAlumnoListaComponent implements OnInit, OnDestroy {
     this.store.dispatch(new ClearAlumnoListAction);
     this.store.dispatch(new ClearSelectedPlanFilter);
     this.store.dispatch(new ClearMateriasAction);
+    this.store.dispatch(new ClearSelectedPlanInModal);
   }
 }
