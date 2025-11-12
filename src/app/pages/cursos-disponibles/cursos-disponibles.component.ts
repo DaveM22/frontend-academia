@@ -21,7 +21,7 @@ import { ClearCursos, GetCursoAction } from '../../store/actions/api/curso.actio
 import { CursoState } from '../../store/states/api/curso.state';
 import { Curso } from '../../entities/curso';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { ShowModalConfirmationAction } from '../../store/actions/pages/app.action';
 import { AlumnoInscripcion, AlumnoInscripcionDto } from '../../entities/alumno-inscripcion';
 import { PostAlumnoInscripcionAction } from '../../store/actions/api/alumno-inscripcion.action';
@@ -43,7 +43,7 @@ export class CursosDisponiblesComponent implements OnInit, OnDestroy {
   cursoSelected!:string;
   showConfirmation$:Observable<boolean> = this.store.select(AppPageState.showModalConfirmation)
   loading$:boolean = true;
-  constructor(private store:Store, private activated:ActivatedRoute, private confirmationService: ConfirmationService, private router:Router){}
+  constructor(private store:Store, private activated:ActivatedRoute, private confirmationService: ConfirmationService, private router:Router, private messageService: MessageService){}
 
 
 
@@ -94,6 +94,7 @@ export class CursosDisponiblesComponent implements OnInit, OnDestroy {
             new ShowModalConfirmationAction(false)
           ]).subscribe(x => {
             const personId = this.store.selectSnapshot(AppPageState.getPersonId);
+            this.messageService.add({ severity: 'success', summary: 'Inscripción', detail: `Se ha inscrito al curso: ${this.cursoSelected}` });
             this.router.navigate([`inscripcion-catedra/materias-disponibles/${personId}`])
           })
         },
