@@ -1,31 +1,31 @@
 <div class="flex flex-row justify-center align-items-center">
-    <h4 class="text-xl text-center font-bold text-white pb-2">{{alumnoInscripcion ? 'Actualizar Inscripción:' : 'Nueva Inscripción:'}}</h4>
+    <h3 class="text-xl text-center font-bold text-white pb-2">{{alumnoInscripcion ? 'Actualizar Inscripción:' : 'Nueva Inscripción:'}}</h3>
   </div>
 <div class="grid place-items-center">
     <form [formGroup]="form" (ngSubmit)="onSubmit()" class="grid grid-cols-12 gap-4 w-full max-w-screen-lg">
 
         <div class="col-span-12 lg:col-start-4 lg:col-span-6">
-            <label>Alumno:</label>
-            <input type="text" pInputText class="w-full sm:w-full" formControlName="alumno" />
+            <label class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl">Alumno:</label>
+            <input type="text" pInputText class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl w-full sm:w-full h-[50px]" formControlName="alumno" />
         </div>
         <div class="col-span-12 lg:col-start-4 lg:col-span-6 gap-2">
-            <label>Curso:</label>
-            <input type="text" pInputText placeholder="Seleccione un curso" class="w-full sm:w-full"
+            <label class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl">Curso:</label>
+            <input type="text" pInputText placeholder="Seleccione un curso" class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl w-full sm:w-full h-[50px]"
                 formControlName="curso" />
             <p-button label="Seleccionar curso" severity="primary"
-                styleClass="w-full mt-2 sm:w-full align-items-center lg:w-full sm:mt-2 lg:mt-2 "
+                [styleClass]="'text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl px-4 py-3 sm:px-5 sm:py-3 md:px-6 md:py-3 lg:px-6 lg:py-3 w-full mt-2'"
                 (onClick)="toggleModalCursos()"></p-button>
         </div>
         <div class="col-span-12 lg:col-start-4 lg:col-span-6 gap-2">
-            <label>Condicion:</label>
+            <label class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl">Condicion:</label>
             <p-dropdown formControlName="condicion" appendTo="body" [options]="condiciones"
-                placeholder="Seleccionar condición" styleClass="col-12 sm:col-12 lg:col-12 w-full" />
+                placeholder="Seleccionar condición" styleClass="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl col-12 sm:col-12 lg:col-12 w-full" />
             @if (this.form.value.condicion === 'APROBADO')
             {
             <div class="col-span-12 lg:col-start-4 lg:col-span-6 gap-2">
-                <label>Nota:</label>
+                <label class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl">Nota:</label>
                 <p-inputNumber inputId="integeronly" formControlName="nota" [min]="6" [max]="10" class="w-full"
-                    inputStyleClass="w-full" styleClass="w-full md:w-full lg:w-auto" />
+                    inputStyleClass="w-full h-[50px]" styleClass="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl w-full md:w-full lg:w-auto" />
             </div>
             @if(this.form.value.condicion === 'APROBADO' && !this.form.value.nota){
             <small class="p-error block">
@@ -34,9 +34,9 @@
             }
             }
         </div>
-        <div class="col-span-12 lg:col-start-4 lg:col-span-6 flex justify-center gap-2">
-            <p-button label="Guardar" icon="pi pi-check" class="text-sm lg:text-2xl w-full" styleClass="w-full" [disabled]="form.invalid" severity="success" (onClick)="onSubmit()"></p-button>
-            <p-button label="Cancelar" severity="danger" icon="pi pi-times" class="text-sm lg:text-2xl w-full" styleClass="w-full"
+        <div class="col-span-12 lg:col-start-4 lg:col-span-6 grid grid-cols-2 gap-2 mt-4">
+            <p-button label="Guardar" icon="pi pi-check" [styleClass]="'text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl px-4 py-3 sm:px-5 sm:py-3 md:px-6 md:py-3 lg:px-6 lg:py-3 w-full'" [disabled]="form.invalid" severity="success" (onClick)="onSubmit()"></p-button>
+            <p-button label="Cancelar" severity="danger" icon="pi pi-times" [styleClass]="'text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl px-4 py-3 sm:px-5 sm:py-3 md:px-6 md:py-3 lg:px-6 lg:py-3 w-full'"
                 (onClick)="redirect()"></p-button>
         </div>
     </form>

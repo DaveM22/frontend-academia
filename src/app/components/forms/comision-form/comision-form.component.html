@@ -5,9 +5,9 @@
     <form [formGroup]="form" (ngSubmit)="onSubmit()" class="grid grid-cols-12 gap-2 w-full max-w-screen-lg">
 
         <div class="col-span-12 lg:col-start-4 lg:col-span-6">
-            <label for="descripcion" class="text-sm 2xl:text-2xl">Descripcion:</label>
+            <label for="descripcion" class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl">Descripcion:</label>
             <input id="descripcion" pInputText formControlName="descripcion" type="text"
-                class="text-sm 2xl:text-2xl w-full" styleClass="text-sm 2xl:text-2xl">
+                class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl w-full h-[50px]" styleClass="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl">
             @if(form.get('descripcion')?.invalid && form.get('descripcion')?.dirty){
             <small class="p-error block">
                 El campo descripcion es requerido
@@ -16,9 +16,9 @@
         </div>
 
         <div class="col-span-12 lg:col-start-4 lg:col-span-6">
-            <label class="text-sm 2xl:text-2xl" for="anioCalendario">Año calendario:</label>
-            <p-inputNumber inputId="integeronly" formControlName="anioEspecialidad" class="text-sm 2xl:text-2xl w-full"
-                inputStyleClass="w-full" styleClass="w-full md:w-full lg:w-auto text-sm 2xl:text-2xl" />
+            <label class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl" for="anioCalendario">Año calendario:</label>
+            <p-inputNumber inputId="integeronly" formControlName="anioEspecialidad" class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl w-full"
+                inputStyleClass="w-full h-[50px]" styleClass="w-full md:w-full lg:w-auto text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl" />
             @if(form.get('anioEspecialidad')?.invalid && form.get('anioEspecialidad')?.dirty){
             <small class="p-error block">
                 El campo Año especialidad es requerido
@@ -27,16 +27,16 @@
         </div>
 
         <div class="col-span-12 lg:col-start-4 lg:col-span-6">
-            <label class="text-sm 2xl:text-2xl">Plan:</label>
-            <input type="text" pInputText placeholder="Seleccione un plan" class="form-disabled w-full sm:w-full text-sm 2xl:text-2xl" styleClass="text-sm 2xl:text-2xl"
+            <label class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl">Plan:</label>
+            <input type="text" pInputText placeholder="Seleccione un plan" class="form-disabled w-full sm:w-full text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl h-[50px]" styleClass="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl"
                 formControlName="plan" readonly style="cursor: not-allowed;" />
-            <p-button label="Seleccionar plan" severity="primary" styleClass="w-full mt-2 w-full align-items-center text-sm 2xl:text-2xl "
+            <p-button label="Seleccionar plan" severity="primary" [styleClass]="'text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl px-4 py-3 sm:px-5 sm:py-3 md:px-6 md:py-3 lg:px-6 lg:py-3 w-full mt-2'"
                 (onClick)="toggleModalPlanes()"></p-button>
         </div>
-        <div class="col-span-12 lg:col-start-4 lg:col-span-6 flex justify-center">
-            <p-button type="submit" label="Guardar" icon="pi pi-check" class="text-sm 2xl:text-2xl w-full mr-2" styleClass="w-full"
+        <div class="col-span-12 lg:col-start-4 lg:col-span-6 grid grid-cols-2 gap-2 mt-4">
+            <p-button type="submit" label="Guardar" icon="pi pi-check" [styleClass]="'text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl px-4 py-3 sm:px-5 sm:py-3 md:px-6 md:py-3 lg:px-6 lg:py-3 w-full'"
                 severity="success" [disabled]="form.invalid"></p-button>
-            <p-button label="Cancelar" severity="danger" class="text-sm 2xl:text-2xl w-full mr-2" styleClass="w-full"
+            <p-button label="Cancelar" severity="danger" [styleClass]="'text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl px-4 py-3 sm:px-5 sm:py-3 md:px-6 md:py-3 lg:px-6 lg:py-3 w-full'"
                 (onClick)="redirectComisiones()"></p-button>
         </div>
 

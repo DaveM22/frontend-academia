@@ -1,14 +1,14 @@
 <div class="flex flex-row justify-center align-items-center">
-    <h4 class="text-xl text-center font-bold text-white pb-2">{{title}}</h4>
+    <h3 class="text-xl text-center font-bold text-white pb-2">{{title}}</h3>
   </div>
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
             
     <div class="flex flex-row justify-center">
         <div>
             <div class="field col-12 md:col-4 lg:col-3 xl:col-3">
-                <label for="descripcion" class="text-sm lg:text-xl">Descripcion:</label>
+                <label for="descripcion" class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl">Descripcion:</label>
                 <input id="firstname1" pInputText formControlName="descripcion" type="text"
-                    class="w-full text-sm lg:text-xl">
+                    class="w-full text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl h-[50px]">
                 @if(form.get('descripcion')?.invalid && form.get('descripcion')?.dirty){
                 <small class="p-error block text-red-700">
                     El campo descripcion es requerido
@@ -19,10 +19,10 @@
                 </small>
             </div>
             <div class="field col-12 md:col-4 lg:col-3 xl:col-3">
-                <label class="text-sm lg:text-xl">Especialidad:</label>
+                <label class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl">Especialidad:</label>
                 <p-dropdown [options]="(especialidades$ | async)!" formControlName="especialidadId" dataKey="_id"
                 optionValue="_id" appendTo="body"
-                    optionLabel="descripcion" [filter]="true" filterBy="descripcion" styleClass="w-full text-sm lg:text-xl"
+                    optionLabel="descripcion" [filter]="true" filterBy="descripcion" styleClass="w-full text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl"
                     placeholder="Seleccionar una especialidad">
                     <ng-template pTemplate="selectedItem" let-selectedOption>
                         <div class="flex align-items-center gap-2">
@@ -43,8 +43,12 @@
 
     <div
         class="flex flex-row justify-center mt-2 font-bold text-white border-round">
-        <p-button type="submit" label="Guardar" severity="success" class="text-sm lg:text-2xl mr-2" [disabled]="form.invalid"></p-button>
-        <p-button label="Cancelar" severity="danger" class="text-sm lg:text-2xl mr-2" (onClick)="redirectPlanes()"></p-button>
+        <p-button type="submit" label="Guardar" severity="success" 
+            [styleClass]="'text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl px-4 py-3 sm:px-5 sm:py-3 md:px-6 md:py-3 lg:px-6 lg:py-3 mr-2'" 
+            [disabled]="form.invalid"></p-button>
+        <p-button label="Cancelar" severity="danger" 
+            [styleClass]="'text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl px-4 py-3 sm:px-5 sm:py-3 md:px-6 md:py-3 lg:px-6 lg:py-3 mr-2'" 
+            (onClick)="redirectPlanes()"></p-button>
     </div>
 
 </form>
