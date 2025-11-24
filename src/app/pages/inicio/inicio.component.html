@@ -1,0 +1,13 @@
+<div class="w-full">
+  @if (role === 'Administrador') {
+    <app-admin-inicio />
+  } @else if (role === 'Docente') {
+    <app-docente-inicio />
+  } @else if (role === 'Alumno') {
+    <app-alumno-inicio />
+  } @else {
+    <div class="w-full flex justify-center py-10">
+      <p class="text-white/80">Iniciando...</p>
+    </div>
+  }
+</div>

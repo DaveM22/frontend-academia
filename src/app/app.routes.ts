@@ -59,6 +59,9 @@ import { ParametroListaComponent } from './pages/parametro-lista/parametro-lista
 import { ParametroComponent } from './pages/parametro/parametro.component';
 import { InscripcionFormComponent } from './components/forms/inscripcion-form/inscripcion-form.component';
 import { AlumnoInicioComponent } from './pages/alumno-inicio/alumno-inicio.component';
+import { AdminInicioComponent } from './pages/admin-inicio/admin-inicio.component';
+import { DocenteInicioComponent } from './pages/docente-inicio/docente-inicio.component';
+import { InicioComponent } from './pages/inicio/inicio.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 export const routes: Routes = [
@@ -67,6 +70,16 @@ export const routes: Routes = [
         component: ApplayoutComponent,
         canActivate: [AuthGuard],
         children: [
+            {
+                path: '',
+                pathMatch: 'full',
+                component: InicioComponent
+            },
+            {
+                path: 'inicio',
+                pathMatch: 'full',
+                component: InicioComponent
+            },
 
             {
                 path: 'especialidades',
@@ -222,6 +235,18 @@ export const routes: Routes = [
                 component: AlumnoInicioComponent,
                 canActivate: [AuthGuard, alumnoGuard],
                 data: { role: 'Alumno' }
+            },
+            {
+                path: 'admin/inicio',
+                component: AdminInicioComponent,
+                canActivate: [AuthGuard, adminGuard],
+                data: { role: 'Administrador' }
+            },
+            {
+                path: 'docente/inicio',
+                component: DocenteInicioComponent,
+                canActivate: [AuthGuard, docenteGuard],
+                data: { role: 'Docente' }
             },
             {
                 path: 'docente/:id',

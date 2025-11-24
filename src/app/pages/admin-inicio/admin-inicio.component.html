@@ -1,0 +1,48 @@
+<div class="w-full flex flex-col items-center justify-center py-10">
+  <h3 class="text-xl md:text-3xl text-center font-bold text-white pb-4">Inicio Administrador</h3>
+  <p class="text-sm sm:text-base md:text-lg text-white/80 max-w-2xl text-center">
+    Bienvenido al panel de administración. Aquí podrás gestionar especialidades, planes, materias, comisiones,
+    cursos, alumnos, profesores, usuarios y parámetros del sistema.
+  </p>
+  <div class="grid grid-cols-12 gap-4 w-full mt-8 max-w-5xl">
+    <!-- Placeholder cards for future dynamic stats -->
+    <div class="col-span-12 sm:col-span-6 lg:col-span-3">
+      <div class="rounded-lg bg-gray-800 p-4 flex flex-col gap-2">
+        <span class="text-xs sm:text-sm text-gray-400">Alumnos</span>
+        <span class="text-lg sm:text-xl font-semibold text-indigo-400">--</span>
+        <span class="text-[10px] sm:text-xs text-gray-500">Total registrados</span>
+      </div>
+    </div>
+    <div class="col-span-12 sm:col-span-6 lg:col-span-3">
+      <div class="rounded-lg bg-gray-800 p-4 flex flex-col gap-2">
+        <span class="text-xs sm:text-sm text-gray-400">Profesores</span>
+        <span class="text-lg sm:text-xl font-semibold text-indigo-400">--</span>
+        <span class="text-[10px] sm:text-xs text-gray-500">Total activos</span>
+      </div>
+    </div>
+    <div class="col-span-12 sm:col-span-6 lg:col-span-3">
+      <div class="rounded-lg bg-gray-800 p-4 flex flex-col gap-2">
+        <span class="text-xs sm:text-sm text-gray-400">Cursos</span>
+        <span class="text-lg sm:text-xl font-semibold text-indigo-400">--</span>
+        <span class="text-[10px] sm:text-xs text-gray-500">En el ciclo actual</span>
+      </div>
+    </div>
+    <div class="col-span-12 sm:col-span-6 lg:col-span-3">
+      <div class="rounded-lg bg-gray-800 p-4 flex flex-col gap-2">
+        <span class="text-xs sm:text-sm text-gray-400">Inscripciones</span>
+        <span class="text-lg sm:text-xl font-semibold text-indigo-400">--</span>
+        <span class="text-[10px] sm:text-xs text-gray-500">Procesadas este mes</span>
+      </div>
+    </div>
+  </div>
+  <div class="flex flex-wrap gap-3 mt-10 justify-center">
+    <a routerLink="/especialidades/lista" class="px-4 py-2 rounded bg-indigo-600 hover:bg-indigo-500 text-white text-xs sm:text-sm md:text-base">Especialidades</a>
+    <a routerLink="/planes/lista" class="px-4 py-2 rounded bg-indigo-600 hover:bg-indigo-500 text-white text-xs sm:text-sm md:text-base">Planes</a>
+    <a routerLink="/comisiones/lista" class="px-4 py-2 rounded bg-indigo-600 hover:bg-indigo-500 text-white text-xs sm:text-sm md:text-base">Comisiones</a>
+    <a routerLink="/cursos/lista" class="px-4 py-2 rounded bg-indigo-600 hover:bg-indigo-500 text-white text-xs sm:text-sm md:text-base">Cursos</a>
+    <a routerLink="/alumnos/lista" class="px-4 py-2 rounded bg-indigo-600 hover:bg-indigo-500 text-white text-xs sm:text-sm md:text-base">Alumnos</a>
+    <a routerLink="/profesores/lista" class="px-4 py-2 rounded bg-indigo-600 hover:bg-indigo-500 text-white text-xs sm:text-sm md:text-base">Profesores</a>
+    <a routerLink="/usuarios/lista" class="px-4 py-2 rounded bg-indigo-600 hover:bg-indigo-500 text-white text-xs sm:text-sm md:text-base">Usuarios</a>
+    <a routerLink="/parametros/lista" class="px-4 py-2 rounded bg-indigo-600 hover:bg-indigo-500 text-white text-xs sm:text-sm md:text-base">Parámetros</a>
+  </div>
+</div>
