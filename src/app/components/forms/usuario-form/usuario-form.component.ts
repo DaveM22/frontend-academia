@@ -7,7 +7,6 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
-import { ToastModule } from 'primeng/toast';
 import { Especialidad } from '../../../entities/especialidad';
 import { PostEspecialidadAction, PutEspecialidadAction } from '../../../store/actions/api/especialidad.action';
 import { ClearSelectedEspecialidad } from '../../../store/actions/pages/especialidad.action';
@@ -28,7 +27,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-usuario-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, InputTextModule, CardModule, ButtonModule, PersonasModalComponent, ToastModule, RippleModule, PasswordModule, SelectModule, PersonasModalComponent],
+  imports: [CommonModule, ReactiveFormsModule, InputTextModule, CardModule, ButtonModule, PersonasModalComponent, RippleModule, PasswordModule, SelectModule, PersonasModalComponent],
   templateUrl: './usuario-form.component.html',
   styleUrl: './usuario-form.component.scss'
 })

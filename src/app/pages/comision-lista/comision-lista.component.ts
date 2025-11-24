@@ -11,7 +11,6 @@ import { ButtonModule } from 'primeng/button';
 import { MessageModule } from 'primeng/message';
 import { PanelModule } from 'primeng/panel';
 import { TableModule } from 'primeng/table';
-import { ToastModule } from 'primeng/toast';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { LoadingForm, ShowModalConfirmationAction } from '../../store/actions/pages/app.action';
 import { AppPageState } from '../../store/states/page/app.state';
@@ -29,7 +28,7 @@ import { SelectedPlanFilter } from '../../store/actions/pages/app.action';
 @Component({
   selector: 'app-comision-lista',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, MessageModule, PanelModule, ToastModule, ConfirmDialogModule, IconFieldModule, InputTextModule, InputIconModule, PlanFilterComponent],
+  imports: [CommonModule, TableModule, ButtonModule, MessageModule, PanelModule, ConfirmDialogModule, IconFieldModule, InputTextModule, InputIconModule, PlanFilterComponent],
   templateUrl: './comision-lista.component.html',
   styleUrl: './comision-lista.component.scss',
   providers: [ConfirmationService]

@@ -58,6 +58,7 @@ import { ParameterComponent } from './pages/parameter/parameter.component';
 import { ParametroListaComponent } from './pages/parametro-lista/parametro-lista.component';
 import { ParametroComponent } from './pages/parametro/parametro.component';
 import { InscripcionFormComponent } from './components/forms/inscripcion-form/inscripcion-form.component';
+import { AlumnoInicioComponent } from './pages/alumno-inicio/alumno-inicio.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 export const routes: Routes = [
@@ -215,6 +216,12 @@ export const routes: Routes = [
             {
                 path: 'alumno/catedras/:id',
                 component: CatedrasAlumnoComponent
+            },
+            {
+                path: 'alumno/inicio',
+                component: AlumnoInicioComponent,
+                canActivate: [AuthGuard, alumnoGuard],
+                data: { role: 'Alumno' }
             },
             {
                 path: 'docente/:id',

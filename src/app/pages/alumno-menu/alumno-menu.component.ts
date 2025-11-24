@@ -60,6 +60,11 @@ export class AlumnoMenuComponent implements OnInit {
     
     this.menuItems = [
       {
+        label: 'Inicio',
+        icon: 'pi pi-home',
+        command: () => this.router.navigate(['alumno/inicio'])
+      },
+      {
         label: 'Mis cátedras',
         icon: 'pi pi-user',
         command: () => this.router.navigate(['alumno/catedras/' + personaId])

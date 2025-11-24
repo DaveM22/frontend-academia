@@ -10,7 +10,6 @@ import { TableModule } from 'primeng/table';
 import { CommonModule } from '@angular/common';
 import { MessagesModule } from 'primeng/messages';
 import { PanelModule } from 'primeng/panel';
-import { ToastModule } from 'primeng/toast';
 import { ComisionFilter } from '../../entities/filter';
 import { CardModule } from 'primeng/card';
 import { BlockUiComponent } from '../../components/util/block-ui/block-ui.component';

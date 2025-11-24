@@ -4,38 +4,35 @@
     flex-direction: column !important;
 }
 
-// Móviles pequeños (< 640px)
 @media (max-width: 640px) {
     :host::ng-deep .p-datatable {
-        height: 70vh !important;
+        height: 60vh !important;
     }
 }
 
-// Móviles grandes / Tablets pequeñas (640px - 768px)
 @media (min-width: 640px) {
     :host::ng-deep .p-datatable {
-        height: 70vh !important;
+        height: 60vh !important;
     }
 }
 
-// Tablets (768px+)
 @media (min-width: 768px) {
     :host::ng-deep .p-datatable {
-        height: 70vh !important;
+        height: 60vh !important;
     }
 }
 
-// Laptops (1024px+)
 @media (min-width: 1024px) {
     :host::ng-deep .p-datatable {
-        height: 80vh !important;
+        max-height: calc(100vh - 250px) !important;
+        height: auto !important;
     }
 }
 
-// Pantallas grandes (1440px+)
 @media (min-width: 1440px) {
     :host::ng-deep .p-datatable {
-        height: 90vh !important;
+        max-height: calc(100vh - 250px) !important;
+        height: auto !important;
     }
 }
 

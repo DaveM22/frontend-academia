@@ -7,7 +7,6 @@ import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 import { PanelModule } from 'primeng/panel';
 import { TableModule } from 'primeng/table';
-import { ToastModule } from 'primeng/toast';
 import { EspecialidadBorrarComponent } from '../especialidad-borrar/especialidad-borrar.component';
 import { Observable } from 'rxjs';
 import { Store } from '@ngxs/store';
@@ -19,7 +18,7 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-parametro-lista',
-  imports: [FormsModule,CommonModule, TableModule, ButtonModule, MessageModule, PanelModule, ToastModule, IconFieldModule, InputTextModule, InputIconModule, ToggleSwitchModule],
+  imports: [FormsModule,CommonModule, TableModule, ButtonModule, MessageModule, PanelModule, IconFieldModule, InputTextModule, InputIconModule, ToggleSwitchModule],
   templateUrl: './parametro-lista.component.html',
   styleUrl: './parametro-lista.component.css',
   standalone: true

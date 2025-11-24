@@ -15,7 +15,6 @@ import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 import { PanelModule } from 'primeng/panel';
 import { TableModule } from 'primeng/table';
-import { ToastModule } from 'primeng/toast';
 import { EspecialidadBorrarComponent } from '../especialidad-borrar/especialidad-borrar.component';
 import { ScreenSizeService } from '../../services/screen-size.service.service';
 import { LoadingForm } from '../../store/actions/pages/app.action';
@@ -23,7 +22,7 @@ import { LoadingForm } from '../../store/actions/pages/app.action';
 @Component({
   selector: 'app-especialidad-lista',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, EspecialidadBorrarComponent, MessageModule, PanelModule, ToastModule, IconFieldModule, InputTextModule, InputIconModule],
+  imports: [CommonModule, TableModule, ButtonModule, EspecialidadBorrarComponent, MessageModule, PanelModule, IconFieldModule, InputTextModule, InputIconModule],
   templateUrl: './especialidad-lista.component.html',
   styleUrl: './especialidad-lista.component.scss'
 })
@@ -43,7 +42,7 @@ export class EspecialidadListaComponent implements OnInit {
 
 
   public especialidad!: Especialidad;
-  scrollSize: string = "flex";
+  scrollSize: string = "60vh";
   constructor(private store: Store, private router: Router, private screenService: ScreenSizeService) {
 
   }
@@ -52,6 +51,7 @@ export class EspecialidadListaComponent implements OnInit {
   ngOnInit(): void {
     this.store.dispatch(new GetEspecialidadAction());
     this.updateRowsPerPage();
+    this.updateScrollSize();
   }
 
 
@@ -81,6 +81,7 @@ export class EspecialidadListaComponent implements OnInit {
   @HostListener('window:resize')
   onResize() {
     this.updateRowsPerPage();
+    this.updateScrollSize();
   }
 
   private updateRowsPerPage() {
@@ -95,6 +96,17 @@ export class EspecialidadListaComponent implements OnInit {
       this.rowsPerPage = 10;
     } else {
       this.rowsPerPage = 10;
+    }
+  }
+
+  private updateScrollSize() {
+    const height = window.innerHeight;
+    const width = window.innerWidth;
+    
+    if (width >= 1024) { // lg breakpoint
+      this.scrollSize = `${height - 400}px`;
+    } else {
+      this.scrollSize = "60vh";
     }
   }
 

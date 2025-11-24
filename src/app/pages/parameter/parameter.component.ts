@@ -7,13 +7,12 @@ import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { PanelModule } from 'primeng/panel';
 import { RippleModule } from 'primeng/ripple';
-import { ToastModule } from 'primeng/toast';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
 @Component({
   selector: 'app-parameter',
   standalone: true,
-  imports: [ReactiveFormsModule,ToggleSwitchModule,RouterModule,CommonModule, PanelModule, CardModule, InputTextModule, ButtonModule,ToastModule,  RippleModule],
+  imports: [ReactiveFormsModule,ToggleSwitchModule,RouterModule,CommonModule, PanelModule, CardModule, InputTextModule, ButtonModule, RippleModule],
   templateUrl: './parameter.component.html',
   styleUrl: './parameter.component.scss'
 })

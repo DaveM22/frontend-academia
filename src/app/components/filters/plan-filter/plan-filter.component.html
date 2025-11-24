@@ -1,14 +1,22 @@
-<p-select
-    [options]="(planes$ | async)!" 
-    [(ngModel)]="plan"
-    [checkmark]="true" 
-    optionLabel="descripcion" 
-    [showClear]="true" 
-    [disabled]="disable"
-    placeholder="Seleccione un plan"
-    (onChange)="onChangePlan()"
-    (onClear)="onClear()"
-    class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base"
-    styleClass="text-xs sm:text-sm md:text-base lg:text-base xl:text-base w-full"
-    [ngModelOptions]="{standalone: true}"
-    appendTo="body" />
+<div class="relative w-full">
+    <p-select
+            [options]="(planes$ | async)!" 
+            [(ngModel)]="plan"
+            [checkmark]="true" 
+            optionLabel="descripcion" 
+            [showClear]="true" 
+            [disabled]="disable || (loading$ | async) === true"
+            [placeholder]="(loading$ | async) ? 'Cargando planes...' : 'Seleccione un plan'"
+            (onChange)="onChangePlan()"
+            (onClear)="onClear()"
+            class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base"
+            styleClass="text-xs sm:text-sm md:text-base lg:text-base xl:text-base w-full"
+            [ngModelOptions]="{standalone: true}"
+            appendTo="body" />
+
+    @if ((loading$ | async) === true) {
+        <div class="absolute inset-0 flex items-center justify-center bg-black/40 rounded-md">
+            <i class="pi pi-spinner pi-spin text-white text-3xl"></i>
+        </div>
+    }
+</div>

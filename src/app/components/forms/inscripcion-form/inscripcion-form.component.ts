@@ -5,7 +5,6 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
-import { ToastModule } from 'primeng/toast';
 import { filter, firstValueFrom, lastValueFrom, Observable } from 'rxjs';
 import { Alumno } from '../../../entities/alumno';
 import { Store } from '@ngxs/store';
@@ -39,7 +38,7 @@ import { PlanState } from '../../../store/states/api/plan.state';
 @Component({
   selector: 'app-inscripcion-form',
   standalone: true,
-  imports: [ReactiveFormsModule, InputTextModule, InputNumberModule, CardModule, ButtonModule, ToastModule, MessagesModule, RippleModule, CursosModalComponent, DropdownModule,
+  imports: [ReactiveFormsModule, InputTextModule, InputNumberModule, CardModule, ButtonModule, MessagesModule, RippleModule, CursosModalComponent, DropdownModule,
     InputGroupModule],
   templateUrl: './inscripcion-form.component.html',
   styleUrl: './inscripcion-form.component.scss'

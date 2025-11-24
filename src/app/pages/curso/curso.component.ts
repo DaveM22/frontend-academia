@@ -4,7 +4,6 @@ import { ButtonModule } from 'primeng/button';
 import { MessagesModule } from 'primeng/messages';
 import { PanelModule } from 'primeng/panel';
 import { TableModule } from 'primeng/table';
-import { ToastModule } from 'primeng/toast';
 import { Observable } from 'rxjs';
 import { Curso } from '../../entities/curso';
 import { CursoState } from '../../store/states/api/curso.state';
@@ -43,12 +42,6 @@ export class CursoComponent {
     filters.mostrarMateria = true;
     this.store.dispatch(new GetCursoAction(filters));
   }
-
-
-/*   showModal(curso:Curso){
-    this.curso = curso;
-    this.store.dispatch(new ShowModalDelete(true));
-  } */
 
   redirectNewCurso(){
     this.router.navigate(["/cursos/nuevo"]);

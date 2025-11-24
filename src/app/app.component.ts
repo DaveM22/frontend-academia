@@ -5,7 +5,6 @@ import { Router, RouterOutlet } from '@angular/router';
 import { MenuModule } from 'primeng/menu';
 import {  MessageService } from 'primeng/api';
 import { CommonModule } from '@angular/common';
-import { ToastModule } from 'primeng/toast';
 import { MessagesModule } from 'primeng/messages';
 import { ButtonModule } from 'primeng/button';
 import { PrimeNG } from 'primeng/config';
@@ -14,7 +13,7 @@ import { PrimeNG } from 'primeng/config';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet,ToastModule,MessagesModule, ButtonModule],
+  imports: [RouterOutlet,MessagesModule, ButtonModule],
   providers:[MessageService],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
@@ -22,11 +21,16 @@ import { PrimeNG } from 'primeng/config';
 export class AppComponent implements OnInit {
 
 
-    constructor(private primeng:PrimeNG){
+    constructor(private primeng:PrimeNG, private messageService: MessageService){
 
     }
   ngOnInit(): void {
     this.primeng.ripple.set(true);
+    this.messageService.messageObserver.subscribe(() => {
+      setTimeout(() => {
+        this.messageService.clear();
+      }, 5000);
+    });
   }
 
 }

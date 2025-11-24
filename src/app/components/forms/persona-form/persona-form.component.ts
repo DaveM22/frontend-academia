@@ -10,7 +10,6 @@ import { PostAlumnoAction, PostProfesorAction, PutAlumnoAction, PutProfesorActio
 import { InputTextModule } from 'primeng/inputtext';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
-import { ToastModule } from 'primeng/toast';
 import { RippleModule } from 'primeng/ripple';
 import { InputMaskModule } from 'primeng/inputmask';
 import { PlanesModalComponent } from '../../modals/planes-modal/planes-modal.component';
@@ -27,7 +26,7 @@ import { ClearSelectedPlan } from '../../../store/actions/pages/plan.action';
 @Component({
   selector: 'app-persona-form',
   standalone: true,
-  imports: [ReactiveFormsModule, InputTextModule, CardModule, ButtonModule, ToastModule, RippleModule, InputMaskModule, PlanesModalComponent],
+  imports: [ReactiveFormsModule, InputTextModule, CardModule, ButtonModule, RippleModule, InputMaskModule, PlanesModalComponent],
   templateUrl: './persona-form.component.html',
   styleUrl: './persona-form.component.scss',
   providers: [DatePipe]

@@ -12,7 +12,6 @@ import { EspecialidadPageState } from '../../../store/states/page/especialidad.s
 import { ClearSelectedEspecialidad } from '../../../store/actions/pages/especialidad.action';
 import { MessageService } from 'primeng/api';
 import { RippleModule } from 'primeng/ripple';
-import { ToastModule } from 'primeng/toast';
 import { BlockUI } from 'primeng/blockui';
 import { Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
@@ -21,7 +20,7 @@ import { PanelModule } from 'primeng/panel';
 @Component({
   selector: 'app-especialidad-form',
   standalone: true,
-  imports: [CommonModule, PanelModule, ReactiveFormsModule, InputTextModule, CardModule, ButtonModule, ToastModule, RippleModule],
+  imports: [CommonModule, PanelModule, ReactiveFormsModule, InputTextModule, CardModule, ButtonModule, RippleModule],
   templateUrl: './especialidad-form.component.html',
   styleUrl: './especialidad-form.component.scss'
 })

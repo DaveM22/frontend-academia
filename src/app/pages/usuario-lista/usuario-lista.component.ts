@@ -7,7 +7,6 @@ import { InputTextModule } from 'primeng/inputtext';
 import { MessagesModule } from 'primeng/messages';
 import { PanelModule } from 'primeng/panel';
 import { TableModule } from 'primeng/table';
-import { ToastModule } from 'primeng/toast';
 import { EspecialidadBorrarComponent } from '../especialidad-borrar/especialidad-borrar.component';
 import { Observable } from 'rxjs';
 import { Store } from '@ngxs/store';
@@ -24,7 +23,7 @@ import { MessageModule } from 'primeng/message';
 @Component({
   selector: 'app-usuario-lista',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule,ConfirmDialogModule, MessageModule, PanelModule, ToastModule, IconFieldModule, InputTextModule, InputIconModule],
+  imports: [CommonModule, TableModule, ButtonModule,ConfirmDialogModule, MessageModule, PanelModule, IconFieldModule, InputTextModule, InputIconModule],
   templateUrl: './usuario-lista.component.html',
   styleUrl: './usuario-lista.component.scss',
   providers:[ConfirmationService]

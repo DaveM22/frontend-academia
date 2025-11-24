@@ -12,7 +12,6 @@ import { ShowModalDelete } from '../../store/actions/pages/especialidad.action';
 import { MessagesModule } from 'primeng/messages';
 import { Router, RouterModule } from '@angular/router';
 import { PanelModule } from 'primeng/panel';
-import { ToastModule } from 'primeng/toast';
 import { InputTextModule } from 'primeng/inputtext';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';

@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { ToastModule } from 'primeng/toast';
 import { ButtonModule } from 'primeng/button';
 import { Observable } from 'rxjs';
 import { EspecialidadPageState } from '../../store/states/page/especialidad.state';

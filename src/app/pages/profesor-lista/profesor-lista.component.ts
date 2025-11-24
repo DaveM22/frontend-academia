@@ -14,7 +14,6 @@ import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 import { PanelModule } from 'primeng/panel';
 import { TableModule } from 'primeng/table';
-import { ToastModule } from 'primeng/toast';
 import { EspecialidadBorrarComponent } from '../especialidad-borrar/especialidad-borrar.component';
 import { AppPageState } from '../../store/states/page/app.state';
 import { LoadingForm, ShowModalConfirmationAction } from '../../store/actions/pages/app.action';
@@ -26,7 +25,7 @@ import { DialogModule } from 'primeng/dialog';
 @Component({
   selector: 'app-profesor-lista',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule,ConfirmDialogModule, MessageModule, PanelModule, ToastModule, IconFieldModule, InputTextModule, InputIconModule, DialogModule],
+  imports: [CommonModule, TableModule, ButtonModule,ConfirmDialogModule, MessageModule, PanelModule, IconFieldModule, InputTextModule, InputIconModule, DialogModule],
   templateUrl: './profesor-lista.component.html',
   styleUrl: './profesor-lista.component.scss',
   providers:[ConfirmationService]

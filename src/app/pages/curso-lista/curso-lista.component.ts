@@ -11,7 +11,6 @@ import { ButtonModule } from 'primeng/button';
 import { MessagesModule } from 'primeng/messages';
 import { PanelModule } from 'primeng/panel';
 import { TableModule } from 'primeng/table';
-import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { LoadingForm, ShowModalConfirmationAction } from '../../store/actions/pages/app.action';
@@ -25,7 +24,7 @@ import { DialogModule } from 'primeng/dialog';
 @Component({
   selector: 'app-curso-lista',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, MessageModule, PanelModule, ToastModule, ConfirmDialogModule, IconFieldModule, InputTextModule, InputIconModule, DialogModule],
+  imports: [CommonModule, TableModule, ButtonModule, MessageModule, PanelModule, ConfirmDialogModule, IconFieldModule, InputTextModule, InputIconModule, DialogModule],
   templateUrl: './curso-lista.component.html',
   styleUrl: './curso-lista.component.scss',
   providers: [ConfirmationService]

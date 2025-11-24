@@ -7,7 +7,6 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
-import { ToastModule } from 'primeng/toast';
 import { PlanPageState } from '../../../store/states/page/plan.page.state';
 import { GetByIdPlanAction, GetByIdPlanForCursoAction, PostPlanAction } from '../../../store/actions/api/planes.action';
 import { Curso, CursoDto } from '../../../entities/curso';
@@ -37,7 +36,7 @@ import { PlanFilter } from '../../../entities/filter';
     InputTextModule,
     CardModule,
     ButtonModule,
-    ToastModule, RippleModule, InputNumberModule, InputGroupModule, 
+    RippleModule, InputNumberModule, InputGroupModule, 
     PlanesModalComponent,
     MateriasModalComponent,
     ComisionesModalComponent,

@@ -9,11 +9,17 @@
 @if ((generalLoading$ | async)! === false) 
 {
 
-      @if ((loading$| async) === false && (parametro$ | async)!.activo === false) {
-    <p-message severity="warn" class="mb-2">
-        El sistema de inscripción a materias se encuentra deshabilitado. Por favor, contacte con un administrador.
-    </p-message>  
-    }
+        @if ((loading$| async) === false && (parametro$ | async)!.activo === false) {
+      <div class="flex flex-col items-center justify-center py-12 min-h-[300px] w-full">
+        <div class="flex items-center justify-center w-32 h-32 rounded-full bg-red-600/30 backdrop-blur-sm border border-red-500 mb-6">
+          <i class="pi pi-lock text-red-400 text-6xl"></i>
+        </div>
+        <h3 class="text-center text-white font-bold text-2xl md:text-3xl mb-4">Inscripción deshabilitada</h3>
+        <p class="text-center text-white text-lg md:text-xl max-w-2xl leading-relaxed">
+          El sistema de inscripción a materias se encuentra deshabilitado.
+        </p>
+      </div>
+      }
     @else {
     <router-outlet></router-outlet>
     }

@@ -5,7 +5,6 @@ import { ButtonModule } from 'primeng/button';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { CardModule } from 'primeng/card';
-import { ToastModule } from 'primeng/toast';
 import { RippleModule } from 'primeng/ripple';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputGroupModule } from 'primeng/inputgroup';
@@ -30,7 +29,7 @@ import { MessageService } from 'primeng/api';
     InputTextModule,
     CardModule,
     ButtonModule,
-    ToastModule, RippleModule, InputNumberModule, PlanesModalComponent, CommonModule],
+    RippleModule, InputNumberModule, PlanesModalComponent, CommonModule],
   templateUrl: './comision-form.component.html',
   styleUrl: './comision-form.component.scss'
 })
