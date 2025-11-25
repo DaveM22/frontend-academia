@@ -11,7 +11,7 @@
                     <p-inputNumber inputId="integeronly" formControlName="anioCalendario" class="w-full"
                         styleClass="w-full text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl" inputStyleClass="h-[50px]" />
                     @if(form.get('anioCalendario')?.invalid && form.get('anioCalendario')?.dirty){
-                    <small class="p-error block">El campo Año Calendario es requerido</small>
+                    <small class="p-error block text-red-600">El campo Año Calendario es requerido</small>
                     }
                 </div>
             </div>
@@ -35,7 +35,7 @@
                     <input id="descripcion" pInputText formControlName="descripcion" type="text"
                         class="w-full text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl h-[50px]">
                     @if(form.get('descripcion')?.invalid && form.get('descripcion')?.dirty){
-                    <small class="p-error block">El campo descripcion es requerido</small>
+                    <small class="p-error block text-red-600">El campo descripcion es requerido</small>
                     }
                 </div>
             </div>
@@ -61,7 +61,7 @@
                     <p-inputNumber inputId="integeronly" formControlName="cupo" class="w-full"
                         styleClass="w-full text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl" inputStyleClass="h-[50px]" />
                     @if(form.get('cupo')?.invalid && form.get('cupo')?.dirty){
-                    <small class="p-error block">El campo cupo es requerido</small>
+                    <small class="p-error block text-red-600">El campo cupo es requerido</small>
                     }
                 </div>
             </div>

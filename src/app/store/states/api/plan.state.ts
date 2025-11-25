@@ -15,7 +15,7 @@ import { LoadingForm } from "../../actions/pages/app.action";
   defaults: {
     planes: [],
     planSelected: null,
-    loading: true,
+    loading: false,
     error: false,
     errorMessage: ''
   }

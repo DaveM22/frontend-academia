@@ -1,4 +1,4 @@
-<p-table #dt2 [value]="planes" [loading]="(loading$ | async)" responsiveLayout="stack" [breakpoint]="'960px'"
+<p-table #dt2 [value]="planes" [loading]="(loading$ | async)" [loadingIcon]="''" responsiveLayout="stack" [breakpoint]="'960px'"
     [paginator]="true" [scrollable]="true" [rows]="rowsPerPage" scrollHeight="flex" size="small"
     styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-xs sm:text-sm md:text-base lg:text-base xl:text-base" responsiveLayout="stack"
     [breakpoint]="'960px'" [globalFilterFields]="['descripcion, especialidad.descripcion']">
@@ -45,12 +45,16 @@
             <th class="text-center">Acciones</th>
         </tr>
     </ng-template>
-      <ng-template pTemplate="loading">
-    <div class="flex flex-col items-center justify-center p-4 text-primary">
-      <i class="pi pi-spin pi-spinner text-4xl mb-2"></i>
-      <span class="text-lg font-medium">Cargando datos de clientes...</span>
-    </div>
-  </ng-template>
+        <ng-template pTemplate="loadingbody">
+                <tr>
+                        <td colspan="3">
+                                <div class="flex flex-col items-center justify-center py-6">
+                                        <p-progressSpinner styleClass="mb-3" strokeWidth="4"></p-progressSpinner>
+                                        <span class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base font-semibold">Un momento, estamos procesando tu solicitud...</span>
+                                </div>
+                        </td>
+                </tr>
+        </ng-template>
     <ng-template pTemplate="body" let-plan>
         <tr>
             <td style="width:20%"><span class="p-column-title">Descripción</span>{{plan.descripcion}}</td>

@@ -9,7 +9,7 @@
             <input id="descripcion" pInputText formControlName="descripcion" type="text"
                 class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl w-full h-[50px]" styleClass="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl">
             @if(form.get('descripcion')?.invalid && form.get('descripcion')?.dirty){
-            <small class="p-error block">
+            <small class="p-error block text-red-600">
                 El campo descripcion es requerido
             </small>
             }
@@ -20,7 +20,7 @@
             <p-inputNumber inputId="integeronly" formControlName="anioEspecialidad" class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl w-full"
                 inputStyleClass="w-full h-[50px]" styleClass="w-full md:w-full lg:w-auto text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl" />
             @if(form.get('anioEspecialidad')?.invalid && form.get('anioEspecialidad')?.dirty){
-            <small class="p-error block">
+            <small class="p-error block text-red-600">
                 El campo Año especialidad es requerido
             </small>
             }

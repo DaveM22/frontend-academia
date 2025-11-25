@@ -25,11 +25,12 @@ import { ClearSelectedPlanFilter, ClearSelectedPlanInModal, SelectedEspecialidad
 import { AsignSelectedPlan } from '../../store/actions/pages/plan.action';
 import { ClearMateriasAction } from '../../store/actions/api/materia.action';
 import { MessageModule } from 'primeng/message';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @Component({
   selector: 'app-inscripcion-alumno-lista',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, IconFieldModule, MessageModule, InputIconModule, MessagesModule, InputTextModule, EspecialidadFilterComponent, PlanFilterComponent],
+  imports: [CommonModule, TableModule, ButtonModule, IconFieldModule, MessageModule, InputIconModule, MessagesModule, InputTextModule, EspecialidadFilterComponent, PlanFilterComponent, ProgressSpinnerModule],
   templateUrl: './inscripcion-alumno-lista.component.html',
   styleUrl: './inscripcion-alumno-lista.component.scss'
 })
@@ -125,5 +126,6 @@ export class InscripcionAlumnoListaComponent implements OnInit, OnDestroy {
     this.store.dispatch(new ClearSelectedPlanFilter);
     this.store.dispatch(new ClearMateriasAction);
     this.store.dispatch(new ClearSelectedPlanInModal);
+    this.store.dispatch(new ClearSelectedPersona);
   }
 }

@@ -56,26 +56,47 @@ export class PersonasModalComponent implements OnDestroy {
     this.store.dispatch(new ClearProfesorListAction);
   }
 
-  async ngOnInit(): Promise<void> {
-    const especialidad = await firstValueFrom(this.especiliadadSelected$.pipe(filter(x => x !== null)));
-    if (especialidad) {
-      this.disablePlanDropDown = false;
-      let filter = new PlanFilter();
-      filter.especialidadId = especialidad!._id;
-      this.store.dispatch(new GetPlanAction(filter))
-    }
-    else {
-      this.store.dispatch(new ClearSelectedPlanFilter);
-      this.disablePlanDropDown = true;
-    }
+  ngOnInit(): void {
 
-    this.plan = await firstValueFrom(this.planSelected$.pipe(filter(x => x !== null)));
-    if (this.plan) {
-      const filter = new AlumnoFilter();
-      filter.planId = this.plan!._id;
-      this.store.dispatch(new GetAlumnosAction(filter));
-      this.disableTipos = false;
-    }
+    this.especiliadadSelected$.subscribe((esp) => {
+      if (esp) {
+        this.disablePlanDropDown = false;
+        let filter = new PlanFilter();
+        filter.especialidadId = esp!._id;
+        this.store.dispatch(new GetPlanAction(filter))
+      }
+      else {
+        this.store.dispatch(new ClearSelectedPlanFilter);
+        this.disablePlanDropDown = true;
+      }
+    });
+
+    this.planSelected$.subscribe((plan) => {
+      if (plan) {
+        this.plan = plan;
+        const filter = new AlumnoFilter();
+        filter.planId = plan!._id;
+        this.store.dispatch(new GetAlumnosAction(filter));
+        this.disableTipos = false;
+      }
+      else{
+        this.disableTipos = true;
+      }
+    })
+
+    this.profesores$.subscribe(x => {
+      if (x.length > 0) {
+        this.personas = x;
+      }
+    });
+
+    this.alumnos$.subscribe(x => {
+      if (x.length > 0) {
+        this.personas = x;
+      }
+    })
+
+
 
 
   }
@@ -97,8 +118,6 @@ export class PersonasModalComponent implements OnDestroy {
       filter.planId = this.plan!._id;
       this.store.dispatch(new GetProfesoresAction(filter));
     }
-    this.personas = await firstValueFrom(this.profesores$.pipe(filter(x => x !== null)));
-    this.personas = await firstValueFrom(this.alumnos$.pipe(filter(x => x !== null)));
   }
 
   onClear() {
@@ -114,7 +133,7 @@ export class PersonasModalComponent implements OnDestroy {
 
   }
 
-  onClose(){
+  onClose() {
     this.toggleOffModal();
   }
 

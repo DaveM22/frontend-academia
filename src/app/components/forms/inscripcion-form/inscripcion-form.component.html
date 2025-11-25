@@ -28,7 +28,7 @@
                     inputStyleClass="w-full h-[50px]" styleClass="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl w-full md:w-full lg:w-auto" />
             </div>
             @if(this.form.value.condicion === 'APROBADO' && !this.form.value.nota){
-            <small class="p-error block">
+            <small class="p-error block text-red-600">
                 El campo nota es requerido con la condición de aprobado
             </small>
             }

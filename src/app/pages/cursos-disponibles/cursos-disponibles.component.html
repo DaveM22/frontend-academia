@@ -9,7 +9,7 @@
 
 } -->
 
-<p-table #dt2 [value]="cursos" [loading]="loading$" responsiveLayout="stack" [breakpoint]="'960px'" [paginator]="true"
+<p-table #dt2 [value]="cursos" [loading]="loading$" [loadingIcon]="''" responsiveLayout="stack" [breakpoint]="'960px'" [paginator]="true"
     [scrollable]="true" [rows]="5" scrollHeight="flex"
     styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-sm lg:text-xl"
     [globalFilterFields]="['descripcion, especialidad.descripcion']">
@@ -34,6 +34,16 @@
                 <div class="flex flex-column sm:flex-row gap-2 justify-center">
                     <p-button class="text-sm lg:text-xl" label="Inscribirse" severity="primary"
                         (onClick)="modalConfirmar(curso)"></p-button>
+                </div>
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="loadingbody">
+        <tr>
+            <td colspan="2">
+                <div class="flex flex-col items-center justify-center py-6">
+                    <p-progressSpinner styleClass="mb-3" strokeWidth="4"></p-progressSpinner>
+                    <span class="text-sm lg:text-xl font-semibold">Un momento, estamos procesando tu solicitud...</span>
                 </div>
             </td>
         </tr>

@@ -24,11 +24,12 @@ import { ShowModalConfirmationAction } from '../../store/actions/pages/app.actio
 import { AlumnoInscripcionState } from '../../store/states/api/alumno-incripcion.state';
 import { ClearMateriaAction } from '../../store/actions/pages/materia.action';
 import { ClearMateriasAction } from '../../store/actions/api/materia.action';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @Component({
   selector: 'app-inscripciones',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, IconFieldModule, InputIconModule, MessagesModule, InputTextModule, ConfirmDialogModule],
+  imports: [CommonModule, TableModule, ButtonModule, IconFieldModule, InputIconModule, MessagesModule, InputTextModule, ConfirmDialogModule, ProgressSpinnerModule],
   templateUrl: './inscripciones.component.html',
   styleUrl: './inscripciones.component.scss',
   providers: [ConfirmationService]

@@ -21,11 +21,12 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ScreenSizeService } from '../../services/screen-size.service.service';
 import { DialogModule } from 'primeng/dialog';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @Component({
   selector: 'app-profesor-lista',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule,ConfirmDialogModule, MessageModule, PanelModule, IconFieldModule, InputTextModule, InputIconModule, DialogModule],
+  imports: [CommonModule, TableModule, ButtonModule,ConfirmDialogModule, MessageModule, PanelModule, IconFieldModule, InputTextModule, InputIconModule, DialogModule, ProgressSpinnerModule],
   templateUrl: './profesor-lista.component.html',
   styleUrl: './profesor-lista.component.scss',
   providers:[ConfirmationService]

@@ -18,11 +18,12 @@ import { TableModule } from 'primeng/table';
 import { EspecialidadBorrarComponent } from '../especialidad-borrar/especialidad-borrar.component';
 import { ScreenSizeService } from '../../services/screen-size.service.service';
 import { LoadingForm } from '../../store/actions/pages/app.action';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @Component({
   selector: 'app-especialidad-lista',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, EspecialidadBorrarComponent, MessageModule, PanelModule, IconFieldModule, InputTextModule, InputIconModule],
+  imports: [CommonModule, TableModule, ButtonModule, EspecialidadBorrarComponent, MessageModule, PanelModule, IconFieldModule, InputTextModule, InputIconModule, ProgressSpinnerModule],
   templateUrl: './especialidad-lista.component.html',
   styleUrl: './especialidad-lista.component.scss'
 })

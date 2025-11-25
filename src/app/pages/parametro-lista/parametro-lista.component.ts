@@ -15,10 +15,11 @@ import { Parametro } from '../../entities/parametro';
 import { GetParametrosAction, PutParametroAction } from '../../store/actions/api/parametros.action';
 import { ToggleSwitch, ToggleSwitchModule } from 'primeng/toggleswitch';
 import { FormsModule } from '@angular/forms';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @Component({
   selector: 'app-parametro-lista',
-  imports: [FormsModule,CommonModule, TableModule, ButtonModule, MessageModule, PanelModule, IconFieldModule, InputTextModule, InputIconModule, ToggleSwitchModule],
+  imports: [FormsModule,CommonModule, TableModule, ButtonModule, MessageModule, PanelModule, IconFieldModule, InputTextModule, InputIconModule, ToggleSwitchModule, ProgressSpinnerModule],
   templateUrl: './parametro-lista.component.html',
   styleUrl: './parametro-lista.component.css',
   standalone: true

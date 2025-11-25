@@ -63,6 +63,7 @@ import { AdminInicioComponent } from './pages/admin-inicio/admin-inicio.componen
 import { DocenteInicioComponent } from './pages/docente-inicio/docente-inicio.component';
 import { InicioComponent } from './pages/inicio/inicio.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { docenteExistsGuard } from './pages/docente-menu/docente-exists.guard';
 
 export const routes: Routes = [
     {
@@ -261,7 +262,7 @@ export const routes: Routes = [
                     { path: 'cursos-inscripciones/:idCurso', component: CatedrasDocenteInscripcionesComponent },
                     { path: 'cursos-inscripciones/:idCurso/inscripciones/:idInscripcion', component: InscripcionFormComponent }
                 ],
-                canActivate: [AuthGuard, docenteGuard],
+                canActivate: [AuthGuard, docenteGuard, docenteExistsGuard],
                 data: {
                     role: 'Docente'
                 }

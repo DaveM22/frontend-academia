@@ -21,11 +21,12 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ScreenSizeService } from '../../services/screen-size.service.service';
 import { AlumnoFilter } from '../../entities/filter';
 import { DialogModule } from 'primeng/dialog';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @Component({
   selector: 'app-alumno-lista',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule,ConfirmDialogModule, MessagesModule, PanelModule, IconFieldModule, InputTextModule, InputIconModule, DialogModule],
+  imports: [CommonModule, TableModule, ButtonModule,ConfirmDialogModule, MessagesModule, PanelModule, IconFieldModule, InputTextModule, InputIconModule, DialogModule, ProgressSpinnerModule],
   templateUrl: './alumno-lista.component.html',
   styleUrl: './alumno-lista.component.scss',
   providers:[ConfirmationService]

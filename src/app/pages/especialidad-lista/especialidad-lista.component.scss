@@ -59,3 +59,7 @@
 :host::ng-deep .p-datatable .p-paginator {
     flex-shrink: 0 !important;
 }
+
+:host::ng-deep .p-datatable .p-datatable-loading-icon {
+    display: none !important;
+}

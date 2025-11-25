@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Store } from '@ngxs/store';
 import { Alumno, AlumnoDto } from '../../../entities/alumno';
@@ -13,7 +13,7 @@ import { ButtonModule } from 'primeng/button';
 import { RippleModule } from 'primeng/ripple';
 import { InputMaskModule } from 'primeng/inputmask';
 import { PlanesModalComponent } from '../../modals/planes-modal/planes-modal.component';
-import { ClearSelectedPlanInModal, ShowPlanModal } from '../../../store/actions/pages/app.action';
+import { ClearSelectedPlanFilter, ClearSelectedPlanInModal, ShowPlanModal } from '../../../store/actions/pages/app.action';
 import { Observable } from 'rxjs';
 import { PlanState } from '../../../store/states/api/plan.state';
 import { AppPageState } from '../../../store/states/page/app.state';
@@ -31,7 +31,7 @@ import { ClearSelectedPlan } from '../../../store/actions/pages/plan.action';
   styleUrl: './persona-form.component.scss',
   providers: [DatePipe]
 })
-export class PersonaFormComponent {
+export class PersonaFormComponent implements OnDestroy {
   @Input() title!: string;
   tipoPersona!: TipoPersonaEnum
   planSelected$: Observable<Plan | null> = this.store.select(AppPageState.getSelectedPlanInModal);
@@ -45,6 +45,12 @@ export class PersonaFormComponent {
   personaDto!: PersonaDto;
 
   constructor(private store: Store, private router: Router, private messageService: MessageService, private datePipe: DatePipe) { }
+
+  ngOnDestroy(): void {
+    this.store.dispatch(new ClearSelectedPlanFilter);
+    this.store.dispatch(new ClearSelectedPlan);
+    this.store.dispatch(new ClearSelectedPersona);
+  }
 
   ngOnInit(): void {
 

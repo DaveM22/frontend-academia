@@ -13,11 +13,12 @@ import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessagesModule } from 'primeng/messages';
 import { TableModule } from 'primeng/table';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @Component({
   selector: 'app-materia-cursos',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, IconFieldModule, InputIconModule, MessagesModule, InputTextModule],
+  imports: [CommonModule, TableModule, ButtonModule, IconFieldModule, InputIconModule, MessagesModule, InputTextModule, ProgressSpinnerModule],
   templateUrl: './materia-cursos.component.html',
   styleUrl: './materia-cursos.component.scss'
 })
@@ -36,7 +37,7 @@ export class MateriaCursosComponent implements OnInit {
     
     // Si necesitas hacer algo con los cursos después de cargarlos
     const cursos = await lastValueFrom(this.cursos$);
-    console.log(cursos);
+
   }
 
 

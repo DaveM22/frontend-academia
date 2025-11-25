@@ -16,7 +16,7 @@ import { ClearSelectedCursoAction } from '../../../store/actions/pages/curso.act
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { PlanesModalComponent } from '../../modals/planes-modal/planes-modal.component';
-import { ClearSelectedComisionInModal, ClearSelectedMateriaInModal, ClearSelectedPlanInModal, ShowComisionesModal, ShowMateriaModal, ShowPlanModal } from '../../../store/actions/pages/app.action';
+import { ClearSelectedComisionInModal, ClearSelectedMateriaInModal, ClearSelectedPlanFilter, ClearSelectedPlanInModal, ShowComisionesModal, ShowMateriaModal, ShowPlanModal } from '../../../store/actions/pages/app.action';
 import { Observable } from 'rxjs';
 import { Plan } from '../../../entities/plan';
 import { AppPageState } from '../../../store/states/page/app.state';
@@ -27,6 +27,7 @@ import { Materia } from '../../../entities/materia';
 import { Comision } from '../../../entities/comision';
 import { ComisionesModalComponent } from '../../modals/comisiones-modal/comisiones-modal.component';
 import { PlanFilter } from '../../../entities/filter';
+import { ClearSelectedPlan } from '../../../store/actions/pages/plan.action';
 
 @Component({
   selector: 'app-curso-form',
@@ -36,7 +37,7 @@ import { PlanFilter } from '../../../entities/filter';
     InputTextModule,
     CardModule,
     ButtonModule,
-    RippleModule, InputNumberModule, InputGroupModule, 
+    RippleModule, InputNumberModule, InputGroupModule,
     PlanesModalComponent,
     MateriasModalComponent,
     ComisionesModalComponent,
@@ -46,7 +47,7 @@ import { PlanFilter } from '../../../entities/filter';
 })
 export class CursoFormComponent implements OnDestroy {
   planInModalSelected$: Observable<Plan | null> = this.store.select(AppPageState.getSelectedPlanInModal);
-  planSelected$:Observable<Plan | null> = this.store.select(PlanPageState.getPlanSelected);
+  planSelected$: Observable<Plan | null> = this.store.select(PlanPageState.getPlanSelected);
   materiaSelected$: Observable<Materia | null> = this.store.select(AppPageState.getSelectedMateriaInModal);
   comisionSelected$: Observable<Comision | null> = this.store.select(AppPageState.getSelectedComisionInModal);
   cursoSelected$: Observable<Curso | null> = this.store.select(CursoPageState.getCursoSelected);
@@ -65,11 +66,11 @@ export class CursoFormComponent implements OnDestroy {
       descripcion: new FormControl('', [Validators.required]),
       anioCalendario: new FormControl(0, [Validators.required]),
       cupo: new FormControl(0, [Validators.required]),
-      plan: new FormControl({value:'', disabled:true}, [Validators.required]),
+      plan: new FormControl({ value: '', disabled: true }, [Validators.required]),
       planId: new FormControl('', [Validators.required]),
-      materia: new FormControl({value:'', disabled:true}, [Validators.required]),
+      materia: new FormControl({ value: '', disabled: true }, [Validators.required]),
       materiaId: new FormControl('', [Validators.required]),
-      comision: new FormControl({value:'', disabled:true}, [Validators.required]),
+      comision: new FormControl({ value: '', disabled: true }, [Validators.required]),
       comisionId: new FormControl('', [Validators.required])
     });
     this.form.patchValue(this.store.selectSnapshot(ComisionState.getComisiones)!);
@@ -85,7 +86,11 @@ export class CursoFormComponent implements OnDestroy {
     this.store.dispatch(new ClearSelectedPlanInModal);
     this.store.dispatch(new ClearSelectedMateriaInModal);
     this.store.dispatch(new ClearSelectedComisionInModal)
+    this.store.dispatch(new ClearSelectedPlanFilter);
+    this.store.dispatch(new ClearSelectedPlan);
   }
+
+
 
 
   public onSubmit() {
@@ -125,7 +130,7 @@ export class CursoFormComponent implements OnDestroy {
     this.store.dispatch(new ShowComisionesModal(true));
   }
 
-  subscripcionPlanSelectedInModal(){
+  subscripcionPlanSelectedInModal() {
     this.planInModalSelected$.subscribe(x => {
       if (x !== null) {
         this.plan = x!;
@@ -133,53 +138,53 @@ export class CursoFormComponent implements OnDestroy {
         let filter = new PlanFilter();
         filter.incluirMaterias = true;
         filter.incluirComisiones = true;
-        
+
         this.store.dispatch(new GetByIdPlanAction(this.plan._id, filter));
       }
     })
   }
 
-  subscripcionPlanSelected(){
+  subscripcionPlanSelected() {
     this.planSelected$.subscribe(x => {
-      if (x !== null) {
+      if (x) {
         this.plan = x!;
         this.form.patchValue({ 'plan': this.plan.descripcion, 'planId': this.plan._id });
       }
     })
   }
-  
 
-  subscriptionMateriaSelected(){
+
+  subscriptionMateriaSelected() {
     this.materiaSelected$.subscribe(x => {
-      if (x !== null) {
-        this.form.patchValue({ 'materia': x.descripcion, 'materiaId':x._id });
+      if (x) {
+        this.form.patchValue({ 'materia': x.descripcion, 'materiaId': x._id });
       }
     })
   }
 
-  subscriptionComisionSelected(){
+  subscriptionComisionSelected() {
     this.comisionSelected$.subscribe(x => {
-      if (x !== null) {
-        this.form.patchValue({ 'comision': x.descripcion, 'comisionId':x._id });
+      if (x) {
+        this.form.patchValue({ 'comision': x.descripcion, 'comisionId': x._id });
       }
     })
   }
 
-  subscriptionCursoSelected(){
+  subscriptionCursoSelected() {
     this.cursoSelected$.subscribe(x => {
-      if(x){
+      if (x) {
         let filter = new PlanFilter();
         filter.incluirMaterias = true;
         filter.incluirComisiones = true;
         console.log(x.materia)
         this.store.dispatch(new GetByIdPlanAction(x.materia?.plan!, filter))
         this.form.patchValue({
-          '_id':x._id,
-          'descripcion':x.descripcion,
-          'materia': x.materia!.descripcion, 'materiaId':x.materia!._id,
-          'comision':x.comision?.descripcion, 'comisionId':x.comision?._id,
+          '_id': x._id,
+          'descripcion': x.descripcion,
+          'materia': x.materia!.descripcion, 'materiaId': x.materia!._id,
+          'comision': x.comision?.descripcion, 'comisionId': x.comision?._id,
           'cupo': x.cupo,
-          'anioCalendario':x.anioCalendario
+          'anioCalendario': x.anioCalendario
         })
 
       }

@@ -33,7 +33,7 @@ export class PlanFilterComponent implements OnInit, OnDestroy  {
   ngOnInit(): void {
     this.planSelected$.subscribe(x => {
       if(x){
-        console.log(x)
+
         this.plan = x;
       }
       else{

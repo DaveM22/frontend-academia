@@ -20,11 +20,12 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ScreenSizeService } from '../../services/screen-size.service.service';
 import { MateriaState } from '../../store/states/api/materia.state';
 import { ClearSelectedPlan } from '../../store/actions/pages/plan.action';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @Component({
   selector: 'app-plan-materias',
   standalone: true,
-  imports: [TableModule, CommonModule, MessagesModule, ButtonModule, ConfirmDialogModule],
+  imports: [TableModule, CommonModule, MessagesModule, ButtonModule, ConfirmDialogModule, ProgressSpinnerModule],
   templateUrl: './plan-materias.component.html',
   styleUrl: './plan-materias.component.scss',
   providers: [ConfirmationService]
@@ -50,15 +51,13 @@ export class PlanMateriasComponent implements OnInit {
     private screenService: ScreenSizeService) {
 
   }
-  async ngOnInit(): Promise<void> {
+  ngOnInit(): void {
+    this.loading$ = true;
     this.id = this.activadedRoute.snapshot.params['id'];
     const planFilter = new PlanFilter();
     planFilter.incluirMaterias = true;
     this.store.dispatch(new GetByIdPlanAction(this.id, planFilter));
-    const planSelected = await firstValueFrom(this.planSelected$.pipe(filter(x => x !== null)));
-    this.plan = planSelected;
-    this.materias = this.plan.materias;
-    this.header = this.plan.descripcion;
+
 
     this.showConfirmation$.subscribe(x => {
       if (x && this.materiaSelected) {
@@ -66,10 +65,20 @@ export class PlanMateriasComponent implements OnInit {
       }
     })
 
+    this.planSelected$.subscribe(plan => {
+      if (plan) {
+        this.plan = plan!;
+        this.materias = this.plan.materias;
+        this.header = this.plan.descripcion;
+        this.loading$ = false;
+      }
+
+    });
+
     this.screenService.screenSize$.subscribe((x: any) => {
       this.scrollSize = x.currentTarget.innerWidth > 992 ? 'flex' : '50vh'
     })
-    this.loading$ = false;
+
   }
 
   redirectMateriaNuevo() {

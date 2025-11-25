@@ -35,6 +35,7 @@ import { AuthService } from '@auth0/auth0-angular';
 import { environment } from '../../../../environments/environment';
 import { ClearAlumnoInscripcionAction } from '../../../store/actions/pages/alumno-inscripcion.action';
 import { PlanState } from '../../../store/states/api/plan.state';
+import { ClearSelectedPersona } from '../../../store/actions/pages/persona.action';
 @Component({
   selector: 'app-inscripcion-form',
   standalone: true,
@@ -59,6 +60,7 @@ export class InscripcionFormComponent implements OnInit, OnDestroy {
   constructor(private store: Store, private router: Router, private messageService: MessageService, private activatedRoute: ActivatedRoute, private authService: AuthService) { }
   ngOnDestroy(): void {
     this.store.dispatch(new ClearAlumnoInscripcionAction());
+    this.store.dispatch(new ClearSelectedPersona);
   }
 
   async ngOnInit(): Promise<void> {

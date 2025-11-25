@@ -24,11 +24,12 @@ import { Plan } from '../../entities/plan';
 import { GetPlanAction } from '../../store/actions/api/planes.action';
 import { PlanFilter } from '../../entities/filter';
 import { SelectedPlanFilter } from '../../store/actions/pages/app.action';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @Component({
   selector: 'app-comision-lista',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, MessageModule, PanelModule, ConfirmDialogModule, IconFieldModule, InputTextModule, InputIconModule, PlanFilterComponent],
+  imports: [CommonModule, TableModule, ButtonModule, MessageModule, PanelModule, ConfirmDialogModule, IconFieldModule, InputTextModule, InputIconModule, PlanFilterComponent, ProgressSpinnerModule],
   templateUrl: './comision-lista.component.html',
   styleUrl: './comision-lista.component.scss',
   providers: [ConfirmationService]

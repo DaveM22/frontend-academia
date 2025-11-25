@@ -20,11 +20,12 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputIconModule } from 'primeng/inputicon';
 import { MessageModule } from 'primeng/message';
 import { DialogModule } from 'primeng/dialog';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @Component({
   selector: 'app-curso-lista',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, MessageModule, PanelModule, ConfirmDialogModule, IconFieldModule, InputTextModule, InputIconModule, DialogModule],
+  imports: [CommonModule, TableModule, ButtonModule, MessageModule, PanelModule, ConfirmDialogModule, IconFieldModule, InputTextModule, InputIconModule, DialogModule, ProgressSpinnerModule],
   templateUrl: './curso-lista.component.html',
   styleUrl: './curso-lista.component.scss',
   providers: [ConfirmationService]

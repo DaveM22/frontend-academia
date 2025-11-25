@@ -22,11 +22,12 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { AppPageState } from '../../store/states/page/app.state';
 import e from 'express';
 import { Especialidad } from '../../entities/especialidad';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @Component({
   selector: 'app-plan-lista',
   standalone: true,
-  imports: [ButtonModule, TableModule, CommonModule, MessageModule, IconFieldModule, InputIconModule, ConfirmDialogModule, InputTextModule, EspecialidadFilterComponent],
+  imports: [ButtonModule, TableModule, CommonModule, MessageModule, IconFieldModule, InputIconModule, ConfirmDialogModule, InputTextModule, EspecialidadFilterComponent, ProgressSpinnerModule],
   templateUrl: './plan-lista.component.html',
   styleUrl: './plan-lista.component.scss',
   providers: [ConfirmationService]

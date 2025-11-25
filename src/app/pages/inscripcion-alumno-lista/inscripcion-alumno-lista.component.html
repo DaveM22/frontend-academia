@@ -9,7 +9,7 @@
 
 }
 
-<p-table #dt2 [value]="(alumnos$ | async)!" [loading]="(loading$ | async)"
+<p-table #dt2 [value]="(alumnos$ | async)!" [loading]="(loading$ | async)" [loadingIcon]="''"
     styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-xs sm:text-sm md:text-base lg:text-base xl:text-base" responsiveLayout="stack"
     [breakpoint]="'960px'" [paginator]="true" [scrollable]="true" [rows]="rowsPerPage" scrollHeight="flex"
     [globalFilterFields]="['nombre', 'apellido', 'direccion', 'email', 'legajo']" size="small">
@@ -76,6 +76,16 @@
                 <div class="flex gap-2 justify-center">
                     <p-button label="Inscripciones" styleClass="text-xs sm:text-sm md:text-base lg:text-base xl:text-base px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2"
                         (onClick)="redirectToInscripciones(alumno._id)"></p-button>
+                </div>
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="loadingbody">
+        <tr>
+            <td colspan="5">
+                <div class="flex flex-col items-center justify-center py-6">
+                    <p-progressSpinner styleClass="mb-3" strokeWidth="4"></p-progressSpinner>
+                    <span class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base font-semibold">Un momento, estamos procesando tu solicitud...</span>
                 </div>
             </td>
         </tr>

@@ -12,9 +12,6 @@ import { Curso } from '../../entities/curso';
   styleUrl: './curso-nuevo.component.scss'
 })
 export class CursoNuevoComponent {
-  constructor(private store:Store){}
-  ngOnInit(): void {
-    this.store.dispatch(new AsignSelectedCursoAction(new Curso()));
 
-  }
+
 }

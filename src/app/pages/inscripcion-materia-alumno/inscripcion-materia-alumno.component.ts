@@ -30,10 +30,11 @@ import { BlockUiComponent } from '../../components/util/block-ui/block-ui.compon
 import { BlockUiGeneralComponent } from '../../components/util/block-ui-general/block-ui-general.component';
 import { GeneralLoadingAction } from '../../store/actions/pages/app.action';
 import { filter, distinctUntilChanged } from 'rxjs';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 @Component({
   selector: 'app-inscripcion-materia-alumno',
   standalone: true,
-  imports: [CommonModule,RouterModule, PanelModule, CardModule, MessageModule,  BlockUiGeneralComponent],
+  imports: [CommonModule,RouterModule, PanelModule, CardModule, MessageModule,  BlockUiGeneralComponent, ProgressSpinnerModule],
   templateUrl: './inscripcion-materia-alumno.component.html',
   styleUrl: './inscripcion-materia-alumno.component.scss'
 })

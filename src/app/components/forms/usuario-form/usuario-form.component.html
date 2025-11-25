@@ -7,7 +7,7 @@
             <label for="nombreUsuario" class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl">Usuario:</label>
             <input id="nombreUsuario" pInputText formControlName="nombreUsuario" type="text" class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl w-full h-[50px]">
             @if(form.get('nombreUsuario')?.invalid && form.get('nombreUsuario')?.dirty){
-            <small class="p-error block">
+            <small class="p-error block text-red-600">
                 El campo Usuario es requerido
             </small>
             }
@@ -16,7 +16,7 @@
             <label for="nombreYapellido" class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl">Nombre y apellido:</label>
             <input id="nombreYapellido" pInputText formControlName="nombreYapellido" type="text" class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl w-full h-[50px]">
             @if(form.get('descripcion')?.invalid && form.get('nombreYapellido')?.dirty){
-            <small class="p-error block">
+            <small class="p-error block text-red-600">
                 El campo Nombre y Apellido es requerido
             </small>
             }
@@ -25,7 +25,7 @@
             <label for="email" class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl">Email:</label>
             <input id="email" pInputText formControlName="email" type="text" class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl w-full h-[50px]">
             @if(form.get('email')?.invalid && form.get('email')?.dirty){
-            <small class="p-error block">
+            <small class="p-error block text-red-600">
                 El campo Email es requerido
             </small>
             }
@@ -36,7 +36,7 @@
             <p-select id="role" name="role" formControlName="role" [options]="roles" optionLabel="name" optionValue="code" appendTo="body"
                 placeholder="Seleccionar rol" styleClass="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl w-full" />
             @if(form.get('role')?.invalid && form.get('role')?.dirty){
-            <small class="p-error block">
+            <small class="p-error block text-red-600">
                 El campo Rol es requerido
             </small>
             }
@@ -48,7 +48,7 @@
             <label for="clave" class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl">Clave:</label>
             <p-password formControlName="clave" [feedback]="false" styleClass="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl w-full" inputStyleClass="h-[50px]" />
             @if(form.get('descripcion')?.invalid && form.get('clave')?.dirty){
-            <small class="p-error block">
+            <small class="p-error block text-red-600">
                 El campo clave es requerido
             </small>
             }

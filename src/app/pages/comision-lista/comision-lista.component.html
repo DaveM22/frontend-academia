@@ -1,4 +1,4 @@
-<p-table #dt2 [value]="(comisiones$ | async)!" [loading]="(loading$ | async)" [globalFilterFields]="['descripcion']"
+<p-table #dt2 [value]="(comisiones$ | async)!" [loading]="(loading$ | async)" [loadingIcon]="''" [globalFilterFields]="['descripcion']"
    styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-xs sm:text-sm md:text-base lg:text-base xl:text-base" size="small" responsiveLayout="stack" [breakpoint]="'960px'"
     [paginator]="true" [scrollable]="true" [scrollHeight]="scrollSize" [rows]="rowsPerPage">
     <ng-template pTemplate="caption">
@@ -64,6 +64,16 @@
         </tr>
     </ng-template>
 
+    <ng-template pTemplate="loadingbody">
+        <tr>
+            <td colspan="4">
+                <div class="flex flex-col items-center justify-center py-6">
+                    <p-progressSpinner styleClass="mb-3" strokeWidth="4"></p-progressSpinner>
+                    <span class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base font-semibold">Un momento, estamos procesando tu solicitud...</span>
+                </div>
+            </td>
+        </tr>
+    </ng-template>
     <ng-template pTemplate="emptymessage">
         @if ((comisiones$ | async)!.length === 0) {
         <tr>

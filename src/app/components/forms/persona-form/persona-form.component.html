@@ -7,7 +7,7 @@
             <label for="nombre" class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl">Nombre:</label>
             <input id="nombre" pInputText formControlName="nombre" type="text" class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl w-full h-[50px]">
             @if(form.get('nombre')?.invalid && form.get('nombre')?.dirty){
-            <small class="p-error block">
+            <small class="p-error block text-red-600">
                 El campo nombre es requerido
             </small>
             }
@@ -16,7 +16,7 @@
             <label for="apellido" class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl">Apellido:</label>
             <input id="apellido" pInputText formControlName="apellido" type="text" class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl w-full h-[50px]">
             @if(form.get('apellido')?.invalid && form.get('apellido')?.dirty){
-            <small class="p-error block">
+            <small class="p-error block text-red-600">
                 El campo apellido es requerido
             </small>
             }
@@ -26,7 +26,7 @@
             <input id="direccion" pInputText formControlName="direccion" type="text"
                 class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl w-full h-[50px]">
             @if(form.get('direccion')?.invalid && form.get('direccion')?.dirty){
-            <small class="p-error block">
+            <small class="p-error block text-red-600">
                 El campo dirección es requerido
             </small>
             }
@@ -35,7 +35,7 @@
             <label for="email" class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl">Email:</label>
             <input id="email" pInputText formControlName="email" type="text" class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl w-full h-[50px]">
             @if(form.get('email')?.invalid && form.get('email')?.dirty){
-            <small class="p-error block">
+            <small class="p-error block text-red-600">
                 El campo email es requerido
             </small>
             }
@@ -45,7 +45,7 @@
             <label for="telefono" class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl">Teléfono:</label>
             <input id="telefono" pInputText formControlName="telefono" type="text" class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl w-full h-[50px]">
             @if(form.get('telefono')?.invalid && form.get('telefono')?.dirty){
-            <small class="p-error block">
+            <small class="p-error block text-red-600">
                 El campo teléfono es requerido
             </small>
             }
@@ -55,7 +55,7 @@
             <p-inputMask mask="99/99/9999" placeholder="dd/mm/aaaa" slotChar="dd/mm/aaaa"
                 styleClass="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl w-full" inputStyleClass="h-[50px]" formControlName="fechaNacimiento" />
             @if(form.get('fechaNacimiento')?.invalid && form.get('fechaNacimiento')?.dirty){
-            <small class="p-error block">
+            <small class="p-error block text-red-600">
                 El campo fecha nacimiento es requerido
             </small>
 

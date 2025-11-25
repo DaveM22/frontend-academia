@@ -60,14 +60,14 @@ export class DocenteMenuComponent implements OnInit {
     
     this.menuItems = [
       {
-        label: 'Mis cátedras',
-        icon: 'pi pi-chalkboard-teacher',
-        command: () => this.router.navigate(['docente/catedras/' + personaId])
+        label: 'Inicio',
+        icon: 'pi pi-home',
+        command: () => this.router.navigate(['docente/inicio'])
       },
       {
-        label: 'Asignar docente',
-        icon: 'pi pi-user-plus',
-        command: () => this.router.navigate(['asignacion-profesor'])
+        label: 'Asignaciones',
+        icon: 'pi pi-book',
+        command: () => this.router.navigate(['docente/'+ personaId+'/cursos-asignados'])
       }
     ];
   }

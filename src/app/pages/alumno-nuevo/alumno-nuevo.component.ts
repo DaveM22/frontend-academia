@@ -11,15 +11,9 @@ import { Alumno } from '../../entities/alumno';
   templateUrl: './alumno-nuevo.component.html',
   styleUrl: './alumno-nuevo.component.scss'
 })
-export class AlumnoNuevoComponent implements OnInit {
+export class AlumnoNuevoComponent  {
 
-  constructor(private store:Store){
 
-  }
-
-  ngOnInit(): void {
-    this.store.dispatch(new AsignSelectedPersona(new Alumno()));
-  }
 
   
 

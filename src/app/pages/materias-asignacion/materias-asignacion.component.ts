@@ -23,6 +23,7 @@ import { FieldsetModule } from 'primeng/fieldset';
 import { ClearSelectedPlan } from '../../store/actions/pages/plan.action';
 import { ClearSelectedEspecialidadFilter, ClearSelectedPlanFilter } from '../../store/actions/pages/app.action';
 import { Plan } from '../../entities/plan';
+import { ClearSelectedPersona } from '../../store/actions/pages/persona.action';
 
 @Component({
   selector: 'app-materias-asignacion',
@@ -34,7 +35,7 @@ import { Plan } from '../../entities/plan';
 export class MateriasAsignacionComponent implements OnDestroy{
   loading$:Observable<boolean | null> = this.store.select(MateriaState.getLoading);
   especialidadSelected$:Observable<Especialidad | null> = this.store.select(AppPageState.getSelectedEspecialidad);
-  planSelected$:Observable<Especialidad | null> = this.store.select(AppPageState.getSelectedPlanInFilter);
+  planSelected$:Observable<Plan| null> = this.store.select(AppPageState.getSelectedPlanInFilter);
   materias$:Observable<Materia[]> = this.store.select(MateriaState.getMaterias);
   disablePlanDropDown:boolean = true;
   messages: Message[] | undefined;
@@ -47,6 +48,35 @@ export class MateriasAsignacionComponent implements OnDestroy{
 
 
   ngOnInit(): void {
+      
+      this.especialidadSelected$.subscribe(x => {
+          if (x) {
+            this.disablePlanDropDown = false;
+            let filter = new PlanFilter();
+            filter.especialidadId = x!._id;
+            this.store.dispatch(new GetPlanAction(filter));
+          }
+          else {
+            this.store.dispatch(new ClearSelectedPlanFilter);
+            this.disablePlanDropDown = true;
+          }
+        });
+    
+        this.planSelected$.subscribe(x => {
+          if (x) {
+              this.plan = x;
+              let filter = new MateriaFilter();
+              filter.planId = this.plan._id;
+              this.store.dispatch(new GetMateriasAction(filter))
+              this.mostrarTip = false;
+          }
+          else{
+            this.store.dispatch(new ClearSelectedPlanFilter());
+          }
+        })
+    
+    
+    
 
 
   
@@ -102,6 +132,7 @@ export class MateriasAsignacionComponent implements OnDestroy{
     this.store.dispatch(new ClearMateriasAction());
     this.store.dispatch(new ClearSelectedPlanFilter);
     this.store.dispatch(new ClearSelectedEspecialidadFilter);
+    this.store.dispatch(new ClearSelectedPersona());
   }
 
 }

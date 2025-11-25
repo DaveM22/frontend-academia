@@ -22,11 +22,12 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { AppPageState } from '../../store/states/page/app.state';
 import { ShowModalConfirmationAction } from '../../store/actions/pages/app.action';
 import { MessageModule } from 'primeng/message';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @Component({
   selector: 'app-docentes-cursos',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule,MessageModule, IconFieldModule, InputIconModule, MessagesModule, InputTextModule, ConfirmDialogModule],
+  imports: [CommonModule, TableModule, ButtonModule,MessageModule, IconFieldModule, InputIconModule, MessagesModule, InputTextModule, ConfirmDialogModule, ProgressSpinnerModule],
   templateUrl: './docentes-cursos.component.html',
   styleUrl: './docentes-cursos.component.scss',
   providers:[ConfirmationService]
