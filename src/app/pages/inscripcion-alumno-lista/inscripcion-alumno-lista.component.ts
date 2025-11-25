@@ -47,7 +47,7 @@ export class InscripcionAlumnoListaComponent implements OnInit, OnDestroy {
   constructor(private store: Store, private router: Router) { }
 
 
-  async ngOnInit(): Promise<void> {
+  ngOnInit(): void {
     this.updateRowsPerPage();
     this.especialidadSelected$.subscribe(x => {
       if (x) {
@@ -72,24 +72,6 @@ export class InscripcionAlumnoListaComponent implements OnInit, OnDestroy {
         this.store.dispatch(new ClearSelectedPlanFilter());
       }
     })
-
-
-
-
-    const planSelected = await firstValueFrom(this.planSelected$.pipe(filter(x => x !== null)));
-    if (planSelected) {
-      const filter = new AlumnoFilter();
-      filter.planId = planSelected!._id;
-      this.store.dispatch(new GetAlumnosAction(filter));
-    }
-
-
-  }
-
-
-  onPlanChanged(value: Plan) {
-    this.store.dispatch(new SelectedPlanFilter(value));
-    this.mostrarTip = false;
   }
 
   @HostListener('window:resize')
@@ -112,10 +94,6 @@ export class InscripcionAlumnoListaComponent implements OnInit, OnDestroy {
     }
   }
 
-
-  onEspecialidadChanged(value: Especialidad) {
-    this.store.dispatch(new SelectedEspecialidadFilterAction(value))
-  }
 
   redirectToInscripciones(id: string) {
     this.router.navigate([`/inscripciones/alumnos/${id}`]);
