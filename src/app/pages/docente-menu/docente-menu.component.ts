@@ -57,7 +57,6 @@ export class DocenteMenuComponent implements OnInit {
 
   private setupDocenteMenu() {
     const personaId = this.store.selectSnapshot(AppPageState.getPersonId);
-    
     this.menuItems = [
       {
         label: 'Inicio',
@@ -67,7 +66,7 @@ export class DocenteMenuComponent implements OnInit {
       {
         label: 'Asignaciones',
         icon: 'pi pi-book',
-        command: () => this.router.navigate(['docente/'+ personaId+'/cursos-asignados'])
+        command: () => this.router.navigate(['docente/cursos-asignados'])
       }
     ];
   }

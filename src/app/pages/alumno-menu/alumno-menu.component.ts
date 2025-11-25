@@ -57,7 +57,6 @@ export class AlumnoMenuComponent implements OnInit {
 
   private setupAlumnoMenu() {
     const personaId = this.store.selectSnapshot(AppPageState.getPersonId);
-    
     this.menuItems = [
       {
         label: 'Inicio',
@@ -67,12 +66,12 @@ export class AlumnoMenuComponent implements OnInit {
       {
         label: 'Mis cátedras',
         icon: 'pi pi-user',
-        command: () => this.router.navigate(['alumno/catedras/' + personaId])
+        command: () => this.router.navigate(['alumno/catedras'])
       },
       {
         label: 'Inscribirse a cátedra',
         icon: 'pi pi-plus-circle',
-        command: () => this.router.navigate(['inscripcion-catedra/materias-disponibles/' + personaId])
+        command: () => this.router.navigate(['inscripcion-catedra/materias-disponibles'])
       }
     ];
   }

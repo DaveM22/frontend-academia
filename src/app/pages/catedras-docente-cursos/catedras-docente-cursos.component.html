@@ -1,45 +1,90 @@
-<p-table #dt2 [value]="cursos" responsiveLayout="stack" [breakpoint]="'960px'" [paginator]="true" [scrollable]="true"
-    [rows]="5" scrollHeight="flex" styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-sm lg:text-xl"
-    [loading]="loading$"
-    [globalFilterFields]="['descripcion, especialidad.descripcion']">
+<p-table #dt2 [value]="cursosFiltrados" [paginator]="true" [rows]="rowsPerPage"
+    [loading]="loading$" [globalFilterFields]="['curso.materia.descripcion', 'curso.comision.descripcion']"
+    class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base" responsiveLayout="scroll">
+
     <ng-template pTemplate="caption">
-        <div class="grid">
-            <div class="flex flex-col w-full gap-2 md:flex-row justify-between">
-                <div>
-                    {{(persona$ | async)!.plan.descripcion}}
-                </div>
-                <div>
-                    <p-iconField iconPosition="left" class="mb-4 lg:mb-0 w-full">
-                        <p-inputIcon>
-                            <i class="pi pi-search"></i>
-                        </p-inputIcon>
-                        <input pInputText pSize="large" type="text" class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base w-full h-[50px]"
-                            (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
-                            placeholder="Buscar plan" />
-                    </p-iconField>
-                </div>
+        <div class="grid grid-cols-12 gap-4 w-full">
+            <div class="col-span-12 md:col-span-3">
+                <label class="block text-xs sm:text-sm md:text-base font-medium text-white mb-2">Filtrar por estado:</label>
+                <p-dropdown [options]="estados" [(ngModel)]="selectedEstado" optionLabel="label" optionValue="value"
+                    placeholder="Todos los estados" [showClear]="true" styleClass="w-full text-xs sm:text-sm md:text-base"
+                    (onChange)="onEstadoChange($event)"></p-dropdown>
+            </div>
+            <div class="col-span-12 md:col-span-4 md:col-start-4 flex items-end md:justify-center">
+                <p-button label="Ver resumen" icon="pi pi-chart-bar" class="w-full md:w-auto text-xs sm:text-sm md:text-base"
+                    (click)="showResumenModal()"></p-button>
+            </div>
+            <div class="col-span-12 md:col-span-4 md:col-start-9">
+                <label class="block text-xs sm:text-sm md:text-base font-medium text-white mb-2">Búsqueda:</label>
+                <p-iconField iconPosition="left" class="w-full">
+                    <p-inputIcon>
+                        <i class="pi pi-search"></i>
+                    </p-inputIcon>
+                    <input pInputText pSize="large" type="text"
+                        class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base w-full h-[50px]"
+                        (input)="dt2.filterGlobal($any($event.target).value, 'contains')" placeholder="Buscar curso" />
+                </p-iconField>
             </div>
         </div>
     </ng-template>
     <ng-template pTemplate="header">
         <tr>
-            <th>Catedra</th>
+            <th>Materia</th>
             <th>Comisión</th>
-            <th>Acciones</th>
+            <th>Cargo</th>
+            <th>Inscriptos</th>
         </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-asignacion>
+    <ng-template pTemplate="body" let-docenteCurso>
         <tr>
-            <td style="width:40%"><span class="p-column-title">Catedra</span>{{asignacion.curso.materia.descripcion}}
+            <td class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base">{{ docenteCurso.curso?.materia?.descripcion || 'N/A' }}</td>
+            <td class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base">{{ docenteCurso.curso?.comision?.descripcion || 'N/A' }}</td>
+            <td class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base">{{ docenteCurso.cargo || 'N/A' }}</td>
+            <td class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base">
+                <p-button label="Ver" icon="pi pi-users" (click)="verInscriptos(docenteCurso)" pSize="small"></p-button>
             </td>
-            <td style="width:40%"><span class="p-column-title">Comisión</span>{{asignacion.curso.comision.descripcion}}
-            </td>
-            <td style="width:40%"><span class="p-column-title">Acciones</span>
-                <div class="flex flex-column sm:flex-row gap-2 justify-content-center">
-                    <p-button label="Borrar" severity="primary" label="Inscripciones"
-                        (onClick)="redirectToCatedrasDocenteInscripciones(asignacion.curso._id)"></p-button>
-                </div>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+        <tr>
+            <td class="text-center text-xs sm:text-sm md:text-base lg:text-base xl:text-base" colspan="4">
+                @if (cursosFiltrados.length === 0) {
+                No se encontraron cursos asignados
+                }
             </td>
         </tr>
     </ng-template>
 </p-table>
+
+<p-dialog header="Resumen de Estados" [(visible)]="displayResumenModal" [modal]="true" [closable]="true" [draggable]="false"
+    [resizable]="false" styleClass="w-11/12 md:w-1/2 lg:w-1/3" [baseZIndex]="10000">
+    <div class="space-y-4">
+        <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">Estadísticas de cursos por estado:</h3>
+        <div class="grid grid-cols-1 gap-4">
+            <div class="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800">
+                <div class="flex items-center justify-between">
+                    <span class="text-sm font-medium text-green-800 dark:text-green-200">Cursos Activos</span>
+                    <span class="text-2xl font-bold text-green-600 dark:text-green-400">{{ resumenEstados.teoria }}</span>
+                </div>
+                <i class="pi pi-check-circle text-green-500 text-lg mt-2"></i>
+            </div>
+            <div class="p-4 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-800">
+                <div class="flex items-center justify-between">
+                    <span class="text-sm font-medium text-red-800 dark:text-red-200">Cursos Inactivos</span>
+                    <span class="text-2xl font-bold text-red-600 dark:text-red-400">{{ resumenEstados.practica }}</span>
+                </div>
+                <i class="pi pi-times-circle text-red-500 text-lg mt-2"></i>
+            </div>
+            <div class="p-4 bg-gray-50 dark:bg-gray-900/20 rounded-lg border border-gray-200 dark:border-gray-800 mt-2">
+                <div class="flex items-center justify-between">
+                    <span class="text-sm font-medium text-gray-800 dark:text-gray-200">Total de Cursos</span>
+                    <span class="text-2xl font-bold text-gray-600 dark:text-gray-400">{{ resumenEstados.total }}</span>
+                </div>
+                <i class="pi pi-list text-gray-500 text-lg mt-2"></i>
+            </div>
+        </div>
+    </div>
+    <ng-template pTemplate="footer">
+        <p-button label="Cerrar" icon="pi pi-times" class="text-xs sm:text-sm md:text-base" (click)="displayResumenModal = false"></p-button>
+    </ng-template>
+</p-dialog>

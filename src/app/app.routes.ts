@@ -63,7 +63,7 @@ import { AdminInicioComponent } from './pages/admin-inicio/admin-inicio.componen
 import { DocenteInicioComponent } from './pages/docente-inicio/docente-inicio.component';
 import { InicioComponent } from './pages/inicio/inicio.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
-import { docenteExistsGuard } from './pages/docente-menu/docente-exists.guard';
+// docente id removed from URL; ownership/existence guards no longer needed
 
 export const routes: Routes = [
     {
@@ -228,7 +228,7 @@ export const routes: Routes = [
             },
 
             {
-                path: 'alumno/catedras/:id',
+                path: 'alumno/catedras',
                 component: CatedrasAlumnoComponent
             },
             {
@@ -250,7 +250,7 @@ export const routes: Routes = [
                 data: { role: 'Docente' }
             },
             {
-                path: 'docente/:id',
+                path: 'docente',
                 component: CatedrasDocenteComponent,
                 children: [
                     {
@@ -262,7 +262,7 @@ export const routes: Routes = [
                     { path: 'cursos-inscripciones/:idCurso', component: CatedrasDocenteInscripcionesComponent },
                     { path: 'cursos-inscripciones/:idCurso/inscripciones/:idInscripcion', component: InscripcionFormComponent }
                 ],
-                canActivate: [AuthGuard, docenteGuard, docenteExistsGuard],
+                canActivate: [AuthGuard, docenteGuard],
                 data: {
                     role: 'Docente'
                 }
@@ -274,10 +274,10 @@ export const routes: Routes = [
                     {
                         path: '',
                         pathMatch: 'full',
-                        redirectTo: 'materias-disponibles/:id'
+                        redirectTo: 'materias-disponibles'
                     },
-                    { path: 'materias-disponibles/:id', component: InscripcionMateriaAlumnoMateriasComponent },
-                    { path: 'cursos-disponibles/:id', component: CursosDisponiblesComponent }
+                    { path: 'materias-disponibles', component: InscripcionMateriaAlumnoMateriasComponent },
+                    { path: 'cursos-disponibles/:idCurso', component: CursosDisponiblesComponent }
                 ],
                 canActivate: [AuthGuard, alumnoGuard],
                 data: {

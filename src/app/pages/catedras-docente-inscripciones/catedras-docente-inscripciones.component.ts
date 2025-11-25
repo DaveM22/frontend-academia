@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+
 import { Store } from '@ngxs/store';
 import { ButtonModule } from 'primeng/button';
 import { IconFieldModule } from 'primeng/iconfield';
@@ -44,34 +45,39 @@ export class CatedrasDocenteInscripcionesComponent implements OnInit {
   materia: Materia | null = null;
   comision: Comision | null = null;
   parametroHabilitado: boolean = false;
-  mostrarAviso: boolean = false;  
-  constructor(private store: Store, private router: ActivatedRoute, private route: Router) { }
+  mostrarAviso: boolean = false;
+  constructor(private store: Store, private activatedRoute: ActivatedRoute, private router: Router) { }
 
   async ngOnInit(): Promise<void> {
     this.loading$ = true;
+    this.cursoId = this.activatedRoute.snapshot.params['idCurso']
     this.store.dispatch(new GetByNombreParametroAction("HabilitarCargaNotas"));
     const parametroHabilitado = await firstValueFrom(this.parametro$.pipe(filter(param => param !== null)));
     this.parametroHabilitado = parametroHabilitado.activo;
-    this.cursoId = this.router.snapshot.params['idCurso'];
-    this.store.dispatch(new GetByIdCursoAction(this.cursoId));
-    const cursoSelected = await firstValueFrom(this.curso$.pipe(filter(curso => curso !== null)));
-    this.materia = cursoSelected!.materia;
-    this.comision = cursoSelected!.comision;
-    this.store.dispatch(new GetInscripcionByCursoAction(this.cursoId));
-    const inscripciones = await firstValueFrom(this.inscripciones$.pipe(filter(inscripciones => inscripciones.length > 0)));
-    this.inscripciones = inscripciones;
+    if (this.cursoId) {
+      console.log(this.cursoId);
+      this.store.dispatch(new GetByIdCursoAction(this.cursoId));
+      const cursoSelected = await firstValueFrom(this.curso$.pipe(filter(curso => curso !== null)));
+      this.materia = cursoSelected!.materia;
+      this.comision = cursoSelected!.comision;
+      this.store.dispatch(new GetInscripcionByCursoAction(this.cursoId));
+      const inscripciones = await firstValueFrom(this.inscripciones$.pipe(filter(param => param.length !== 0)));
+      this.inscripciones = inscripciones;
+    } else {
+      this.inscripciones = [];
+    }
     this.loading$ = false;
   }
 
 
   redirectToInscripcionForm(idInscripcion: string) {
-    if(this.parametroHabilitado){
+    if (this.parametroHabilitado) {
       this.loading$ = true;
       this.store.dispatch(new GetOneAlumnoInscripcionAction(idInscripcion)).subscribe(() => {
-        this.route.navigate([`docente/${this.router.snapshot.params['id']}/cursos-inscripciones/${this.cursoId}/inscripciones/${idInscripcion}`]);
+        this.router.navigate([`docente/cursos-inscripciones/${this.cursoId}/inscripciones/${idInscripcion}`]);
       });
     }
-    else{
+    else {
       this.mostrarAviso = true;
     }
 

@@ -81,19 +81,21 @@ export class InscripcionFormComponent implements OnInit, OnDestroy {
       this.role = 'Docente';
     }
 
-    this.alumnoId = this.activatedRoute.snapshot.params['id'] === undefined ? this.store.selectSnapshot(AppPageState.getPersonId) : this.activatedRoute.snapshot.params['id'];
-    let alumnoFilter = new AlumnoFilter();
-    alumnoFilter.incluirInscripciones = false;
-    this.store.dispatch(new GetAlumnoByIdAction(this.alumnoId, alumnoFilter));
+    if (this.activatedRoute.snapshot.params['id']) {
+      let alumnoFilter = new AlumnoFilter();
+      alumnoFilter.incluirInscripciones = false;
+      this.store.dispatch(new GetAlumnoByIdAction(this.alumnoId, alumnoFilter));
 
-    const alumnoSelected = await firstValueFrom(this.alumno$.pipe(filter(a => a !== null)));
-    if (alumnoSelected) {
-      this.alumno = alumnoSelected;
-      this.form.patchValue({ 'alumno': `${this.alumno.apellido} ${this.alumno.nombre}`, 'alumnoId': this.alumno._id })
+      const alumnoSelected = await firstValueFrom(this.alumno$.pipe(filter(a => a !== null)));
+      if (alumnoSelected) {
+        this.alumno = alumnoSelected;
+        this.form.patchValue({ 'alumno': `${this.alumno.apellido} ${this.alumno.nombre}`, 'alumnoId': this.alumno._id })
+      }
     }
 
-    if (this.activatedRoute.snapshot.params['idInscripcion'] !== undefined) {
-      this.store.dispatch(new GetOneAlumnoInscripcionAction(this.activatedRoute.snapshot.params['inscripcionId']));
+
+    if (this.activatedRoute.snapshot.params['idInscripcion']) {
+      this.store.dispatch(new GetOneAlumnoInscripcionAction(this.activatedRoute.snapshot.params['idInscripcion']));
       const alumnoInscripcionSelected = await firstValueFrom(this.alumnoInscripcion$.pipe(filter(ai => ai !== null)));
       if (alumnoInscripcionSelected) {
         this.alumnoInscripcion = alumnoInscripcionSelected;
@@ -141,7 +143,7 @@ export class InscripcionFormComponent implements OnInit, OnDestroy {
 
   redirect() {
     if (this.role === 'Docente') {
-      this.router.navigate([`docente/${this.activatedRoute.snapshot.params['id']}/cursos-inscripciones/${this.alumnoInscripcion.curso?._id}`]);
+      this.router.navigate([`docente/cursos-inscripciones/${this.alumnoInscripcion.curso?._id}`]);
     } else {
       this.router.navigate([`/inscripciones/alumnos/${this.alumnoId}`]);
     }

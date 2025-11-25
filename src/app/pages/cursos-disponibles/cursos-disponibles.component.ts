@@ -96,7 +96,7 @@ export class CursosDisponiblesComponent implements OnInit, OnDestroy {
           ]).subscribe(x => {
             const personId = this.store.selectSnapshot(AppPageState.getPersonId);
             this.messageService.add({ severity: 'success', summary: 'Inscripción', detail: `Se ha inscrito al curso: ${this.cursoSelected}` });
-            this.router.navigate([`inscripcion-catedra/materias-disponibles/${personId}`])
+            this.router.navigate([`inscripcion-catedra/materias-disponibles`])
           })
         },
         reject: () => {
@@ -112,7 +112,7 @@ modalConfirmar(curso:Curso){
 
 redirectMateriasDisponibles(){
   const personId = this.store.selectSnapshot(AppPageState.getPersonId);
-  this.router.navigate([`inscripcion-catedra/materias-disponibles/${personId}`])
+  this.router.navigate([`inscripcion-catedra/materias-disponibles`])
 }
 
   ngOnDestroy(): void {
