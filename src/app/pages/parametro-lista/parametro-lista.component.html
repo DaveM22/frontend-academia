@@ -1,6 +1,6 @@
 <p-table #dt2 [value]="(parametros$ | async)!" [loading]="(loading$ | async)" [loadingIcon]="''"
-    styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-xs sm:text-sm md:text-base lg:text-base xl:text-base" responsiveLayout="stack" [breakpoint]="'960px'"
-    [paginator]="true" [scrollable]="true" size="small" [rows]="rowsPerPage"  [globalFilterFields]="['descripcion']">
+    styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-sm sm:text-base md:text-lg lg:text-lg xl:text-xl" responsiveLayout="stack" [breakpoint]="'960px'"
+    [paginator]="true" [scrollable]="true" size="small" [rows]="rowsPerPage"  [globalFilterFields]="['nombre','descripcion']">
     <ng-template pTemplate="caption">
     @if (error$ | async)
     {
@@ -17,7 +17,7 @@
                 <i class="pi pi-search"></i>
             </p-inputIcon>
             <input pInputText pSize="large" type="text" 
-                class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base w-full h-[50px]" 
+                class="text-sm sm:text-base md:text-lg lg:text-lg xl:text-xl w-full h-[50px]" 
                 (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
                 placeholder="Buscar parametro" />
         </p-iconField>
@@ -34,17 +34,21 @@
     </ng-template>
     <ng-template pTemplate="body" let-parametro>
         <tr>
-            <td  style="width:80%"><span class="p-column-title">Parámetro</span>{{parametro.descripcion}}
+            <td  style="width:80%"><span class="p-column-title">Parámetro</span>{{parametro.nombre}}
             </td>
             <td  style="width:80%"><span class="p-column-title">Estado</span>{{parametro.activo ? 'Habilitado' : 'Deshabilitado'}}
             </td>
-            <td style="width:20%"><span class="p-column-title">Acciones</span>
-                <div class="flex gap-2 justify-center">
+            <td style="width:20%; vertical-align: middle;"><span class="p-column-title">Acciones</span>
+                <div class="flex gap-3 justify-center items-center h-full">
+                    <p-button label="+info" size="small" icon="pi pi-info-circle" severity="info" 
+                        [styleClass]="'text-sm sm:text-base md:text-lg lg:text-lg xl:text-xl px-3 py-2'"
+                        (onClick)="openInfo(parametro)"></p-button>
                     <p-toggleswitch
                         [ngModel]="parametro.activo"
-                        (onChange)="onToggle(parametro, $event.checked)">
+                        (onChange)="onToggle(parametro, $event.checked)"
+                        styleClass="toggle-md">
                         <ng-template #handle let-checked="checked">
-                            <i [ngClass]="['!text-xs','pi',checked ? 'pi-check' : 'pi-times']"></i>
+                            <i [ngClass]="['!text-lg','pi',checked ? 'pi-check' : 'pi-times']"></i>
                         </ng-template>
                     </p-toggleswitch>
                 </div>
@@ -57,7 +61,7 @@
             <td colspan="3">
                 <div class="flex flex-col items-center justify-center py-6">
                     <p-progressSpinner styleClass="mb-3" strokeWidth="4"></p-progressSpinner>
-                    <span class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base font-semibold">Un momento, estamos procesando tu solicitud...</span>
+                    <span class="text-sm sm:text-base md:text-lg lg:text-lg xl:text-xl font-semibold">Un momento, estamos procesando tu solicitud...</span>
                 </div>
             </td>
         </tr>
@@ -75,3 +79,16 @@
         }
     </ng-template>
 </p-table>
+
+<p-dialog [(visible)]="infoVisible" [modal]="true" [closable]="true" [draggable]="false" [resizable]="false" header="Detalle del parámetro" [style]="{width: '36rem'}" (onHide)="closeInfo()">
+    <div class="text-base sm:text-lg md:text-lg lg:text-xl">
+        <div class="mb-3">
+            <span class="font-semibold">Nombre:</span>
+            <span class="ml-2">{{selectedParametro?.nombre}}</span>
+        </div>
+        <div>
+            <span class="font-semibold">Descripción:</span>
+            <span class="ml-2">{{selectedParametro?.descripcion}}</span>
+        </div>
+    </div>
+</p-dialog>

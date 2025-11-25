@@ -19,8 +19,8 @@ import { CommonModule } from '@angular/common';
 export class PlanMateriasEditarComponent {
   materia$:Observable<Materia | null> = this.store.select(MateriaPageState.getMateriaSelected);
   materia!:Materia;
-  constructor(private store:Store){
-    
+  constructor(private store:Store, private activatedRoute: ActivatedRoute){
+      this.store.dispatch(new GetByIdMateriaAction(this.activatedRoute.snapshot.params['idMateria']));
   }
 
 }

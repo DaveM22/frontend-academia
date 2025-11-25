@@ -6,6 +6,7 @@ import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 import { PanelModule } from 'primeng/panel';
+import { DialogModule } from 'primeng/dialog';
 import { TableModule } from 'primeng/table';
 import { EspecialidadBorrarComponent } from '../especialidad-borrar/especialidad-borrar.component';
 import { Observable } from 'rxjs';
@@ -19,7 +20,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @Component({
   selector: 'app-parametro-lista',
-  imports: [FormsModule,CommonModule, TableModule, ButtonModule, MessageModule, PanelModule, IconFieldModule, InputTextModule, InputIconModule, ToggleSwitchModule, ProgressSpinnerModule],
+  imports: [FormsModule,CommonModule, TableModule, ButtonModule, MessageModule, PanelModule, IconFieldModule, InputTextModule, InputIconModule, ToggleSwitchModule, ProgressSpinnerModule, DialogModule],
   templateUrl: './parametro-lista.component.html',
   styleUrl: './parametro-lista.component.css',
   standalone: true
@@ -36,6 +37,9 @@ export class ParametroListaComponent implements OnInit {
   public error$:Observable<boolean> = this.store.select(ParametroState.getError);
 
   public errorMessage$:Observable<string> = this.store.select(ParametroState.getErrorMessage);
+
+  infoVisible = false;
+  selectedParametro: Parametro | null = null;
 
   constructor(private store:Store){}
   ngOnInit(): void {
@@ -73,5 +77,14 @@ onToggle(parametro: Parametro, checked: boolean) {
 
 trackById(index: number, item: Parametro) {
   return item._id;  
+}
+
+openInfo(parametro: Parametro) {
+  this.selectedParametro = parametro;
+  this.infoVisible = true;
+}
+
+closeInfo() {
+  this.infoVisible = false;
 }
 }
