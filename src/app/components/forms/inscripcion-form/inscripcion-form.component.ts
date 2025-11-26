@@ -36,10 +36,11 @@ import { environment } from '../../../../environments/environment';
 import { ClearAlumnoInscripcionAction } from '../../../store/actions/pages/alumno-inscripcion.action';
 import { PlanState } from '../../../store/states/api/plan.state';
 import { ClearSelectedPersona } from '../../../store/actions/pages/persona.action';
+import { SelectModule } from 'primeng/select';
 @Component({
   selector: 'app-inscripcion-form',
   standalone: true,
-  imports: [ReactiveFormsModule, InputTextModule, InputNumberModule, CardModule, ButtonModule, MessagesModule, RippleModule, CursosModalComponent, DropdownModule,
+  imports: [ReactiveFormsModule, InputTextModule, InputNumberModule, CardModule, ButtonModule, MessagesModule, RippleModule, CursosModalComponent, SelectModule,
     InputGroupModule],
   templateUrl: './inscripcion-form.component.html',
   styleUrl: './inscripcion-form.component.scss'

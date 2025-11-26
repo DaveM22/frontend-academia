@@ -11,11 +11,12 @@ import { Alumno } from '../../../entities/alumno';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { DropdownModule } from 'primeng/dropdown';
+import { SelectModule } from 'primeng/select';
 
 @Component({
   selector: 'app-materia-filter',
   standalone: true,
-  imports: [DropdownModule, CommonModule, FormsModule],
+  imports: [SelectModule, CommonModule, FormsModule],
   templateUrl: './materia-filter.component.html',
   styleUrl: './materia-filter.component.scss'
 })

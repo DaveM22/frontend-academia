@@ -18,7 +18,7 @@
         </div>
         <div class="col-span-12 lg:col-start-4 lg:col-span-6 gap-2">
             <label class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl">Condicion:</label>
-            <p-dropdown formControlName="condicion" appendTo="body" [options]="condiciones"
+            <p-select formControlName="condicion" appendTo="body" [options]="condiciones"
                 placeholder="Seleccionar condición" styleClass="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl col-12 sm:col-12 lg:col-12 w-full" />
             @if (this.form.value.condicion === 'APROBADO')
             {

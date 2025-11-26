@@ -14,7 +14,10 @@ import { Alumno } from '../../entities/alumno';
 export class AlumnoNuevoComponent  {
 
 
-
+  constructor(private store: Store) {
+    const nuevoAlumno = new Alumno();
+    this.store.dispatch(new AsignSelectedPersona(nuevoAlumno));
+  }
   
 
   

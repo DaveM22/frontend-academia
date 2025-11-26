@@ -1,7 +1,7 @@
 
-<p-dropdown 
-styleClass="w-full text-xs sm:text-sm md:text-base lg:text-base xl:text-base"
-class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base"
+<p-select 
+    class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base"
+    styleClass="text-xs sm:text-sm md:text-base lg:text-base xl:text-base w-full"
 [options]="(materias$ | async)!" 
 [(ngModel)]="materia"
 [checkmark]="true" 
