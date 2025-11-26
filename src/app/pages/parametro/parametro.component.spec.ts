@@ -1,14 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ParametroComponent } from './parametro.component';
+import { provideStore, Store } from '@ngxs/store';
+import { AppPageState } from '../../store/states/page/app.state';
 
 describe('ParametroComponent', () => {
+  let store: Store
   let component: ParametroComponent;
   let fixture: ComponentFixture<ParametroComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ParametroComponent]
+      imports: [ParametroComponent],
+      providers:[
+        provideStore([AppPageState])
+      ]
     })
     .compileComponents();
 

@@ -12,7 +12,7 @@ export class CallbackComponent implements OnInit {
   constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
-    // Maneja la lógica después de que el usuario se autentica correctamente
+
     this.authService.handleRedirectCallback();
   }
 }

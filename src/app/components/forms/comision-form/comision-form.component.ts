@@ -58,8 +58,8 @@ export class ComisionFormComponent implements OnInit, OnDestroy {
 
 
   pathValues() {
-    let comision = this.store.selectSnapshot(ComisionPageState.getComisionSelected)!
-    if (comision._id !== "") {
+    let comision = this.store.selectSnapshot(ComisionPageState.getComisionSelected);
+    if (comision?._id) {
       this.form.patchValue(comision);
       this.form.patchValue({ 'plan': comision.plan.descripcion, 'planId': comision.plan._id });
     }
@@ -81,7 +81,6 @@ export class ComisionFormComponent implements OnInit, OnDestroy {
 
   public onSubmit() {
     this.comision = this.form.value
-    console.log(this.comision)
     if (this.comision._id === null) {
       this.store.dispatch(new PostComisionAction(this.comision)).subscribe(() => {
         this.router.navigate(["/comisiones/lista"])

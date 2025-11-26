@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { CursoFormComponent } from '../../components/forms/curso-form/curso-form.component';
-import { Store } from '@ngxs/store';
-import { AsignSelectedCursoAction } from '../../store/actions/pages/curso.action';
-import { Curso } from '../../entities/curso';
+
 
 @Component({
   selector: 'app-curso-nuevo',

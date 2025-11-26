@@ -69,6 +69,16 @@
                     <td style="width:20%"><span class="p-column-title">Comisión</span>{{inscripcion.condicion}}</td>
                 </tr>
             </ng-template>
+            <ng-template pTemplate="loadingbody">
+                <tr>
+                    <td colspan="3">
+                        <div class="flex flex-col items-center justify-center py-6">
+                            <p-progressSpinner styleClass="mb-3" strokeWidth="4"></p-progressSpinner>
+                            <span class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base font-semibold">Un momento, estamos procesando tu solicitud...</span>
+                        </div>
+                    </td>
+                </tr>
+            </ng-template>
             <ng-template pTemplate="emptymessage">
                 @if (inscripciones.length === 0) {
                 <tr>

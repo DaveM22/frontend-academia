@@ -52,7 +52,10 @@ export class UsuarioFormComponent {
       personaDescripcion: new FormControl('', [Validators.required]),
       persona: new FormControl('', [Validators.required])
     });
-    this.form.patchValue(this.store.selectSnapshot(UsuarioPageState.getUsuarioSelected)!);
+    const usuario = this.store.selectSnapshot(UsuarioPageState.getUsuarioSelected);
+    if (usuario) {
+      this.form.patchValue(usuario);
+    }
 
     this.roles = [
       { name: 'Docente', code: 'rol_7dAr6i1DwSZLKsrh' },
@@ -70,10 +73,10 @@ export class UsuarioFormComponent {
 
 
   pathValues() {
-    let persona = this.store.selectSnapshot(PersonaPageState.getPersonaSelected)!
-    if (persona._id !== "") {
-      this.form.patchValue(persona);
-      this.form.patchValue({ 'plan': persona.plan.descripcion, 'planId': persona.plan._id });
+    let persona = this.store.selectSnapshot(PersonaPageState.getPersonaSelected);
+    if (persona?._id !== "") {
+      this.form.patchValue(persona!);
+      this.form.patchValue({ 'plan': persona!.plan.descripcion, 'planId': persona!.plan._id });
     }
   }
 

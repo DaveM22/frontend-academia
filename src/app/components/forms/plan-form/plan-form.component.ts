@@ -44,8 +44,11 @@ export class PlanFormComponent implements OnInit {
       descripcion: new FormControl('', [Validators.required]),
       especialidadId: new FormControl('', [Validators.required]),
     });
-    this.form.patchValue(this.store.selectSnapshot(PlanPageState.getPlanSelected)!);
-    this.form.patchValue({'especialidadId': this.store.selectSnapshot(PlanPageState.getPlanSelected)?.especialidad._id})
+    const plan = this.store.selectSnapshot(PlanPageState.getPlanSelected);
+    if (plan) {
+      this.form.patchValue(plan);
+      this.form.patchValue({'especialidadId': plan.especialidad._id});
+    }
   }
 
   public onSubmit(){

@@ -24,11 +24,12 @@ import { ClearSelectedPlan } from '../../store/actions/pages/plan.action';
 import { ClearSelectedEspecialidadFilter, ClearSelectedPlanFilter } from '../../store/actions/pages/app.action';
 import { Plan } from '../../entities/plan';
 import { ClearSelectedPersona } from '../../store/actions/pages/persona.action';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @Component({
   selector: 'app-materias-asignacion',
   standalone: true,
-  imports: [CommonModule,ToolbarModule,MessageModule,EspecialidadFilterComponent,PlanFilterComponent, TableModule, ButtonModule, IconFieldModule, InputIconModule, MessageModule, InputTextModule],
+  imports: [CommonModule,ToolbarModule,MessageModule,EspecialidadFilterComponent,PlanFilterComponent, TableModule, ButtonModule, IconFieldModule, InputIconModule, MessageModule, InputTextModule, ProgressSpinnerModule],
   templateUrl: './materias-asignacion.component.html',
   styleUrl: './materias-asignacion.component.scss'
 })

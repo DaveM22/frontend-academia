@@ -27,11 +27,12 @@ import { MessageModule } from 'primeng/message';
 import { GetByNombreParametroAction, GetParametrosAction } from '../../store/actions/api/parametros.action';
 import { ParametroState } from '../../store/states/api/parametro.state';
 import { Parametro } from '../../entities/parametro';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @Component({
   selector: 'app-catedras-docente-inscripciones',
   standalone: true,
-  imports: [CommonModule, ToolbarModule, PanelModule, TableModule, ButtonModule, IconFieldModule, InputIconModule, MessagesModule, InputTextModule, Skeleton, MessageModule],
+  imports: [CommonModule, ToolbarModule, PanelModule, TableModule, ButtonModule, IconFieldModule, InputIconModule, MessagesModule, InputTextModule, Skeleton, MessageModule, ProgressSpinnerModule],
   templateUrl: './catedras-docente-inscripciones.component.html',
   styleUrl: './catedras-docente-inscripciones.component.scss'
 })
@@ -58,7 +59,7 @@ export class CatedrasDocenteInscripcionesComponent implements OnInit {
       this.mostrarAviso = true;
     }
     if (this.cursoId) {
-      console.log(this.cursoId);
+
       this.store.dispatch(new GetByIdCursoAction(this.cursoId));
       const cursoSelected = await firstValueFrom(this.curso$.pipe(filter(curso => curso !== null)));
       this.materia = cursoSelected!.materia;
@@ -80,7 +81,7 @@ export class CatedrasDocenteInscripcionesComponent implements OnInit {
         this.router.navigate([`docente/cursos-inscripciones/${this.cursoId}/inscripciones/${idInscripcion}`]);
       });
     }
-    // cuando está deshabilitado el aviso ya se muestra desde init
+
 
 
   }

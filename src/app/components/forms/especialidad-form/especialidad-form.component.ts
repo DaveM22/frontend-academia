@@ -36,7 +36,10 @@ export class EspecialidadFormComponent implements OnInit {
       _id: new FormControl(null),
       descripcion: new FormControl('', [Validators.required])
     });
-    this.form.patchValue(this.store.selectSnapshot(EspecialidadPageState.getEspecialidadSelected)!);
+    const especialidad = this.store.selectSnapshot(EspecialidadPageState.getEspecialidadSelected);
+    if (especialidad) {
+      this.form.patchValue(especialidad);
+    }
   }
 
   public onSubmit() {

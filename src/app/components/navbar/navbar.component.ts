@@ -41,20 +41,23 @@ export class NavbarComponent implements OnInit {
       { label: 'Especialidades', icon: 'pi pi-plus', command: () => this.redirect("/especialidades/lista") },
       { label: 'Planes', icon: 'pi pi-search', command: () => this.redirect("/planes/lista") }
     ];
-    this.auth.idTokenClaims$.subscribe(x => {
-      this.picture = x!.picture!
-      this.name = x!.name!
-      this.rol = x![environment.roleLogin][0]
-    })
-      this.toggle$.subscribe( x => this.toggle = x);
+    this.auth.idTokenClaims$?.subscribe(x => {
+      if (x) {
+        this.picture = x.picture || '';
+        this.name = x.name || '';
+        this.rol = x[environment.roleLogin]?.[0] || '';
+      }
+    });
+    this.toggle$.subscribe( x => this.toggle = x);
 
-        this.logItems = [
-          {
-          label:'Salir',
-          icon: 'pi pi-user',
-          command:() => this.logout()
-        }]
-    }
+    this.logItems = [
+      {
+        label:'Salir',
+        icon: 'pi pi-user',
+        command:() => this.logout()
+      }
+    ];
+  }
 
     toggleAction(){
       this.store.dispatch(new ToggleMenuAction(!this.toggle));

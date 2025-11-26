@@ -20,11 +20,12 @@ import { PersonaPageState } from '../../store/states/page/persona.state';
 import { DropdownModule } from 'primeng/dropdown';
 import { FormsModule } from '@angular/forms';
 import { DialogModule } from 'primeng/dialog';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @Component({
   selector: 'app-catedras-docente-cursos',
   standalone: true,
-  imports: [CommonModule, ToolbarModule, PanelModule, TableModule, ButtonModule, IconFieldModule, InputIconModule, MessagesModule, InputTextModule, DropdownModule, FormsModule, DialogModule],
+  imports: [CommonModule, ToolbarModule, PanelModule, TableModule, ButtonModule, IconFieldModule, InputIconModule, MessagesModule, InputTextModule, DropdownModule, FormsModule, DialogModule, ProgressSpinnerModule],
   templateUrl: './catedras-docente-cursos.component.html',
   styleUrl: './catedras-docente-cursos.component.scss'
 })

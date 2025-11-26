@@ -27,11 +27,12 @@ import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
 import { filter, distinctUntilChanged, takeUntil, concatMap, last, take, first } from 'rxjs/operators';
 import { Condicion, CondicionList } from '../../entities/enums';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @Component({
   selector: 'app-catedras-alumno',
   standalone: true,
-  imports: [CommonModule, ToolbarModule, PanelModule, TableModule, ButtonModule, IconFieldModule, InputIconModule, MessagesModule, InputTextModule, CardModule, DropdownModule, FormsModule, DialogModule],
+  imports: [CommonModule, ToolbarModule, PanelModule, TableModule, ButtonModule, IconFieldModule, InputIconModule, MessagesModule, InputTextModule, CardModule, DropdownModule, FormsModule, DialogModule, ProgressSpinnerModule],
   templateUrl: './catedras-alumno.component.html',
   styleUrl: './catedras-alumno.component.scss'
 })

@@ -10,5 +10,5 @@ import { Especialidad } from '../../entities/especialidad';
   styleUrl: './especialidad-nuevo.component.scss'
 })
 export class EspecialidadNuevoComponent {
-    especilidad:Especialidad = new Especialidad();
+
 }
