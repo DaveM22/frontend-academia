@@ -51,11 +51,11 @@ export class PlanFilterComponent implements OnInit, OnDestroy  {
   }
 
   onChangePlan(){
-    this.selectionChange.emit(this.plan)
+    this.store.dispatch(new SelectedPlanFilter(this.plan!));
   }
 
   onClear(){
-    console.log(this.plan)
+ 
     this.store.dispatch(new ClearSelectedPlanFilter);
     this.store.dispatch(new ClearAlumnoListAction);
     this.store.dispatch(new ClearMateriaAction);

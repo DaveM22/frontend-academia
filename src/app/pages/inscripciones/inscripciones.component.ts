@@ -106,12 +106,16 @@ export class InscripcionesComponent implements OnInit, OnDestroy {
   }
 
   redirectToNuevaInscripcion() {
-    console.log(this.alumno._id);
     this.route.navigate([`inscripciones/alumnos/${this.alumno._id}/nuevo`]);
+
   }
 
   redirectToInscripcionesalumnos() {
-    this.route.navigate([`inscripciones/alumnos/lista`]);
+    this.store.dispatch(new UpdateManualLoading(true)).subscribe(() => {
+      this.store.dispatch(new UpdateManualLoading(false)).subscribe(() => {
+          this.route.navigate([`inscripciones/alumnos/lista`]);
+      })
+    })
   }
 
   redirectActualizarInscripcion(inscripcionId: string) {

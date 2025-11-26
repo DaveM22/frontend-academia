@@ -10,7 +10,7 @@ import { Alumno } from '../../../entities/alumno';
 import { Store } from '@ngxs/store';
 import { PersonaState } from '../../../store/states/api/persona.state';
 import { PersonaPageState } from '../../../store/states/page/persona.state';
-import { GetAlumnoByIdAction } from '../../../store/actions/api/persona.action';
+import { GetAlumnoByIdAction, UpdateManualLoading } from '../../../store/actions/api/persona.action';
 import { CursosModalComponent } from '../../modals/cursos-modal/cursos-modal.component';
 import { ShowCursoModal } from '../../../store/actions/pages/app.action';
 import { Especialidad } from '../../../entities/especialidad';
@@ -63,7 +63,8 @@ export class InscripcionFormComponent implements OnInit, OnDestroy {
     this.store.dispatch(new ClearSelectedPersona);
   }
 
-  async ngOnInit(): Promise<void> {
+  ngOnInit(): void {
+
     this.condiciones = [Condicion.INSCRIPTO.toString(), Condicion.APROBADO.toString(), Condicion.REGULAR.toString()];
 
     this.form = new FormGroup({
@@ -76,38 +77,32 @@ export class InscripcionFormComponent implements OnInit, OnDestroy {
       nota: new FormControl('')
     });
 
-    const role = await firstValueFrom(this.authService.idTokenClaims$.pipe(filter(u => u !== null && u !== undefined)));
-    if (role && (role[environment.roleLogin] as Array<string>).some(r => r === 'Docente')) {
-      this.role = 'Docente';
-    }
 
-    if (this.activatedRoute.snapshot.params['id']) {
-      let alumnoFilter = new AlumnoFilter();
-      alumnoFilter.incluirInscripciones = false;
-      this.store.dispatch(new GetAlumnoByIdAction(this.alumnoId, alumnoFilter));
 
-      const alumnoSelected = await firstValueFrom(this.alumno$.pipe(filter(a => a !== null)));
-      if (alumnoSelected) {
-        this.alumno = alumnoSelected;
-        this.form.patchValue({ 'alumno': `${this.alumno.apellido} ${this.alumno.nombre}`, 'alumnoId': this.alumno._id })
+    this.authService.idTokenClaims$.subscribe(async role => {
+      if (role && (role[environment.roleLogin] as Array<string>).some(r => r === 'Docente')) {
+        this.role = 'Docente';
       }
-    }
+    });
 
 
     if (this.activatedRoute.snapshot.params['idInscripcion']) {
       this.store.dispatch(new GetOneAlumnoInscripcionAction(this.activatedRoute.snapshot.params['idInscripcion']));
-      const alumnoInscripcionSelected = await firstValueFrom(this.alumnoInscripcion$.pipe(filter(ai => ai !== null)));
-      if (alumnoInscripcionSelected) {
-        this.alumnoInscripcion = alumnoInscripcionSelected;
-        this.form.patchValue({ '_id': this.alumnoInscripcion._id, 'alumno': `${this.alumnoInscripcion.alumno!.apellido} ${this.alumnoInscripcion.alumno!.nombre}`, 'alumnoId': this.alumnoInscripcion.alumno!._id, 'condicion': this.alumnoInscripcion.condicion, nota: this.alumnoInscripcion.nota, 'curso': this.alumnoInscripcion.curso?.descripcion, 'cursoId': this.alumnoInscripcion.curso?._id })
-      }
 
-
-      const cursoSelected = await firstValueFrom(this.cursoSelectedModal$.pipe(filter(c => c !== null)));
-      if (cursoSelected) {
-        this.form.patchValue({ 'curso': cursoSelected.descripcion, 'cursoId': cursoSelected._id });
-      }
     }
+
+
+    if (this.activatedRoute.snapshot.params['id'] && !this.activatedRoute.snapshot.params['idInscripcion']) {
+      this.alumnoId = this.activatedRoute.snapshot.params['id'];
+
+      let alumnoFilter = new AlumnoFilter();
+      alumnoFilter.incluirInscripciones = false;
+      this.store.dispatch(new GetAlumnoByIdAction(this.alumnoId, alumnoFilter));
+
+    }
+
+
+
 
     this.cursoSelectedModal$.subscribe(curso => {
       if (curso) {
@@ -115,12 +110,25 @@ export class InscripcionFormComponent implements OnInit, OnDestroy {
       }
     });
 
-    console.log('fin')
+    this.alumnoInscripcion$.subscribe(ai => {
+      if (ai) {
+        this.alumnoInscripcion = ai;
+        this.form.patchValue({ '_id': this.alumnoInscripcion._id, 'alumno': `${this.alumnoInscripcion.alumno!.apellido} ${this.alumnoInscripcion.alumno!.nombre}`, 'alumnoId': this.alumnoInscripcion.alumno!._id, 'condicion': this.alumnoInscripcion.condicion, nota: this.alumnoInscripcion.nota, 'curso': this.alumnoInscripcion.curso?.descripcion, 'cursoId': this.alumnoInscripcion.curso?._id })
+      }
+    });
+
+    this.alumno$.subscribe(a => {
+      if (a) {
+        this.alumno = a;
+        this.form.patchValue({ 'alumno': `${this.alumno.apellido} ${this.alumno.nombre}`, 'alumnoId': this.alumno._id })
+      }
+    });
+
+
   }
 
   onSubmit() {
     this.alumnoInscripcion = this.form.value
-    console.log(this.alumnoInscripcion);
     if (this.alumnoInscripcion._id === null) {
       this.alumnoInscripcionDto = this.form.value;
       this.store.dispatch(new PostAlumnoInscripcionAction(this.alumnoInscripcionDto)).subscribe(() => {
@@ -145,7 +153,7 @@ export class InscripcionFormComponent implements OnInit, OnDestroy {
     if (this.role === 'Docente') {
       this.router.navigate([`docente/cursos-inscripciones/${this.alumnoInscripcion.curso?._id}`]);
     } else {
-      this.router.navigate([`/inscripciones/alumnos/${this.alumnoId}`]);
+      this.router.navigate([`/inscripciones/alumnos/${this.alumno._id}`]);
     }
   }
 

@@ -26,6 +26,7 @@ import { AsignSelectedPlan } from '../../store/actions/pages/plan.action';
 import { ClearMateriasAction } from '../../store/actions/api/materia.action';
 import { MessageModule } from 'primeng/message';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { MateriaState } from '../../store/states/api/materia.state';
 
 @Component({
   selector: 'app-inscripcion-alumno-lista',
@@ -39,6 +40,7 @@ export class InscripcionAlumnoListaComponent implements OnInit, OnDestroy {
   alumnos$: Observable<Alumno[]> = this.store.select(PersonaState.getAlumnos);
   loading$: Observable<boolean> = this.store.select(PersonaState.getLoading);
   error$: Observable<boolean> = this.store.select(PersonaState.getError);
+  materias$: Observable<any> = this.store.select(MateriaState.getMaterias);
   especialidadSelected$: Observable<Especialidad | null> = this.store.select(AppPageState.getSelectedEspecialidad);
   planSelected$: Observable<Plan | null> = this.store.select(AppPageState.getSelectedPlanInFilter);
   disablePlanDropDown: boolean = true;
@@ -72,6 +74,8 @@ export class InscripcionAlumnoListaComponent implements OnInit, OnDestroy {
         this.store.dispatch(new ClearSelectedPlanFilter());
       }
     })
+
+
   }
 
   @HostListener('window:resize')
