@@ -71,14 +71,14 @@ export class InscripcionesComponent implements OnInit, OnDestroy {
     this.updateRowsPerPage();
     let filterAlumno = new AlumnoFilter();
     filterAlumno.incluirInscripciones = true;
-
+    this.store.dispatch(new UpdateManualLoading(true));
     await firstValueFrom(this.store.dispatch(new GetAlumnoByIdAction(this.router.snapshot.params['id'], filterAlumno)));
 
     const alumno = await firstValueFrom(this.alumno$.pipe(filter(a => a !== null)));
     this.alumno = alumno;
     this.inscripciones = this.alumno.inscripciones;
-    this.loading$.subscribe(x => false);
 
+    this.store.dispatch(new UpdateManualLoading(false));
 
 
   }
@@ -113,7 +113,7 @@ export class InscripcionesComponent implements OnInit, OnDestroy {
   redirectToInscripcionesalumnos() {
     this.store.dispatch(new UpdateManualLoading(true)).subscribe(() => {
       this.store.dispatch(new UpdateManualLoading(false)).subscribe(() => {
-          this.route.navigate([`inscripciones/alumnos/lista`]);
+        this.route.navigate([`inscripciones/alumnos/lista`]);
       })
     })
   }
