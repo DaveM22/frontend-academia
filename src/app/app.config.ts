@@ -34,6 +34,7 @@ import { definePreset } from '@primeng/themes';
 import { style } from '@angular/animations';
 import { Parametro } from './entities/parametro';
 import { ParametroState } from './store/states/api/parametro.state';
+import { NotificacionState } from './store/states/api/notificacion.state';
 
 const MyPreset = definePreset(Material, {
   primitive: {
@@ -5317,7 +5318,8 @@ export const appConfig: ApplicationConfig = {
         UsuarioState,
         UsuarioPageState,
         AlumnoInscripcionPageState,
-        ParametroState
+        ParametroState,
+        NotificacionState
       ], { developmentMode: !environment.production}),
       
 ],

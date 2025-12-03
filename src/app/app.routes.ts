@@ -63,7 +63,8 @@ import { AdminInicioComponent } from './pages/admin-inicio/admin-inicio.componen
 import { DocenteInicioComponent } from './pages/docente-inicio/docente-inicio.component';
 import { InicioComponent } from './pages/inicio/inicio.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
-// docente id removed from URL; ownership/existence guards no longer needed
+import { NotificacionesDocenteComponent } from './pages/notificaciones-docente/notificaciones-docente.component';
+
 
 export const routes: Routes = [
     {
@@ -260,7 +261,8 @@ export const routes: Routes = [
                     },
                     { path: 'cursos-asignados', component: CatedrasDocenteCursosComponent },
                     { path: 'cursos-inscripciones/:idCurso', component: CatedrasDocenteInscripcionesComponent },
-                    { path: 'cursos-inscripciones/:idCurso/inscripciones/:idInscripcion', component: InscripcionFormComponent }
+                    { path: 'cursos-inscripciones/:idCurso/inscripciones/:idInscripcion', component: InscripcionFormComponent },
+                    { path: 'notificaciones', component: NotificacionesDocenteComponent }
                 ],
                 canActivate: [AuthGuard, docenteGuard],
                 data: {
