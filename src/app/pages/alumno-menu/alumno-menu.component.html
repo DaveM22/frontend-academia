@@ -10,10 +10,16 @@
           <div class="flex items-center gap-4">
             @for (item of menuItems; track item.label) {
               <button 
-                class="text-white hover:text-indigo-200 hover:bg-indigo-600 px-3 py-2 rounded-lg font-medium text-sm transition-colors duration-200 flex items-center gap-2"
+                class="text-white hover:text-indigo-200 hover:bg-indigo-600 px-3 py-2 rounded-lg font-medium text-sm transition-colors duration-200 flex items-center gap-2 relative"
                 (click)="onDesktopMenuClick(item)">
                 <i [class]="item.icon" class="text-gray-300"></i>
                 <span>{{item.label}}</span>
+                @if (item.label === 'Novedades') {
+                  @let count = notificacionesCount$ | async;
+                  @if ((count ?? 0) > 0) {
+                    <p-badge [value]="count ?? 0" severity="danger" styleClass="ml-2"></p-badge>
+                  }
+                }
               </button>
             }
           </div>
@@ -112,10 +118,16 @@
           <div class="px-4 py-2">
             @for (item of menuItems; track item.label) {
               <button 
-                class="w-full text-left p-3 text-white hover:bg-indigo-600 rounded-lg mb-2 flex items-center gap-3 transition-colors duration-200"
+                class="w-full text-left p-3 text-white hover:bg-indigo-600 rounded-lg mb-2 flex items-center gap-3 transition-colors duration-200 relative"
                 (click)="onMobileMenuClick(item)">
                 <i [class]="item.icon" class="text-gray-300"></i>
                 <span class="font-medium">{{item.label}}</span>
+                @if (item.label === 'Novedades') {
+                  @let count = notificacionesCount$ | async;
+                  @if ((count ?? 0) > 0) {
+                    <p-badge [value]="count ?? 0" severity="danger" styleClass="ml-2"></p-badge>
+                  }
+                }
               </button>
             }
           </div>

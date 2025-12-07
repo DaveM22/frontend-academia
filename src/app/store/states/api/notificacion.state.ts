@@ -1,6 +1,6 @@
 import { State, Action, StateContext, Selector } from '@ngxs/store';
 import { NotificacionModelState } from '../../modelstate/api/notificacion.modelstate';
-import { GetNotificacionesAction, GetNoLeidasAction, GetNoLeidasCountAction, MarcarComoLeidaAction, ClearNotificacionesAction } from '../../actions/api/notificacion.action';
+import { GetNotificacionesAction, GetNoLeidasAction, GetNoLeidasCountAction, MarcarComoLeidaAction, ClearNotificacionesAction, GetNotificacionesAlumnoAction, GetNoLeidasCountAlumnoAction, MarcarComoLeidaAlumnoAction } from '../../actions/api/notificacion.action';
 import { NotificacionService } from '../../../services/notificacion.service';
 import { Injectable } from '@angular/core';
 import { MessageService } from 'primeng/api';
@@ -88,8 +88,9 @@ export class NotificacionState {
   @Action(GetNoLeidasCountAction)
   getNoLeidasCount(ctx: StateContext<NotificacionModelState>, action: GetNoLeidasCountAction) {
     return this.notificacionService.getNoLeidasCount(action.payload.docenteId).pipe(
-      tap((response) => {
-        ctx.patchState({ noLeidasCount: response.count });
+      tap((response: any) => {
+        const count = typeof response === 'number' ? response : (response?.count || 0);
+        ctx.patchState({ noLeidasCount: count });
       }),
       catchError((error) => {
         const message = error?.error?.message || 'Error al obtener cantidad de notificaciones';
@@ -103,7 +104,6 @@ export class NotificacionState {
   marcarComoLeida(ctx: StateContext<NotificacionModelState>, action: MarcarComoLeidaAction) {
     return this.notificacionService.marcarComoLeida(action.payload.notificacionId).pipe(
       tap(() => {
-        // Recargar notificaciones y contar
         ctx.dispatch(new GetNotificacionesAction({ docenteId: action.payload.docenteId }));
         ctx.dispatch(new GetNoLeidasCountAction({ docenteId: action.payload.docenteId }));
         this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'Notificación marcada como leída' });
@@ -126,5 +126,52 @@ export class NotificacionState {
       error: false,
       errorMessage: ''
     });
+  }
+
+  @Action(GetNotificacionesAlumnoAction)
+  getNotificacionesAlumno(ctx: StateContext<NotificacionModelState>, action: GetNotificacionesAlumnoAction) {
+    ctx.patchState({ loading: true, error: false, errorMessage: '' });
+    return this.notificacionService.getByAlumno(action.payload.alumnoId).pipe(
+      tap((notificaciones) => {
+        ctx.patchState({ notificaciones, loading: false });
+      }),
+      catchError((error) => {
+        const message = error?.error?.message || 'Error al cargar notificaciones';
+        ctx.patchState({ error: true, errorMessage: message, loading: false });
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: message });
+        return of([]);
+      })
+    );
+  }
+
+  @Action(GetNoLeidasCountAlumnoAction)
+  getNoLeidasCountAlumno(ctx: StateContext<NotificacionModelState>, action: GetNoLeidasCountAlumnoAction) {
+    return this.notificacionService.getNoLeidasCountAlumno(action.payload.alumnoId).pipe(
+      tap((response: any) => {
+        const count = typeof response === 'number' ? response : (response?.count || 0);
+        ctx.patchState({ noLeidasCount: count });
+      }),
+      catchError((error) => {
+        const message = error?.error?.message || 'Error al obtener cantidad de notificaciones';
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: message });
+        return of({ count: 0 });
+      })
+    );
+  }
+
+  @Action(MarcarComoLeidaAlumnoAction)
+  marcarComoLeidaAlumno(ctx: StateContext<NotificacionModelState>, action: MarcarComoLeidaAlumnoAction) {
+    return this.notificacionService.marcarComoLeida(action.payload.notificacionId).pipe(
+      tap(() => {
+        ctx.dispatch(new GetNotificacionesAlumnoAction({ alumnoId: action.payload.alumnoId }));
+        ctx.dispatch(new GetNoLeidasCountAlumnoAction({ alumnoId: action.payload.alumnoId }));
+        this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'Notificación marcada como leída' });
+      }),
+      catchError((error) => {
+        const message = error?.error?.message || 'Error al marcar notificación como leída';
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: message });
+        return of(null);
+      })
+    );
   }
 }

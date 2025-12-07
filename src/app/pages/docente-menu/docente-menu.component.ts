@@ -12,6 +12,7 @@ import { MenuItem } from 'primeng/api';
 import { AppPageState } from '../../store/states/page/app.state';
 import { NotificacionState } from '../../store/states/api/notificacion.state';
 import { GetNoLeidasCountAction } from '../../store/actions/api/notificacion.action';
+import { SetPersonaId } from '../../store/actions/pages/app.action';
 import { environment } from '../../../environments/environment';
 import { combineLatest, take, filter, interval, Observable, Subject } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
@@ -44,20 +45,34 @@ export class DocenteMenuComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.setupMenu();
-    const docenteId = this.store.selectSnapshot(AppPageState.getPersonId);
-    if (docenteId) {
-      this.store.dispatch(new GetNoLeidasCountAction({ docenteId }));
-      // Auto-refresh cada 30 segundos
-      interval(30000)
-        .pipe(
-          switchMap(() => {
-            this.store.dispatch(new GetNoLeidasCountAction({ docenteId }));
-            return [];
-          }),
-          takeUntil(this.destroy$)
-        )
-        .subscribe();
-    }
+    
+    // Obtener personId de Auth0 y establecerlo en el store
+    combineLatest([
+      this.auth.isAuthenticated$,
+      this.auth.idTokenClaims$
+    ]).pipe(
+      take(1),
+      filter(([isLogged, claims]) => isLogged && claims !== null)
+    ).subscribe(([isLogged, claims]) => {
+      if (claims) {
+        const personaId = claims["personaId"];
+        if (personaId) {
+          this.store.dispatch(new SetPersonaId(personaId));
+          this.store.dispatch(new GetNoLeidasCountAction({ docenteId: personaId }));
+          
+          // Auto-refresh cada 30 segundos
+          interval(30000)
+            .pipe(
+              switchMap(() => {
+                this.store.dispatch(new GetNoLeidasCountAction({ docenteId: personaId }));
+                return [];
+              }),
+              takeUntil(this.destroy$)
+            )
+            .subscribe();
+        }
+      }
+    });
   }
 
   ngOnDestroy(): void {

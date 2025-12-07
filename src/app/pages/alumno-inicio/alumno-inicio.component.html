@@ -1,6 +1,91 @@
-<div class="w-full flex flex-col items-center justify-center py-10">
-  <h3 class="text-xl md:text-3xl text-center font-bold text-white pb-4">Inicio Alumno</h3>
-  <p class="text-sm sm:text-base md:text-lg text-white/80 max-w-xl text-center">
-    Bienvenido a tu panel. Aquí podrás acceder rápidamente a tus cátedras, inscripciones y novedades académicas.
-  </p>
+<div class="w-full">
+  <!-- Header -->
+  <div class="grid grid-cols-12 gap-4 mb-8">
+    <div class="col-span-12">
+      <h1 class="text-2xl md:text-3xl font-bold text-white">Bienvenido a tu panel</h1>
+      <p class="text-sm sm:text-base md:text-lg text-white/80 mt-2">
+        Aquí podrás acceder rápidamente a tus cátedras, inscripciones y novedades académicas.
+      </p>
+    </div>
+  </div>
+
+  <!-- Novedades Section -->
+  <div class="grid grid-cols-12 gap-4">
+    <div class="col-span-12">
+      @if (error$ | async) {
+        <p-message severity="error" text="Error al cargar novedades"></p-message>
+      }
+
+      <!-- Novedades Card -->
+      <p-card>
+        <ng-template pTemplate="header">
+          <div class="bg-gradient-to-r from-indigo-600 to-indigo-800 p-6 rounded-t-lg">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <i class="pi pi-bell text-2xl text-white"></i>
+                <div>
+                  <h2 class="text-xl md:text-2xl font-bold text-white">Novedades Recientes</h2>
+                  <p class="text-sm text-indigo-100">Últimas actualizaciones académicas</p>
+                </div>
+              </div>
+              @let count = noLeidasCount$ | async;
+              @if ((count ?? 0) > 0) {
+                <p-badge [value]="count ?? 0" severity="danger" styleClass="ml-2"></p-badge>
+              }
+            </div>
+          </div>
+        </ng-template>
+
+        <div class="p-6">
+          @if (loading$ | async) {
+            <div class="flex justify-center items-center py-8">
+              <p-progressSpinner [style]="{ width: '50px', height: '50px' }" strokeWidth="4"></p-progressSpinner>
+            </div>
+          } @else {
+            @let notificaciones = notificaciones$ | async;
+            @if (notificaciones && notificaciones.length > 0) {
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                @for (notificacion of notificaciones.slice(0, 4); track notificacion._id) {
+                  <div class="bg-gray-800 border border-gray-700 rounded-lg p-4 hover:border-indigo-500 transition-colors cursor-pointer hover:shadow-lg"
+                       [class.opacity-60]="notificacion.leida">
+                    <div class="flex items-start justify-between mb-3">
+                      <p-tag [value]="getTipoLabel(notificacion.tipo)" 
+                             [severity]="getTipoColor(notificacion.tipo)"
+                             styleClass="text-xs"></p-tag>
+                      @if (!notificacion.leida) {
+                        <span class="inline-block w-3 h-3 bg-blue-500 rounded-full"></span>
+                      }
+                    </div>
+                    <h3 class="text-sm md:text-base font-semibold text-white mb-2">{{ notificacion.titulo }}</h3>
+                    <p class="text-xs md:text-sm text-gray-300 mb-3 line-clamp-2">{{ notificacion.mensaje }}</p>
+                    <div class="flex items-center justify-between text-xs text-gray-400">
+                      <span>{{ notificacion.fechaCreacion | date: 'short' }}</span>
+                      @if (notificacion.leida) {
+                        <span class="text-gray-500">✓ Leída</span>
+                      }
+                    </div>
+                  </div>
+                }
+              </div>
+
+              <div class="flex justify-center">
+                <p-button 
+                  label="Ver todas las novedades"
+                  icon="pi pi-arrow-right"
+                  (onClick)="verTodasLasNovedades()"
+                  severity="secondary"
+                  [text]="true"
+                ></p-button>
+              </div>
+            } @else {
+              <div class="text-center py-8">
+                <i class="pi pi-inbox text-4xl text-gray-400 mb-3 block"></i>
+                <p class="text-gray-400">No tienes novedades en este momento</p>
+              </div>
+            }
+          }
+        </div>
+      </p-card>
+    </div>
+  </div>
 </div>

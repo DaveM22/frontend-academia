@@ -64,6 +64,7 @@ import { DocenteInicioComponent } from './pages/docente-inicio/docente-inicio.co
 import { InicioComponent } from './pages/inicio/inicio.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { NotificacionesDocenteComponent } from './pages/notificaciones-docente/notificaciones-docente.component';
+import { NovedadesAlumnoComponent } from './pages/novedades-alumno/novedades-alumno.component';
 
 
 export const routes: Routes = [
@@ -235,6 +236,12 @@ export const routes: Routes = [
             {
                 path: 'alumno/inicio',
                 component: AlumnoInicioComponent,
+                canActivate: [AuthGuard, alumnoGuard],
+                data: { role: 'Alumno' }
+            },
+            {
+                path: 'alumno/novedades',
+                component: NovedadesAlumnoComponent,
                 canActivate: [AuthGuard, alumnoGuard],
                 data: { role: 'Alumno' }
             },

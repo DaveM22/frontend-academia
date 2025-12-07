@@ -1,53 +1,72 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { Store } from '@ngxs/store';
 import { Observable, Subject, interval } from 'rxjs';
 import { takeUntil, switchMap } from 'rxjs/operators';
 import { AppPageState } from '../../store/states/page/app.state';
 import { NotificacionState } from '../../store/states/api/notificacion.state';
-import { GetNotificacionesAlumnoAction, GetNoLeidasCountAlumnoAction } from '../../store/actions/api/notificacion.action';
+import { GetNotificacionesAlumnoAction, GetNoLeidasCountAlumnoAction, MarcarComoLeidaAlumnoAction } from '../../store/actions/api/notificacion.action';
 import { Notificacion } from '../../entities/notificacion';
-import { Router } from '@angular/router';
 
 // PrimeNG
 import { ButtonModule } from 'primeng/button';
 import { MessageModule } from 'primeng/message';
 import { TagModule } from 'primeng/tag';
 import { BadgeModule } from 'primeng/badge';
-import { CardModule } from 'primeng/card';
+import { TooltipModule } from 'primeng/tooltip';
+import { InputGroupModule } from 'primeng/inputgroup';
+import { InputIconModule } from 'primeng/inputicon';
+import { InputTextModule } from 'primeng/inputtext';
+import { IconFieldModule } from 'primeng/iconfield';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
-  selector: 'app-alumno-inicio',
+  selector: 'app-novedades-alumno',
   standalone: true,
   imports: [
     CommonModule,
+    FormsModule,
     ButtonModule,
     MessageModule,
     TagModule,
     BadgeModule,
-    CardModule,
-    ProgressSpinnerModule
+    TooltipModule,
+    InputGroupModule,
+    InputIconModule,
+    InputTextModule,
+    IconFieldModule,
+    ProgressSpinnerModule,
+    ConfirmDialogModule
   ],
-  templateUrl: './alumno-inicio.component.html',
-  styleUrl: './alumno-inicio.component.scss'
+  templateUrl: './novedades-alumno.component.html',
+  styleUrl: './novedades-alumno.component.scss',
+  providers:[ConfirmationService]
 })
-export class AlumnoInicioComponent implements OnInit, OnDestroy {
+export class NovedadesAlumnoComponent implements OnInit, OnDestroy {
   notificaciones$: Observable<Notificacion[]>;
   noLeidasCount$: Observable<number>;
   loading$: Observable<boolean>;
   error$: Observable<boolean>;
-  
+  errorMessage$: Observable<string>;
+
+  filtroSearch: string = '';
+  filtroTipo: string = '';
+
   private destroy$ = new Subject<void>();
 
   constructor(
     private store: Store,
-    private router: Router
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService
   ) {
     this.notificaciones$ = this.store.select(NotificacionState.getNotificaciones);
     this.noLeidasCount$ = this.store.select(NotificacionState.getNoLeidasCount);
     this.loading$ = this.store.select(NotificacionState.getLoading);
     this.error$ = this.store.select(NotificacionState.getError);
+    this.errorMessage$ = this.store.select(NotificacionState.getErrorMessage);
   }
 
   ngOnInit(): void {
@@ -78,6 +97,35 @@ export class AlumnoInicioComponent implements OnInit, OnDestroy {
     this.store.dispatch(new GetNoLeidasCountAlumnoAction({ alumnoId }));
   }
 
+  get notificacionesFiltradas(): Observable<Notificacion[]> {
+    return new Observable(observer => {
+      this.notificaciones$.subscribe(notificaciones => {
+        let filtradas = notificaciones;
+        
+        if (this.filtroSearch) {
+          const search = this.filtroSearch.toLowerCase();
+          filtradas = filtradas.filter(n => 
+            n.titulo.toLowerCase().includes(search) || 
+            n.mensaje.toLowerCase().includes(search)
+          );
+        }
+        
+        if (this.filtroTipo) {
+          filtradas = filtradas.filter(n => n.tipo === this.filtroTipo);
+        }
+        
+        observer.next(filtradas);
+      });
+    });
+  }
+
+  marcarComoLeida(notificacion: Notificacion): void {
+    const alumnoId = this.store.selectSnapshot(AppPageState.getPersonId);
+    if (alumnoId && !notificacion.leida) {
+      this.store.dispatch(new MarcarComoLeidaAlumnoAction({ notificacionId: notificacion._id, alumnoId }));
+    }
+  }
+
   getTipoColor(tipo: string): 'info' | 'success' | 'warn' | 'danger' | 'secondary' | 'contrast' {
     switch (tipo) {
       case 'ALUMNO_INSCRITO':
@@ -104,7 +152,18 @@ export class AlumnoInicioComponent implements OnInit, OnDestroy {
     }
   }
 
-  verTodasLasNovedades(): void {
-    this.router.navigate(['alumno/novedades']);
+  getEstadoLabel(leida: boolean): string {
+    return leida ? 'Leída' : 'No leída';
+  }
+
+  getEstadoColor(leida: boolean): 'success' | 'warn' {
+    return leida ? 'success' : 'warn';
+  }
+
+  onRefresh(): void {
+    const alumnoId = this.store.selectSnapshot(AppPageState.getPersonId);
+    if (alumnoId) {
+      this.loadNotificaciones(alumnoId);
+    }
   }
 }

@@ -13,7 +13,7 @@ export class NotificacionService {
   constructor(private http: HttpClient) {}
 
   getByDocente(docenteId: string): Observable<Notificacion[]> {
-    return this.http.get<Notificacion[]>(`${this.apiUrl}/${docenteId}`);
+    return this.http.get<Notificacion[]>(`${this.apiUrl}/docente/${docenteId}`);
   }
 
   marcarComoLeida(notificacionId: string): Observable<void> {
@@ -21,10 +21,24 @@ export class NotificacionService {
   }
 
   getNoLeidas(docenteId: string): Observable<Notificacion[]> {
-    return this.http.get<Notificacion[]>(`${this.apiUrl}/${docenteId}/no-leidas`);
+    return this.http.get<Notificacion[]>(`${this.apiUrl}/docente/${docenteId}/no-leidas`);
   }
 
-  getNoLeidasCount(docenteId: string): Observable<{ count: number }> {
-    return this.http.get<{ count: number }>(`${this.apiUrl}/${docenteId}`);
+  getNoLeidasCount(docenteId: string): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/docente/${docenteId}/no-leidas/count`);
   }
+
+  getByAlumno(alumnoId: string): Observable<Notificacion[]> {
+    return this.http.get<Notificacion[]>(`${this.apiUrl}/alumno/${alumnoId}`);
+  }
+
+  getNoLeidasAlumno(alumnoId: string): Observable<Notificacion[]> {
+    return this.http.get<Notificacion[]>(`${this.apiUrl}/alumno/${alumnoId}/no-leidas`);
+  }
+
+  getNoLeidasCountAlumno(alumnoId: string): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/alumno/${alumnoId}/no-leidas/count`);
+  }
+
+
 }

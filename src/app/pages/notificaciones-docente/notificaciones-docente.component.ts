@@ -80,6 +80,7 @@ export class NotificacionesDocenteComponent implements OnInit, OnDestroy {
         .pipe(
           switchMap(() => {
             this.store.dispatch(new GetNotificacionesAction({ docenteId }));
+            this.store.dispatch(new GetNoLeidasCountAction({ docenteId }));
             return [];
           }),
           takeUntil(this.destroy$)
