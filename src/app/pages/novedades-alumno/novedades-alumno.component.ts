@@ -22,6 +22,7 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { TableModule } from 'primeng/table';
 
 @Component({
   selector: 'app-novedades-alumno',
@@ -39,7 +40,8 @@ import { ConfirmationService, MessageService } from 'primeng/api';
     InputTextModule,
     IconFieldModule,
     ProgressSpinnerModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    TableModule
   ],
   templateUrl: './novedades-alumno.component.html',
   styleUrl: './novedades-alumno.component.scss',

@@ -16,6 +16,7 @@ import { TagModule } from 'primeng/tag';
 import { BadgeModule } from 'primeng/badge';
 import { CardModule } from 'primeng/card';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { TableModule } from 'primeng/table';
 
 @Component({
   selector: 'app-docente-inicio',
@@ -27,7 +28,8 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     TagModule,
     BadgeModule,
     CardModule,
-    ProgressSpinnerModule
+    ProgressSpinnerModule,
+    TableModule
   ],
   templateUrl: './docente-inicio.component.html',
   styleUrl: './docente-inicio.component.scss'

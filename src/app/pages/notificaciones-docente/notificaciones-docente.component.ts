@@ -22,6 +22,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { IconFieldModule } from 'primeng/iconfield';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { TableModule } from 'primeng/table';
 
 @Component({
   selector: 'app-notificaciones-docente',
@@ -39,7 +40,8 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     InputTextModule,
     IconFieldModule,
     ProgressSpinnerModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    TableModule
   ],
   templateUrl: './notificaciones-docente.component.html',
   styleUrl: './notificaciones-docente.component.scss',
