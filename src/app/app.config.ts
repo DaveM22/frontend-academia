@@ -37,6 +37,7 @@ import { Parametro } from './entities/parametro';
 import { ParametroState } from './store/states/api/parametro.state';
 import { NotificacionState } from './store/states/api/notificacion.state';
 import { DashboardState } from './store/states/api/dashboard.state';
+import { DashboardProfesorState } from './store/states/api/dashboard-profesor.state';
 
 // MyPreset imported from mypreset.ts
 
@@ -106,7 +107,8 @@ export const appConfig: ApplicationConfig = {
         AlumnoInscripcionPageState,
         ParametroState,
         NotificacionState,
-        DashboardState
+        DashboardState,
+        DashboardProfesorState
       ], { developmentMode: !environment.production}),
       
 ],

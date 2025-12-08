@@ -1,5 +1,4 @@
 <div class="w-full">
-  <!-- Header -->
   <div class="grid grid-cols-12 gap-4 mb-8">
     <div class="col-span-12">
       <h1 class="text-2xl md:text-3xl font-bold text-white">Bienvenido al panel docente</h1>
@@ -10,39 +9,49 @@
     </div>
   </div>
 
-  <!-- Stats Cards -->
   <div class="grid grid-cols-12 gap-4 mb-8">
     <div class="col-span-12 sm:col-span-6 lg:col-span-4">
       <div class="rounded-lg bg-gray-800 p-4 flex flex-col gap-2">
         <span class="text-xs sm:text-sm text-gray-400">Cátedras</span>
-        <span class="text-lg sm:text-xl font-semibold text-indigo-400">--</span>
+        @if (profesorLoading$ | async) {
+          <div class="h-6 w-16 bg-gray-700 rounded animate-pulse"></div>
+        } @else {
+          <span class="text-lg sm:text-xl font-semibold text-indigo-400">{{ (catedrasAsignadas$ | async) ?? '--' }}</span>
+        }
         <span class="text-[10px] sm:text-xs text-gray-500">Asignadas</span>
       </div>
     </div>
     <div class="col-span-12 sm:col-span-6 lg:col-span-4">
       <div class="rounded-lg bg-gray-800 p-4 flex flex-col gap-2">
         <span class="text-xs sm:text-sm text-gray-400">Cursos</span>
-        <span class="text-lg sm:text-xl font-semibold text-indigo-400">--</span>
+        @if (profesorLoading$ | async) {
+          <div class="h-6 w-16 bg-gray-700 rounded animate-pulse"></div>
+        } @else {
+          <span class="text-lg sm:text-xl font-semibold text-indigo-400">{{ (cursosActivos$ | async) ?? '--' }}</span>
+        }
         <span class="text-[10px] sm:text-xs text-gray-500">Activos</span>
       </div>
     </div>
     <div class="col-span-12 sm:col-span-6 lg:col-span-4">
       <div class="rounded-lg bg-gray-800 p-4 flex flex-col gap-2">
         <span class="text-xs sm:text-sm text-gray-400">Inscripciones</span>
-        <span class="text-lg sm:text-xl font-semibold text-indigo-400">--</span>
+        @if (profesorLoading$ | async) {
+          <div class="h-6 w-24 bg-gray-700 rounded animate-pulse"></div>
+        } @else {
+          <span class="text-lg sm:text-xl font-semibold text-indigo-400">{{ (inscripcionesEnRevision$ | async) ?? '--' }}</span>
+        }
         <span class="text-[10px] sm:text-xs text-gray-500">En revisión</span>
       </div>
     </div>
   </div>
 
-  <!-- Notificaciones Section -->
   <div class="grid grid-cols-12 gap-4">
     <div class="col-span-12">
       @if (error$ | async) {
       <p-message severity="error" text="Error al cargar notificaciones"></p-message>
       }
 
-      <!-- Notificaciones Card -->
+
       <p-card>
         <ng-template pTemplate="header">
           <div class="bg-gradient-to-r from-indigo-600 to-indigo-800 p-6 rounded-t-lg">

@@ -55,9 +55,6 @@ export class CatedrasDocenteInscripcionesComponent implements OnInit {
     this.store.dispatch(new GetByNombreParametroAction("HabilitarCargaNotas"));
     const parametroHabilitado = await firstValueFrom(this.parametro$.pipe(filter(param => param !== null)));
     this.parametroHabilitado = parametroHabilitado.activo;
-    if (!this.parametroHabilitado) {
-      this.mostrarAviso = true;
-    }
     if (this.cursoId) {
 
       this.store.dispatch(new GetByIdCursoAction(this.cursoId));
@@ -84,6 +81,15 @@ export class CatedrasDocenteInscripcionesComponent implements OnInit {
 
 
 
+  }
+
+  onActualizarInscripcion(idInscripcion: string) {
+    if (this.parametroHabilitado) {
+      this.redirectToInscripcionForm(idInscripcion);
+    } else {
+      this.mostrarAviso = true;
+      this.router.navigate(['docente/aviso-carga-notas'], { queryParams: { cursoId: this.cursoId } });
+    }
   }
 
 }

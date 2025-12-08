@@ -17,6 +17,8 @@ import { BadgeModule } from 'primeng/badge';
 import { CardModule } from 'primeng/card';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { TableModule } from 'primeng/table';
+import { DashboardProfesorState } from '../../store/states/api/dashboard-profesor.state';
+import { GetDashboardProfesorTotalesAction } from '../../store/actions/api/dashboard-profesor.action';
 
 @Component({
   selector: 'app-docente-inicio',
@@ -35,6 +37,11 @@ import { TableModule } from 'primeng/table';
   styleUrl: './docente-inicio.component.scss'
 })
 export class DocenteInicioComponent implements OnInit, OnDestroy {
+    // Dashboard totals
+    profesorLoading$: Observable<boolean>;
+    catedrasAsignadas$: Observable<number>;
+    cursosActivos$: Observable<number>;
+    inscripcionesEnRevision$: Observable<number>;
   notificaciones$: Observable<Notificacion[]>;
   noLeidasCount$: Observable<number>;
   loading$: Observable<boolean>;
@@ -50,17 +57,26 @@ export class DocenteInicioComponent implements OnInit, OnDestroy {
     this.noLeidasCount$ = this.store.select(NotificacionState.getNoLeidasCount);
     this.loading$ = this.store.select(NotificacionState.getLoading);
     this.error$ = this.store.select(NotificacionState.getError);
+
+    // Profesor dashboard selectors
+    this.profesorLoading$ = this.store.select(DashboardProfesorState.getLoading);
+    this.catedrasAsignadas$ = this.store.select(DashboardProfesorState.getCatedrasAsignadas);
+    this.cursosActivos$ = this.store.select(DashboardProfesorState.getCursosActivos);
+    this.inscripcionesEnRevision$ = this.store.select(DashboardProfesorState.getInscripcionesEnRevision);
   }
 
   ngOnInit(): void {
     const docenteId = this.store.selectSnapshot(AppPageState.getPersonId);
     if (docenteId) {
       this.loadNotificaciones(docenteId);
+      // Load dashboard totals for profesor
+      this.store.dispatch(new GetDashboardProfesorTotalesAction(docenteId));
       interval(30000)
         .pipe(
           switchMap(() => {
             this.store.dispatch(new GetNotificacionesAction({ docenteId }));
             this.store.dispatch(new GetNoLeidasCountAction({ docenteId }));
+            this.store.dispatch(new GetDashboardProfesorTotalesAction(docenteId));
             return [];
           }),
           takeUntil(this.destroy$)

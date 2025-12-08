@@ -65,6 +65,7 @@ import { InicioComponent } from './pages/inicio/inicio.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { NotificacionesDocenteComponent } from './pages/notificaciones-docente/notificaciones-docente.component';
 import { NovedadesAlumnoComponent } from './pages/novedades-alumno/novedades-alumno.component';
+import { AvisoCargaNotasComponent } from './pages/aviso-carga-notas/aviso-carga-notas.component';
 
 
 export const routes: Routes = [
@@ -269,6 +270,7 @@ export const routes: Routes = [
                     { path: 'cursos-asignados', component: CatedrasDocenteCursosComponent },
                     { path: 'cursos-inscripciones/:idCurso', component: CatedrasDocenteInscripcionesComponent },
                     { path: 'cursos-inscripciones/:idCurso/inscripciones/:idInscripcion', component: InscripcionFormComponent },
+                    { path: 'aviso-carga-notas', component: AvisoCargaNotasComponent },
                     { path: 'notificaciones', component: NotificacionesDocenteComponent }
                 ],
                 canActivate: [AuthGuard, docenteGuard],
