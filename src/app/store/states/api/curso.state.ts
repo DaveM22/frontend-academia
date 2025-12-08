@@ -134,7 +134,8 @@ export class CursoState {
     @Action(GenerateReport)
     async generateReport(ctx: StateContext<CursoModelState>, action: GenerateReport) {
 
-        ctx.patchState({ loading: true, error: false });
+        ctx.patchState({ error: false });
+        ctx.dispatch(new LoadingForm(true));
         try {
             const response = await lastValueFrom(this.service.generateReport(action.id));
             saveAs(response, 'archivo.pdf');
@@ -146,7 +147,7 @@ export class CursoState {
             ErrorStateHandler.handleError(err, ctx);
         }
         finally {
-            ctx.patchState({ loading: false })
+            ctx.dispatch(new LoadingForm(false));
         }
 
     }

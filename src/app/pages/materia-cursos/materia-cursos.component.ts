@@ -20,7 +20,7 @@ import { BlockUiComponent } from '../../components/util/block-ui/block-ui.compon
 @Component({
   selector: 'app-materia-cursos',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, IconFieldModule, InputIconModule, MessagesModule, InputTextModule, ProgressSpinnerModule],
+  imports: [CommonModule, TableModule, ButtonModule, IconFieldModule, InputIconModule, MessagesModule, InputTextModule, ProgressSpinnerModule, BlockUiComponent],
   templateUrl: './materia-cursos.component.html',
   styleUrl: './materia-cursos.component.scss'
 })
