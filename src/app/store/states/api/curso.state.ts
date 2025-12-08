@@ -46,7 +46,8 @@ export class CursoState {
 
     @Action(GetCursoAction)
     async getEspecialidadAction(ctx: StateContext<CursoModelState>, action: GetCursoAction) {
-        ctx.patchState({ loading: true, error: false })
+        ctx.patchState({error: false })
+        ctx.dispatch(new LoadingForm(true));
         try {
             const response = await lastValueFrom(this.service.getCursos(action.filters));
 
@@ -60,7 +61,7 @@ export class CursoState {
             ErrorStateHandler.handleError(error, ctx);
         }
         finally {
-            ctx.patchState({ loading: false })
+                ctx.dispatch(new LoadingForm(false));
         }
 
     }

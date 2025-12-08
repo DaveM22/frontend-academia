@@ -24,7 +24,7 @@ import { BlockUiComponent } from "../../components/util/block-ui/block-ui.compon
 @Component({
   selector: 'app-especialidad',
   standalone: true,
-  imports: [RouterModule, CommonModule, PanelModule, CardModule, BlockUiComponent],
+  imports: [RouterModule, CommonModule, PanelModule, CardModule],
   templateUrl: './especialidad.component.html',
   styleUrl: './especialidad.component.scss'
 })

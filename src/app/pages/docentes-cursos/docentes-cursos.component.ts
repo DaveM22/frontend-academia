@@ -23,11 +23,12 @@ import { AppPageState } from '../../store/states/page/app.state';
 import { ShowModalConfirmationAction } from '../../store/actions/pages/app.action';
 import { MessageModule } from 'primeng/message';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { BlockUiComponent } from '../../components/util/block-ui/block-ui.component';
 
 @Component({
   selector: 'app-docentes-cursos',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule,MessageModule, IconFieldModule, InputIconModule, MessagesModule, InputTextModule, ConfirmDialogModule, ProgressSpinnerModule],
+  imports: [CommonModule, TableModule, ButtonModule,MessageModule, IconFieldModule,BlockUiComponent, InputIconModule, MessagesModule, InputTextModule, ConfirmDialogModule, ProgressSpinnerModule],
   templateUrl: './docentes-cursos.component.html',
   styleUrl: './docentes-cursos.component.scss',
   providers:[ConfirmationService]
@@ -36,7 +37,7 @@ export class DocentesCursosComponent implements OnInit {
   docenteCursos$: Observable<DocenteCurso[]> = this.store.select(DocenteCursoState.getDocentesCursos);
   showConfirmation$:Observable<boolean> = this.store.select(AppPageState.showModalConfirmation)
   curso$:Observable<Curso | null> = this.store.select(CursoPageState.getCursoSelected);
-  loading$: Observable<boolean> = this.store.select(DocenteCursoState.getLoading);
+  loading$: Observable<boolean> = this.store.select(AppPageState.getFormLoading);
   error$: Observable<boolean> = this.store.select(DocenteCursoState.getError);
   docenteCursoSelected!:DocenteCurso
   materiaId:string='';

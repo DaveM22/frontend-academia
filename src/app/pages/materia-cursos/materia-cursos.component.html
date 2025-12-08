@@ -43,16 +43,7 @@
             </td>
         </tr>
     </ng-template>
-    <ng-template pTemplate="loadingbody">
-        <tr>
-            <td colspan="2">
-                <div class="flex flex-col items-center justify-center py-6">
-                    <p-progressSpinner styleClass="mb-3" strokeWidth="4"></p-progressSpinner>
-                    <span class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base font-semibold">Un momento, estamos procesando tu solicitud...</span>
-                </div>
-            </td>
-        </tr>
-    </ng-template>
+
     <ng-template pTemplate="emptymessage">
         @if ((cursos$ | async)!.length === 0) {
         <tr>
@@ -66,3 +57,5 @@
         }
     </ng-template>
 </p-table>
+
+<app-block-ui [target]="dt2"></app-block-ui>

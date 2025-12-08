@@ -8,7 +8,7 @@ import { BlockUiComponent } from '../../components/util/block-ui/block-ui.compon
 @Component({
   selector: 'app-profesor',
   standalone: true,
-  imports: [CommonModule, RouterModule, PanelModule, CardModule, BlockUiComponent],
+  imports: [CommonModule, RouterModule, PanelModule, CardModule],
   templateUrl: './profesor.component.html',
   styleUrl: './profesor.component.scss'
 })

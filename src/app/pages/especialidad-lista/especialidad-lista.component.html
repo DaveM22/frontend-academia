@@ -1,5 +1,5 @@
 
-<p-table #dt2 [value]="(especialidades$ | async)!" [loading]="(loading$ | async)" [loadingIcon]="''"
+<p-table #dt2 [value]="(especialidades$ | async)!" 
     styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-xs sm:text-sm md:text-base lg:text-base xl:text-base" responsiveLayout="stack" [breakpoint]="'960px'"
     [paginator]="true" [scrollable]="true" size="small" [rows]="rowsPerPage" [scrollHeight]="scrollSize" [globalFilterFields]="['descripcion']">
     <ng-template pTemplate="caption">
@@ -79,6 +79,8 @@
         }
     </ng-template>
 </p-table>
+
+<app-block-ui [target]="dt2"></app-block-ui>
 
 
 

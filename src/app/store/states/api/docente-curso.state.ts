@@ -41,7 +41,8 @@ export class DocenteCursoState {
 
     @Action(GetDocenteCursoAction)
     async getDocenteCurso(ctx: StateContext<DocenteCursoModelState>, action: GetDocenteCursoAction) {
-        ctx.patchState({ error: false, loading: true })
+        ctx.patchState({ error: false})
+        ctx.dispatch(new LoadingForm(true));
         try {
             const response = await lastValueFrom(this.service.get(action.filter))
             ctx.patchState({
@@ -52,9 +53,7 @@ export class DocenteCursoState {
             ErrorStateHandler.handleError(error, ctx);
         }
         finally {
-            ctx.patchState({
-                loading: false
-            })
+            ctx.dispatch(new LoadingForm(false));
         }
     }
 

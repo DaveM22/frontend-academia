@@ -18,7 +18,7 @@ import { AppPageState } from '../../store/states/page/app.state';
 @Component({
   selector: 'app-curso',
   standalone: true,
-  imports: [CommonModule, PanelModule, RouterModule, CardModule, BlockUiComponent],
+  imports: [CommonModule, PanelModule, RouterModule, CardModule],
   templateUrl: './curso.component.html',
   styleUrl: './curso.component.scss'
 })

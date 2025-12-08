@@ -1,4 +1,4 @@
-<p-table #dt2 [value]="(parametros$ | async)!" [loading]="(loading$ | async)" [loadingIcon]="''"
+<p-table #dt2 [value]="(parametros$ | async)!" 
     styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-sm sm:text-base md:text-lg lg:text-lg xl:text-xl" responsiveLayout="stack" [breakpoint]="'960px'"
     [paginator]="true" [scrollable]="true" size="small" [rows]="rowsPerPage"  [globalFilterFields]="['nombre','descripcion']">
     <ng-template pTemplate="caption">
@@ -67,7 +67,12 @@
         </tr>
     </ng-template>
     <ng-template pTemplate="emptymessage">
-        @if ((parametros$ | async)!.length === 0) {
+        @if(loading$ | async) {
+        <tr>
+            <td class="text-center text-sm lg:text-xl" colspan="3">Cargando parámetros...</td>
+        </tr>
+        }
+        @else if ((parametros$ | async)!.length === 0) {
         <tr>
             <td class="text-center" colspan="3">No se han registrado parámetros</td>
         </tr>
@@ -79,6 +84,8 @@
         }
     </ng-template>
 </p-table>
+
+<app-block-ui [target]="dt2"></app-block-ui>
 
 <p-dialog [(visible)]="infoVisible" [modal]="true" [closable]="true" [draggable]="false" [resizable]="false" header="Detalle del parámetro" [style]="{width: '36rem'}" (onHide)="closeInfo()">
     <div class="text-base sm:text-lg md:text-lg lg:text-xl">

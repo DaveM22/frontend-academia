@@ -45,7 +45,8 @@ export class ComisionState {
 
   @Action(GetComision)
   async getComision(ctx: StateContext<ComisionModelState>, action: GetComision) {
-    ctx.patchState({ loading: true, error: false })
+    ctx.patchState({error: false })
+    ctx.dispatch(new LoadingForm(true));
     try {
       const response = await lastValueFrom(this.service.get(action.filter));
       ctx.patchState({
@@ -58,7 +59,7 @@ export class ComisionState {
       ErrorStateHandler.handleError(error, ctx);
     }
     finally {
-      ctx.patchState({ loading: false })
+      ctx.dispatch(new LoadingForm(false));
     }
   }
 

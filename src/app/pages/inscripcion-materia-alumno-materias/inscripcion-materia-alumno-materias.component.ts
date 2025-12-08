@@ -23,10 +23,11 @@ import { GeneralLoadingAction } from '../../store/actions/pages/app.action';
 import { filter, distinctUntilChanged, takeUntil, concatMap, last, take, first } from 'rxjs/operators';
 import { MessageModule } from 'primeng/message';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { BlockUiComponent } from '../../components/util/block-ui/block-ui.component';
 @Component({
   selector: 'app-inscripcion-materia-alumno-materias',
   standalone: true,
-  imports: [CommonModule,ToolbarModule, TableModule, ButtonModule, IconFieldModule, InputIconModule, MessageModule, InputTextModule, ProgressSpinnerModule],
+  imports: [CommonModule,ToolbarModule, TableModule, ButtonModule, BlockUiComponent, IconFieldModule, InputIconModule, MessageModule, InputTextModule, ProgressSpinnerModule],
   templateUrl: './inscripcion-materia-alumno-materias.component.html',
   styleUrl: './inscripcion-materia-alumno-materias.component.scss'
 })

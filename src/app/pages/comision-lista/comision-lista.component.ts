@@ -25,11 +25,12 @@ import { GetPlanAction } from '../../store/actions/api/planes.action';
 import { PlanFilter } from '../../entities/filter';
 import { SelectedPlanFilter } from '../../store/actions/pages/app.action';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { BlockUiComponent } from '../../components/util/block-ui/block-ui.component';
 
 @Component({
   selector: 'app-comision-lista',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, MessageModule, PanelModule, ConfirmDialogModule, IconFieldModule, InputTextModule, InputIconModule, PlanFilterComponent, ProgressSpinnerModule],
+  imports: [CommonModule, TableModule, ButtonModule, MessageModule, PanelModule,BlockUiComponent, ConfirmDialogModule, IconFieldModule, InputTextModule, InputIconModule, PlanFilterComponent, ProgressSpinnerModule],
   templateUrl: './comision-lista.component.html',
   styleUrl: './comision-lista.component.scss',
   providers: [ConfirmationService]
@@ -38,7 +39,7 @@ export class ComisionListaComponent implements OnInit {
   rowsPerPage = 5;
   public comisiones$: Observable<Comision[]> = this.store.select(ComisionState.getComisiones)
 
-  public loading$: Observable<boolean> = this.store.select(ComisionState.getLoading);
+  public loading$: Observable<boolean> = this.store.select(AppPageState.getFormLoading);
 
   public error$: Observable<boolean> = this.store.select(ComisionState.getError);
 

@@ -1,5 +1,5 @@
 
-<p-table #dt2 [value]="inscripciones" [loading]="(loading$ | async)" [loadingIcon]="''"
+<p-table #dt2 [value]="inscripciones" 
     styleClass="p-datatable-gridlines p-datatable-striped text-xs sm:text-sm md:text-base lg:text-base xl:text-base" responsiveLayout="stack"
     [breakpoint]="'960px'" [paginator]="true" size="small" [scrollable]="true" [rows]="rowsPerPage" scrollHeight="48vh"
     [globalFilterFields]="['nota','condicion', 'curso.descripcion']">
@@ -60,18 +60,16 @@
             </td>
         </tr>
     </ng-template>
-    <ng-template pTemplate="loadingbody">
-        <tr>
-            <td colspan="4">
-                <div class="flex flex-col items-center justify-center py-6">
-                    <p-progressSpinner styleClass="mb-3" strokeWidth="4"></p-progressSpinner>
-                    <span class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base font-semibold">Un momento, estamos procesando tu solicitud...</span>
-                </div>
-            </td>
-        </tr>
-    </ng-template>
+
+    
+
     <ng-template pTemplate="emptymessage">
-        @if (inscripciones.length === 0) {
+        @if (loading$ | async) {
+        <tr>
+            <td class="text-center text-sm lg:text-xl" colspan="4">Cargando cátedras inscriptas...</td>
+        </tr>
+        }
+        @else if (inscripciones.length === 0) {
         <tr>
             <td class="text-center text-sm lg:text-xl" colspan="4">No se han registrado inscripciones</td>
         </tr>
@@ -83,4 +81,7 @@
         </tr>
         }
     </ng-template>
+
+    
+<app-block-ui [target]="dt2"></app-block-ui>
 </p-table>

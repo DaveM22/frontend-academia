@@ -27,18 +27,19 @@ import { ClearMateriasAction } from '../../store/actions/api/materia.action';
 import { MessageModule } from 'primeng/message';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { MateriaState } from '../../store/states/api/materia.state';
+import { BlockUiComponent } from '../../components/util/block-ui/block-ui.component';
 
 @Component({
   selector: 'app-inscripcion-alumno-lista',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, IconFieldModule, MessageModule, InputIconModule, MessagesModule, InputTextModule, EspecialidadFilterComponent, PlanFilterComponent, ProgressSpinnerModule],
+  imports: [CommonModule, TableModule, ButtonModule, IconFieldModule,BlockUiComponent, MessageModule, InputIconModule, MessagesModule, InputTextModule, EspecialidadFilterComponent, PlanFilterComponent, ProgressSpinnerModule],
   templateUrl: './inscripcion-alumno-lista.component.html',
   styleUrl: './inscripcion-alumno-lista.component.scss'
 })
 export class InscripcionAlumnoListaComponent implements OnInit, OnDestroy {
   rowsPerPage = 5;
   alumnos$: Observable<Alumno[]> = this.store.select(PersonaState.getAlumnos);
-  loading$: Observable<boolean> = this.store.select(PersonaState.getLoading);
+  loading$: Observable<boolean> = this.store.select(AppPageState.getFormLoading);
   error$: Observable<boolean> = this.store.select(PersonaState.getError);
   materias$: Observable<any> = this.store.select(MateriaState.getMaterias);
   especialidadSelected$: Observable<Especialidad | null> = this.store.select(AppPageState.getSelectedEspecialidad);

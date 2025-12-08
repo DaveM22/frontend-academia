@@ -22,11 +22,12 @@ import { ScreenSizeService } from '../../services/screen-size.service.service';
 import { AlumnoFilter } from '../../entities/filter';
 import { DialogModule } from 'primeng/dialog';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { BlockUiComponent } from '../../components/util/block-ui/block-ui.component';
 
 @Component({
   selector: 'app-alumno-lista',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule,ConfirmDialogModule, MessagesModule, PanelModule, IconFieldModule, InputTextModule, InputIconModule, DialogModule, ProgressSpinnerModule],
+  imports: [CommonModule, TableModule, ButtonModule,ConfirmDialogModule, MessagesModule, PanelModule, IconFieldModule, InputTextModule, InputIconModule, DialogModule, ProgressSpinnerModule, BlockUiComponent],
   templateUrl: './alumno-lista.component.html',
   styleUrl: './alumno-lista.component.scss',
   providers:[ConfirmationService]
@@ -35,7 +36,7 @@ export class AlumnoListaComponent implements OnInit {
   screenSize = { width: 0, height: 0 };
   rowsPerPage = 5;
   alumnos$:Observable<Alumno[]> = this.store.select(PersonaState.getAlumnos);
-  loading$:Observable<boolean> = this.store.select(PersonaState.getLoading);
+  loading$:Observable<boolean> = this.store.select(AppPageState.getFormLoading);
   error$:Observable<boolean> = this.store.select(PersonaState.getError)
   errorMessage$:Observable<string> = this.store.select(PersonaState.getErrorMessage);
   showConfirmation$:Observable<boolean> = this.store.select(AppPageState.showModalConfirmation)

@@ -21,7 +21,7 @@ import { BlockUiComponent } from '../../components/util/block-ui/block-ui.compon
 @Component({
   selector: 'app-inscripcion-alumno',
   standalone: true,
-  imports: [CommonModule, PanelModule, RouterModule, CardModule, BlockUiComponent],
+  imports: [CommonModule, PanelModule, RouterModule, CardModule],
   templateUrl: './inscripcion-alumno.component.html',
   styleUrl: './inscripcion-alumno.component.scss'
 })

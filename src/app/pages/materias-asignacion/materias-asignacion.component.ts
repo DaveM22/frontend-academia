@@ -25,11 +25,12 @@ import { ClearSelectedEspecialidadFilter, ClearSelectedPlanFilter } from '../../
 import { Plan } from '../../entities/plan';
 import { ClearSelectedPersona } from '../../store/actions/pages/persona.action';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { BlockUiComponent } from '../../components/util/block-ui/block-ui.component';
 
 @Component({
   selector: 'app-materias-asignacion',
   standalone: true,
-  imports: [CommonModule,ToolbarModule,MessageModule,EspecialidadFilterComponent,PlanFilterComponent, TableModule, ButtonModule, IconFieldModule, InputIconModule, MessageModule, InputTextModule, ProgressSpinnerModule],
+  imports: [CommonModule,ToolbarModule,MessageModule,EspecialidadFilterComponent,PlanFilterComponent,BlockUiComponent ,TableModule, ButtonModule, IconFieldModule, InputIconModule, MessageModule, InputTextModule, ProgressSpinnerModule],
   templateUrl: './materias-asignacion.component.html',
   styleUrl: './materias-asignacion.component.scss'
 })

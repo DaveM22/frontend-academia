@@ -23,11 +23,12 @@ import { AppPageState } from '../../store/states/page/app.state';
 import e from 'express';
 import { Especialidad } from '../../entities/especialidad';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { BlockUiComponent } from '../../components/util/block-ui/block-ui.component';
 
 @Component({
   selector: 'app-plan-lista',
   standalone: true,
-  imports: [ButtonModule, TableModule, CommonModule, MessageModule, IconFieldModule, InputIconModule, ConfirmDialogModule, InputTextModule, EspecialidadFilterComponent, ProgressSpinnerModule],
+  imports: [ButtonModule, TableModule, CommonModule, MessageModule, IconFieldModule, InputIconModule, ConfirmDialogModule, InputTextModule, EspecialidadFilterComponent, ProgressSpinnerModule, BlockUiComponent],
   templateUrl: './plan-lista.component.html',
   styleUrl: './plan-lista.component.scss',
   providers: [ConfirmationService]

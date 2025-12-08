@@ -25,7 +25,7 @@ import { BlockUiComponent } from '../../components/util/block-ui/block-ui.compon
 @Component({
   selector: 'app-plan',
   standalone: true,
-  imports: [CommonModule, RouterModule, PanelModule, CardModule, BlockUiComponent],
+  imports: [CommonModule, RouterModule, PanelModule, CardModule],
   templateUrl: './plan.component.html',
   styleUrl: './plan.component.scss'
 })

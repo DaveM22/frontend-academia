@@ -1,23 +1,15 @@
-<!-- @if (error$ | async)
-{
-<p-messages severity="error">
-    <ng-template pTemplate>
 
-        <div class="ml-2">{{(errorMessage$ | async)}}</div>
-    </ng-template>
-</p-messages>
 
-} -->
-
-<p-table #dt2 [value]="cursos" [loading]="loading$" [loadingIcon]="''" responsiveLayout="stack" [breakpoint]="'960px'" [paginator]="true"
-    [scrollable]="true" [rows]="5" scrollHeight="flex"
+<p-table #dt2 [value]="cursos" [loading]="loading$" [loadingIcon]="''" responsiveLayout="stack" [breakpoint]="'960px'"
+    [paginator]="true" [scrollable]="true" [rows]="5" scrollHeight="flex"
     styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-sm lg:text-xl"
     [globalFilterFields]="['descripcion, especialidad.descripcion']">
     <ng-template pTemplate="caption">
         <div class="flex gap-2 justify-center">
 
             <p-button label="Volver a materias disponibles" severity="primary"
-                [styleClass]="'w-full text-sm sm:text-base md:text-lg px-3 py-1 sm:px-4 sm:py-1 md:px-5 md:py-1'" (click)="redirectMateriasDisponibles()"></p-button>
+                [styleClass]="'w-full text-sm sm:text-base md:text-lg px-3 py-1 sm:px-4 sm:py-1 md:px-5 md:py-1'"
+                (click)="redirectMateriasDisponibles()"></p-button>
 
         </div>
     </ng-template>
@@ -38,18 +30,14 @@
             </td>
         </tr>
     </ng-template>
-    <ng-template pTemplate="loadingbody">
-        <tr>
-            <td colspan="2">
-                <div class="flex flex-col items-center justify-center py-6">
-                    <p-progressSpinner styleClass="mb-3" strokeWidth="4"></p-progressSpinner>
-                    <span class="text-sm lg:text-xl font-semibold">Un momento, estamos procesando tu solicitud...</span>
-                </div>
-            </td>
-        </tr>
-    </ng-template>
+
     <ng-template pTemplate="emptymessage">
-        @if ((cursos$ | async)!.length === 0) {
+        @if(loading$){
+        <tr>
+            <td class="text-center text-sm lg:text-xl" colspan="2">Cargando cursos disponibles...</td>
+        </tr>
+        }
+        @else if ((cursos$ | async)!.length === 0) {
         <tr>
             <td class="text-center" colspan="2">No hay cursos disponibles para esta cátedra</td>
         </tr>
@@ -76,3 +64,5 @@
             class="ui-button-secondary"></button>
     </ng-template>
 </p-confirmDialog>
+
+<app-block-ui [target]="dt2"></app-block-ui>

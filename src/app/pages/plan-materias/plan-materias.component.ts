@@ -21,11 +21,12 @@ import { ScreenSizeService } from '../../services/screen-size.service.service';
 import { MateriaState } from '../../store/states/api/materia.state';
 import { ClearSelectedPlan } from '../../store/actions/pages/plan.action';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { BlockUiComponent } from '../../components/util/block-ui/block-ui.component';
 
 @Component({
   selector: 'app-plan-materias',
   standalone: true,
-  imports: [TableModule, CommonModule, MessagesModule, ButtonModule, ConfirmDialogModule, ProgressSpinnerModule],
+  imports: [TableModule, CommonModule, MessagesModule, ButtonModule, ConfirmDialogModule, ProgressSpinnerModule, BlockUiComponent],
   templateUrl: './plan-materias.component.html',
   styleUrl: './plan-materias.component.scss',
   providers: [ConfirmationService]

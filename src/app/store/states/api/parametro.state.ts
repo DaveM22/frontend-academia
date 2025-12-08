@@ -52,7 +52,8 @@ export class ParametroState
 
   @Action(GetParametrosAction)
   async getParametrosAction(ctx: StateContext<ParametroModelState>, action: GetParametrosAction) {
-    ctx.patchState({ loading: true, error: false })
+    ctx.patchState({ error: false })
+    ctx.dispatch(new LoadingForm(true));
     try {
       const response = await lastValueFrom(this.service.getall());
       ctx.patchState({
@@ -63,7 +64,7 @@ export class ParametroState
       ErrorStateHandler.handleError(error, ctx);
     }
     finally {
-      ctx.patchState({ loading: false })
+      ctx.dispatch(new LoadingForm(false));
     }
 
   }

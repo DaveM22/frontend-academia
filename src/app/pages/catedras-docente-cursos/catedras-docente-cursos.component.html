@@ -45,27 +45,25 @@
             </td>
         </tr>
     </ng-template>
-    <ng-template pTemplate="loadingbody">
-        <tr>
-            <td colspan="4">
-                <div class="flex flex-col items-center justify-center py-6">
-                    <p-progressSpinner styleClass="mb-3" strokeWidth="4"></p-progressSpinner>
-                    <span class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base font-semibold">Un momento, estamos procesando tu solicitud...</span>
-                </div>
-            </td>
-        </tr>
-    </ng-template>
+
     <ng-template pTemplate="emptymessage">
         <tr>
             <td class="text-center text-xs sm:text-sm md:text-base lg:text-base xl:text-base" colspan="4">
-                @if (cursosFiltrados.length === 0) {
-                No se encontraron cursos asignados
+                @if(loading$){
+                    <tr>
+                        <td class="text-center text-sm lg:text-xl" colspan="4">Cargando cursos asignados...</td>
+                    </tr>
+                }
+                @else if (cursosFiltrados.length === 0) {
+                    <tr>
+                        <td class="text-center text-sm lg:text-xl" colspan="4">No se le han asignado cursos</td>
+                    </tr>
                 }
             </td>
         </tr>
     </ng-template>
 </p-table>
-
+            <app-block-ui [target]="dt2"></app-block-ui>
 <p-dialog header="Resumen de Estados" [(visible)]="displayResumenModal" [modal]="true" [closable]="true" [draggable]="false"
     [resizable]="false" styleClass="w-11/12 md:w-1/2 lg:w-1/3" [baseZIndex]="10000">
     <div class="space-y-4">

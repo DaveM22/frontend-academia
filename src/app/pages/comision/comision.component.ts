@@ -18,7 +18,7 @@ import { AppPageState } from '../../store/states/page/app.state';
 @Component({
   selector: 'app-comision',
   standalone: true,
-  imports: [CommonModule, PanelModule, RouterModule, CardModule, BlockUiComponent],
+  imports: [CommonModule, PanelModule, RouterModule, CardModule],
   templateUrl: './comision.component.html',
   styleUrl: './comision.component.scss'
 })

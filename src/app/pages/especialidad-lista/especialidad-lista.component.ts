@@ -19,11 +19,12 @@ import { EspecialidadBorrarComponent } from '../especialidad-borrar/especialidad
 import { ScreenSizeService } from '../../services/screen-size.service.service';
 import { LoadingForm } from '../../store/actions/pages/app.action';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { BlockUiComponent } from '../../components/util/block-ui/block-ui.component';
 
 @Component({
   selector: 'app-especialidad-lista',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, EspecialidadBorrarComponent, MessageModule, PanelModule, IconFieldModule, InputTextModule, InputIconModule, ProgressSpinnerModule],
+  imports: [CommonModule, TableModule, ButtonModule, EspecialidadBorrarComponent, MessageModule, PanelModule, IconFieldModule, InputTextModule, InputIconModule, ProgressSpinnerModule, BlockUiComponent],
   templateUrl: './especialidad-lista.component.html',
   styleUrl: './especialidad-lista.component.scss'
 })

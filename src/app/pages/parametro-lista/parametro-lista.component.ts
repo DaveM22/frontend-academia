@@ -17,10 +17,12 @@ import { GetParametrosAction, PutParametroAction } from '../../store/actions/api
 import { ToggleSwitch, ToggleSwitchModule } from 'primeng/toggleswitch';
 import { FormsModule } from '@angular/forms';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { BlockUiComponent } from '../../components/util/block-ui/block-ui.component';
+import { AppPageState } from '../../store/states/page/app.state';
 
 @Component({
   selector: 'app-parametro-lista',
-  imports: [FormsModule,CommonModule, TableModule, ButtonModule, MessageModule, PanelModule, IconFieldModule, InputTextModule, InputIconModule, ToggleSwitchModule, ProgressSpinnerModule, DialogModule],
+  imports: [FormsModule,CommonModule, TableModule, ButtonModule, MessageModule, PanelModule, IconFieldModule, InputTextModule, InputIconModule, ToggleSwitchModule, ProgressSpinnerModule, DialogModule, BlockUiComponent],
   templateUrl: './parametro-lista.component.html',
   styleUrl: './parametro-lista.component.css',
   standalone: true
@@ -32,7 +34,7 @@ export class ParametroListaComponent implements OnInit {
 
   public parametros$: Observable<Parametro[]> = this.store.select(ParametroState.getParametros)
 
-  public loading$:Observable<boolean> = this.store.select(ParametroState.getLoading);
+  public loading$:Observable<boolean> = this.store.select(AppPageState.getFormLoading);
 
   public error$:Observable<boolean> = this.store.select(ParametroState.getError);
 

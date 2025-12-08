@@ -14,6 +14,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { MessagesModule } from 'primeng/messages';
 import { TableModule } from 'primeng/table';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { AppPageState } from '../../store/states/page/app.state';
+import { BlockUiComponent } from '../../components/util/block-ui/block-ui.component';
 
 @Component({
   selector: 'app-materia-cursos',
@@ -25,7 +27,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 export class MateriaCursosComponent implements OnInit {
   cursos$:Observable<Curso[]> = this.store.select(CursoState.getCursos); 
   materiaId:string = ''
-  loading$:Observable<boolean> = this.store.select(CursoState.getLoading);
+  loading$:Observable<boolean> = this.store.select(AppPageState.getFormLoading);
   constructor(private store:Store, private activateRouter:ActivatedRoute, private route:Router){}
 
 
@@ -34,8 +36,7 @@ export class MateriaCursosComponent implements OnInit {
     let filter = new CursoFilter();
     filter.materiaId = this.materiaId;
     this.store.dispatch(new GetCursoAction(filter));
-    
-    // Si necesitas hacer algo con los cursos después de cargarlos
+
     const cursos = await lastValueFrom(this.cursos$);
 
   }

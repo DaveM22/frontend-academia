@@ -1,6 +1,7 @@
-<p-table #dt2 [value]="(profesores$ | async)!" [loading]="(loading$ | async)" [loadingIcon]="''"
-    styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-xs sm:text-sm md:text-base lg:text-base xl:text-base" responsiveLayout="stack"
-    [breakpoint]="'960px'" [paginator]="true" size="small" [scrollable]="true" [rows]="rowsPerPage" [scrollHeight]="scrollSize"
+<p-table #dt2 [value]="(profesores$ | async)!"
+    styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-xs sm:text-sm md:text-base lg:text-base xl:text-base"
+    responsiveLayout="stack" [breakpoint]="'960px'" [paginator]="true" size="small" [scrollable]="true"
+    [rows]="rowsPerPage" [scrollHeight]="scrollSize"
     [globalFilterFields]="['nombre', 'apellido','direccion', 'email','legajo']">
     <ng-template pTemplate="caption">
         @if (error$ | async)
@@ -12,11 +13,9 @@
         }
         <div class="grid grid-cols-12 gap-4 w-full">
             <div class="col-span-12 md:col-span-4 md:col-start-5 flex justify-center">
-                <p-button 
-                    label="Nuevo profesor" 
-                    severity="info" 
-                    class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base" 
-                    styleClass="px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2" 
+                <p-button label="Nuevo profesor" severity="info"
+                    class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base"
+                    styleClass="px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2"
                     (onClick)="redirecToNuevoProfesor()">
                 </p-button>
             </div>
@@ -25,7 +24,7 @@
                     <p-inputIcon>
                         <i class="pi pi-search"></i>
                     </p-inputIcon>
-                    <input pInputText pSize="large" type="text" 
+                    <input pInputText pSize="large" type="text"
                         class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base w-full h-[50px]"
                         (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
                         placeholder="Buscar profesor" />
@@ -54,15 +53,24 @@
                 <div class="flex gap-2 justify-center">
                     <p-button label="Ver Info" severity="info" (onClick)="showProfesorInfo(profesor)"
                         styleClass="text-xs sm:text-sm md:text-base lg:text-base xl:text-base px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2"></p-button>
-                    <p-button  label="Editar" severity="warn" class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base" styleClass="px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2"
+                    <p-button label="Editar" severity="warn"
+                        class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base"
+                        styleClass="px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2"
                         (onClick)="redirectToEditarProfesor(profesor._id)"></p-button>
-                    <p-button  label="Borrar" class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base" severity="danger" styleClass="px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2" (onClick)="modalConfirmar(profesor)" />
+                    <p-button label="Borrar" class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base"
+                        severity="danger" styleClass="px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2"
+                        (onClick)="modalConfirmar(profesor)" />
                 </div>
             </td>
         </tr>
     </ng-template>
     <ng-template pTemplate="emptymessage">
-        @if ((profesores$ | async)!.length === 0) {
+        @if(loading$ | async) {
+        <tr>
+            <td class="text-center text-sm lg:text-xl" colspan="6">Cargando profesores...</td>
+        </tr>
+        }
+        @else if ((profesores$ | async)!.length === 0) {
         <tr>
             <td class="text-center text-sm lg:text-xl" colspan="6">No se han registrado profesores</td>
         </tr>
@@ -74,19 +82,13 @@
         </tr>
         }
     </ng-template>
-    <ng-template pTemplate="loadingbody">
-        <tr>
-            <td colspan="6">
-                <div class="flex flex-col items-center justify-center py-6">
-                    <p-progressSpinner styleClass="mb-3" strokeWidth="4"></p-progressSpinner>
-                    <span class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base font-semibold">Un momento, estamos procesando tu solicitud...</span>
-                </div>
-            </td>
-        </tr>
-    </ng-template>
 </p-table>
 
-<p-dialog [(visible)]="displayProfesorInfo" [modal]="true" [style]="{width: '50vw'}" [breakpoints]="{'960px': '75vw', '640px': '95vw'}" header="Información del Profesor" [draggable]="false" [resizable]="false">
+<app-block-ui [target]="dt2"></app-block-ui>
+
+<p-dialog [(visible)]="displayProfesorInfo" [modal]="true" [style]="{width: '50vw'}"
+    [breakpoints]="{'960px': '75vw', '640px': '95vw'}" header="Información del Profesor" [draggable]="false"
+    [resizable]="false">
     <div class="flex flex-col gap-4">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div class="flex flex-col gap-2">
@@ -124,7 +126,8 @@
         </div>
     </div>
     <ng-template pTemplate="footer">
-        <p-button label="Cerrar" severity="secondary" (onClick)="displayProfesorInfo = false" styleClass="text-sm"></p-button>
+        <p-button label="Cerrar" severity="secondary" (onClick)="displayProfesorInfo = false"
+            styleClass="text-sm"></p-button>
     </ng-template>
 </p-dialog>
 
@@ -137,10 +140,12 @@
     </ng-template>
     <ng-template pTemplate="footer" let-reject="reject">
         <div class="flex gap-2 justify-center">
-            <p-button icon="pi pi-check" label="Aceptar" severity="success" class="text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl" styleClass="px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2"
-                (click)="cd.onAccept()"></p-button>
-            <p-button icon="pi pi-times" label="Cancelar" severity="danger" class="text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl" styleClass="px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2"
-                (click)="cd.onReject()"></p-button>
+            <p-button icon="pi pi-check" label="Aceptar" severity="success"
+                class="text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl"
+                styleClass="px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2" (click)="cd.onAccept()"></p-button>
+            <p-button icon="pi pi-times" label="Cancelar" severity="danger"
+                class="text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl"
+                styleClass="px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2" (click)="cd.onReject()"></p-button>
         </div>
 
     </ng-template>

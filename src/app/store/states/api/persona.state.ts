@@ -53,9 +53,9 @@ export class PersonaState {
     @Action(GetAlumnosAction)
     async getAlumnos(ctx: StateContext<PersonaModelState>, action: GetAlumnosAction) {
         ctx.patchState({
-            loading: true,
             error: false
         })
+        ctx.dispatch(new LoadingForm(true));
         try {
             const response = await lastValueFrom(this.service.getAlumnos(action.filters));
             ctx.patchState({
@@ -69,18 +69,16 @@ export class PersonaState {
             })
         }
         finally {
-            ctx.patchState({
-                loading: false
-            })
+            ctx.dispatch(new LoadingForm(false));
         }
     }
 
     @Action(GetAlumnoByIdAction)
     async GetAlumnoByIdAction(ctx: StateContext<PersonaModelState>, action: GetAlumnoByIdAction) {
         ctx.patchState({
-            loading: true,
             error: false
         })
+        ctx.dispatch(new LoadingForm(true));
         try {
             const response = await lastValueFrom(this.service.getByIdAlumno(action.id, action.filter));
             ctx.dispatch(new AsignSelectedAlumno(response));
@@ -91,9 +89,7 @@ export class PersonaState {
             })
         }
         finally {
-            ctx.patchState({
-                loading: false
-            })
+            ctx.dispatch(new LoadingForm(false));
         }
     }
 
@@ -102,9 +98,9 @@ export class PersonaState {
     @Action(GetProfesorByIdAction)
     async getProfesorById(ctx: StateContext<PersonaModelState>, action: GetProfesorByIdAction) {
         ctx.patchState({
-            loading: true,
             error: false
         })
+        ctx.dispatch(new LoadingForm(true));
         try {
             const response = await lastValueFrom(this.service.getByIdProfesor(action.id, action.filter));
             ctx.dispatch(new AsignSelectedProfesor(response));
@@ -115,17 +111,13 @@ export class PersonaState {
             })
         }
         finally {
-            ctx.patchState({
-                loading: false
-            })
+            ctx.dispatch(new LoadingForm(false));
         }
     }
 
     @Action(GetProfesoresAction)
     async getProfesores(ctx: StateContext<PersonaModelState>, action: GetProfesoresAction) {
-        ctx.patchState({
-            loading: true
-        })
+        ctx.dispatch(new LoadingForm(true));
         try {
             const response = await lastValueFrom(this.service.getProfesores(action.filter));
             ctx.patchState({
@@ -138,9 +130,7 @@ export class PersonaState {
             })
         }
         finally {
-            ctx.patchState({
-                loading: false
-            })
+            ctx.dispatch(new LoadingForm(false));
         }
     }
 

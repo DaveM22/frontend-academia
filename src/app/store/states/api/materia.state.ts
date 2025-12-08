@@ -40,7 +40,8 @@ export class MateriaState {
 
   @Action(GetMateriasAction)
   async getMateriasAction(ctx: StateContext<MateriaModelState>, action: GetMateriasAction) {
-    ctx.patchState({ error: false, loading: true })
+    ctx.patchState({ error: false })
+    ctx.dispatch(new LoadingForm(true));
     try {
       const response = await lastValueFrom(this.service.getMateria(action.filter));
       ctx.patchState({
@@ -53,9 +54,7 @@ export class MateriaState {
       ctx.patchState({ error: true })
     }
     finally {
-      ctx.patchState({
-        loading: false
-      })
+      ctx.dispatch(new LoadingForm(false));
     }
   }
 

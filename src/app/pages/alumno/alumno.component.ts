@@ -19,7 +19,7 @@ import { BlockUiComponent } from '../../components/util/block-ui/block-ui.compon
 @Component({
   selector: 'app-alumno',
   standalone: true,
-  imports: [CommonModule, PanelModule, RouterModule, CardModule, BlockUiComponent],
+  imports: [CommonModule, PanelModule, RouterModule, CardModule],
   templateUrl: './alumno.component.html',
   styleUrl: './alumno.component.scss'
 })

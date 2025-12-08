@@ -50,7 +50,8 @@ export class EspecialidadState {
 
   @Action(GetEspecialidadAction)
   async getEspecialidadAction(ctx: StateContext<EspecialidadModelState>, action: GetEspecialidadAction) {
-    ctx.patchState({ loading: true, error: false })
+    ctx.patchState({ error: false })
+    ctx.dispatch(new LoadingForm(true));
     try {
       const response = await lastValueFrom(this.service.getEspecialidades());
       ctx.patchState({
@@ -61,7 +62,8 @@ export class EspecialidadState {
       ErrorStateHandler.handleError(error, ctx);
     }
     finally {
-      ctx.patchState({ loading: false })
+
+      ctx.dispatch(new LoadingForm(false));
     }
 
   }

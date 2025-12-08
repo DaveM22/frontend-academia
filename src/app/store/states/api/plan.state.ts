@@ -55,7 +55,8 @@ export class PlanState {
 
   @Action(GetPlanAction)
   async getPlanAction(ctx: StateContext<PlanModelState>, action: GetPlanAction) {
-    ctx.patchState({ loading: true, error: false })
+    ctx.patchState({error: false })
+    ctx.dispatch(new LoadingForm(true));
     try {
       const response = await lastValueFrom(this.service.getPlanes(action.filter));
       ctx.patchState({
@@ -68,7 +69,7 @@ export class PlanState {
       ErrorStateHandler.handleError(error, ctx);
     }
     finally {
-      ctx.patchState({ loading: false })
+      ctx.dispatch(new LoadingForm(false));
     }
 
   }

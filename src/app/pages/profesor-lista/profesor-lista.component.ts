@@ -22,11 +22,12 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ScreenSizeService } from '../../services/screen-size.service.service';
 import { DialogModule } from 'primeng/dialog';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { BlockUiComponent } from '../../components/util/block-ui/block-ui.component';
 
 @Component({
   selector: 'app-profesor-lista',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule,ConfirmDialogModule, MessageModule, PanelModule, IconFieldModule, InputTextModule, InputIconModule, DialogModule, ProgressSpinnerModule],
+  imports: [CommonModule, TableModule, ButtonModule,ConfirmDialogModule, MessageModule, PanelModule, IconFieldModule, InputTextModule, InputIconModule, DialogModule, ProgressSpinnerModule, BlockUiComponent],
   templateUrl: './profesor-lista.component.html',
   styleUrl: './profesor-lista.component.scss',
   providers:[ConfirmationService]
@@ -34,7 +35,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 export class ProfesorListaComponent implements OnInit {
   rowsPerPage = 5;
   profesores$: Observable<Profesor[]> = this.store.select(PersonaState.getProfesores);
-  loading$: Observable<boolean> = this.store.select(PersonaState.getLoading);
+  loading$: Observable<boolean> = this.store.select(AppPageState.getFormLoading);
   error$: Observable<boolean> = this.store.select(PersonaState.getError)
   errorMessage$: Observable<string> = this.store.select(PersonaState.getErrorMessage);
   showConfirmation$: Observable<boolean> = this.store.select(AppPageState.showModalConfirmation)

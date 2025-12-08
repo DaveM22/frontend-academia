@@ -27,11 +27,12 @@ import { AlumnoInscripcion, AlumnoInscripcionDto } from '../../entities/alumno-i
 import { PostAlumnoInscripcionAction } from '../../store/actions/api/alumno-inscripcion.action';
 import { Condicion } from '../../entities/enums';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { BlockUiComponent } from '../../components/util/block-ui/block-ui.component';
 
 @Component({
   selector: 'app-cursos-disponibles',
   standalone: true,
-  imports: [CommonModule,ConfirmDialogModule,ToolbarModule, TableModule, ButtonModule, IconFieldModule, InputIconModule, MessagesModule, InputTextModule, ProgressSpinnerModule],
+  imports: [CommonModule,ConfirmDialogModule,ToolbarModule, TableModule, ButtonModule,BlockUiComponent, IconFieldModule, InputIconModule, MessagesModule, InputTextModule, ProgressSpinnerModule],
   templateUrl: './cursos-disponibles.component.html',
   styleUrl: './cursos-disponibles.component.scss',
   providers:[ConfirmationService]

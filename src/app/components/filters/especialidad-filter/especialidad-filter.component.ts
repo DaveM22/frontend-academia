@@ -21,11 +21,13 @@ import { ClearAlumnoListAction } from '../../../store/actions/api/persona.action
 })
 export class EspecialidadFilterComponent {
   especialiades$:Observable<Especialidad[]> = this.store.select(EspecialidadState.getEspecialidades);
-  loading$:Observable<boolean> = this.store.select(EspecialidadState.getLoading);
+  loading$:boolean = true;
   especialidad!:Especialidad;
   @Output() selectionChange = new EventEmitter<Especialidad>();
   constructor(private store:Store){
-    this.store.dispatch(new GetEspecialidadAction);
+    this.store.dispatch(new GetEspecialidadAction).subscribe(()=>{
+      this.loading$ = false;
+    });
   }
 
 

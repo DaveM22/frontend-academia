@@ -21,11 +21,12 @@ import { InputIconModule } from 'primeng/inputicon';
 import { MessageModule } from 'primeng/message';
 import { DialogModule } from 'primeng/dialog';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { BlockUiComponent } from '../../components/util/block-ui/block-ui.component';
 
 @Component({
   selector: 'app-curso-lista',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, MessageModule, PanelModule, ConfirmDialogModule, IconFieldModule, InputTextModule, InputIconModule, DialogModule, ProgressSpinnerModule],
+  imports: [CommonModule, TableModule, ButtonModule, MessageModule, PanelModule, ConfirmDialogModule, IconFieldModule, InputTextModule, InputIconModule, DialogModule, ProgressSpinnerModule, BlockUiComponent],
   templateUrl: './curso-lista.component.html',
   styleUrl: './curso-lista.component.scss',
   providers: [ConfirmationService]
@@ -34,7 +35,7 @@ export class CursoListaComponent implements OnInit {
   rowsPerPage = 5;
   public cursos$: Observable<Curso[]> = this.store.select(CursoState.getCursos)
 
-  public loading$: Observable<boolean> = this.store.select(CursoState.getLoading);
+  public loading$: Observable<boolean> = this.store.select(AppPageState.getFormLoading);
 
   public error$: Observable<boolean> = this.store.select(CursoState.getError);
 

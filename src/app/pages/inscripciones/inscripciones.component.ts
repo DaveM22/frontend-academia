@@ -25,18 +25,19 @@ import { AlumnoInscripcionState } from '../../store/states/api/alumno-incripcion
 import { ClearMateriaAction } from '../../store/actions/pages/materia.action';
 import { ClearMateriasAction } from '../../store/actions/api/materia.action';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { BlockUiComponent } from '../../components/util/block-ui/block-ui.component';
 
 @Component({
   selector: 'app-inscripciones',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, IconFieldModule, InputIconModule, MessagesModule, InputTextModule, ConfirmDialogModule, ProgressSpinnerModule],
+  imports: [CommonModule, TableModule, ButtonModule, IconFieldModule,BlockUiComponent, InputIconModule, MessagesModule, InputTextModule, ConfirmDialogModule, ProgressSpinnerModule],
   templateUrl: './inscripciones.component.html',
   styleUrl: './inscripciones.component.scss',
   providers: [ConfirmationService]
 })
 export class InscripcionesComponent implements OnInit, OnDestroy {
   alumno$: Observable<Alumno | null> = this.store.select(PersonaPageState.getAlumnoSelected);
-  loading$: Observable<boolean> = this.store.select(PersonaState.getLoading) || this.store.select(AlumnoInscripcionState.getLoading);
+  loading$: Observable<boolean> = this.store.select(AppPageState.getFormLoading);
   alumno!: Alumno;
   inscripciones: AlumnoInscripcion[] = []
   showConfirmation$: Observable<boolean> = this.store.select(AppPageState.showModalConfirmation)
@@ -71,14 +72,13 @@ export class InscripcionesComponent implements OnInit, OnDestroy {
     this.updateRowsPerPage();
     let filterAlumno = new AlumnoFilter();
     filterAlumno.incluirInscripciones = true;
-    this.store.dispatch(new UpdateManualLoading(true));
+
     await firstValueFrom(this.store.dispatch(new GetAlumnoByIdAction(this.router.snapshot.params['id'], filterAlumno)));
 
     const alumno = await firstValueFrom(this.alumno$.pipe(filter(a => a !== null)));
     this.alumno = alumno;
     this.inscripciones = this.alumno.inscripciones;
 
-    this.store.dispatch(new UpdateManualLoading(false));
 
 
   }

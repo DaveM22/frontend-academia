@@ -59,3 +59,33 @@
 :host::ng-deep .p-datatable .p-paginator {
     flex-shrink: 0 !important;
 }
+
+:host::ng-deep .p-datatable .p-datatable-loading-icon {
+    display: none !important;
+}
+
+:host::ng-deep .p-datatable-loading .p-datatable-wrapper {
+    position: relative !important;
+}
+
+/* Keep loading row fixed just below headers, overlaying grey body area */
+:host::ng-deep .p-datatable-loading .p-datatable-tbody {
+    position: relative !important;
+}
+
+:host::ng-deep .p-datatable-loading .p-datatable-tbody > tr:first-child {
+    position: sticky !important;
+    top: 0 !important; /* sticks right under sticky header */
+    z-index: 5 !important; /* above rows, below header */
+    background: var(--surface-ground, #111827) !important; /* match grey area */
+    border: none !important;
+}
+
+:host::ng-deep .p-datatable-loading .p-datatable-tbody > tr:first-child td {
+    border: none !important;
+    padding: 0 !important;
+}
+
+
+
+

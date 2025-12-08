@@ -5,8 +5,10 @@
         </div>
       </ng-template>
     <ng-template pTemplate="content" class="pt-0">
+      <p-card #crd styleClass="h-full">
         <router-outlet></router-outlet>
+      </p-card>
+
     </ng-template>
  </p-card>
 
- <app-block-ui [target]="crd"></app-block-ui>
