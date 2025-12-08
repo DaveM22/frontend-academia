@@ -119,7 +119,8 @@ export class PlanState {
 
   @Action(GetByIdPlanAction)
   async getByIdPlanAction(ctx: StateContext<PlanModelState>, action: GetByIdPlanAction) {
-    ctx.patchState({ loading: true, error: false });
+    ctx.patchState({error: false });
+    ctx.dispatch(new LoadingForm(true));
     try {
       const response = await lastValueFrom(this.service.getPlanById(action.id, action.filter));
       ctx.dispatch(new AsignSelectedPlan(response));
@@ -131,7 +132,7 @@ export class PlanState {
       ErrorStateHandler.handleError(error, ctx);
     }
     finally {
-      ctx.patchState({ loading: false })
+        ctx.dispatch(new LoadingForm(false));
     }
   }
 

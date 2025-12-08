@@ -34,7 +34,7 @@ import { BlockUiComponent } from '../../components/util/block-ui/block-ui.compon
 export class PlanMateriasComponent implements OnInit {
   error$: Observable<boolean> = this.store.select(PlanState.getError);
   errorMessage$: Observable<string> = this.store.select(PlanState.getErrorMessage);
-  loading$: boolean = true;
+  loading$: Observable<boolean> = this.store.select(AppPageState.getFormLoading);
   planSelected$: Observable<Plan | null> = this.store.select(PlanPageState.getPlanSelected);
   showConfirmation$: Observable<boolean> = this.store.select(AppPageState.showModalConfirmation)
   plan!: Plan;
@@ -53,7 +53,7 @@ export class PlanMateriasComponent implements OnInit {
 
   }
   ngOnInit(): void {
-    this.loading$ = true;
+
     this.id = this.activadedRoute.snapshot.params['id'];
     const planFilter = new PlanFilter();
     planFilter.incluirMaterias = true;
@@ -71,7 +71,7 @@ export class PlanMateriasComponent implements OnInit {
         this.plan = plan!;
         this.materias = this.plan.materias;
         this.header = this.plan.descripcion;
-        this.loading$ = false;
+
       }
 
     });

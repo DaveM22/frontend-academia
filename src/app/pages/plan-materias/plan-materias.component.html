@@ -9,7 +9,7 @@
 
 }
 
-<p-table #dt2 [value]="materias" [loading]="loading$" [loadingIcon]="''"
+<p-table #dt2 [value]="materias" 
     styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-xs sm:text-sm md:text-base lg:text-base xl:text-base"
     responsiveLayout="stack" [breakpoint]="'960px'" [paginator]="true" [scrollable]="true" size="small" [rows]="5"
     [scrollHeight]="scrollSize" [globalFilterFields]="['descripcion']">
@@ -62,12 +62,12 @@
         </tr>
     </ng-template>
     <ng-template pTemplate="emptymessage">
-        @if(loading$){
+        @if(loading$ | async) {
         <tr>
             <td class="text-center" colspan="4">Cargando materias...</td>
         </tr>
         }
-        @else if (materias.length === 0) {
+        @else if ((planSelected$ | async)) {
         <tr>
             <td class="text-center" colspan="4">No se han registrado materias</td>
         </tr>

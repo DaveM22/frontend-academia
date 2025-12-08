@@ -1,3 +1,6 @@
+import Material from '@primeng/themes/material';
+import { definePreset } from '@primeng/themes';
+
 export const MyPresetConfig = {
   primitive: {
       borderRadius: {
@@ -661,3 +664,5 @@ export const MyPresetConfig = {
   },
     components: {},
 };
+
+export const MyPreset = definePreset(Material, MyPresetConfig);
