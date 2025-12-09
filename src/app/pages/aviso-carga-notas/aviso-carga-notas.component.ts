@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 
 @Component({
@@ -11,9 +11,14 @@ import { ButtonModule } from 'primeng/button';
   styleUrl: './aviso-carga-notas.component.scss'
 })
 export class AvisoCargaNotasComponent {
-  constructor(private router: Router) {}
+  constructor(private router: Router, private route: ActivatedRoute) {}
 
   volverAInscriptos() {
-    this.router.navigate(['docente/cursos-asignados']);
+    const cursoId = this.route.snapshot.queryParamMap.get('cursoId');
+    if (cursoId) {
+      this.router.navigate([`docente/cursos-inscripciones/${cursoId}`]);
+    } else {
+      this.router.navigate(['docente/cursos-asignados']);
+    }
   }
 }
