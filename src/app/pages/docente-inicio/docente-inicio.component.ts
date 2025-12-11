@@ -43,7 +43,6 @@ import { GetDashboardProfesorTotalesAction } from '../../store/actions/api/dashb
   styleUrl: './docente-inicio.component.scss'
 })
 export class DocenteInicioComponent implements OnInit, OnDestroy {
-    // Dashboard totals
     profesorLoading$: Observable<boolean>;
     catedrasAsignadas$: Observable<number>;
     cursosActivos$: Observable<number>;
@@ -61,10 +60,9 @@ export class DocenteInicioComponent implements OnInit, OnDestroy {
   ) {
     this.notificaciones$ = this.store.select(NotificacionState.getNotificaciones);
     this.noLeidasCount$ = this.store.select(NotificacionState.getNoLeidasCount);
-    this.loading$ = this.store.select(NotificacionState.getLoading);
+    this.loading$ = this.store.select(AppPageState.getFormLoading);
     this.error$ = this.store.select(NotificacionState.getError);
 
-    // Profesor dashboard selectors
     this.profesorLoading$ = this.store.select(DashboardProfesorState.getLoading);
     this.catedrasAsignadas$ = this.store.select(DashboardProfesorState.getCatedrasAsignadas);
     this.cursosActivos$ = this.store.select(DashboardProfesorState.getCursosActivos);
@@ -75,7 +73,7 @@ export class DocenteInicioComponent implements OnInit, OnDestroy {
     const docenteId = this.store.selectSnapshot(AppPageState.getPersonId);
     if (docenteId) {
       this.loadNotificaciones(docenteId);
-      // Load dashboard totals for profesor
+
       this.store.dispatch(new GetDashboardProfesorTotalesAction(docenteId));
       interval(30000)
         .pipe(

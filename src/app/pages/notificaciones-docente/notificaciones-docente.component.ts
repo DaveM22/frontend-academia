@@ -23,6 +23,7 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { TableModule } from 'primeng/table';
+import { BlockUiComponent } from '../../components/util/block-ui/block-ui.component';
 
 @Component({
   selector: 'app-notificaciones-docente',
@@ -41,7 +42,8 @@ import { TableModule } from 'primeng/table';
     IconFieldModule,
     ProgressSpinnerModule,
     ConfirmDialogModule,
-    TableModule
+    TableModule,
+    BlockUiComponent
   ],
   templateUrl: './notificaciones-docente.component.html',
   styleUrl: './notificaciones-docente.component.scss',
@@ -62,9 +64,7 @@ export class NotificacionesDocenteComponent implements OnInit, OnDestroy {
   nots: Notificacion[] = [];
 
   constructor(
-    private store: Store,
-    private messageService: MessageService,
-    private confirmationService: ConfirmationService
+    private store: Store
   ) {
     this.notificaciones$ = this.store.select(NotificacionState.getNotificaciones);
     this.noLeidas$ = this.store.select(NotificacionState.getNoLeidas);
@@ -78,7 +78,7 @@ export class NotificacionesDocenteComponent implements OnInit, OnDestroy {
     const docenteId = this.store.selectSnapshot(AppPageState.getPersonId);
     if (docenteId) {
       this.loadNotificaciones(docenteId);
-      // Auto-refresh cada 30 segundos
+
       interval(30000)
         .pipe(
           switchMap(() => {

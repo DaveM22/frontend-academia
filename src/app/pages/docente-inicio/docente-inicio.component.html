@@ -84,7 +84,7 @@
             [rows]="10"
             [scrollHeight]="'70vh'"
             [globalFilterFields]="['titulo', 'mensaje']"
-            [loading]="loading$ | async">
+>
             
             <ng-template pTemplate="caption">
               <div class="flex flex-col gap-3">
@@ -129,17 +129,6 @@
                 </td>
                 <td><span class="p-column-title">Fecha</span>
                   <span class="text-gray-400 text-sm">{{ notificacion.fechaCreacion | date: 'dd/MM/yyyy' }}</span>
-                </td>
-              </tr>
-            </ng-template>
-
-            <ng-template pTemplate="loadingbody">
-              <tr>
-                <td colspan="4">
-                  <div class="flex flex-col items-center justify-center py-6">
-                    <p-progressSpinner styleClass="mb-3" strokeWidth="4"></p-progressSpinner>
-                    <span class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base font-semibold">Cargando notificaciones...</span>
-                  </div>
                 </td>
               </tr>
             </ng-template>
