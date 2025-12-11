@@ -28,7 +28,7 @@ import { MobileSortSelectComponent, SortOption } from '../../components/util/mob
 @Component({
   selector: 'app-alumno-lista',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule,ConfirmDialogModule, MessagesModule, PanelModule, IconFieldModule, InputTextModule, InputIconModule, DialogModule, ProgressSpinnerModule, BlockUiComponent, MobileSortSelectComponent],
+  imports: [CommonModule, TableModule, ButtonModule,ConfirmDialogModule, MessagesModule, PanelModule, IconFieldModule, InputTextModule, InputIconModule, DialogModule, ProgressSpinnerModule, MobileSortSelectComponent],
   templateUrl: './alumno-lista.component.html',
   styleUrl: './alumno-lista.component.scss',
   providers:[ConfirmationService]

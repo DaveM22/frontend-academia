@@ -27,7 +27,7 @@ import { MobileSortSelectComponent, SortOption } from '../../components/util/mob
 @Component({
   selector: 'app-plan-materias',
   standalone: true,
-  imports: [TableModule, CommonModule, MessagesModule, ButtonModule, ConfirmDialogModule, ProgressSpinnerModule, BlockUiComponent, MobileSortSelectComponent],
+  imports: [TableModule, CommonModule, MessagesModule, ButtonModule, ConfirmDialogModule, ProgressSpinnerModule, MobileSortSelectComponent],
   templateUrl: './plan-materias.component.html',
   styleUrl: './plan-materias.component.scss',
   providers: [ConfirmationService]

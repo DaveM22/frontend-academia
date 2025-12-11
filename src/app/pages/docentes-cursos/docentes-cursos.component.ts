@@ -28,7 +28,7 @@ import { BlockUiComponent } from '../../components/util/block-ui/block-ui.compon
 @Component({
   selector: 'app-docentes-cursos',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule,MessageModule, IconFieldModule,BlockUiComponent, InputIconModule, MessagesModule, InputTextModule, ConfirmDialogModule, ProgressSpinnerModule],
+  imports: [CommonModule, TableModule, ButtonModule,MessageModule, IconFieldModule, InputIconModule, MessagesModule, InputTextModule, ConfirmDialogModule, ProgressSpinnerModule],
   templateUrl: './docentes-cursos.component.html',
   styleUrl: './docentes-cursos.component.scss',
   providers:[ConfirmationService]

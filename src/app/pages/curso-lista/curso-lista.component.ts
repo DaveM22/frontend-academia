@@ -27,7 +27,7 @@ import { MobileSortSelectComponent, SortOption } from '../../components/util/mob
 @Component({
   selector: 'app-curso-lista',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, MessageModule, PanelModule, ConfirmDialogModule, IconFieldModule, InputTextModule, InputIconModule, DialogModule, ProgressSpinnerModule, BlockUiComponent, MobileSortSelectComponent],
+  imports: [CommonModule, TableModule, ButtonModule, MessageModule, PanelModule, ConfirmDialogModule, IconFieldModule, InputTextModule, InputIconModule, DialogModule, ProgressSpinnerModule, MobileSortSelectComponent],
   templateUrl: './curso-lista.component.html',
   styleUrl: './curso-lista.component.scss',
   providers: [ConfirmationService]

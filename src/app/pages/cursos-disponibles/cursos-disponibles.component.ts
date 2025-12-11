@@ -32,7 +32,7 @@ import { BlockUiComponent } from '../../components/util/block-ui/block-ui.compon
 @Component({
   selector: 'app-cursos-disponibles',
   standalone: true,
-  imports: [CommonModule,ConfirmDialogModule,ToolbarModule, TableModule, ButtonModule,BlockUiComponent, IconFieldModule, InputIconModule, MessagesModule, InputTextModule, ProgressSpinnerModule],
+  imports: [CommonModule,ConfirmDialogModule,ToolbarModule, TableModule, ButtonModule, IconFieldModule, InputIconModule, MessagesModule, InputTextModule, ProgressSpinnerModule],
   templateUrl: './cursos-disponibles.component.html',
   styleUrl: './cursos-disponibles.component.scss',
   providers:[ConfirmationService]

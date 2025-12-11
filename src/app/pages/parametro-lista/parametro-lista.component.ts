@@ -23,7 +23,7 @@ import { MobileSortSelectComponent, SortOption } from '../../components/util/mob
 
 @Component({
   selector: 'app-parametro-lista',
-  imports: [FormsModule,CommonModule, TableModule, ButtonModule, MessageModule, PanelModule, IconFieldModule, InputTextModule, InputIconModule, ToggleSwitchModule, ProgressSpinnerModule, DialogModule, BlockUiComponent, MobileSortSelectComponent],
+  imports: [FormsModule,CommonModule, TableModule, ButtonModule, MessageModule, PanelModule, IconFieldModule, InputTextModule, InputIconModule, ToggleSwitchModule, ProgressSpinnerModule, DialogModule, MobileSortSelectComponent],
   templateUrl: './parametro-lista.component.html',
   styleUrl: './parametro-lista.component.css',
   standalone: true

@@ -33,7 +33,7 @@ import { BlockUiComponent } from '../../components/util/block-ui/block-ui.compon
 @Component({
   selector: 'app-catedras-alumno',
   standalone: true,
-  imports: [CommonModule, ToolbarModule, PanelModule, TableModule, BlockUiComponent, ButtonModule, IconFieldModule, InputIconModule, MessagesModule, InputTextModule, CardModule, DropdownModule, FormsModule, DialogModule, ProgressSpinnerModule],
+  imports: [CommonModule, ToolbarModule, PanelModule, TableModule, ButtonModule, IconFieldModule, InputIconModule, MessagesModule, InputTextModule, CardModule, DropdownModule, FormsModule, DialogModule, ProgressSpinnerModule],
   templateUrl: './catedras-alumno.component.html',
   styleUrl: './catedras-alumno.component.scss'
 })

@@ -31,7 +31,7 @@ import { MobileSortSelectComponent, SortOption } from '../../components/util/mob
 @Component({
   selector: 'app-materias-asignacion',
   standalone: true,
-  imports: [CommonModule,ToolbarModule,MessageModule,EspecialidadFilterComponent,PlanFilterComponent,BlockUiComponent ,TableModule, ButtonModule, IconFieldModule, InputIconModule, MessageModule, InputTextModule, ProgressSpinnerModule, MobileSortSelectComponent],
+  imports: [CommonModule,ToolbarModule,MessageModule,EspecialidadFilterComponent,PlanFilterComponent ,TableModule, ButtonModule, IconFieldModule, InputIconModule, MessageModule, InputTextModule, ProgressSpinnerModule, MobileSortSelectComponent],
   templateUrl: './materias-asignacion.component.html',
   styleUrl: './materias-asignacion.component.scss'
 })

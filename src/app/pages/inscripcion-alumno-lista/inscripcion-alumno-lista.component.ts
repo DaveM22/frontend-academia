@@ -33,7 +33,7 @@ import { MobileSortSelectComponent, SortOption } from '../../components/util/mob
 @Component({
   selector: 'app-inscripcion-alumno-lista',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, IconFieldModule,BlockUiComponent, MessageModule, InputIconModule, MessagesModule, InputTextModule, EspecialidadFilterComponent, PlanFilterComponent, ProgressSpinnerModule, MobileSortSelectComponent],
+  imports: [CommonModule, TableModule, ButtonModule, IconFieldModule, MessageModule, InputIconModule, MessagesModule, InputTextModule, EspecialidadFilterComponent, PlanFilterComponent, ProgressSpinnerModule, MobileSortSelectComponent],
   templateUrl: './inscripcion-alumno-lista.component.html',
   styleUrl: './inscripcion-alumno-lista.component.scss'
 })

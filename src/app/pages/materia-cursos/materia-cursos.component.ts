@@ -21,7 +21,7 @@ import { MobileSortSelectComponent, SortOption } from '../../components/util/mob
 @Component({
   selector: 'app-materia-cursos',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, IconFieldModule, InputIconModule, MessagesModule, InputTextModule, ProgressSpinnerModule, BlockUiComponent, MobileSortSelectComponent],
+  imports: [CommonModule, TableModule, ButtonModule, IconFieldModule, InputIconModule, MessagesModule, InputTextModule, ProgressSpinnerModule, MobileSortSelectComponent],
   templateUrl: './materia-cursos.component.html',
   styleUrl: './materia-cursos.component.scss'
 })

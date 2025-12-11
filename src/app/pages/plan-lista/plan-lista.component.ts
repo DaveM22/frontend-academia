@@ -29,7 +29,7 @@ import { MobileSortSelectComponent, SortOption } from '../../components/util/mob
 @Component({
   selector: 'app-plan-lista',
   standalone: true,
-  imports: [ButtonModule, TableModule, CommonModule, MessageModule, IconFieldModule, InputIconModule, ConfirmDialogModule, InputTextModule, EspecialidadFilterComponent, ProgressSpinnerModule, BlockUiComponent, MobileSortSelectComponent],
+  imports: [ButtonModule, TableModule, CommonModule, MessageModule, IconFieldModule, InputIconModule, ConfirmDialogModule, InputTextModule, EspecialidadFilterComponent, ProgressSpinnerModule, MobileSortSelectComponent],
   templateUrl: './plan-lista.component.html',
   styleUrl: './plan-lista.component.scss',
   providers: [ConfirmationService]

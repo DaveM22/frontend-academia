@@ -31,7 +31,7 @@ import { MobileSortSelectComponent, SortOption } from '../../components/util/mob
 @Component({
   selector: 'app-inscripciones',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, IconFieldModule,BlockUiComponent, InputIconModule, MessagesModule, InputTextModule, ConfirmDialogModule, ProgressSpinnerModule, MobileSortSelectComponent],
+  imports: [CommonModule, TableModule, ButtonModule, IconFieldModule, InputIconModule, MessagesModule, InputTextModule, ConfirmDialogModule, ProgressSpinnerModule, MobileSortSelectComponent],
   templateUrl: './inscripciones.component.html',
   styleUrl: './inscripciones.component.scss',
   providers: [ConfirmationService]

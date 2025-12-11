@@ -25,7 +25,7 @@ import { MobileSortSelectComponent, SortOption } from '../../components/util/mob
 @Component({
   selector: 'app-especialidad-lista',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, EspecialidadBorrarComponent, MessageModule, PanelModule, IconFieldModule, InputTextModule, InputIconModule, ProgressSpinnerModule, BlockUiComponent, MobileSortSelectComponent],
+  imports: [CommonModule, TableModule, ButtonModule, EspecialidadBorrarComponent, MessageModule, PanelModule, IconFieldModule, InputTextModule, InputIconModule, ProgressSpinnerModule, MobileSortSelectComponent],
   templateUrl: './especialidad-lista.component.html',
   styleUrl: './especialidad-lista.component.scss'
 })

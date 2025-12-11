@@ -31,7 +31,7 @@ import { MobileSortSelectComponent, SortOption } from '../../components/util/mob
 @Component({
   selector: 'app-comision-lista',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, MessageModule, PanelModule,BlockUiComponent, ConfirmDialogModule, IconFieldModule, InputTextModule, InputIconModule, PlanFilterComponent, ProgressSpinnerModule, MobileSortSelectComponent],
+  imports: [CommonModule, TableModule, ButtonModule, MessageModule, PanelModule, ConfirmDialogModule, IconFieldModule, InputTextModule, InputIconModule, PlanFilterComponent, ProgressSpinnerModule, MobileSortSelectComponent],
   templateUrl: './comision-lista.component.html',
   styleUrl: './comision-lista.component.scss',
   providers: [ConfirmationService]

@@ -27,7 +27,7 @@ import { BlockUiComponent } from '../../components/util/block-ui/block-ui.compon
 @Component({
   selector: 'app-inscripcion-materia-alumno-materias',
   standalone: true,
-  imports: [CommonModule,ToolbarModule, TableModule, ButtonModule, BlockUiComponent, IconFieldModule, InputIconModule, MessageModule, InputTextModule, ProgressSpinnerModule],
+  imports: [CommonModule,ToolbarModule, TableModule, ButtonModule, IconFieldModule, InputIconModule, MessageModule, InputTextModule, ProgressSpinnerModule],
   templateUrl: './inscripcion-materia-alumno-materias.component.html',
   styleUrl: './inscripcion-materia-alumno-materias.component.scss'
 })

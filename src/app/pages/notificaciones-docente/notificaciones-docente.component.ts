@@ -42,8 +42,7 @@ import { BlockUiComponent } from '../../components/util/block-ui/block-ui.compon
     IconFieldModule,
     ProgressSpinnerModule,
     ConfirmDialogModule,
-    TableModule,
-    BlockUiComponent
+    TableModule
   ],
   templateUrl: './notificaciones-docente.component.html',
   styleUrl: './notificaciones-docente.component.scss',

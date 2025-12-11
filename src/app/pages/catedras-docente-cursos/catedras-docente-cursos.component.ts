@@ -26,7 +26,7 @@ import { BlockUiComponent } from '../../components/util/block-ui/block-ui.compon
 @Component({
   selector: 'app-catedras-docente-cursos',
   standalone: true,
-  imports: [CommonModule, ToolbarModule, PanelModule, TableModule, ButtonModule,BlockUiComponent, IconFieldModule, InputIconModule, MessagesModule, InputTextModule, DropdownModule, FormsModule, DialogModule, ProgressSpinnerModule],
+  imports: [CommonModule, ToolbarModule, PanelModule, TableModule, ButtonModule, IconFieldModule, InputIconModule, MessagesModule, InputTextModule, DropdownModule, FormsModule, DialogModule, ProgressSpinnerModule],
   templateUrl: './catedras-docente-cursos.component.html',
   styleUrl: './catedras-docente-cursos.component.scss'
 })
