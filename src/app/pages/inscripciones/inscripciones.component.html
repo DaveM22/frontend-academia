@@ -1,6 +1,6 @@
 
 <p-table #dt2 [value]="inscripciones" 
-    styleClass="p-datatable-gridlines p-datatable-striped text-xs sm:text-sm md:text-base lg:text-base xl:text-base" responsiveLayout="stack"
+    styleClass="p-datatable-gridlines p-datatable-striped text-md sm:text-base md:text-base lg:text-base xl:text-base" responsiveLayout="stack"
     [breakpoint]="'960px'" [paginator]="true" size="small" [scrollable]="true" [rows]="rowsPerPage" scrollHeight="48vh"
     [globalFilterFields]="['nota','condicion', 'curso.descripcion']">
     <ng-template pTemplate="caption">
@@ -69,12 +69,12 @@
     <ng-template pTemplate="emptymessage">
         @if (loading$ | async) {
         <tr>
-            <td class="text-center text-sm lg:text-xl" colspan="4">Cargando cátedras inscriptas...</td>
+            <td class="text-center text-md sm:text-base md:text-base lg:text-base xl:text-base" colspan="4">Cargando cátedras inscriptas...</td>
         </tr>
         }
         @else if (inscripciones.length === 0) {
         <tr>
-            <td class="text-center text-sm lg:text-xl" colspan="4">No se han registrado inscripciones</td>
+            <td class="text-center text-md sm:text-base md:text-base lg:text-base xl:text-base" colspan="4">No se han registrado inscripciones</td>
         </tr>
         }
         @else {

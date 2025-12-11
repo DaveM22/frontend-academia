@@ -1,5 +1,5 @@
 <p-table #dt2 [value]="(docenteCursos$ | async)!" 
-    styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-xs sm:text-sm md:text-base lg:text-base xl:text-base" responsiveLayout="stack"
+    styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-md sm:text-base md:text-base lg:text-base xl:text-base" responsiveLayout="stack"
     [breakpoint]="'960px'" [paginator]="true" [scrollable]="true" [rows]="5" size="small" scrollHeight="flex"
     [globalFilterFields]="['nombre', 'apellido', 'direccion', 'email', 'legajo']">
     <ng-template pTemplate="caption">
@@ -80,21 +80,21 @@
     <ng-template pTemplate="emptymessage">
         @if(loading$ | async) {
         <tr>
-            <td class="text-center text-xs sm:text-sm md:text-base lg:text-base xl:text-base" colspan="4">
+            <td class="text-center text-md sm:text-base md:text-base lg:text-base xl:text-base" colspan="4">
                 Cargando docentes asignados...
             </td>
         </tr>
         }
         @else if ((docenteCursos$ | async)!.length === 0) {
         <tr>
-            <td class="text-center text-xs sm:text-sm md:text-base lg:text-base xl:text-base" colspan="4">
+            <td class="text-center text-md sm:text-base md:text-base lg:text-base xl:text-base" colspan="4">
                 No se han registrado docentes vinculados al curso
             </td>
         </tr>
         }
         @else {
         <tr>
-            <td class="text-center text-xs sm:text-sm md:text-base lg:text-base xl:text-base" colspan="4">
+            <td class="text-center text-md sm:text-base md:text-base lg:text-base xl:text-base" colspan="4">
                 No se encontraron docentes asignados con el filtro aplicado
             </td>
         </tr>

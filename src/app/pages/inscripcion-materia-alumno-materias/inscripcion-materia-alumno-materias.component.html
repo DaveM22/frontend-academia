@@ -27,12 +27,12 @@ styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-xs sm:tex
     <ng-template pTemplate="emptymessage">
         @if (loading$) {
            <tr>
-            <td class="text-center text-sm lg:text-xl" colspan="3">Cargando cátedras inscriptas...</td>
+            <td class="text-center text-md sm:text-base md:text-base lg:text-base xl:text-base" colspan="3">Cargando cátedras inscriptas...</td>
         </tr>
         }
         @else if ((materias$ | async)!.length === 0) {
         <tr>
-            <td class="text-center" colspan="3">No se han registrado cátedras disponibles para el alumno</td>
+            <td class="text-center text-md sm:text-base md:text-base lg:text-base xl:text-base" colspan="3">No se han registrado cátedras disponibles para el alumno</td>
         </tr>
         }
         @else {

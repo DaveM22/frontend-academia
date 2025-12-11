@@ -23,6 +23,14 @@
   }
 }
 
+// Clase para limitar líneas de mensaje
+.line-clamp-4 {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 :host::ng-deep .p-datatable {
     display: flex !important;
     flex-direction: column !important;

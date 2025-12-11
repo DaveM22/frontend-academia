@@ -48,7 +48,7 @@
   } @else {
     @if (notificaciones && notificaciones.length > 0) {
       <div class="overflow-auto">
-        <p-table #dt2 [value]="notificaciones" [tableStyle]="{ 'min-width': '50rem' }" styleClass="p-datatable-striped">
+        <p-table #dt2 [value]="notificaciones" [tableStyle]="{ 'min-width': '50rem' }" styleClass="p-datatable-striped text-md sm:text-base md:text-base lg:text-base xl:text-base">
           <ng-template pTemplate="header">
             <tr>
               <th pSortableColumn="leida" pRipple style="width: 10%">Estado <p-sortIcon field="leida"></p-sortIcon></th>

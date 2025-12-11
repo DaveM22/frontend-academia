@@ -1,5 +1,5 @@
 <p-table #dt2 [value]="cursos" 
-    styleClass="p-datatable-gridlines p-datatable-striped h-full text-xs sm:text-sm md:text-base lg:text-base xl:text-base" responsiveLayout="stack"
+    styleClass="p-datatable-gridlines p-datatable-striped h-full text-md sm:text-base md:text-base lg:text-base xl:text-base" responsiveLayout="stack"
     [breakpoint]="'960px'" [paginator]="true" [scrollable]="true" [rows]="5" scrollHeight="flex"
     [globalFilterFields]="['nombre', 'apellido', 'direccion', 'email', 'legajo']">
     <ng-template pTemplate="caption">
@@ -50,7 +50,7 @@
     <ng-template pTemplate="emptymessage">
         @if (cursos.length === 0) {
         <tr>
-            <td class="text-center text-sm lg:text-2xl" colspan="2">No se han registrado cursos para esta materia</td>
+            <td class="text-center text-md sm:text-base md:text-base lg:text-base xl:text-base" colspan="2">No se han registrado cursos para esta materia</td>
         </tr>
         }
         @else {

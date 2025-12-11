@@ -45,7 +45,7 @@
             @let notificaciones = notificaciones$ | async;
             @if (notificaciones && notificaciones.length > 0) {
               <div class="flex-1 min-h-0 overflow-auto">
-                <p-table [value]="notificaciones.slice(0, 5)" [tableStyle]="{ 'min-width': '50rem' }" styleClass="p-datatable-striped">
+                <p-table [value]="notificaciones.slice(0, 5)" [tableStyle]="{ 'min-width': '50rem' }" styleClass="p-datatable-striped text-md sm:text-base md:text-base lg:text-base xl:text-base">
                   <ng-template pTemplate="header">
                     <tr>
                       <th pSortableColumn style="width: 10%">Estado <p-sortIcon field="leida"></p-sortIcon></th>

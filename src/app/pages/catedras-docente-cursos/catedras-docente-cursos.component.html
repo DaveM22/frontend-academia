@@ -1,6 +1,6 @@
 <p-table #dt2 [value]="cursosFiltrados" [paginator]="true" [rows]="rowsPerPage"
     [loading]="loading$" [globalFilterFields]="['curso.materia.descripcion', 'curso.comision.descripcion']"
-    class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base" size="small" responsiveLayout="scroll">
+    class="text-md sm:text-base md:text-base lg:text-base xl:text-base" size="small" responsiveLayout="scroll">
 
     <ng-template pTemplate="caption">
         <div class="grid grid-cols-12 gap-4 w-full">
@@ -37,10 +37,10 @@
     </ng-template>
     <ng-template pTemplate="body" let-docenteCurso>
         <tr>
-            <td class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base">{{ docenteCurso.curso?.materia?.descripcion || 'N/A' }}</td>
-            <td class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base">{{ docenteCurso.curso?.comision?.descripcion || 'N/A' }}</td>
-            <td class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base">{{ docenteCurso.cargo || 'N/A' }}</td>
-            <td class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base">
+            <td class="text-md sm:text-base md:text-base lg:text-base xl:text-base">{{ docenteCurso.curso?.materia?.descripcion || 'N/A' }}</td>
+            <td class="text-md sm:text-base md:text-base lg:text-base xl:text-base">{{ docenteCurso.curso?.comision?.descripcion || 'N/A' }}</td>
+            <td class="text-md sm:text-base md:text-base lg:text-base xl:text-base">{{ docenteCurso.cargo || 'N/A' }}</td>
+            <td class="text-md sm:text-base md:text-base lg:text-base xl:text-base">
                 <p-button label="Ver" icon="pi pi-users" (click)="verInscriptos(docenteCurso)" pSize="small"></p-button>
             </td>
         </tr>

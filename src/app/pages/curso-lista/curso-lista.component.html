@@ -75,7 +75,7 @@
     <ng-template pTemplate="emptymessage">
         @if(loading$ | async) {
         <tr>
-            <td class="text-center text-xs sm:text-sm md:text-base lg:text-base xl:text-base" colspan="4">Cargando cursos...</td>
+            <td class="text-center text-md sm:text-base md:text-base lg:text-base xl:text-base" colspan="4">Cargando cursos...</td>
         </tr>
         }
         @else if ((cursos$ | async)!.length === 0) {

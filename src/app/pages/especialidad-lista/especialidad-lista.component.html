@@ -1,6 +1,6 @@
 
 <p-table #dt2 [value]="especialidades" 
-    styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-xs sm:text-sm md:text-base lg:text-base xl:text-base" responsiveLayout="stack" [breakpoint]="'960px'"
+    styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-md sm:text-base md:text-base lg:text-base xl:text-base" responsiveLayout="stack" [breakpoint]="'960px'"
     [paginator]="true" [scrollable]="true" size="small" [rows]="rowsPerPage" [scrollHeight]="scrollSize" [globalFilterFields]="['descripcion']">
     <ng-template pTemplate="caption">
     @if (error$ | async)
@@ -66,12 +66,12 @@
     <ng-template pTemplate="emptymessage">
         @if ((especialidades$ | async)!.length === 0) {
         <tr>
-            <td class="text-center" colspan="2">No se han registrado especialidades</td>
+            <td class="text-center text-md sm:text-base md:text-base lg:text-base xl:text-base" colspan="2">No se han registrado especialidades</td>
         </tr>
         }
         @else {
         <tr>
-            <td class="text-center" colspan="2">No se encontraron especialidades con el filtro aplicado</td>
+            <td class="text-center text-md sm:text-base md:text-base lg:text-base xl:text-base" colspan="2">No se encontraron especialidades con el filtro aplicado</td>
         </tr>
         }
     </ng-template>

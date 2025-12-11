@@ -1,5 +1,5 @@
 <p-table #dt2 [value]="comisiones" [globalFilterFields]="['descripcion']"
-    styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-xs sm:text-sm md:text-base lg:text-base xl:text-base"
+    styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-md sm:text-base md:text-base lg:text-base xl:text-base"
     size="small" responsiveLayout="stack" [breakpoint]="'960px'" [paginator]="true" [scrollable]="true"
     [scrollHeight]="scrollSize" [rows]="rowsPerPage">
     <ng-template pTemplate="caption">
@@ -74,12 +74,12 @@
     <ng-template pTemplate="emptymessage">
         @if(loading$ | async) {
         <tr>
-            <td class="text-center text-sm lg:text-xl" colspan="6">Cargando comisiones...</td>
+            <td class="text-center text-md sm:text-base md:text-base lg:text-base xl:text-base" colspan="6">Cargando comisiones...</td>
         </tr>
         }
         @else if ((comisiones$ | async)!.length === 0) {
         <tr>
-            <td class="text-center" colspan="4">No se han registrado comisiones</td>
+            <td class="text-center text-md sm:text-base md:text-base lg:text-base xl:text-base" colspan="4">No se han registrado comisiones</td>
         </tr>
         }
         @else {

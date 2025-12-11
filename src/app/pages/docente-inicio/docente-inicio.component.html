@@ -75,7 +75,7 @@
           @let notificaciones = notificaciones$ | async;
           <p-table #notificacionesTable 
             [value]="notificaciones ?? []" 
-            styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-xs sm:text-sm md:text-base lg:text-base xl:text-base"
+            styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-md sm:text-base md:text-base lg:text-base xl:text-base"
             responsiveLayout="stack"
             [breakpoint]="'960px'"
             [paginator]="true"
@@ -125,7 +125,7 @@
                   <span class="font-semibold text-white">{{ notificacion.titulo }}</span>
                 </td>
                 <td><span class="p-column-title">Mensaje</span>
-                  <span class="text-gray-300">{{ notificacion.mensaje }}</span>
+                  <span class="text-gray-300 text-xs text-right text-balance">{{ notificacion.mensaje }}</span>
                 </td>
                 <td><span class="p-column-title">Fecha</span>
                   <span class="text-gray-400 text-sm">{{ notificacion.fechaCreacion | date: 'dd/MM/yyyy' }}</span>
@@ -135,7 +135,7 @@
 
             <ng-template pTemplate="emptymessage">
               <tr>
-                <td colspan="4" class="text-center">No hay notificaciones registradas</td>
+                <td colspan="4" class="text-center text-md sm:text-base md:text-base lg:text-base xl:text-base">No hay notificaciones registradas</td>
               </tr>
             </ng-template>
           </p-table>
