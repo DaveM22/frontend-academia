@@ -38,6 +38,7 @@ import { BlockUiComponent } from '../../components/util/block-ui/block-ui.compon
 })
 export class InscripcionAlumnoListaComponent implements OnInit, OnDestroy {
   rowsPerPage = 5;
+  alumnos: Alumno[] = [];
   alumnos$: Observable<Alumno[]> = this.store.select(PersonaState.getAlumnos);
   loading$: Observable<boolean> = this.store.select(AppPageState.getFormLoading);
   error$: Observable<boolean> = this.store.select(PersonaState.getError);
@@ -51,6 +52,7 @@ export class InscripcionAlumnoListaComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
+    this.alumnos$.subscribe(x => this.alumnos = x ? [...x] : []);
     this.updateRowsPerPage();
     this.especialidadSelected$.subscribe(x => {
       if (x) {

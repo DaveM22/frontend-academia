@@ -1,4 +1,4 @@
-<p-table #dt2 [value]="(alumnos$ | async)!" 
+<p-table #dt2 [value]="alumnos" 
     styleClass="mt-10 p-datatable-gridlines p-datatable-striped h-full pt-0 text-xs sm:text-sm md:text-base lg:text-base xl:text-base" responsiveLayout="stack"
     [breakpoint]="'960px'" [paginator]="true" [scrollable]="true" [rows]="rowsPerPage" scrollHeight="flex"
     [globalFilterFields]="['nombre', 'apellido', 'direccion', 'email', 'legajo']" size="small">
@@ -46,10 +46,10 @@
     </ng-template>
     <ng-template pTemplate="header">
         <tr>
-            <th>Legajo</th>
-            <th>Nombre</th>
-            <th>Apellido</th>
-            <th>Plan</th>
+            <th pSortableColumn="legajo" pRipple>Legajo <p-sortIcon field="legajo"></p-sortIcon></th>
+            <th pSortableColumn="nombre" pRipple>Nombre <p-sortIcon field="nombre"></p-sortIcon></th>
+            <th pSortableColumn="apellido" pRipple>Apellido <p-sortIcon field="apellido"></p-sortIcon></th>
+            <th pSortableColumn="plan.descripcion" pRipple>Plan <p-sortIcon field="plan.descripcion"></p-sortIcon></th>
             <th class="text-center">Acciones</th>
         </tr>
     </ng-template>

@@ -34,6 +34,7 @@ import { BlockUiComponent } from '../../components/util/block-ui/block-ui.compon
 })
 export class ProfesorListaComponent implements OnInit {
   rowsPerPage = 5;
+  profesores: Profesor[] = [];
   profesores$: Observable<Profesor[]> = this.store.select(PersonaState.getProfesores);
   loading$: Observable<boolean> = this.store.select(AppPageState.getFormLoading);
   error$: Observable<boolean> = this.store.select(PersonaState.getError)
@@ -46,6 +47,7 @@ export class ProfesorListaComponent implements OnInit {
   constructor(private store: Store, private router: Router, private messageService: MessageService, private confirmationService: ConfirmationService, private screenService:ScreenSizeService) {}
 
   ngOnInit(): void {
+    this.profesores$.subscribe(x => this.profesores = x ? [...x] : []);
     let filter = new DocenteFilter();
     this.store.dispatch(new GetProfesoresAction(filter))
     this.updateRowsPerPage();

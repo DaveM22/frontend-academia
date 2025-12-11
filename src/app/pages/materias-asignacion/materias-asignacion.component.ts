@@ -84,7 +84,7 @@ export class MateriasAsignacionComponent implements OnDestroy{
   
     this.materias$.subscribe(x => {
       if(x !== null){
-        this.materias = x;
+        this.materias = [...x];
       }
     })
 

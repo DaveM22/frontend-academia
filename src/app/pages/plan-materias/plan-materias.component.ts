@@ -69,7 +69,7 @@ export class PlanMateriasComponent implements OnInit {
     this.planSelected$.subscribe(plan => {
       if (plan) {
         this.plan = plan!;
-        this.materias = this.plan.materias;
+        this.materias = this.plan.materias ? [...this.plan.materias] : [];
         this.header = this.plan.descripcion;
 
       }

@@ -77,7 +77,7 @@ export class InscripcionesComponent implements OnInit, OnDestroy {
 
     const alumno = await firstValueFrom(this.alumno$.pipe(filter(a => a !== null)));
     this.alumno = alumno;
-    this.inscripciones = this.alumno.inscripciones;
+    this.inscripciones = this.alumno.inscripciones ? [...this.alumno.inscripciones] : [];
 
 
 

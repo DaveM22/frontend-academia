@@ -1,4 +1,4 @@
-<p-table #dt2 [value]="(cursos$ | async)!" 
+<p-table #dt2 [value]="cursos" 
     [globalFilterFields]="['descripcion','anioCalendario','comision.descripcion','materia.descripcion']"
     styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-xs sm:text-sm md:text-base lg:text-base xl:text-base"
     responsiveLayout="stack" [breakpoint]="'960px'" [paginator]="true" size="small" [scrollable]="true"
@@ -34,9 +34,9 @@
     </ng-template>
     <ng-template pTemplate="header">
         <tr>
-            <th>Año calendario</th>
-            <th>Curso</th>
-            <th>Comisión</th>
+            <th pSortableColumn="anioCalendario" pRipple>Año calendario <p-sortIcon field="anioCalendario"></p-sortIcon></th>
+            <th pSortableColumn="descripcion" pRipple>Curso <p-sortIcon field="descripcion"></p-sortIcon></th>
+            <th pSortableColumn="comision.descripcion" pRipple>Comisión <p-sortIcon field="comision.descripcion"></p-sortIcon></th>
             <th class="text-center">Acciones</th>
         </tr>
     </ng-template>

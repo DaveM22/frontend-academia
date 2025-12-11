@@ -259,6 +259,12 @@ export const routes: Routes = [
                 data: { role: 'Docente' }
             },
             {
+                path: 'docente/notificaciones',
+                component: NotificacionesDocenteComponent,
+                canActivate: [AuthGuard, docenteGuard],
+                data: { role: 'Docente' }
+            },
+            {
                 path: 'docente',
                 component: CatedrasDocenteComponent,
                 children: [
@@ -270,8 +276,7 @@ export const routes: Routes = [
                     { path: 'cursos-asignados', component: CatedrasDocenteCursosComponent },
                     { path: 'cursos-inscripciones/:idCurso', component: CatedrasDocenteInscripcionesComponent },
                     { path: 'cursos-inscripciones/:idCurso/inscripciones/:idInscripcion', component: InscripcionFormComponent },
-                    { path: 'aviso-carga-notas', component: AvisoCargaNotasComponent },
-                    { path: 'notificaciones', component: NotificacionesDocenteComponent }
+                    { path: 'aviso-carga-notas', component: AvisoCargaNotasComponent }
                 ],
                 canActivate: [AuthGuard, docenteGuard],
                 data: {

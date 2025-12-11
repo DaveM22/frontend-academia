@@ -33,6 +33,7 @@ import { BlockUiComponent } from '../../components/util/block-ui/block-ui.compon
 })
 export class CursoListaComponent implements OnInit {
   rowsPerPage = 5;
+  public cursos: Curso[] = [];
   public cursos$: Observable<Curso[]> = this.store.select(CursoState.getCursos)
 
   public loading$: Observable<boolean> = this.store.select(AppPageState.getFormLoading);
@@ -55,6 +56,7 @@ export class CursoListaComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.cursos$.subscribe(x => this.cursos = x ? [...x] : []);
     this.updateRowsPerPage();
     const filters = new CursoFilter();
     filters.mostrarComision = true;
@@ -83,7 +85,6 @@ export class CursoListaComponent implements OnInit {
     this.store.dispatch(new GenerateReport(id));
   }
 
-  cursos!: Curso[];
   title = 'academia';
 
   @HostListener('window:resize')

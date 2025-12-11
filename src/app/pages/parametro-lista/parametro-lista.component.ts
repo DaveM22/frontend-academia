@@ -31,7 +31,7 @@ export class ParametroListaComponent implements OnInit {
 
   screenSize = { width: 0, height: 0 };
   rowsPerPage = 5;
-
+  public parametros: Parametro[] = [];
   public parametros$: Observable<Parametro[]> = this.store.select(ParametroState.getParametros)
 
   public loading$:Observable<boolean> = this.store.select(AppPageState.getFormLoading);
@@ -45,6 +45,7 @@ export class ParametroListaComponent implements OnInit {
 
   constructor(private store:Store){}
   ngOnInit(): void {
+    this.parametros$.subscribe(x => this.parametros = x ? [...x] : []);
     this.updateRowsPerPage();
        this.store.dispatch(new GetParametrosAction());
   }
@@ -68,8 +69,6 @@ export class ParametroListaComponent implements OnInit {
       this.rowsPerPage = 10;
     }
   }
-
-  parametros!: Parametro[];
 
 onToggle(parametro: Parametro, checked: boolean) {
   // clonamos el objeto para no mutar el store

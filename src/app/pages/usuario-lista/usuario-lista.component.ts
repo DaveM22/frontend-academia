@@ -31,7 +31,7 @@ import { BlockUiComponent } from '../../components/util/block-ui/block-ui.compon
   providers:[ConfirmationService]
 })
 export class UsuarioListaComponent implements OnInit {
-
+  usuarios: Usuario[] = [];
   usuarios$:Observable<Usuario[]> = this.store.select(UsuarioState.getUsuarios) 
   loading$:Observable<boolean> = this.store.select(UsuarioState.getLoading);
   error$:Observable<boolean> = this.store.select(UsuarioState.getError);
@@ -42,6 +42,7 @@ export class UsuarioListaComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.usuarios$.subscribe(x => this.usuarios = x ? [...x] : []);
     this.showConfirmation$.subscribe(x => {
       if (x && this.usuarioSelected$) {
         this.confirm();

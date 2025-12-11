@@ -1,6 +1,6 @@
 
 
-<p-table #dt2 [value]="(usuarios$ | async)!" [loading]="(loading$ | async)" [loadingIcon]="''"
+<p-table #dt2 [value]="usuarios" [loading]="(loading$ | async)" [loadingIcon]="''"
     styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-xs sm:text-sm md:text-base lg:text-base xl:text-base" responsiveLayout="stack"
      size="small" [breakpoint]="'960px'" [paginator]="true" [scrollable]="true" [rows]="5" scrollHeight="flex"
     [globalFilterFields]="['nombre', 'apellido','direccion', 'email','legajo']">
@@ -39,8 +39,8 @@
     </ng-template>
     <ng-template pTemplate="header">
         <tr>
-            <th>Usuario</th>
-            <th>Nombre y apellido</th>
+            <th pSortableColumn="nombreUsuario" pRipple>Usuario <p-sortIcon field="nombreUsuario"></p-sortIcon></th>
+            <th pSortableColumn="nombreYapellido" pRipple>Nombre y apellido <p-sortIcon field="nombreYapellido"></p-sortIcon></th>
             <th class="text-center">Acciones</th>
         </tr>
     </ng-template>

@@ -1,4 +1,4 @@
-<p-table #dt2 [value]="(comisiones$ | async)!" [globalFilterFields]="['descripcion']"
+<p-table #dt2 [value]="comisiones" [globalFilterFields]="['descripcion']"
     styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-xs sm:text-sm md:text-base lg:text-base xl:text-base"
     size="small" responsiveLayout="stack" [breakpoint]="'960px'" [paginator]="true" [scrollable]="true"
     [scrollHeight]="scrollSize" [rows]="rowsPerPage">
@@ -39,9 +39,9 @@
     </ng-template>
     <ng-template pTemplate="header">
         <tr>
-            <th>Año especialidad</th>
-            <th>Comisión</th>
-            <th>Plan</th>
+            <th pSortableColumn="anioEspecialidad" pRipple>Año especialidad <p-sortIcon field="anioEspecialidad"></p-sortIcon></th>
+            <th pSortableColumn="comision" pRipple>Comisión <p-sortIcon field="comision"></p-sortIcon></th>
+            <th pSortableColumn="plan" pRipple>Plan <p-sortIcon field="plan"></p-sortIcon></th>
             <th class="text-center">Acciones</th>
         </tr>
     </ng-template>

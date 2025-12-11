@@ -59,6 +59,7 @@ export class NotificacionesDocenteComponent implements OnInit, OnDestroy {
   filtroTipo: string = '';
 
   private destroy$ = new Subject<void>();
+  nots: Notificacion[] = [];
 
   constructor(
     private store: Store,
@@ -82,13 +83,15 @@ export class NotificacionesDocenteComponent implements OnInit, OnDestroy {
         .pipe(
           switchMap(() => {
             this.store.dispatch(new GetNotificacionesAction({ docenteId }));
-            this.store.dispatch(new GetNoLeidasCountAction({ docenteId }));
+
             return [];
           }),
           takeUntil(this.destroy$)
         )
         .subscribe();
     }
+
+    this.notificaciones$.subscribe(x => this.nots = x ? [...x] : []);
   }
 
   ngOnDestroy(): void {

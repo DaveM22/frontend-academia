@@ -1,4 +1,4 @@
-<p-table #dt2 [value]="(parametros$ | async)!" 
+<p-table #dt2 [value]="parametros" 
     styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-sm sm:text-base md:text-lg lg:text-lg xl:text-xl" responsiveLayout="stack" [breakpoint]="'960px'"
     [paginator]="true" [scrollable]="true" size="small" [rows]="rowsPerPage"  [globalFilterFields]="['nombre','descripcion']">
     <ng-template pTemplate="caption">
@@ -27,8 +27,8 @@
     </ng-template>
     <ng-template pTemplate="header">
         <tr>
-            <th>Parámetro</th>
-            <th>Estado</th>
+            <th pSortableColumn="nombre" pRipple>Parámetro <p-sortIcon field="nombre"></p-sortIcon></th>
+            <th pSortableColumn="activo" pRipple>Estado <p-sortIcon field="activo"></p-sortIcon></th>
             <th class="text-center">Acciones</th>
         </tr>
     </ng-template>

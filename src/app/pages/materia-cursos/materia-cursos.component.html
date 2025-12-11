@@ -1,4 +1,4 @@
-<p-table #dt2 [value]="(cursos$ | async)!" [loading]="(loading$ | async)" [loadingIcon]="''"
+<p-table #dt2 [value]="cursos" [loading]="(loading$ | async)" [loadingIcon]="''"
     styleClass="p-datatable-gridlines p-datatable-striped h-full text-xs sm:text-sm md:text-base lg:text-base xl:text-base" responsiveLayout="stack"
     [breakpoint]="'960px'" [paginator]="true" [scrollable]="true" [rows]="5" scrollHeight="flex"
     [globalFilterFields]="['nombre', 'apellido', 'direccion', 'email', 'legajo']">
@@ -28,7 +28,7 @@
     </ng-template>
     <ng-template pTemplate="header">
         <tr>
-            <th>Curso</th>
+            <th pSortableColumn="descripcion" pRipple>Curso <p-sortIcon field="descripcion"></p-sortIcon></th>
             <th class="text-center">Acciones</th>
         </tr>
     </ng-template>
@@ -45,7 +45,7 @@
     </ng-template>
 
     <ng-template pTemplate="emptymessage">
-        @if ((cursos$ | async)!.length === 0) {
+        @if (cursos.length === 0) {
         <tr>
             <td class="text-center text-sm lg:text-2xl" colspan="2">No se han registrado cursos para esta materia</td>
         </tr>

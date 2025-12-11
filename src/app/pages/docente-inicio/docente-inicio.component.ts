@@ -17,6 +17,9 @@ import { BadgeModule } from 'primeng/badge';
 import { CardModule } from 'primeng/card';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { TableModule } from 'primeng/table';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { InputTextModule } from 'primeng/inputtext';
 import { DashboardProfesorState } from '../../store/states/api/dashboard-profesor.state';
 import { GetDashboardProfesorTotalesAction } from '../../store/actions/api/dashboard-profesor.action';
 
@@ -31,7 +34,10 @@ import { GetDashboardProfesorTotalesAction } from '../../store/actions/api/dashb
     BadgeModule,
     CardModule,
     ProgressSpinnerModule,
-    TableModule
+    TableModule,
+    IconFieldModule,
+    InputIconModule,
+    InputTextModule
   ],
   templateUrl: './docente-inicio.component.html',
   styleUrl: './docente-inicio.component.scss'

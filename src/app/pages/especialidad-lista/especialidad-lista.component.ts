@@ -32,6 +32,7 @@ export class EspecialidadListaComponent implements OnInit {
   screenSize = { width: 0, height: 0 };
 
   rowsPerPage = 5;
+  public especialidades: Especialidad[] = [];
   public especialidades$: Observable<Especialidad[]> = this.store.select(EspecialidadState.getEspecialidades)
 
   public loading$: Observable<boolean> = this.store.select(EspecialidadState.getLoading);
@@ -51,6 +52,7 @@ export class EspecialidadListaComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.especialidades$.subscribe(x => this.especialidades = x ? [...x] : []);
     this.store.dispatch(new GetEspecialidadAction());
     this.updateRowsPerPage();
     this.updateScrollSize();
@@ -75,7 +77,6 @@ export class EspecialidadListaComponent implements OnInit {
 
   }
 
-  especialidades!: Especialidad[];
   title = 'academia';
 
 

@@ -34,9 +34,9 @@
     </ng-template>
     <ng-template pTemplate="header">
         <tr>
-            <th>Materia</th>
-            <th class="text-center">Horas semanales</th>
-            <th class="text-center">Horas totales</th>
+            <th pSortableColumn="descripcion" pRipple>Materia <p-sortIcon field="descripcion"></p-sortIcon></th>
+            <th pSortableColumn="hsSemanales" pRipple class="text-center">Horas semanales <p-sortIcon field="hsSemanales"></p-sortIcon></th>
+            <th pSortableColumn="hsTotales" pRipple class="text-center">Horas totales <p-sortIcon field="hsTotales"></p-sortIcon></th>
             <th class="text-center">Acciones</th>
         </tr>
     </ng-template>

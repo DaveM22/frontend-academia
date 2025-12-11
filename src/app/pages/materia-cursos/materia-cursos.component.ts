@@ -25,7 +25,8 @@ import { BlockUiComponent } from '../../components/util/block-ui/block-ui.compon
   styleUrl: './materia-cursos.component.scss'
 })
 export class MateriaCursosComponent implements OnInit {
-  cursos$:Observable<Curso[]> = this.store.select(CursoState.getCursos); 
+  cursos$:Observable<Curso[]> = this.store.select(CursoState.getCursos);
+  cursos: Curso[] = []; 
   materiaId:string = ''
   loading$:Observable<boolean> = this.store.select(AppPageState.getFormLoading);
   constructor(private store:Store, private activateRouter:ActivatedRoute, private route:Router){}
@@ -33,6 +34,7 @@ export class MateriaCursosComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.materiaId = this.activateRouter.snapshot.params['id'];
+    this.cursos$.subscribe(x => this.cursos = x ? [...x] : []);
     let filter = new CursoFilter();
     filter.materiaId = this.materiaId;
     this.store.dispatch(new GetCursoAction(filter));

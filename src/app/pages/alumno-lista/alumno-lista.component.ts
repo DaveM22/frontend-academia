@@ -36,6 +36,7 @@ export class AlumnoListaComponent implements OnInit {
   screenSize = { width: 0, height: 0 };
   rowsPerPage = 5;
   alumnos$:Observable<Alumno[]> = this.store.select(PersonaState.getAlumnos);
+  alumnos: Alumno[] = [];
   loading$:Observable<boolean> = this.store.select(AppPageState.getFormLoading);
   error$:Observable<boolean> = this.store.select(PersonaState.getError)
   errorMessage$:Observable<string> = this.store.select(PersonaState.getErrorMessage);
@@ -64,6 +65,7 @@ export class AlumnoListaComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.dispatch(new GetAlumnosAction(new AlumnoFilter()));
+    this.alumnos$.subscribe(x => this.alumnos = x ? [...x] : []);
     this.updateRowsPerPage();
     this.showConfirmation$.subscribe(x => {
       if(x  && this.alumnoSelected){

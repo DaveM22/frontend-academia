@@ -1,7 +1,7 @@
 <p-table #dt2 [value]="planes" [loading]="(loading$ | async)" [loadingIcon]="''" responsiveLayout="stack"
     [breakpoint]="'960px'" [paginator]="true" [scrollable]="true" [rows]="rowsPerPage" scrollHeight="flex" size="small"
     styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-xs sm:text-sm md:text-base lg:text-base xl:text-base"
-    responsiveLayout="stack" [breakpoint]="'960px'" [globalFilterFields]="['descripcion, especialidad.descripcion']">
+    responsiveLayout="stack" [breakpoint]="'960px'" [globalFilterFields]="['descripcion','especialidad.descripcion']">
     <ng-template pTemplate="caption">
         @if (error$ | async)
         {
@@ -35,8 +35,8 @@
     </ng-template>
     <ng-template pTemplate="header">
         <tr>
-            <th>Descripción</th>
-            <th>Especialidad</th>
+            <th pSortableColumn="descripcion" pRipple>Descripción <p-sortIcon field="descripcion"></p-sortIcon></th>
+            <th pSortableColumn="especialidad.descripcion" pRipple>Especialidad <p-sortIcon field="especialidad.descripcion"></p-sortIcon></th>
             <th class="text-center">Acciones</th>
         </tr>
     </ng-template>

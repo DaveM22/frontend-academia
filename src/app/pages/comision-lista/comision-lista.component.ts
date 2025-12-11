@@ -37,6 +37,7 @@ import { BlockUiComponent } from '../../components/util/block-ui/block-ui.compon
 })
 export class ComisionListaComponent implements OnInit {
   rowsPerPage = 5;
+  public comisiones: Comision[] = [];
   public comisiones$: Observable<Comision[]> = this.store.select(ComisionState.getComisiones)
 
   public loading$: Observable<boolean> = this.store.select(AppPageState.getFormLoading);
@@ -57,6 +58,7 @@ export class ComisionListaComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.comisiones$.subscribe(x => this.comisiones = x ? [...x] : []);
     let filters = new ComisionFilter();
     filters.mostrarPlan = true;
     this.store.dispatch(new GetComision(filters));

@@ -49,6 +49,7 @@ import { TableModule } from 'primeng/table';
 })
 export class NovedadesAlumnoComponent implements OnInit, OnDestroy {
   notificaciones$: Observable<Notificacion[]>;
+  notificaciones: Notificacion[] = [];
   noLeidasCount$: Observable<number>;
   loading$: Observable<boolean>;
   error$: Observable<boolean>;
@@ -73,6 +74,7 @@ export class NovedadesAlumnoComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     const alumnoId = this.store.selectSnapshot(AppPageState.getPersonId);
+    this.notificaciones$.subscribe(x => this.notificaciones = x ? [...x] : []);
     if (alumnoId) {
       this.loadNotificaciones(alumnoId);
       // Auto-refresh cada 30 segundos

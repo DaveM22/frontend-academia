@@ -35,6 +35,7 @@ import { BlockUiComponent } from '../../components/util/block-ui/block-ui.compon
 })
 export class PlanListaComponent implements OnInit {
   rowsPerPage = 5;
+  public planes: Plan[] = [];
   public planes$: Observable<Plan[]> = this.store.select(PlanState.getPlanes)
   public loading$: Observable<boolean> = this.store.select(PlanState.getLoading);
   public error$: Observable<boolean> = this.store.select(PlanState.getError);
@@ -53,8 +54,8 @@ export class PlanListaComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.planes$.subscribe(x => this.planes = x ? [...x] : []);
     this.updateRowsPerPage();
-    this.planes$.subscribe(x => this.planes = x);
     let filter = new PlanFilter();
     filter.mostrarEspecialidad = true
     this.store.dispatch(new GetPlanAction(filter));
@@ -109,7 +110,6 @@ export class PlanListaComponent implements OnInit {
     this.store.dispatch(new GenerateReport(id));
   }
 
-  planes!: Plan[];
   title = 'academia';
 
   @HostListener('window:resize')

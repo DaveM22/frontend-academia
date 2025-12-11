@@ -41,9 +41,9 @@
     </ng-template>
     <ng-template pTemplate="header">
         <tr>
-            <th>Inscripción</th>
-            <th>Condición</th>
-            <th>Nota</th>
+            <th pSortableColumn="curso.descripcion" pRipple>Inscripción <p-sortIcon field="curso.descripcion"></p-sortIcon></th>
+            <th pSortableColumn="condicion" pRipple>Condición <p-sortIcon field="condicion"></p-sortIcon></th>
+            <th pSortableColumn="nota" pRipple>Nota <p-sortIcon field="nota"></p-sortIcon></th>
             <th class="text-center">Acciones</th>
         </tr>
     </ng-template>
