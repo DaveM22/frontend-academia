@@ -22,6 +22,9 @@
 
 
   <div class="grid grid-cols-12 gap-4 mb-6">
+    <div class="col-span-12 md:hidden mb-2">
+      <app-mobile-sort-select [sortOptions]="sortOptions" [table]="table"></app-mobile-sort-select>
+    </div>
     <div class="col-span-12">
       <p-iconField iconPosition="left">
         <p-inputIcon>
@@ -45,7 +48,7 @@
   } @else {
     @if (notificaciones && notificaciones.length > 0) {
       <div class="overflow-auto">
-        <p-table [value]="notificaciones" [tableStyle]="{ 'min-width': '50rem' }" styleClass="p-datatable-striped">
+        <p-table #dt2 [value]="notificaciones" [tableStyle]="{ 'min-width': '50rem' }" styleClass="p-datatable-striped">
           <ng-template pTemplate="header">
             <tr>
               <th pSortableColumn="leida" pRipple style="width: 10%">Estado <p-sortIcon field="leida"></p-sortIcon></th>

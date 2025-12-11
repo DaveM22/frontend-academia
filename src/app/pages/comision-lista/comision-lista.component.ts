@@ -26,11 +26,12 @@ import { PlanFilter } from '../../entities/filter';
 import { SelectedPlanFilter } from '../../store/actions/pages/app.action';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { BlockUiComponent } from '../../components/util/block-ui/block-ui.component';
+import { MobileSortSelectComponent, SortOption } from '../../components/util/mobile-sort-select/mobile-sort-select.component';
 
 @Component({
   selector: 'app-comision-lista',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, MessageModule, PanelModule,BlockUiComponent, ConfirmDialogModule, IconFieldModule, InputTextModule, InputIconModule, PlanFilterComponent, ProgressSpinnerModule],
+  imports: [CommonModule, TableModule, ButtonModule, MessageModule, PanelModule,BlockUiComponent, ConfirmDialogModule, IconFieldModule, InputTextModule, InputIconModule, PlanFilterComponent, ProgressSpinnerModule, MobileSortSelectComponent],
   templateUrl: './comision-lista.component.html',
   styleUrl: './comision-lista.component.scss',
   providers: [ConfirmationService]
@@ -41,6 +42,12 @@ export class ComisionListaComponent implements OnInit {
   public comisiones$: Observable<Comision[]> = this.store.select(ComisionState.getComisiones)
 
   public loading$: Observable<boolean> = this.store.select(AppPageState.getFormLoading);
+
+  sortOptions: SortOption[] = [
+    { label: 'Año especialidad', field: 'anioEspecialidad' },
+    { label: 'Comisión', field: 'comision' },
+    { label: 'Plan', field: 'plan' }
+  ];
 
   public error$: Observable<boolean> = this.store.select(ComisionState.getError);
 
@@ -161,7 +168,7 @@ export class ComisionListaComponent implements OnInit {
           })
       },
       reject: () => {
-        this.store.dispatch(new ShowModalConfirmationAction(false));
+        this.store.dispatch(new ShowModalConfirmationAction(false))
       }
     });
   }

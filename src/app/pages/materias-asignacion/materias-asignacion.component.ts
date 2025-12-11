@@ -26,11 +26,12 @@ import { Plan } from '../../entities/plan';
 import { ClearSelectedPersona } from '../../store/actions/pages/persona.action';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { BlockUiComponent } from '../../components/util/block-ui/block-ui.component';
+import { MobileSortSelectComponent, SortOption } from '../../components/util/mobile-sort-select/mobile-sort-select.component';
 
 @Component({
   selector: 'app-materias-asignacion',
   standalone: true,
-  imports: [CommonModule,ToolbarModule,MessageModule,EspecialidadFilterComponent,PlanFilterComponent,BlockUiComponent ,TableModule, ButtonModule, IconFieldModule, InputIconModule, MessageModule, InputTextModule, ProgressSpinnerModule],
+  imports: [CommonModule,ToolbarModule,MessageModule,EspecialidadFilterComponent,PlanFilterComponent,BlockUiComponent ,TableModule, ButtonModule, IconFieldModule, InputIconModule, MessageModule, InputTextModule, ProgressSpinnerModule, MobileSortSelectComponent],
   templateUrl: './materias-asignacion.component.html',
   styleUrl: './materias-asignacion.component.scss'
 })
@@ -42,6 +43,9 @@ export class MateriasAsignacionComponent implements OnDestroy{
   disablePlanDropDown:boolean = true;
   messages: Message[] | undefined;
   materias!: Materia[];
+  sortOptions: SortOption[] = [
+    { label: 'Materia', field: 'descripcion' }
+  ];
   mostrarTip: boolean = true;
   plan!:Plan | undefined;
 

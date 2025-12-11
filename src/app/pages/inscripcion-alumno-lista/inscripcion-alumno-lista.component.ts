@@ -28,11 +28,12 @@ import { MessageModule } from 'primeng/message';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { MateriaState } from '../../store/states/api/materia.state';
 import { BlockUiComponent } from '../../components/util/block-ui/block-ui.component';
+import { MobileSortSelectComponent, SortOption } from '../../components/util/mobile-sort-select/mobile-sort-select.component';
 
 @Component({
   selector: 'app-inscripcion-alumno-lista',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, IconFieldModule,BlockUiComponent, MessageModule, InputIconModule, MessagesModule, InputTextModule, EspecialidadFilterComponent, PlanFilterComponent, ProgressSpinnerModule],
+  imports: [CommonModule, TableModule, ButtonModule, IconFieldModule,BlockUiComponent, MessageModule, InputIconModule, MessagesModule, InputTextModule, EspecialidadFilterComponent, PlanFilterComponent, ProgressSpinnerModule, MobileSortSelectComponent],
   templateUrl: './inscripcion-alumno-lista.component.html',
   styleUrl: './inscripcion-alumno-lista.component.scss'
 })
@@ -48,6 +49,13 @@ export class InscripcionAlumnoListaComponent implements OnInit, OnDestroy {
   disablePlanDropDown: boolean = true;
   errorMessage$: Observable<string> = this.store.select(PersonaState.getErrorMessage);
   mostrarTip: boolean = true;
+
+  sortOptions: SortOption[] = [
+    { label: 'Legajo', field: 'legajo' },
+    { label: 'Nombre', field: 'nombre' },
+    { label: 'Apellido', field: 'apellido' },
+    { label: 'Plan', field: 'plan.descripcion' }
+  ];
   constructor(private store: Store, private router: Router) { }
 
 

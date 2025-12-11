@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Store } from '@ngxs/store';
@@ -23,6 +23,8 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { TableModule } from 'primeng/table';
+import { MobileSortSelectComponent, SortOption } from '../../components/util/mobile-sort-select/mobile-sort-select.component';
+import { Table } from 'primeng/table';
 
 @Component({
   selector: 'app-novedades-alumno',
@@ -41,19 +43,28 @@ import { TableModule } from 'primeng/table';
     IconFieldModule,
     ProgressSpinnerModule,
     ConfirmDialogModule,
-    TableModule
+    TableModule,
+    MobileSortSelectComponent
   ],
   templateUrl: './novedades-alumno.component.html',
   styleUrl: './novedades-alumno.component.scss',
   providers:[ConfirmationService]
 })
 export class NovedadesAlumnoComponent implements OnInit, OnDestroy {
+  @ViewChild('dt2') table!: Table;
   notificaciones$: Observable<Notificacion[]>;
   notificaciones: Notificacion[] = [];
   noLeidasCount$: Observable<number>;
   loading$: Observable<boolean>;
   error$: Observable<boolean>;
   errorMessage$: Observable<string>;
+
+  sortOptions: SortOption[] = [
+    { label: 'Estado', field: 'leida' },
+    { label: 'Título', field: 'titulo' },
+    { label: 'Mensaje', field: 'mensaje' },
+    { label: 'Fecha', field: 'fechaCreacion' }
+  ];
 
   filtroSearch: string = '';
   filtroTipo: string = '';

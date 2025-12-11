@@ -22,11 +22,12 @@ import { MateriaState } from '../../store/states/api/materia.state';
 import { ClearSelectedPlan } from '../../store/actions/pages/plan.action';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { BlockUiComponent } from '../../components/util/block-ui/block-ui.component';
+import { MobileSortSelectComponent, SortOption } from '../../components/util/mobile-sort-select/mobile-sort-select.component';
 
 @Component({
   selector: 'app-plan-materias',
   standalone: true,
-  imports: [TableModule, CommonModule, MessagesModule, ButtonModule, ConfirmDialogModule, ProgressSpinnerModule, BlockUiComponent],
+  imports: [TableModule, CommonModule, MessagesModule, ButtonModule, ConfirmDialogModule, ProgressSpinnerModule, BlockUiComponent, MobileSortSelectComponent],
   templateUrl: './plan-materias.component.html',
   styleUrl: './plan-materias.component.scss',
   providers: [ConfirmationService]
@@ -39,6 +40,11 @@ export class PlanMateriasComponent implements OnInit {
   showConfirmation$: Observable<boolean> = this.store.select(AppPageState.showModalConfirmation)
   plan!: Plan;
   materias: Materia[] = []
+  sortOptions: SortOption[] = [
+    { label: 'Materia', field: 'descripcion' },
+    { label: 'Horas semanales', field: 'hsSemanales' },
+    { label: 'Horas totales', field: 'hsTotales' }
+  ];
   header!: string;
   id!: string;
   materiaSelected!: Materia;

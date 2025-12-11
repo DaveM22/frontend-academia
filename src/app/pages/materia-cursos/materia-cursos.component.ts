@@ -16,17 +16,21 @@ import { TableModule } from 'primeng/table';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { AppPageState } from '../../store/states/page/app.state';
 import { BlockUiComponent } from '../../components/util/block-ui/block-ui.component';
+import { MobileSortSelectComponent, SortOption } from '../../components/util/mobile-sort-select/mobile-sort-select.component';
 
 @Component({
   selector: 'app-materia-cursos',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, IconFieldModule, InputIconModule, MessagesModule, InputTextModule, ProgressSpinnerModule, BlockUiComponent],
+  imports: [CommonModule, TableModule, ButtonModule, IconFieldModule, InputIconModule, MessagesModule, InputTextModule, ProgressSpinnerModule, BlockUiComponent, MobileSortSelectComponent],
   templateUrl: './materia-cursos.component.html',
   styleUrl: './materia-cursos.component.scss'
 })
 export class MateriaCursosComponent implements OnInit {
   cursos$:Observable<Curso[]> = this.store.select(CursoState.getCursos);
   cursos: Curso[] = []; 
+  sortOptions: SortOption[] = [
+    { label: 'Curso', field: 'descripcion' }
+  ];
   materiaId:string = ''
   loading$:Observable<boolean> = this.store.select(AppPageState.getFormLoading);
   constructor(private store:Store, private activateRouter:ActivatedRoute, private route:Router){}

@@ -20,11 +20,12 @@ import { ScreenSizeService } from '../../services/screen-size.service.service';
 import { LoadingForm } from '../../store/actions/pages/app.action';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { BlockUiComponent } from '../../components/util/block-ui/block-ui.component';
+import { MobileSortSelectComponent, SortOption } from '../../components/util/mobile-sort-select/mobile-sort-select.component';
 
 @Component({
   selector: 'app-especialidad-lista',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, EspecialidadBorrarComponent, MessageModule, PanelModule, IconFieldModule, InputTextModule, InputIconModule, ProgressSpinnerModule, BlockUiComponent],
+  imports: [CommonModule, TableModule, ButtonModule, EspecialidadBorrarComponent, MessageModule, PanelModule, IconFieldModule, InputTextModule, InputIconModule, ProgressSpinnerModule, BlockUiComponent, MobileSortSelectComponent],
   templateUrl: './especialidad-lista.component.html',
   styleUrl: './especialidad-lista.component.scss'
 })
@@ -36,6 +37,10 @@ export class EspecialidadListaComponent implements OnInit {
   public especialidades$: Observable<Especialidad[]> = this.store.select(EspecialidadState.getEspecialidades)
 
   public loading$: Observable<boolean> = this.store.select(EspecialidadState.getLoading);
+
+  sortOptions: SortOption[] = [
+    { label: 'Especialidad', field: 'descripcion' }
+  ];
 
   public error$: Observable<boolean> = this.store.select(EspecialidadState.getError);
 

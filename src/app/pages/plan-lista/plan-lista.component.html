@@ -10,6 +10,9 @@
         </p-message>
 
         }
+        <div class="col-span-12 md:hidden mb-2">
+            <app-mobile-sort-select [sortOptions]="sortOptions" [table]="dt2"></app-mobile-sort-select>
+        </div>
         <div class="grid grid-cols-12 gap-4 w-full">
             <div class="col-span-12 md:col-span-3">
                 <app-especialidad-filter class="h-full" (selectionChange)="onEspecialidadChanged($event)">

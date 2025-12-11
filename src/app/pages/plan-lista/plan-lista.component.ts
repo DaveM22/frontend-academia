@@ -24,11 +24,12 @@ import e from 'express';
 import { Especialidad } from '../../entities/especialidad';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { BlockUiComponent } from '../../components/util/block-ui/block-ui.component';
+import { MobileSortSelectComponent, SortOption } from '../../components/util/mobile-sort-select/mobile-sort-select.component';
 
 @Component({
   selector: 'app-plan-lista',
   standalone: true,
-  imports: [ButtonModule, TableModule, CommonModule, MessageModule, IconFieldModule, InputIconModule, ConfirmDialogModule, InputTextModule, EspecialidadFilterComponent, ProgressSpinnerModule, BlockUiComponent],
+  imports: [ButtonModule, TableModule, CommonModule, MessageModule, IconFieldModule, InputIconModule, ConfirmDialogModule, InputTextModule, EspecialidadFilterComponent, ProgressSpinnerModule, BlockUiComponent, MobileSortSelectComponent],
   templateUrl: './plan-lista.component.html',
   styleUrl: './plan-lista.component.scss',
   providers: [ConfirmationService]
@@ -45,6 +46,11 @@ export class PlanListaComponent implements OnInit {
   public planSelected!: Plan;
   public plan!: Plan;
   error: boolean = false;
+
+  sortOptions: SortOption[] = [
+    { label: 'Descripción', field: 'descripcion' },
+    { label: 'Especialidad', field: 'especialidad.descripcion' }
+  ];
 
   constructor(
     private store: Store,

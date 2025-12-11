@@ -19,10 +19,11 @@ import { FormsModule } from '@angular/forms';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { BlockUiComponent } from '../../components/util/block-ui/block-ui.component';
 import { AppPageState } from '../../store/states/page/app.state';
+import { MobileSortSelectComponent, SortOption } from '../../components/util/mobile-sort-select/mobile-sort-select.component';
 
 @Component({
   selector: 'app-parametro-lista',
-  imports: [FormsModule,CommonModule, TableModule, ButtonModule, MessageModule, PanelModule, IconFieldModule, InputTextModule, InputIconModule, ToggleSwitchModule, ProgressSpinnerModule, DialogModule, BlockUiComponent],
+  imports: [FormsModule,CommonModule, TableModule, ButtonModule, MessageModule, PanelModule, IconFieldModule, InputTextModule, InputIconModule, ToggleSwitchModule, ProgressSpinnerModule, DialogModule, BlockUiComponent, MobileSortSelectComponent],
   templateUrl: './parametro-lista.component.html',
   styleUrl: './parametro-lista.component.css',
   standalone: true
@@ -35,6 +36,11 @@ export class ParametroListaComponent implements OnInit {
   public parametros$: Observable<Parametro[]> = this.store.select(ParametroState.getParametros)
 
   public loading$:Observable<boolean> = this.store.select(AppPageState.getFormLoading);
+
+  sortOptions: SortOption[] = [
+    { label: 'Parámetro', field: 'nombre' },
+    { label: 'Estado', field: 'activo' }
+  ];
 
   public error$:Observable<boolean> = this.store.select(ParametroState.getError);
 

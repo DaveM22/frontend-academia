@@ -15,6 +15,9 @@
         }
 
         <div class="grid grid-cols-12 gap-4 w-full">
+            <div class="col-span-12 md:hidden mb-2">
+                <app-mobile-sort-select [sortOptions]="sortOptions" [table]="dt2"></app-mobile-sort-select>
+            </div>
             <div class="col-span-12 md:col-span-4 md:col-start-5 flex justify-center">
                 <p-button 
                     label="Nuevo usuario" 

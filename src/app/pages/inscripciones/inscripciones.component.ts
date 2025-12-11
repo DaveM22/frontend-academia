@@ -26,11 +26,12 @@ import { ClearMateriaAction } from '../../store/actions/pages/materia.action';
 import { ClearMateriasAction } from '../../store/actions/api/materia.action';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { BlockUiComponent } from '../../components/util/block-ui/block-ui.component';
+import { MobileSortSelectComponent, SortOption } from '../../components/util/mobile-sort-select/mobile-sort-select.component';
 
 @Component({
   selector: 'app-inscripciones',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, IconFieldModule,BlockUiComponent, InputIconModule, MessagesModule, InputTextModule, ConfirmDialogModule, ProgressSpinnerModule],
+  imports: [CommonModule, TableModule, ButtonModule, IconFieldModule,BlockUiComponent, InputIconModule, MessagesModule, InputTextModule, ConfirmDialogModule, ProgressSpinnerModule, MobileSortSelectComponent],
   templateUrl: './inscripciones.component.html',
   styleUrl: './inscripciones.component.scss',
   providers: [ConfirmationService]
@@ -40,6 +41,11 @@ export class InscripcionesComponent implements OnInit, OnDestroy {
   loading$: Observable<boolean> = this.store.select(AppPageState.getFormLoading);
   alumno!: Alumno;
   inscripciones: AlumnoInscripcion[] = []
+  sortOptions: SortOption[] = [
+    { label: 'Inscripción', field: 'curso.descripcion' },
+    { label: 'Condición', field: 'condicion' },
+    { label: 'Nota', field: 'nota' }
+  ];
   showConfirmation$: Observable<boolean> = this.store.select(AppPageState.showModalConfirmation)
   rowsPerPage: number = 6;
 

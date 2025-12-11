@@ -22,11 +22,12 @@ import { MessageModule } from 'primeng/message';
 import { DialogModule } from 'primeng/dialog';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { BlockUiComponent } from '../../components/util/block-ui/block-ui.component';
+import { MobileSortSelectComponent, SortOption } from '../../components/util/mobile-sort-select/mobile-sort-select.component';
 
 @Component({
   selector: 'app-curso-lista',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, MessageModule, PanelModule, ConfirmDialogModule, IconFieldModule, InputTextModule, InputIconModule, DialogModule, ProgressSpinnerModule, BlockUiComponent],
+  imports: [CommonModule, TableModule, ButtonModule, MessageModule, PanelModule, ConfirmDialogModule, IconFieldModule, InputTextModule, InputIconModule, DialogModule, ProgressSpinnerModule, BlockUiComponent, MobileSortSelectComponent],
   templateUrl: './curso-lista.component.html',
   styleUrl: './curso-lista.component.scss',
   providers: [ConfirmationService]
@@ -37,6 +38,12 @@ export class CursoListaComponent implements OnInit {
   public cursos$: Observable<Curso[]> = this.store.select(CursoState.getCursos)
 
   public loading$: Observable<boolean> = this.store.select(AppPageState.getFormLoading);
+
+  sortOptions: SortOption[] = [
+    { label: 'Año calendario', field: 'anioCalendario' },
+    { label: 'Curso', field: 'descripcion' },
+    { label: 'Comisión', field: 'comision.descripcion' }
+  ];
 
   public error$: Observable<boolean> = this.store.select(CursoState.getError);
 

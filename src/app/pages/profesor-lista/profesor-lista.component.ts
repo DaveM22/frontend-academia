@@ -23,11 +23,12 @@ import { ScreenSizeService } from '../../services/screen-size.service.service';
 import { DialogModule } from 'primeng/dialog';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { BlockUiComponent } from '../../components/util/block-ui/block-ui.component';
+import { MobileSortSelectComponent, SortOption } from '../../components/util/mobile-sort-select/mobile-sort-select.component';
 
 @Component({
   selector: 'app-profesor-lista',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule,ConfirmDialogModule, MessageModule, PanelModule, IconFieldModule, InputTextModule, InputIconModule, DialogModule, ProgressSpinnerModule, BlockUiComponent],
+  imports: [CommonModule, TableModule, ButtonModule,ConfirmDialogModule, MessageModule, PanelModule, IconFieldModule, InputTextModule, InputIconModule, DialogModule, ProgressSpinnerModule, BlockUiComponent, MobileSortSelectComponent],
   templateUrl: './profesor-lista.component.html',
   styleUrl: './profesor-lista.component.scss',
   providers:[ConfirmationService]
@@ -36,6 +37,13 @@ export class ProfesorListaComponent implements OnInit {
   rowsPerPage = 5;
   profesores: Profesor[] = [];
   profesores$: Observable<Profesor[]> = this.store.select(PersonaState.getProfesores);
+  sortOptions: SortOption[] = [
+    { label: 'Legajo', field: 'legajo' },
+    { label: 'Nombre', field: 'nombre' },
+    { label: 'Apellido', field: 'apellido' },
+    { label: 'Email', field: 'email' },
+    { label: 'Plan', field: 'plan' }
+  ];
   loading$: Observable<boolean> = this.store.select(AppPageState.getFormLoading);
   error$: Observable<boolean> = this.store.select(PersonaState.getError)
   errorMessage$: Observable<string> = this.store.select(PersonaState.getErrorMessage);

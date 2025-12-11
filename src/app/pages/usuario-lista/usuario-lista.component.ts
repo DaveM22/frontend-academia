@@ -21,11 +21,12 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { MessageModule } from 'primeng/message';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { BlockUiComponent } from '../../components/util/block-ui/block-ui.component';
+import { MobileSortSelectComponent, SortOption } from '../../components/util/mobile-sort-select/mobile-sort-select.component';
 
 @Component({
   selector: 'app-usuario-lista',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule,ConfirmDialogModule, MessageModule, PanelModule, IconFieldModule, InputTextModule, InputIconModule, ProgressSpinnerModule, BlockUiComponent],
+  imports: [CommonModule, TableModule, ButtonModule,ConfirmDialogModule, MessageModule, PanelModule, IconFieldModule, InputTextModule, InputIconModule, ProgressSpinnerModule, BlockUiComponent, MobileSortSelectComponent],
   templateUrl: './usuario-lista.component.html',
   styleUrl: './usuario-lista.component.scss',
   providers:[ConfirmationService]
@@ -37,6 +38,10 @@ export class UsuarioListaComponent implements OnInit {
   error$:Observable<boolean> = this.store.select(UsuarioState.getError);
   errorMessage$:Observable<string> = this.store.select(UsuarioState.getErrorMessage)
   usuarioSelected$!:Usuario;
+  sortOptions: SortOption[] = [
+    { label: 'Usuario', field: 'nombreUsuario' },
+    { label: 'Nombre y Apellido', field: 'nombreYapellido' }
+  ];
  showConfirmation$: Observable<boolean> = this.store.select(AppPageState.showModalConfirmation)
   constructor(private store:Store, private router:Router, private messageService: MessageService,  private confirmationService: ConfirmationService){}
 

@@ -23,11 +23,12 @@ import { AlumnoFilter } from '../../entities/filter';
 import { DialogModule } from 'primeng/dialog';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { BlockUiComponent } from '../../components/util/block-ui/block-ui.component';
+import { MobileSortSelectComponent, SortOption } from '../../components/util/mobile-sort-select/mobile-sort-select.component';
 
 @Component({
   selector: 'app-alumno-lista',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule,ConfirmDialogModule, MessagesModule, PanelModule, IconFieldModule, InputTextModule, InputIconModule, DialogModule, ProgressSpinnerModule, BlockUiComponent],
+  imports: [CommonModule, TableModule, ButtonModule,ConfirmDialogModule, MessagesModule, PanelModule, IconFieldModule, InputTextModule, InputIconModule, DialogModule, ProgressSpinnerModule, BlockUiComponent, MobileSortSelectComponent],
   templateUrl: './alumno-lista.component.html',
   styleUrl: './alumno-lista.component.scss',
   providers:[ConfirmationService]
@@ -37,6 +38,13 @@ export class AlumnoListaComponent implements OnInit {
   rowsPerPage = 5;
   alumnos$:Observable<Alumno[]> = this.store.select(PersonaState.getAlumnos);
   alumnos: Alumno[] = [];
+  sortOptions: SortOption[] = [
+    { label: 'Legajo', field: 'legajo' },
+    { label: 'Nombre', field: 'nombre' },
+    { label: 'Apellido', field: 'apellido' },
+    { label: 'Email', field: 'email' },
+    { label: 'Plan', field: 'plan' }
+  ];
   loading$:Observable<boolean> = this.store.select(AppPageState.getFormLoading);
   error$:Observable<boolean> = this.store.select(PersonaState.getError)
   errorMessage$:Observable<string> = this.store.select(PersonaState.getErrorMessage);
@@ -46,7 +54,6 @@ export class AlumnoListaComponent implements OnInit {
   displayAlumnoInfo: boolean = false;
   selectedAlumno: Alumno | null = null;
   constructor(private store:Store, private router:Router, private confirmationService:ConfirmationService, private messageService:MessageService, private screenService:ScreenSizeService){}
-
 
   redirecToNuevoAlumno(){
     this.router.navigate(["/alumnos/nuevo"]);
