@@ -14,7 +14,7 @@ export interface SortOption {
   standalone: true,
   imports: [CommonModule, DropdownModule, FormsModule],
   template: `
-    <div class="block md:hidden w-full">
+    <div class="block lg:hidden w-full">
       <label class="block text-xs font-semibold mb-2">Ordenar por:</label>
       <p-dropdown 
         [options]="sortOptions" 
