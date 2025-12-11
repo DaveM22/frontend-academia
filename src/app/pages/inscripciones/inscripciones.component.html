@@ -12,55 +12,63 @@
                 </h2>
                 }
             </div>
-            <div class="grid grid-cols-12 gap-2 w-full items-center">
-                <div class="col-span-12 lg:hidden mb-2">
-                    <app-mobile-sort-select [sortOptions]="sortOptions" [table]="dt2"></app-mobile-sort-select>
+            <div class="grid grid-cols-12 gap-2 w-full items-start">
+                <div class="col-span-12 md:col-span-2 md:col-start-5 flex flex-col md:flex-row gap-2 order-1 md:order-1">
+                    <div class="flex-1">
+                        <label class="block text-xs sm:text-sm md:text-base font-medium mb-2">&nbsp;</label>
+                        <p-button label="Volver a inscripciones" icon="pi pi-arrow-left" severity="primary" 
+                            class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base w-full lg:w-auto"
+                            styleClass="w-full lg:w-auto px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2" 
+                            (onClick)="redirectToInscripcionesalumnos()">
+                        </p-button>
+                    </div>
+                    <div class="flex-1">
+                        <label class="block text-xs sm:text-sm md:text-base font-medium mb-2">&nbsp;</label>
+                        <p-button label="Nueva inscripción" icon="pi pi-plus" severity="primary" 
+                            class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base w-full lg:w-auto"
+                            styleClass="w-full lg:w-auto px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2" 
+                            (onClick)="redirectToNuevaInscripcion()">
+                        </p-button>
+                    </div>
                 </div>
-                <div class="col-span-12 lg:col-span-4">
-                    <p-button label="Volver a inscripciones" icon="pi pi-arrow-left" severity="primary" 
-                        styleClass="w-full text-xs sm:text-sm md:text-base lg:text-base xl:text-base px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2" 
-                        (onClick)="redirectToInscripcionesalumnos()">
-                    </p-button>
-                </div>
-                <div class="col-span-12 lg:col-span-3">
-                    <p-button label="Nueva inscripción" icon="pi pi-plus" severity="primary" 
-                        styleClass="w-full text-xs sm:text-sm md:text-base lg:text-base xl:text-base px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2" 
-                        (onClick)="redirectToNuevaInscripcion()">
-                    </p-button>
-                </div>
-                <div class="col-span-12 lg:col-span-3 lg:col-start-10">
+                <div class="col-span-12 md:col-span-4 md:col-start-9 order-2 md:order-2">
+                    <label class="block text-xs sm:text-sm md:text-base font-medium mb-2">Búsqueda:</label>
                     <p-iconField iconPosition="left" class="w-full">
                         <p-inputIcon>
                             <i class="pi pi-search"></i>
                         </p-inputIcon>
                         <input pInputText pSize="large" type="text" 
-                            class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base w-full h-[50px]" 
+                            class="text-md sm:text-base md:text-base lg:text-base xl:text-base w-full h-[50px]" 
                             (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
                             placeholder="Buscar alumno" />
                     </p-iconField>
+                </div>
+                <div class="col-span-12 lg:hidden mb-2 order-3">
+                    <label class="block text-xs sm:text-sm md:text-base font-medium mb-2">Seleccionar columna:</label>
+                    <app-mobile-sort-select [sortOptions]="sortOptions" [table]="dt2"></app-mobile-sort-select>
                 </div>
             </div>
         </div>
     </ng-template>
     <ng-template pTemplate="header">
         <tr>
+            <th class="text-center">Acciones</th>
             <th pSortableColumn="curso.descripcion" pRipple>Inscripción <p-sortIcon field="curso.descripcion"></p-sortIcon></th>
             <th pSortableColumn="condicion" pRipple>Condición <p-sortIcon field="condicion"></p-sortIcon></th>
             <th pSortableColumn="nota" pRipple>Nota <p-sortIcon field="nota"></p-sortIcon></th>
-            <th class="text-center">Acciones</th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-inscripcion>
         <tr>
-            <td><span class="p-column-title">Curso</span>{{inscripcion.curso.descripcion}}</td>
-            <td><span class="p-column-title">Condición</span>{{inscripcion.condicion}}</td>
-            <td><span class="p-column-title">Nota</span>{{inscripcion.nota || 'Sin especificar'}}</td>
             <td><span class="p-column-title">Acciones</span>
                 <div class="flex gap-2 justify-center">
                     <p-button label="Actualizar" severity="primary" class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base" styleClass="px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2"
                         (onClick)="redirectActualizarInscripcion(inscripcion._id)" />
                 </div>
             </td>
+            <td><span class="p-column-title">Curso</span>{{inscripcion.curso.descripcion}}</td>
+            <td><span class="p-column-title">Condición</span>{{inscripcion.condicion}}</td>
+            <td><span class="p-column-title">Nota</span>{{inscripcion.nota || 'Sin especificar'}}</td>
         </tr>
     </ng-template>
 

@@ -1,5 +1,5 @@
 <p-table #dt2 [value]="alumnos" 
-    styleClass="mt-10 p-datatable-gridlines p-datatable-striped h-full pt-0 text-xs sm:text-sm md:text-base lg:text-base xl:text-base" responsiveLayout="stack"
+    styleClass="mt-10 p-datatable-gridlines p-datatable-striped h-full pt-0 text-md sm:text-base md:text-base lg:text-base xl:text-base" responsiveLayout="stack"
     [breakpoint]="'960px'" [paginator]="true" [scrollable]="true" [rows]="rowsPerPage" scrollHeight="flex"
     [globalFilterFields]="['nombre', 'apellido', 'direccion', 'email', 'legajo']" size="small">
     <ng-template pTemplate="caption">
@@ -11,41 +11,40 @@
         </p-message>
         }
 
-        <div class="col-span-12 lg:hidden mb-2">
-            <app-mobile-sort-select [sortOptions]="sortOptions" [table]="dt2"></app-mobile-sort-select>
+        <div class="grid grid-cols-12 gap-2 w-full">
+            <div class="col-span-12 sm:col-span-6 lg:col-span-4">
+                <label class="mb-2 block text-xs sm:text-sm md:text-base">Especialidad:</label>
+                <app-especialidad-filter
+                    class="h-full">
+                </app-especialidad-filter>
+            </div>
+
+            <div class="col-span-12 sm:col-span-6 lg:col-span-4">
+                <label class="mb-2 block text-xs sm:text-sm md:text-base">Plan:</label>
+                <app-plan-filter
+                    class="h-full"
+                    [disable]="disablePlanDropDown">
+                </app-plan-filter>
+            </div>
+
+            <div class="col-span-12 sm:col-span-12 lg:col-span-4">
+                <label class="mb-2 block text-xs sm:text-sm md:text-base">Búsqueda:</label>
+                <p-iconField iconPosition="left" class="h-full">
+                    <p-inputIcon>
+                        <i class="pi pi-search"></i>
+                    </p-inputIcon>
+                    <input pInputText pSize="large"
+                        class="text-md sm:text-base md:text-base lg:text-base xl:text-base w-full h-[50px]"
+                        type="text"
+                        (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
+                        placeholder="Buscar alumno" />
+                </p-iconField>
+            </div>
         </div>
 
-        <div class="grid">
-            <div class="grid grid-cols-12 w-full gap-4">
-                <div class="col-span-12 sm:col-span-6 lg:col-span-4 flex flex-col">
-                    <label class="mb-2">Especialidad:</label>
-                    <app-especialidad-filter
-                        class="h-full">
-                    </app-especialidad-filter>
-                </div>
-
-                <div class="col-span-12 sm:col-span-6 lg:col-span-4 flex flex-col">
-                    <label class="mb-2">Plan:</label>
-                    <app-plan-filter
-                        class="h-full"
-                        [disable]="disablePlanDropDown">
-                    </app-plan-filter>
-                </div>
-
-                <div class="col-span-12 sm:col-span-12 lg:col-span-4 flex flex-col">
-                    <label class="mb-2">Búsqueda:</label>
-                    <p-iconField iconPosition="left" class="h-full">
-                        <p-inputIcon>
-                            <i class="pi pi-search"></i>
-                        </p-inputIcon>
-                        <input pInputText pSize="large"
-                            class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base w-full h-[50px]"
-                            type="text"
-                            (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
-                            placeholder="Buscar alumno" />
-                    </p-iconField>
-                </div>
-            </div>
+        <div class="col-span-12 lg:hidden mb-2">
+            <label class="block text-xs sm:text-sm md:text-base font-medium mb-2">Seleccionar columna:</label>
+            <app-mobile-sort-select [sortOptions]="sortOptions" [table]="dt2"></app-mobile-sort-select>
         </div>
     </ng-template>
     <ng-template pTemplate="header">

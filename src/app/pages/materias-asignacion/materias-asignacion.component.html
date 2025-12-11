@@ -1,7 +1,7 @@
 <div style="height: 100%;">
     <p-table #dt2  [value]="materias" 
     [loading]="(loading$ | async)" 
-    styleClass="p-datatable-gridlines p-datatable-striped pt-0 h-full text-xs sm:text-sm md:text-base lg:text-base xl:text-base" responsiveLayout="stack"
+    styleClass="p-datatable-gridlines p-datatable-striped pt-0 h-full text-md sm:text-sm md:text-base lg:text-base xl:text-base" responsiveLayout="stack"
     [breakpoint]="'960px'" [paginator]="true" [scrollable]="true" [rows]="5" scrollHeight="flex"
     [globalFilterFields]="['nombre', 'apellido', 'direccion', 'email', 'legajo']"
     size="small"
@@ -14,47 +14,36 @@
             </p-message>
         }
 
-        <div class="lg:hidden mb-2">
-            <app-mobile-sort-select [sortOptions]="sortOptions" [table]="dt2"></app-mobile-sort-select>
+        <div class="grid grid-cols-12 gap-2 w-full">
+            <div class="col-span-12 md:col-span-6 lg:col-span-4">
+                <label class="block text-xs sm:text-sm md:text-base font-medium mb-2">Especialidad:</label>
+                <app-especialidad-filter (selectionChange)="onEspecialidadChanged($event)"></app-especialidad-filter>
+            </div>
+            <div class="col-span-12 md:col-span-6 lg:col-span-4">
+                <label class="block text-xs sm:text-sm md:text-base font-medium mb-2">Plan:</label>
+                <app-plan-filter (selectionChange)="onPlanChanged($event!)" [disable]="disablePlanDropDown"></app-plan-filter>
+            </div>
         </div>
 
-        <div class="sm:block  lg:flex gap-2">
-            <div class="mb-3">
-                <div class="field">
-                    <label>Especialidad:</label>
-                    <div class="field">
-                        <app-especialidad-filter (selectionChange)="onEspecialidadChanged($event)"></app-especialidad-filter>
-                    </div>
-                </div>
-            </div>
-            <div class="mb-3">
-                <div class="field">
-                    <label>Plan:</label>
-                    <div class="field">
-                        <app-plan-filter (selectionChange)="onPlanChanged($event!)" [disable]="disablePlanDropDown"></app-plan-filter>
-                    </div>
-                </div>
-    
-            </div>
-    
-    
+        <div class="lg:hidden mb-2">
+            <app-mobile-sort-select [sortOptions]="sortOptions" [table]="dt2"></app-mobile-sort-select>
         </div>
     
     </ng-template>
         <ng-template pTemplate="header">
             <tr>
-                <th pSortableColumn="descripcion" pRipple>Materia <p-sortIcon field="descripcion"></p-sortIcon></th>
                 <th class="text-center">Acciones</th>
+                <th pSortableColumn="descripcion" pRipple>Materia <p-sortIcon field="descripcion"></p-sortIcon></th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-materia>
             <tr>
-                <td><span class="p-column-title">Legajo</span>{{materia.descripcion}}</td>
                 <td><span  class="p-column-title">Acciones</span>
                     <div class="flex gap-2 justify-center">
                         <p-button label="Ver cursos" (onClick)="redirectSeleccionarCurso(materia._id)" class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base" styleClass="px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2"></p-button>
                     </div>
                 </td>
+                <td><span class="p-column-title">Legajo</span>{{materia.descripcion}}</td>
             </tr>
         </ng-template>
         <ng-template pTemplate="loadingbody">

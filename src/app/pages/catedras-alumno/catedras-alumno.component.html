@@ -10,9 +10,9 @@
             [globalFilterFields]="['curso.materia.descripcion', 'curso.comision.descripcion', 'condicion']">
             <ng-template pTemplate="caption">
 
-                <div class="grid grid-cols-12 gap-4 w-full">
+                <div class="grid grid-cols-12 gap-2 w-full">
    
-                    <div class="col-span-12 md:col-span-3">
+                    <div class="col-span-12 md:col-span-3 md:col-start-1 order-2 md:order-1">
                         <label class="block text-xs sm:text-sm md:text-base font-medium text-white mb-2">Filtrar por condición:</label>
                         <p-dropdown 
                             [options]="condiciones" 
@@ -27,25 +27,26 @@
                     </div>
 
          
-                    <div class="col-span-12 md:col-span-2 md:col-start-4 flex items-end md:justify-center">
+                    <div class="col-span-12 md:col-span-2 md:col-start-5 order-1 md:order-2">
+                        <label class="block text-xs sm:text-sm md:text-base font-medium text-white mb-2">&nbsp;</label>
                         <p-button 
                             label="Ver resumen" 
                             icon="pi pi-chart-bar"
-                            class="w-full md:w-auto text-xs sm:text-sm md:text-base"
-                            styleClass="w-full md:w-auto text-xs sm:text-sm md:text-base"
+                            class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base w-full lg:w-auto"
+                            styleClass="w-full lg:w-auto px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2"
                             (onClick)="showResumenModal()">
                         </p-button>
                     </div>
 
             
-                    <div class="col-span-12 md:col-span-4 md:col-start-9">
+                    <div class="col-span-12 md:col-span-4 md:col-start-9 order-3 md:order-3">
                         <label class="block text-xs sm:text-sm md:text-base font-medium text-white mb-2">Búsqueda:</label>
                         <p-iconField iconPosition="left" class="w-full">
                             <p-inputIcon>
                                 <i class="pi pi-search"></i>
                             </p-inputIcon>
                             <input pInputText pSize="large" type="text" 
-                                class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base w-full h-[50px]"
+                                class="text-md sm:text-base md:text-base lg:text-base xl:text-base w-full h-[50px]"
                                 (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
                                 placeholder="Buscar cátedra" />
                         </p-iconField>

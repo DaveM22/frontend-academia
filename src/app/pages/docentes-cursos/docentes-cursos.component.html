@@ -12,30 +12,37 @@
         </div>
         }
 
-        <div class="grid grid-cols-12 gap-4 w-full">
-            <div class="col-span-12 md:col-span-3 flex justify-center">
-                <p-button 
-                    label="Volver hacia atras" 
-                    severity="primary" 
-                    styleClass="text-xs sm:text-sm md:text-base lg:text-base xl:text-base px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2"
-                    (onClick)="redirectBackToCourses()">
-                </p-button>
+        <div class="grid grid-cols-12 gap-2 w-full">
+            <div class="col-span-12 md:col-span-2 md:col-start-5 flex flex-col md:flex-row gap-2 order-1 md:order-1">
+                <div class="flex-1">
+                    <label class="block text-xs sm:text-sm md:text-base font-medium mb-2">&nbsp;</label>
+                    <p-button 
+                        label="Volver hacia atras" 
+                        severity="primary" 
+                        class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base w-full lg:w-auto"
+                        styleClass="w-full lg:w-auto px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2"
+                        (onClick)="redirectBackToCourses()">
+                    </p-button>
+                </div>
+                <div class="flex-1">
+                    <label class="block text-xs sm:text-sm md:text-base font-medium mb-2">&nbsp;</label>
+                    <p-button 
+                        label="Nueva asignación" 
+                        severity="info" 
+                        class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base w-full lg:w-auto"
+                        styleClass="w-full lg:w-auto px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2"
+                        (onClick)="redirectNewDocenteCurso()">
+                    </p-button>
+                </div>
             </div>
-            <div class="col-span-12 md:col-span-4 md:col-start-5 flex justify-center">
-                <p-button 
-                    label="Nueva asignación" 
-                    severity="info" 
-                    styleClass="text-xs sm:text-sm md:text-base lg:text-base xl:text-base px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2"
-                    (onClick)="redirectNewDocenteCurso()">
-                </p-button>
-            </div>
-            <div class="col-span-12 md:col-span-4">
+            <div class="col-span-12 md:col-span-4 md:col-start-9 order-2 md:order-2">
+                <label class="block text-xs sm:text-sm md:text-base font-medium mb-2">Búsqueda:</label>
                 <p-iconField iconPosition="left" class="w-full">
                     <p-inputIcon>
                         <i class="pi pi-search"></i>
                     </p-inputIcon>
                     <input pInputText pSize="large" type="text" 
-                        class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base w-full h-[50px]" 
+                        class="text-md sm:text-base md:text-base lg:text-base xl:text-base w-full h-[50px]" 
                         (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
                         placeholder="Buscar docente" />
                 </p-iconField>
@@ -44,17 +51,14 @@
     </ng-template>
     <ng-template pTemplate="header">
         <tr>
+            <th class="text-center">Acciones</th>
             <th>Apellido</th>
             <th>Nombre</th>
             <th>Cargo</th>
-            <th class="text-center">Acciones</th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-docenteCurso>
         <tr>
-            <td><span class="p-column-title">Apellido</span>{{docenteCurso.profesor.apellido}}</td>
-            <td><span class="p-column-title">Nombre</span>{{docenteCurso.profesor.nombre}}</td>
-            <td><span class="p-column-title">Cargo</span>{{docenteCurso.cargo}}</td>
             <td><span class="p-column-title">Acciones</span>
                 <div class="flex flex-col gap-2 justify-center lg:flex-row">
                     <p-button 
@@ -65,6 +69,9 @@
                     </p-button>
                 </div>
             </td>
+            <td><span class="p-column-title">Apellido</span>{{docenteCurso.profesor.apellido}}</td>
+            <td><span class="p-column-title">Nombre</span>{{docenteCurso.profesor.nombre}}</td>
+            <td><span class="p-column-title">Cargo</span>{{docenteCurso.cargo}}</td>
         </tr>
     </ng-template>
     <ng-template pTemplate="loadingbody">

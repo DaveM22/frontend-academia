@@ -10,22 +10,24 @@
 
     }
 
-<div class="col-span-12 lg:hidden mb-2">
-    <app-mobile-sort-select [sortOptions]="sortOptions" [table]="dt2"></app-mobile-sort-select>
-</div>
-
-<div class="grid grid-cols-12 gap-4 w-full">
+<div class="grid grid-cols-12 gap-2 w-full">
     <div class="col-span-12 md:col-span-4 md:col-start-9">
+        <label class="block text-xs sm:text-sm md:text-base font-medium mb-2">Búsqueda:</label>
         <p-iconField iconPosition="left">
             <p-inputIcon>
                 <i class="pi pi-search"></i>
             </p-inputIcon>
             <input pInputText pSize="large" type="text" 
-                class="text-sm sm:text-base md:text-lg lg:text-lg xl:text-xl w-full h-[50px]" 
+                class="text-md sm:text-base md:text-base lg:text-base xl:text-base w-full h-[50px]" 
                 (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
                 placeholder="Buscar parametro" />
         </p-iconField>
     </div>
+</div>
+
+<div class="col-span-12 lg:hidden mb-2">
+    <label class="block text-xs sm:text-sm md:text-base font-medium mb-2">Seleccionar columna:</label>
+    <app-mobile-sort-select [sortOptions]="sortOptions" [table]="dt2"></app-mobile-sort-select>
 </div>
 
     </ng-template>
@@ -56,7 +58,7 @@
                         </ng-template>
                     </p-toggleswitch>
                 </div>
-            </td>   
+            </td>
         </tr>
     </ng-template>
 

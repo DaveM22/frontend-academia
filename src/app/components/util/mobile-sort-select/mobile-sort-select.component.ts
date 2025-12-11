@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DropdownModule } from 'primeng/dropdown';
+import { SelectModule } from 'primeng/select';
 import { FormsModule } from '@angular/forms';
 import { Table } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
@@ -13,40 +13,26 @@ export interface SortOption {
 @Component({
   selector: 'app-mobile-sort-select',
   standalone: true,
-  imports: [CommonModule, DropdownModule, FormsModule, ButtonModule],
+  imports: [CommonModule, SelectModule, FormsModule, ButtonModule],
   template: `
     <div class="block lg:hidden w-full">
-      <label class="block text-xs font-semibold mb-2">Ordenar por:</label>
-      <div class="flex gap-2">
-        <p-dropdown 
-          [options]="sortOptionsWithDefault" 
-          [(ngModel)]="selectedSort"
-          optionLabel="label" 
-          optionValue="field"
-          placeholder="Seleccionar columna..."
-          (onChange)="onSortChange($event)"
-          styleClass="w-full text-xs"
-          [style]="{ 'font-size': '0.75rem' }">
-        </p-dropdown>
-        <p-button 
-          icon="pi pi-times"
-          [rounded]="true"
-          [text]="true"
-          severity="secondary"
-          (onClick)="clearSort()"
-          [style]="{ 'min-width': '38px', 'height': '38px' }">
-        </p-button>
-      </div>
+      <p-select
+        [options]="sortOptionsWithDefault" 
+        [(ngModel)]="selectedSort"
+        optionLabel="label" 
+        optionValue="field"
+        placeholder="Seleccionar columna..."
+        (onChange)="onSortChange($event)"
+        [showClear]="false"
+        emptyFilterMessage="No hay registros"
+        emptyMessage="No hay registros"
+        class="text-md sm:text-base md:text-base lg:text-base xl:text-base"
+        styleClass="text-md sm:text-base md:text-base lg:text-base xl:text-base w-full"
+        appendTo="body">
+      </p-select>
     </div>
   `,
-  styles: [`
-    :host ::ng-deep .p-dropdown {
-      height: 38px !important;
-    }
-    :host ::ng-deep .p-dropdown-trigger {
-      width: 2rem !important;
-    }
-  `]
+  styles: []
 })
 export class MobileSortSelectComponent implements OnInit {
   @Input() sortOptions: SortOption[] = [];

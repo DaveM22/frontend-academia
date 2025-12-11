@@ -3,42 +3,42 @@
     styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-md sm:text-base md:text-base lg:text-base xl:text-base" responsiveLayout="stack" [breakpoint]="'960px'"
     [paginator]="true" [scrollable]="true" size="small" [rows]="rowsPerPage" [scrollHeight]="scrollSize" [globalFilterFields]="['descripcion']">
     <ng-template pTemplate="caption">
-    @if (error$ | async)
-    {
-    <p-message severity="error" class="mb-2">
-        {{(errorMessage$ | async)}}
-    </p-message>
+        @if (error$ | async)
+        {
+        <p-message severity="error" class="mb-2">
+            {{(errorMessage$ | async)}}
+        </p-message>
+        }
 
-    }
+        <div class="grid grid-cols-12 gap-2 w-full">
+            <div class="col-span-12 md:col-span-3 md:col-start-6">
+                <label class="block text-xs sm:text-sm md:text-base font-medium mb-2">&nbsp;</label>
+                <p-button
+                    label="Nueva especialidad"
+                    severity="info"
+                    class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base w-full lg:w-auto"
+                    styleClass="w-full lg:w-auto px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2"
+                    (onClick)="redirectNewEspecialidad()"
+                ></p-button>
+            </div>
+            <div class="col-span-12 md:col-span-4 md:col-start-9">
+                <label class="block text-xs sm:text-sm md:text-base font-medium mb-2">Búsqueda:</label>
+                <p-iconField iconPosition="left" class="w-full">
+                    <p-inputIcon>
+                        <i class="pi pi-search"></i>
+                    </p-inputIcon>
+                    <input pSize="large" pInputText type="text" 
+                        class="text-md sm:text-base md:text-base lg:text-base xl:text-base w-full h-[50px]" 
+                        (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
+                        placeholder="Buscar especialidad" />
+                </p-iconField>
+            </div>
+        </div>
 
-<div class="col-span-12 lg:hidden mb-2">
-    <app-mobile-sort-select [sortOptions]="sortOptions" [table]="dt2"></app-mobile-sort-select>
-</div>
-
-<div class="grid grid-cols-12 gap-4 w-full">
-    <div class="col-span-12 md:col-span-4 md:col-start-5 flex justify-center">
-        <p-button
-            label="Nueva especialidad"
-            severity="info"
-            [styleClass]="
-              'text-xs sm:text-sm md:text-base lg:text-base xl:text-base px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2'
-            "
-            (onClick)="redirectNewEspecialidad()"
-        ></p-button>
-    </div>
-    <div class="col-span-12 md:col-span-4">
-        <p-iconField iconPosition="left">
-            <p-inputIcon>
-                <i class="pi pi-search"></i>
-            </p-inputIcon>
-            <input pSize="large" pInputText type="text" 
-                class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base w-full h-[50px]" 
-                (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
-                placeholder="Buscar especialidad" />
-        </p-iconField>
-    </div>
-</div>
-
+        <div class="lg:hidden mb-2">
+            <label class="block text-xs sm:text-sm md:text-base font-medium mb-2">Seleccionar columna:</label>
+            <app-mobile-sort-select [sortOptions]="sortOptions" [table]="dt2"></app-mobile-sort-select>
+        </div>
     </ng-template>
     <ng-template pTemplate="header">
         <tr>
