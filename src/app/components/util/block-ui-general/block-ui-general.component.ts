@@ -21,5 +21,5 @@ export class BlockUiGeneralComponent {
   constructor(private store:Store){
 
   }
-  public loading$:Observable<boolean> = this.store.select(AppPageState.getGeneralLoading);
+  public loading$:Observable<boolean> = this.store.select(AppPageState.getFormLoading);
 }

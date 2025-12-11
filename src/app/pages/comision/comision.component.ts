@@ -14,11 +14,12 @@ import { ComisionFilter } from '../../entities/filter';
 import { CardModule } from 'primeng/card';
 import { BlockUiComponent } from '../../components/util/block-ui/block-ui.component';
 import { AppPageState } from '../../store/states/page/app.state';
+import { BlockUiGeneralComponent } from '../../components/util/block-ui-general/block-ui-general.component';
 
 @Component({
   selector: 'app-comision',
   standalone: true,
-  imports: [CommonModule, PanelModule, RouterModule, CardModule],
+  imports: [CommonModule, PanelModule, RouterModule, CardModule, BlockUiGeneralComponent],
   templateUrl: './comision.component.html',
   styleUrl: './comision.component.scss'
 })

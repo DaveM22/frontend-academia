@@ -93,8 +93,8 @@ export class EspecialidadState {
 
   @Action(GetByIdEspecialidadAction)
   async getByIdEspecialidad(ctx: StateContext<EspecialidadModelState>, action: GetByIdEspecialidadAction) {
-    ctx.patchState({ loading: true, error: false })
-
+    ctx.patchState({ error: false })
+    ctx.dispatch(new LoadingForm(true));
     try {
       const response = await lastValueFrom(this.service.getByIdEspecialidad(action.id));
       ctx.dispatch(new AsignSelectedEspecialidad(response));
@@ -103,7 +103,7 @@ export class EspecialidadState {
       ErrorStateHandler.handleError(error, ctx);
     }
     finally {
-      ctx.patchState({ loading: false })
+      ctx.dispatch(new LoadingForm(false));
     }
 
   }
@@ -135,8 +135,8 @@ export class EspecialidadState {
     ctx.patchState({
       error: false,
       errorMessage: '',
-      loading: true,
     })
+    ctx.dispatch(new LoadingForm(true));
     try {
       await lastValueFrom(this.service.deleteEspecialidad(action.id));
       ctx.patchState({
@@ -147,9 +147,7 @@ export class EspecialidadState {
       ErrorStateHandler.handleError(error, ctx);
     }
     finally {
-      ctx.patchState({
-        loading: false,
-      })
+      ctx.dispatch(new LoadingForm(false));
 
     }
   }

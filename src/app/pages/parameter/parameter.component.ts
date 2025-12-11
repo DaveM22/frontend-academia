@@ -9,10 +9,11 @@ import { PanelModule } from 'primeng/panel';
 import { RippleModule } from 'primeng/ripple';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
+import { BlockUiGeneralComponent } from '../../components/util/block-ui-general/block-ui-general.component';
 @Component({
   selector: 'app-parameter',
   standalone: true,
-  imports: [ReactiveFormsModule,ToggleSwitchModule,RouterModule,CommonModule, PanelModule, CardModule, InputTextModule, ButtonModule, RippleModule],
+  imports: [ReactiveFormsModule,ToggleSwitchModule,RouterModule,CommonModule, PanelModule, CardModule, InputTextModule, ButtonModule, RippleModule, BlockUiGeneralComponent],
   templateUrl: './parameter.component.html',
   styleUrl: './parameter.component.scss'
 })

@@ -23,6 +23,13 @@ export class EspecialidadEditarComponent {
     
   }
 
+    ngOnInit(): void {
+    this.especialidad$.subscribe(x => {
+      this.especialidad = x!;
+    })
+    this.store.dispatch(new GetByIdEspecialidadAction(this.router.snapshot.params['id']));
+  }
+
 
 
 }

@@ -113,14 +113,14 @@ export class PersonaFormComponent implements OnDestroy {
     if (this.form.value._id === null) {
       this.store.dispatch(new PostAlumnoAction(alumno)).subscribe(() => {
         this.router.navigate(["/alumnos/lista"])
-        this.messageService.add({ severity: 'success', summary: 'Crear alumno', detail: 'Se ha creado el alumno' });
+        this.messageService.add({ severity: 'success', detail: 'Se ha creado el alumno' });
       });
 
     }
     else {
       this.store.dispatch(new PutAlumnoAction(alumno)).subscribe(x => {
         this.router.navigate(["/alumnos/lista"])
-        this.messageService.add({ severity: 'success', summary: 'Editar alumno', detail: 'Se guardaron los cambios del alumno' });
+        this.messageService.add({ severity: 'success', detail: 'Se guardaron los cambios del alumno' });
         this.store.dispatch(new ClearSelectedPersona);
       });
     }
@@ -130,12 +130,12 @@ export class PersonaFormComponent implements OnDestroy {
     if (this.form.value._id === null) {
       this.store.dispatch(new PostProfesorAction(this.personaDto)).subscribe(() => {
         this.router.navigate(["/profesores/lista"])
-        this.messageService.add({ severity: 'success', summary: 'Crear profesor', detail: 'Se ha creado el profesor' });
+        this.messageService.add({ severity: 'success', detail: 'Se ha creado el profesor' });
       });
     }
     else {
       this.store.dispatch(new PutProfesorAction(profesor)).subscribe(x => this.router.navigate(["/profesores/lista"]));
-      this.messageService.add({ severity: 'success', summary: 'Editar profesor', detail: 'Se guardaron los cambios del profesor' });
+      this.messageService.add({ severity: 'success', detail: 'Se guardaron los cambios del profesor' });
       this.store.dispatch(new ClearSelectedPersona);
     }
 

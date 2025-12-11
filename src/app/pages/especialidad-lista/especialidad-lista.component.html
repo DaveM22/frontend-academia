@@ -51,10 +51,12 @@
             <td  style="width:80%"><span class="p-column-title">Especialidad</span>{{especialidad.descripcion}}
             </td>
             <td style="width:20%"><span class="p-column-title">Acciones</span>
-                <div class="flex gap-2 justify-center">
-                    <p-button styleClass="text-xs sm:text-sm md:text-base lg:text-base xl:text-base px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2" label="Editar" severity="warn" 
+                        <div class="flex flex-col gap-2 justify-center lg:flex-row">
+                    <p-button                         class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base w-full lg:w-auto"
+                        styleClass="w-full lg:w-auto px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2" label="Editar" severity="warn" 
                         (onClick)="redirectEditEspecialidad(especialidad._id)" />
-                    <p-button styleClass="text-xs sm:text-sm md:text-base lg:text-base xl:text-base px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2" label="Borrar" severity="danger" (onClick)="showModal(especialidad)" />
+                    <p-button                         class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base w-full lg:w-auto"
+                        styleClass="w-full lg:w-auto px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2" label="Borrar" severity="danger" (onClick)="showModal(especialidad)" />
                 </div>
             </td>
         </tr>
@@ -74,8 +76,6 @@
         }
     </ng-template>
 </p-table>
-
-<app-block-ui [target]="dt2"></app-block-ui>
 
 
 

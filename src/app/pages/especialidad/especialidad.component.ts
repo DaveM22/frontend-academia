@@ -21,10 +21,11 @@ import { BlockUI } from 'primeng/blockui';
 import { ProgressSpinner } from 'primeng/progressspinner';
 import { AppPageState } from '../../store/states/page/app.state';
 import { BlockUiComponent } from "../../components/util/block-ui/block-ui.component";
+import { BlockUiGeneralComponent } from '../../components/util/block-ui-general/block-ui-general.component';
 @Component({
   selector: 'app-especialidad',
   standalone: true,
-  imports: [RouterModule, CommonModule, PanelModule, CardModule],
+  imports: [RouterModule, CommonModule, PanelModule, CardModule, BlockUiGeneralComponent],
   templateUrl: './especialidad.component.html',
   styleUrl: './especialidad.component.scss'
 })

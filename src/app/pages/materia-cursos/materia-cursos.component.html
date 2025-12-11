@@ -1,4 +1,4 @@
-<p-table #dt2 [value]="cursos" [loading]="(loading$ | async)" [loadingIcon]="''"
+<p-table #dt2 [value]="cursos" 
     styleClass="p-datatable-gridlines p-datatable-striped h-full text-xs sm:text-sm md:text-base lg:text-base xl:text-base" responsiveLayout="stack"
     [breakpoint]="'960px'" [paginator]="true" [scrollable]="true" [rows]="5" scrollHeight="flex"
     [globalFilterFields]="['nombre', 'apellido', 'direccion', 'email', 'legajo']">
@@ -60,5 +60,3 @@
         }
     </ng-template>
 </p-table>
-
-<app-block-ui [target]="dt2"></app-block-ui>

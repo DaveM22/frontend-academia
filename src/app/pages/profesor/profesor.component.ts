@@ -4,11 +4,12 @@ import { PanelModule } from 'primeng/panel';
 import { RouterModule } from '@angular/router';
 import { CardModule } from 'primeng/card';
 import { BlockUiComponent } from '../../components/util/block-ui/block-ui.component';
+import { BlockUiGeneralComponent } from '../../components/util/block-ui-general/block-ui-general.component';
 
 @Component({
   selector: 'app-profesor',
   standalone: true,
-  imports: [CommonModule, RouterModule, PanelModule, CardModule],
+  imports: [CommonModule, RouterModule, PanelModule, CardModule, BlockUiGeneralComponent],
   templateUrl: './profesor.component.html',
   styleUrl: './profesor.component.scss'
 })

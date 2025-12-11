@@ -6,19 +6,19 @@
 
 @media (max-width: 640px) {
     :host::ng-deep .p-datatable {
-        height: 72vh !important;
+        height: 75dvh !important;
     }
 }
 
 @media (min-width: 640px) {
     :host::ng-deep .p-datatable {
-        height: 60vh !important;
+        height: 75dvh !important;
     }
 }
 
 @media (min-width: 768px) {
     :host::ng-deep .p-datatable {
-        height: 60vh !important;
+       height: 75dvh !important;
     }
 }
 

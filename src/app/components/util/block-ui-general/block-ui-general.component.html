@@ -3,10 +3,10 @@
 
   </div>
 
-  <p-blockUI [target]="target" [blocked]="(loading$ | async)!">
-    <div class="absolute inset-0 flex flex-col items-center justify-center">
+  <p-blockUI [target]="target" [blocked]="(loading$ | async)">
+    <div class="absolute inset-0 flex flex-col items-center justify-start" style="background-color: rgba(0,0,0,0.12);">
       <p-progress-spinner ariaLabel="loading" />
-      <p class="text-gray-700 text-base text-center">
+      <p class="text-white text-base text-center font-medium">
         Un momento, estamos procesando tu solicitud...
       </p>
     </div>

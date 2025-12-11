@@ -134,14 +134,14 @@ export class InscripcionFormComponent implements OnInit, OnDestroy {
       this.alumnoInscripcionDto = this.form.value;
       this.store.dispatch(new PostAlumnoInscripcionAction(this.alumnoInscripcionDto)).subscribe(() => {
         this.router.navigate([`/inscripciones/alumnos/${this.alumnoId}`]);
-        this.messageService.add({ severity: 'success', summary: 'Crear inscripción', detail: 'Se ha registrado la inscripción' });
+        this.messageService.add({ severity: 'success',  detail: 'Se ha registrado la inscripción' });
       });
     }
     else {
       this.alumnoInscripcionDto = this.form.value;
       this.store.dispatch(new PutAlumnoInscripcionAction(this.alumnoInscripcion._id, this.alumnoInscripcionDto)).subscribe(() => {
         this.router.navigate([`/inscripciones/alumnos/${this.alumno._id}`]);
-        this.messageService.add({ severity: 'success', summary: 'Editar inscripción', detail: 'Se han guardado los cambios de la inscripción' });
+        this.messageService.add({ severity: 'success', detail: 'Se han guardado los cambios de la inscripción' });
       });
     }
   }

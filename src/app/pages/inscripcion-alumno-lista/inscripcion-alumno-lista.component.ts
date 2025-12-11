@@ -63,11 +63,13 @@ export class InscripcionAlumnoListaComponent implements OnInit, OnDestroy {
     this.alumnos$.subscribe(x => this.alumnos = x ? [...x] : []);
     this.updateRowsPerPage();
     this.especialidadSelected$.subscribe(x => {
+
       if (x) {
         this.disablePlanDropDown = false;
         let filter = new PlanFilter();
         filter.especialidadId = x!._id;
         this.store.dispatch(new GetPlanAction(filter));
+              this.mostrarTip = false;
       }
       else {
         this.store.dispatch(new ClearSelectedPlanFilter);

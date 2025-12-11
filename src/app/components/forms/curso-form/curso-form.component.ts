@@ -97,7 +97,7 @@ export class CursoFormComponent implements OnDestroy {
     this.curso = this.form.value
     if (this.form.value._id === null) {
       this.store.dispatch(new PostCursoAction(this.curso)).subscribe(() => {
-        this.messageService.add({ severity: 'success', summary: 'Crear curso', detail: 'Se ha creado el curso: ' + this.curso.descripcion });
+        this.messageService.add({ severity: 'success', detail: 'Se ha creado el curso: ' + this.curso.descripcion });
         this.router.navigate(["/cursos/lista"])
         this.form.reset();
       });
@@ -105,7 +105,7 @@ export class CursoFormComponent implements OnDestroy {
     else {
       this.store.dispatch(new PutCursoAction(this.curso)).subscribe(x => {
         this.router.navigate(["/cursos/lista"])
-        this.messageService.add({ severity: 'success', summary: 'Editar curso', detail: 'Se guardaron los cambios del curso' });
+        this.messageService.add({ severity: 'success', detail: 'Se guardaron los cambios del curso' });
         this.store.dispatch(new ClearSelectedCursoAction);
         this.form.reset();
       });

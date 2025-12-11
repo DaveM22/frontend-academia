@@ -38,7 +38,7 @@ export class PlanListaComponent implements OnInit {
   rowsPerPage = 5;
   public planes: Plan[] = [];
   public planes$: Observable<Plan[]> = this.store.select(PlanState.getPlanes)
-  public loading$: Observable<boolean> = this.store.select(PlanState.getLoading);
+  public loading$: Observable<boolean> = this.store.select(AppPageState.getFormLoading);
   public error$: Observable<boolean> = this.store.select(PlanState.getError);
   public errorMessage$: Observable<string> = this.store.select(PlanState.getErrorMessage);
   public especialidadSelected$ = this.store.select(AppPageState.getSelectedEspecialidad);
@@ -101,9 +101,7 @@ export class PlanListaComponent implements OnInit {
   }
 
   redirectEditarPlan(id: string) {
-    this.store.dispatch(new LoadingForm(true));
     this.store.dispatch(new GetByIdPlanAction(id, new PlanFilter())).subscribe(() => {
-      this.store.dispatch(new LoadingForm(false));
       this.router.navigate(["/planes/editar/" + id])
     })
   }

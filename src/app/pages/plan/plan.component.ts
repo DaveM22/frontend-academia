@@ -21,11 +21,12 @@ import { CardModule } from 'primeng/card';
 import { BlockUI } from 'primeng/blockui';
 import { ProgressSpinner } from 'primeng/progressspinner';
 import { BlockUiComponent } from '../../components/util/block-ui/block-ui.component';
+import { BlockUiGeneralComponent } from '../../components/util/block-ui-general/block-ui-general.component';
 
 @Component({
   selector: 'app-plan',
   standalone: true,
-  imports: [CommonModule, RouterModule, PanelModule, CardModule],
+  imports: [CommonModule, RouterModule, PanelModule, CardModule, BlockUiGeneralComponent],
   templateUrl: './plan.component.html',
   styleUrl: './plan.component.scss'
 })

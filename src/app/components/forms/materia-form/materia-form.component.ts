@@ -47,14 +47,14 @@ export class MateriaFormComponent {
     if (this.form.value._id === '') {
       this.store.dispatch(new PostMateriaAction(this.materia!)).subscribe(x => {
         this.router.navigate([`/planes/${this.planId}/materias`])
-        this.messageService.add({ severity: 'success', summary: 'Crear materia', detail: 'Se ha creado la materia: ' + this.materia.descripcion });
+        this.messageService.add({ severity: 'success', detail: 'Se ha creado la materia: ' + this.materia.descripcion });
       });
 
     }
     else {
       this.store.dispatch(new PutMateriaAction(this.materia!)).subscribe(x => {
         this.router.navigate([`/planes/${this.planId}/materias`])
-        this.messageService.add({ severity: 'success', summary: 'Actualizar materia', detail: 'Se ha actualizado la materia: ' + this.materia.descripcion });
+        this.messageService.add({ severity: 'success', detail: 'Se ha actualizado la materia: ' + this.materia.descripcion });
       });
       this.store.dispatch(new ClearMateriaAction);
     }

@@ -1,6 +1,7 @@
-<p-table #dt2 [value]="alumnos" 
-    styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-xs sm:text-sm md:text-base lg:text-base xl:text-base" responsiveLayout="stack"
-    [breakpoint]="'960px'" [paginator]="true" size="small" [scrollable]="true" [rows]="rowsPerPage" [scrollHeight]="scrollSize"
+<p-table #dt2 [value]="alumnos"
+    styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-xs sm:text-sm md:text-base lg:text-base xl:text-base"
+    responsiveLayout="stack" [breakpoint]="'960px'" [paginator]="true" size="small" [scrollable]="true"
+    [rows]="rowsPerPage" [scrollHeight]="scrollSize"
     [globalFilterFields]="['nombre', 'apellido', 'direccion', 'email', 'legajo']">
     <ng-template pTemplate="caption">
         @if (error$ | async)
@@ -19,11 +20,9 @@
                 <app-mobile-sort-select [sortOptions]="sortOptions" [table]="dt2"></app-mobile-sort-select>
             </div>
             <div class="col-span-12 md:col-span-4 md:col-start-5 flex justify-center">
-                <p-button 
-                    label="Nuevo alumno" 
-                    severity="info" 
-                    class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base" 
-                    styleClass="px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2" 
+                <p-button label="Nuevo alumno" severity="info"
+                    class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base"
+                    styleClass="px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2"
                     (onClick)="redirecToNuevoAlumno()">
                 </p-button>
             </div>
@@ -32,10 +31,9 @@
                     <p-inputIcon>
                         <i class="pi pi-search"></i>
                     </p-inputIcon>
-                    <input pInputText pSize="large" type="text" 
+                    <input pInputText pSize="large" type="text"
                         class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base w-full h-[50px]"
-                        (input)="dt2.filterGlobal($any($event.target).value, 'contains')" 
-                        placeholder="Buscar alumno" />
+                        (input)="dt2.filterGlobal($any($event.target).value, 'contains')" placeholder="Buscar alumno" />
                 </p-iconField>
             </div>
         </div>
@@ -59,13 +57,16 @@
             <td><span class="p-column-title">Email</span>{{alumno.email}}</td>
             <td><span class="p-column-title">Plan</span>{{alumno.plan.descripcion}}</td>
             <td><span class="p-column-title">Acciones</span>
-                <div class="flex gap-2 justify-center">
+                <div class="flex flex-col gap-2 justify-center lg:flex-row">
                     <p-button label="Ver Info" severity="info" (onClick)="showAlumnoInfo(alumno)"
-                        styleClass="text-xs sm:text-sm md:text-base lg:text-base xl:text-base px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2"></p-button>
+                        class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base w-full lg:w-auto"
+                        styleClass="w-full lg:w-auto px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2"></p-button>
                     <p-button label="Editar" severity="warn" (onClick)="redirectToEditarAlumno(alumno._id)"
-                        styleClass="text-xs sm:text-sm md:text-base lg:text-base xl:text-base px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2"></p-button>
+                        class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base w-full lg:w-auto"
+                        styleClass="w-full lg:w-auto px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2"></p-button>
                     <p-button label="Borrar" severity="danger" (onClick)="modalConfirmar(alumno)"
-                        styleClass="text-xs sm:text-sm md:text-base lg:text-base xl:text-base px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2" />
+                        class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base w-full lg:w-auto"
+                        styleClass="w-full lg:w-auto px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2" />
                 </div>
             </td>
         </tr>
@@ -90,9 +91,9 @@
     </ng-template>
 </p-table>
 
-<app-block-ui [target]="dt2"></app-block-ui>
-
-<p-dialog [(visible)]="displayAlumnoInfo" [modal]="true" [style]="{width: '50vw'}" [breakpoints]="{'960px': '75vw', '640px': '95vw'}" header="Información del Alumno" [draggable]="false" [resizable]="false">
+<p-dialog [(visible)]="displayAlumnoInfo" [modal]="true" [style]="{width: '50vw'}"
+    [breakpoints]="{'960px': '75vw', '640px': '95vw'}" header="Información del Alumno" [draggable]="false"
+    [resizable]="false">
     <div class="flex flex-col gap-4">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div class="flex flex-col gap-2">
@@ -130,7 +131,8 @@
         </div>
     </div>
     <ng-template pTemplate="footer">
-        <p-button label="Cerrar" severity="secondary" (onClick)="displayAlumnoInfo = false" styleClass="text-sm"></p-button>
+        <p-button label="Cerrar" severity="secondary" (onClick)="displayAlumnoInfo = false"
+            styleClass="text-sm"></p-button>
     </ng-template>
 </p-dialog>
 
@@ -143,10 +145,10 @@
     </ng-template>
     <ng-template pTemplate="footer" let-message>
         <div class="flex gap-2 justify-center">
-            <button type="button" pButton icon="pi pi-check" label="Aceptar" severity="success" (click)="message.accept()"
-                class="ui-button-success"></button>
-            <button type="button" pButton icon="pi pi-times" label="Cancelar" severity="danger" (click)="message.reject()"
-                class="ui-button-secondary"></button>
+            <button type="button" pButton icon="pi pi-check" label="Aceptar" severity="success"
+                (click)="message.accept()" class="ui-button-success"></button>
+            <button type="button" pButton icon="pi pi-times" label="Cancelar" severity="danger"
+                (click)="message.reject()" class="ui-button-secondary"></button>
         </div>
 
     </ng-template>

@@ -175,7 +175,8 @@ export class PlanState {
 
   @Action(DeletePlanAction)
   async deletePlan(ctx: StateContext<PlanModelState>, action: DeletePlanAction) {
-    ctx.patchState({ loading: true, error: false });
+    ctx.patchState({ error: false })
+    ctx.dispatch(new LoadingForm(true));
     try {
       const response = await lastValueFrom(this.service.delete(action.id));
       ctx.patchState({
@@ -187,7 +188,7 @@ export class PlanState {
       ErrorStateHandler.handleError(error, ctx);
     }
     finally {
-      ctx.patchState({ loading: false })
+      ctx.dispatch(new LoadingForm(false));
     }
   }
 

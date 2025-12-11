@@ -14,11 +14,12 @@ import { CursoFilter } from '../../entities/filter';
 import { CardModule } from 'primeng/card';
 import { BlockUiComponent } from '../../components/util/block-ui/block-ui.component';
 import { AppPageState } from '../../store/states/page/app.state';
+import { BlockUiGeneralComponent } from '../../components/util/block-ui-general/block-ui-general.component';
 
 @Component({
   selector: 'app-curso',
   standalone: true,
-  imports: [CommonModule, PanelModule, RouterModule, CardModule],
+  imports: [CommonModule, PanelModule, RouterModule, CardModule, BlockUiGeneralComponent],
   templateUrl: './curso.component.html',
   styleUrl: './curso.component.scss'
 })
