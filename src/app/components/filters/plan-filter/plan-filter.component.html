@@ -7,6 +7,8 @@
             [showClear]="true" 
             [disabled]="disable || (loading$ | async) === true"
             [placeholder]="(loading$ | async) ? 'Cargando planes...' : 'Seleccione un plan'"
+            emptyFilterMessage="No hay registros"
+            emptyMessage="No hay registros"
             (onChange)="onChangePlan()"
             (onClear)="onClear()"
             class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base"
