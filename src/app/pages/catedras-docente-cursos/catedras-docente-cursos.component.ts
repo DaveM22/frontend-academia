@@ -22,11 +22,12 @@ import { FormsModule } from '@angular/forms';
 import { DialogModule } from 'primeng/dialog';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { BlockUiComponent } from '../../components/util/block-ui/block-ui.component';
+import { MobileSortSelectComponent, SortOption } from '../../components/util/mobile-sort-select/mobile-sort-select.component';
 
 @Component({
   selector: 'app-catedras-docente-cursos',
   standalone: true,
-  imports: [CommonModule, ToolbarModule, PanelModule, TableModule, ButtonModule, IconFieldModule, InputIconModule, MessagesModule, InputTextModule, DropdownModule, FormsModule, DialogModule, ProgressSpinnerModule],
+  imports: [CommonModule, ToolbarModule, PanelModule, TableModule, ButtonModule, IconFieldModule, InputIconModule, MessagesModule, InputTextModule, DropdownModule, FormsModule, DialogModule, ProgressSpinnerModule, MobileSortSelectComponent],
   templateUrl: './catedras-docente-cursos.component.html',
   styleUrl: './catedras-docente-cursos.component.scss'
 })
@@ -46,6 +47,11 @@ export class CatedrasDocenteCursosComponent {
 
   rowsPerPage: number = 5;
   rowsPerPageOptions: number[] = [5, 10, 25, 50];
+  sortOptions: SortOption[] = [
+    { label: 'Materia', field: 'curso.materia.descripcion' },
+    { label: 'Comisión', field: 'curso.comision.descripcion' },
+    { label: 'Cargo', field: 'cargo' }
+  ];
   displayResumenModal: boolean = false;
   resumenEstados = { teoria: 0, practica: 0, total: 0 };
 

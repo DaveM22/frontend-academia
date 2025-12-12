@@ -77,6 +77,7 @@ export class UsuarioFormComponent {
     if (persona?._id !== "") {
       this.form.patchValue(persona!);
       this.form.patchValue({ 'plan': persona!.plan.descripcion, 'planId': persona!.plan._id });
+      this.form.patchValue({'personaId': persona!._id, 'personaDescripcion': persona!.legajo });
     }
   }
 

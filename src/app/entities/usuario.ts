@@ -7,4 +7,5 @@ export class Usuario {
     persona:Persona | null = null
     nombreYapellido:string | null = ''
     clave:string | null = ''
+    roles:string = ''
 }

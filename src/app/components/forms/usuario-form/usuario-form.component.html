@@ -31,6 +31,7 @@
             }
         </div>
 
+        @if(!usuario || !usuario._id) {
         <div class="col-span-12 lg:col-start-4 lg:col-span-6">
             <label for="role" class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl">Rol:</label>
             <p-select id="role" name="role" formControlName="role" [options]="roles" optionLabel="name" optionValue="code" appendTo="body"
@@ -41,12 +42,12 @@
             </small>
             }
         </div>
-
-
+        }
 
         <div class="col-span-12 lg:col-start-4 lg:col-span-6">
             <label for="clave" class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl">Clave:</label>
-            <p-password formControlName="clave" [feedback]="false" styleClass="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl w-full" inputStyleClass="h-[50px]" />
+            <p-password id="clave" formControlName="clave" [toggleMask]="true" styleClass="w-full text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl" inputStyleClass="h-[50px] w-full" />
+            <small class="block text-gray-400 text-xs sm:text-sm mt-1">Si completas este campo, reemplazará la contraseña anterior</small>
             @if(form.get('descripcion')?.invalid && form.get('clave')?.dirty){
             <small class="p-error block text-red-600">
                 El campo clave es requerido
