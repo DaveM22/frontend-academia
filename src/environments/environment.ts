@@ -1,6 +1,10 @@
+/// <reference types="vite/client" />
+
 export const environment = {
-    production: true,
-    apiUrl: 'https://backend-ncxs.onrender.com/api',
-    roleLogin:'https://academia.com/roles',
-    audicence:'https://academia.com'
+    production: import.meta.env['PRODUCTION'],
+    apiUrl: import.meta.env['API_URL'],
+    roleLogin: import.meta.env['ROLE_LOGIN'],
+    audicence: import.meta.env['AUDIENCE'],
+    auth0Domain: import.meta.env['AUTH0_DOMAIN'],
+    auth0ClientId: import.meta.env['AUTH0_CLIENT_ID']
 };

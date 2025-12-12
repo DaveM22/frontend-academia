@@ -39,7 +39,6 @@ import { NotificacionState } from './store/states/api/notificacion.state';
 import { DashboardState } from './store/states/api/dashboard.state';
 import { DashboardProfesorState } from './store/states/api/dashboard-profesor.state';
 
-// MyPreset imported from mypreset.ts
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -63,8 +62,8 @@ export const appConfig: ApplicationConfig = {
     }),
     withNgxsLoggerPlugin(),
     provideAuth0({
-      domain: 'dev-20at530bk6073fra.us.auth0.com',
-      clientId: 'KnOM8qladHYWB4bFbKNLHdNDDVQn9GFP',
+      domain: environment.auth0Domain,
+      clientId: environment.auth0ClientId,
       authorizationParams: {
         redirect_uri: window.location.origin,
         audience:environment.audicence
