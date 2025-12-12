@@ -29,11 +29,12 @@ import { filter, distinctUntilChanged, takeUntil, concatMap, last, take, first }
 import { Condicion, CondicionList } from '../../entities/enums';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { BlockUiComponent } from '../../components/util/block-ui/block-ui.component';
+import { MobileSortSelectComponent, SortOption } from '../../components/util/mobile-sort-select/mobile-sort-select.component';
 
 @Component({
   selector: 'app-catedras-alumno',
   standalone: true,
-  imports: [CommonModule, ToolbarModule, PanelModule, TableModule, ButtonModule, IconFieldModule, InputIconModule, MessagesModule, InputTextModule, CardModule, DropdownModule, FormsModule, DialogModule, ProgressSpinnerModule],
+  imports: [CommonModule, ToolbarModule, PanelModule, TableModule, ButtonModule, IconFieldModule, InputIconModule, MessagesModule, InputTextModule, CardModule, DropdownModule, FormsModule, DialogModule, ProgressSpinnerModule, MobileSortSelectComponent],
   templateUrl: './catedras-alumno.component.html',
   styleUrl: './catedras-alumno.component.scss'
 })
@@ -58,6 +59,11 @@ export class CatedrasAlumnoComponent implements OnInit {
   // Propiedades responsivas para la tabla
   rowsPerPage: number = 5; // Móvil por defecto
   rowsPerPageOptions: number[] = [5, 10, 25, 50];
+  sortOptions: SortOption[] = [
+    { label: 'Cátedra', field: 'curso.materia.descripcion' },
+    { label: 'Comisión', field: 'curso.comision.descripcion' },
+    { label: 'Condición', field: 'condicion' }
+  ];
 
   // Propiedades para el modal de resumen
   displayResumenModal: boolean = false;

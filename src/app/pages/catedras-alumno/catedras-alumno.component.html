@@ -10,10 +10,10 @@
             [globalFilterFields]="['curso.materia.descripcion', 'curso.comision.descripcion', 'condicion']">
             <ng-template pTemplate="caption">
 
-                <div class="grid grid-cols-12 gap-2 w-full">
-   
-                    <div class="col-span-12 md:col-span-3 md:col-start-1 order-2 md:order-1">
-                        <label class="block text-xs sm:text-sm md:text-base font-medium text-white mb-2">Filtrar por condición:</label>
+                <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 mb-4 w-full">
+                    <!-- Filtro Condición -->
+                    <div class="order-2 lg:order-1 w-full lg:w-1/3">
+                        <label class="block text-xs sm:text-sm md:text-base font-medium mb-2">Filtrar por condición:</label>
                         <p-dropdown 
                             [options]="condiciones" 
                             [(ngModel)]="selectedCondicion"
@@ -26,21 +26,20 @@
                         </p-dropdown>
                     </div>
 
-         
-                    <div class="col-span-12 md:col-span-2 md:col-start-5 order-1 md:order-2">
-                        <label class="block text-xs sm:text-sm md:text-base font-medium text-white mb-2">&nbsp;</label>
+                    <!-- Botón Ver Resumen -->
+                    <div class="order-1 lg:order-2 w-full lg:w-auto lg:flex-1 lg:flex lg:justify-center">
                         <p-button 
                             label="Ver resumen" 
-                            icon="pi pi-chart-bar"
+                            severity="info"
                             class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base w-full lg:w-auto"
                             styleClass="w-full lg:w-auto px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2"
                             (onClick)="showResumenModal()">
                         </p-button>
                     </div>
 
-            
-                    <div class="col-span-12 md:col-span-4 md:col-start-9 order-3 md:order-3">
-                        <label class="block text-xs sm:text-sm md:text-base font-medium text-white mb-2">Búsqueda:</label>
+                    <!-- Búsqueda -->
+                    <div class="order-3 lg:order-3 w-full lg:w-1/3">
+                        <label class="block text-xs sm:text-sm md:text-base font-medium mb-2">Búsqueda:</label>
                         <p-iconField iconPosition="left" class="w-full">
                             <p-inputIcon>
                                 <i class="pi pi-search"></i>
@@ -51,6 +50,11 @@
                                 placeholder="Buscar cátedra" />
                         </p-iconField>
                     </div>
+                </div>
+
+                <div class="lg:hidden mb-2">
+                    <label class="block text-xs sm:text-sm md:text-base font-medium mb-2">Seleccionar columna:</label>
+                    <app-mobile-sort-select [sortOptions]="sortOptions" [table]="dt2"></app-mobile-sort-select>
                 </div>
 
             </ng-template>

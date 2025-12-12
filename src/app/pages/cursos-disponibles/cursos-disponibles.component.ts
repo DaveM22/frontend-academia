@@ -28,11 +28,12 @@ import { PostAlumnoInscripcionAction } from '../../store/actions/api/alumno-insc
 import { Condicion } from '../../entities/enums';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { BlockUiComponent } from '../../components/util/block-ui/block-ui.component';
+import { MobileSortSelectComponent, SortOption } from '../../components/util/mobile-sort-select/mobile-sort-select.component';
 
 @Component({
   selector: 'app-cursos-disponibles',
   standalone: true,
-  imports: [CommonModule,ConfirmDialogModule,ToolbarModule, TableModule, ButtonModule, IconFieldModule, InputIconModule, MessagesModule, InputTextModule, ProgressSpinnerModule],
+  imports: [CommonModule,ConfirmDialogModule,ToolbarModule, TableModule, ButtonModule, IconFieldModule, InputIconModule, MessagesModule, InputTextModule, ProgressSpinnerModule, MobileSortSelectComponent],
   templateUrl: './cursos-disponibles.component.html',
   styleUrl: './cursos-disponibles.component.scss',
   providers:[ConfirmationService]
@@ -45,6 +46,9 @@ export class CursosDisponiblesComponent implements OnInit, OnDestroy {
   cursoSelected!:string;
   showConfirmation$:Observable<boolean> = this.store.select(AppPageState.showModalConfirmation)
   loading$:boolean = true;
+  sortOptions: SortOption[] = [
+    { label: 'Curso', field: 'descripcion' }
+  ];
   constructor(private store:Store, private activated:ActivatedRoute, private confirmationService: ConfirmationService, private router:Router, private messageService: MessageService){}
 
 

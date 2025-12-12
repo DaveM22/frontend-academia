@@ -1,38 +1,42 @@
-<p-table #dt2 [value]="(materias$ | async)!"  responsiveLayout="stack" [breakpoint]="'960px'"
-[paginator]="true" [scrollable]="true" [rows]="5" scrollHeight="flex" size="small"
-
-styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-md sm:text-sm md:text-base lg:text-base xl:text-base" 
-[globalFilterFields]="['descripcion, especialidad.descripcion']">
+<p-table #dt2 [value]="(materias$ | async)!" responsiveLayout="stack" [breakpoint]="'960px'" [paginator]="true"
+    [scrollable]="true" [rows]="5" scrollHeight="flex" size="small"
+    styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-md sm:text-sm md:text-base lg:text-base xl:text-base"
+    [globalFilterFields]="['descripcion, especialidad.descripcion']">
     <ng-template pTemplate="caption">
 
 
     </ng-template>
     <ng-template pTemplate="header">
         <tr>
-            <th class="text-center">Acciones</th>
             <th>Catedra</th>
+            <th class="text-center">Acciones</th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-materia>
         <tr>
+
+            <td style="width:70%"><span class="p-column-title">Cátedra</span>{{materia.descripcion}}</td>
             <td style="width:30%"><span class="p-column-title">Acciones</span>
                 <div class="flex flex-column sm:flex-row gap-2 justify-center">
-                    <p-button label="Ver comisiones" (onClick)="redirectToCursosDisponibles(materia._id)" class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base" styleClass="px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2"></p-button>
+                    <p-button label="Ver comisiones" (onClick)="redirectToCursosDisponibles(materia._id)"
+                        class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base"
+                        styleClass="px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2"></p-button>
                 </div>
             </td>
-            <td style="width:70%"><span class="p-column-title">Cátedra</span>{{materia.descripcion}}</td>
         </tr>
     </ng-template>
 
     <ng-template pTemplate="emptymessage">
         @if (loading$) {
-           <tr>
-            <td class="text-center text-md sm:text-base md:text-base lg:text-base xl:text-base" colspan="3">Cargando cátedras inscriptas...</td>
+        <tr>
+            <td class="text-center text-md sm:text-base md:text-base lg:text-base xl:text-base" colspan="3">Cargando
+                cátedras inscriptas...</td>
         </tr>
         }
         @else if ((materias$ | async)!.length === 0) {
         <tr>
-            <td class="text-center text-md sm:text-base md:text-base lg:text-base xl:text-base" colspan="3">No se han registrado cátedras disponibles para el alumno</td>
+            <td class="text-center text-md sm:text-base md:text-base lg:text-base xl:text-base" colspan="3">No se han
+                registrado cátedras disponibles para el alumno</td>
         </tr>
         }
         @else {
@@ -42,5 +46,5 @@ styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-md sm:tex
         }
     </ng-template>
 
-    
+
 </p-table>
