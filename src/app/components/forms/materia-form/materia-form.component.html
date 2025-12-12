@@ -5,23 +5,38 @@
     <form [formGroup]="form" (ngSubmit)="onSubmit()" class="grid grid-cols-12 gap-4 w-full max-w-screen-lg">
         <div class="col-span-12 lg:col-start-4 lg:col-span-6">
             <label for="descripcion" class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl">Descripción:</label>
-            <input id="descripcion" pInputText formControlName="descripcion" type="text" placeholder="Ingrese la descripción de la materia" class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl w-full h-[50px]">
-            @if(form.get('descripcion')?.invalid && form.get('descripcion')?.dirty){
+            <input id="descripcion" pInputText formControlName="descripcion" type="text" placeholder="Ingrese la descripción de la materia" maxlength="60" class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl w-full h-[50px]">
+            @if(form.get('descripcion')?.hasError('required') && form.get('descripcion')?.dirty){
             <small class="p-error block text-red-600">El campo descripción es requerido</small>
+            }
+            @if(form.get('descripcion')?.hasError('maxlength') && form.get('descripcion')?.dirty){
+            <small class="p-error block text-red-600">La descripción no puede exceder 60 caracteres</small>
             }
         </div>
         <div class="col-span-12 lg:col-start-4 lg:col-span-6">
             <label for="hsSemanales" class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl">Horas semanales:</label>
-            <p-inputNumber inputId="hsSemanales" size="large" formControlName="hsSemanales" placeholder="Ingrese las horas semanales" styleClass="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl w-full" inputStyleClass="h-[50px]" />
-            @if(form.get('hsSemanales')?.invalid && form.get('hsSemanales')?.dirty){
+            <p-inputNumber inputId="hsSemanales" size="large" formControlName="hsSemanales" placeholder="Ingrese las horas semanales" [min]="1" [max]="100" styleClass="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl w-full" inputStyleClass="h-[50px]" />
+            @if(form.get('hsSemanales')?.hasError('required') && form.get('hsSemanales')?.dirty){
             <small class="p-error block text-red-600">El campo horas semanales es requerido</small>
+            }
+            @if(form.get('hsSemanales')?.hasError('min') && form.get('hsSemanales')?.dirty){
+            <small class="p-error block text-red-600">Las horas semanales deben ser mínimo 1</small>
+            }
+            @if(form.get('hsSemanales')?.hasError('max') && form.get('hsSemanales')?.dirty){
+            <small class="p-error block text-red-600">Las horas semanales no pueden exceder 100</small>
             }
         </div>
         <div class="col-span-12 lg:col-start-4 lg:col-span-6">
             <label for="hsTotales" class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl">Horas totales:</label>
-            <p-inputNumber inputId="hsTotales" size="large" formControlName="hsTotales" placeholder="Ingrese las horas totales" styleClass="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl w-full" inputStyleClass="h-[50px]" />
-            @if(form.get('hsTotales')?.invalid && form.get('hsTotales')?.dirty){
+            <p-inputNumber inputId="hsTotales" size="large" formControlName="hsTotales" placeholder="Ingrese las horas totales" [min]="1" [max]="100" styleClass="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl w-full" inputStyleClass="h-[50px]" />
+            @if(form.get('hsTotales')?.hasError('required') && form.get('hsTotales')?.dirty){
             <small class="p-error block text-red-600">El campo horas totales es requerido</small>
+            }
+            @if(form.get('hsTotales')?.hasError('min') && form.get('hsTotales')?.dirty){
+            <small class="p-error block text-red-600">Las horas totales deben ser mínimo 1</small>
+            }
+            @if(form.get('hsTotales')?.hasError('max') && form.get('hsTotales')?.dirty){
+            <small class="p-error block text-red-600">Las horas totales no pueden exceder 100</small>
             }
         </div>
         <div class="col-span-12 lg:col-start-4 lg:col-span-6 grid grid-cols-2 gap-2 mt-4">

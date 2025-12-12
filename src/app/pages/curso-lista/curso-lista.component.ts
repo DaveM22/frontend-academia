@@ -1,10 +1,10 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { Curso } from '../../entities/curso';
 import { CursoFilter } from '../../entities/filter';
-import { DeleteCursoAction, GenerateReport, GetByIdCursoAction, GetCursoAction } from '../../store/actions/api/curso.action';
+import { ClearCursos, DeleteCursoAction, GenerateReport, GetByIdCursoAction, GetCursoAction } from '../../store/actions/api/curso.action';
 import { CursoState } from '../../store/states/api/curso.state';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
@@ -32,7 +32,7 @@ import { MobileSortSelectComponent, SortOption } from '../../components/util/mob
   styleUrl: './curso-lista.component.scss',
   providers: [ConfirmationService]
 })
-export class CursoListaComponent implements OnInit {
+export class CursoListaComponent implements OnInit , OnDestroy {
   rowsPerPage = 5;
   public cursos: Curso[] = [];
   public cursos$: Observable<Curso[]> = this.store.select(CursoState.getCursos)
@@ -52,7 +52,6 @@ export class CursoListaComponent implements OnInit {
 
   cursoSelected!: Curso;
 
-  // Propiedades para el modal de detalles
   showModal: boolean = false;
   selectedCurso: Curso | null = null;
 
@@ -60,6 +59,9 @@ export class CursoListaComponent implements OnInit {
 
   constructor(private store: Store, private router: Router, private confirmationService: ConfirmationService, private messageService: MessageService) {
 
+  }
+  ngOnDestroy(): void {
+    this.store.dispatch(new ClearCursos());
   }
 
   ngOnInit(): void {
@@ -123,10 +125,22 @@ export class CursoListaComponent implements OnInit {
       rejectButtonStyleClass: 'p-button-sm',
       acceptButtonStyleClass: 'p-button-outlined p-button-sm',
       accept: () => {
+        const previousError = this.store.selectSnapshot(CursoState.getError);
         this.store.dispatch(new DeleteCursoAction(this.cursoSelected._id))
-          .subscribe(() => {
-            this.store.dispatch(new ShowModalConfirmationAction(false))
-            this.messageService.add({ severity: 'success', summary: 'Borrar curso', detail: `Se ha borrado el curso: ${this.cursoSelected.descripcion}` });
+          .subscribe({
+            next: () => {
+              this.store.dispatch(new ShowModalConfirmationAction(false))
+              
+              // Si había error antes y ahora no lo hay, significa que fue exitoso
+              const currentError = this.store.selectSnapshot(CursoState.getError);
+              if (!currentError) {
+                this.messageService.add({ severity: 'success', summary: 'Borrar curso', detail: `Se ha borrado el curso: ${this.cursoSelected.descripcion}` });
+              }
+            },
+            error: (err) => {
+              console.error('Error deleting curso:', err);
+              this.store.dispatch(new ShowModalConfirmationAction(false));
+            }
           })
       },
       reject: () => {

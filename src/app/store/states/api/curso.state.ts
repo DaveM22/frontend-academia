@@ -45,8 +45,8 @@ export class CursoState {
     constructor(private service: CursoService) { }
 
     @Action(GetCursoAction)
-    async getEspecialidadAction(ctx: StateContext<CursoModelState>, action: GetCursoAction) {
-        ctx.patchState({error: false })
+    async getCursosdAction(ctx: StateContext<CursoModelState>, action: GetCursoAction) {
+        ctx.patchState({ error: false })
         ctx.dispatch(new LoadingForm(true));
         try {
             const response = await lastValueFrom(this.service.getCursos(action.filters));
@@ -61,17 +61,31 @@ export class CursoState {
             ErrorStateHandler.handleError(error, ctx);
         }
         finally {
-                ctx.dispatch(new LoadingForm(false));
+            ctx.dispatch(new LoadingForm(false));
         }
 
     }
 
     @Action(DeleteCursoAction)
-    async deleteEspecialidadAction(ctx: StateContext<CursoModelState>, action: DeleteCursoAction) {
-        await lastValueFrom(this.service.delete(action.id));
-        ctx.patchState({
-            cursos: ctx.getState().cursos.filter(x => x._id !== action.id)
-        })
+    async deleteCursoAction(ctx: StateContext<CursoModelState>, action: DeleteCursoAction) {
+        ctx.patchState({ error: false }); 
+        ctx.dispatch(new LoadingForm(true));
+        try {
+
+            await lastValueFrom(this.service.delete(action.id));
+            ctx.patchState({
+                cursos: ctx.getState().cursos.filter(x => x._id !== action.id),
+                error: false 
+            })
+
+        }
+        catch (error) {
+            ErrorStateHandler.handleError(error, ctx);
+        }
+        finally {
+            ctx.dispatch(new LoadingForm(false));
+        }
+
     }
 
     @Action(PostCursoAction)

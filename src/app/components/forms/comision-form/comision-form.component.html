@@ -6,22 +6,37 @@
 
         <div class="col-span-12 lg:col-start-4 lg:col-span-6">
             <label for="descripcion" class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl">Descripcion:</label>
-            <input id="descripcion" pInputText formControlName="descripcion" type="text"
+            <input id="descripcion" pInputText formControlName="descripcion" type="text" maxlength="60"
                 class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl w-full h-[50px]" styleClass="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl">
-            @if(form.get('descripcion')?.invalid && form.get('descripcion')?.dirty){
+            @if(form.get('descripcion')?.hasError('required') && form.get('descripcion')?.dirty){
             <small class="p-error block text-red-600">
                 El campo descripcion es requerido
+            </small>
+            }
+            @if(form.get('descripcion')?.hasError('maxlength') && form.get('descripcion')?.dirty){
+            <small class="p-error block text-red-600">
+                La descripcion no puede exceder 60 caracteres
             </small>
             }
         </div>
 
         <div class="col-span-12 lg:col-start-4 lg:col-span-6">
-            <label class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl" for="anioCalendario">Año calendario:</label>
-            <p-inputNumber inputId="integeronly" formControlName="anioEspecialidad" class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl w-full"
+            <label class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl" for="anioEspecialidad">Año especialidad:</label>
+            <p-inputNumber inputId="integeronly" formControlName="anioEspecialidad" [min]="1" [max]="10" class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl w-full"
                 inputStyleClass="w-full h-[50px]" styleClass="w-full md:w-full lg:w-auto text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl" />
-            @if(form.get('anioEspecialidad')?.invalid && form.get('anioEspecialidad')?.dirty){
+            @if(form.get('anioEspecialidad')?.hasError('required') && form.get('anioEspecialidad')?.dirty){
             <small class="p-error block text-red-600">
                 El campo Año especialidad es requerido
+            </small>
+            }
+            @if(form.get('anioEspecialidad')?.hasError('min') && form.get('anioEspecialidad')?.dirty){
+            <small class="p-error block text-red-600">
+                El año debe ser mínimo 1
+            </small>
+            }
+            @if(form.get('anioEspecialidad')?.hasError('max') && form.get('anioEspecialidad')?.dirty){
+            <small class="p-error block text-red-600">
+                El año no puede exceder 10
             </small>
             }
         </div>

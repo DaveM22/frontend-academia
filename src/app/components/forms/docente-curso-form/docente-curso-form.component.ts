@@ -19,6 +19,7 @@ import { Profesor } from '../../../entities/profesor';
 import { AppPageState } from '../../../store/states/page/app.state';
 import { DocenteCurso, DocenteCursoDto } from '../../../entities/docente-curso';
 import { PostDocenteCursoAction } from '../../../store/actions/api/docente-curso.action';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-docente-curso-form',
@@ -38,7 +39,7 @@ export class DocenteCursoFormComponent implements OnInit {
 
   cargos!:string[];
 
-  constructor(private store:Store, private router:Router){}
+  constructor(private store:Store, private router:Router, private messageService: MessageService){}
 
   ngOnInit(): void {
     this.store.dispatch(new GetByIdCursoAction(this.cursoId));
@@ -83,6 +84,7 @@ export class DocenteCursoFormComponent implements OnInit {
     this.docenteCursoDto = this.form.value;
     this.store.dispatch(new PostDocenteCursoAction(this.docenteCursoDto)).subscribe(() => {
       this.router.navigate([`asignacion-docentes/${this.curso.materia?._id}/${this.curso._id}/docentes`])
+      this.messageService.add({ severity: 'success', summary: 'Asignación de docente', detail: `Se ha asignado el docente al curso` });
     });
   }
 }

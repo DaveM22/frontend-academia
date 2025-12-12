@@ -47,8 +47,8 @@ export class ComisionFormComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.form = new FormGroup({
       _id: new FormControl(null),
-      descripcion: new FormControl('', [Validators.required]),
-      anioEspecialidad: new FormControl(0, [Validators.required]),
+      descripcion: new FormControl('', [Validators.required, Validators.maxLength(60)]),
+      anioEspecialidad: new FormControl(0, [Validators.required, Validators.min(1), Validators.max(10)]),
       plan: new FormControl('', [Validators.required]),
       planId: new FormControl('', [Validators.required])
     });

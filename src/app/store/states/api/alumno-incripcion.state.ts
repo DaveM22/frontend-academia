@@ -32,6 +32,16 @@ export class AlumnoInscripcionState {
     return state.inscripciones;
   }
 
+  @Selector()
+  static getError(state: AlumnoInscripcionModelState) {
+    return state.error;
+  }
+
+  @Selector()
+  static getErrorMessage(state: AlumnoInscripcionModelState) {
+    return state.errorMessage;
+  }
+
   constructor(private service: AlumnoInscripcionService) { }
 
   @Action(PostAlumnoInscripcionAction)
@@ -105,6 +115,7 @@ export class AlumnoInscripcionState {
 
 @Action(DeleteAlumnoInscripcionAction)
 async deleteComision(ctx: StateContext<AlumnoInscripcionModelState>, action: DeleteAlumnoInscripcionAction) {
+  ctx.dispatch(new LoadingForm(true));
   ctx.patchState({
     error: false,
     errorMessage: ''
@@ -112,11 +123,15 @@ async deleteComision(ctx: StateContext<AlumnoInscripcionModelState>, action: Del
   try {
     await lastValueFrom(this.service.delete(action.id));
     ctx.patchState({
-      inscripciones: ctx.getState().inscripciones.filter(x => x._id !== action.id)
+      inscripciones: ctx.getState().inscripciones.filter(x => x._id !== action.id),
+      error: false 
     })
   }
   catch (error: any) {
     ErrorStateHandler.handleError(error, ctx);
+  }
+  finally {
+    ctx.dispatch(new LoadingForm(false));
   }
 }
 }

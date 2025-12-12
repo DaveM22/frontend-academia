@@ -106,6 +106,10 @@ export class UsuarioState {
     ctx.dispatch(new LoadingForm(true));
     try {
       const response = await lastValueFrom(this.service.postUsuario(action.usr));
+      const list = ctx.getState().usuarios;
+      ctx.patchState({
+        usuarios: [...list, response]
+      })
     }
     catch (error: any) {
       ErrorStateHandler.handleError(error, ctx);
@@ -121,6 +125,12 @@ export class UsuarioState {
     ctx.dispatch(new LoadingForm(true));
     try {
       const response = await lastValueFrom(this.service.putUsuario(action.usr));
+      const updatedUsuarios = ctx.getState().usuarios.map(item => item =
+        item._id === response._id ? response : item
+      );
+      ctx.patchState({
+        usuarios: updatedUsuarios
+      })
     }
     catch (error: any) {
       ErrorStateHandler.handleError(error, ctx);

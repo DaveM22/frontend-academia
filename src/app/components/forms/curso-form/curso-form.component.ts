@@ -28,6 +28,7 @@ import { Comision } from '../../../entities/comision';
 import { ComisionesModalComponent } from '../../modals/comisiones-modal/comisiones-modal.component';
 import { PlanFilter } from '../../../entities/filter';
 import { ClearSelectedPlan } from '../../../store/actions/pages/plan.action';
+import { ClearMateriaAction } from '../../../store/actions/pages/materia.action';
 
 @Component({
   selector: 'app-curso-form',
@@ -63,9 +64,9 @@ export class CursoFormComponent implements OnDestroy {
   ngOnInit(): void {
     this.form = new FormGroup({
       _id: new FormControl(null),
-      descripcion: new FormControl('', [Validators.required]),
-      anioCalendario: new FormControl(0, [Validators.required]),
-      cupo: new FormControl(0, [Validators.required]),
+      descripcion: new FormControl('', [Validators.required, Validators.maxLength(50)]),
+      anioCalendario: new FormControl(0, [Validators.required, Validators.min(2000), Validators.max(3000)]),
+      cupo: new FormControl(0, [Validators.required, Validators.min(1), Validators.max(50)]),
       plan: new FormControl({ value: '', disabled: true }, [Validators.required]),
       planId: new FormControl('', [Validators.required]),
       materia: new FormControl({ value: '', disabled: true }, [Validators.required]),
@@ -85,6 +86,7 @@ export class CursoFormComponent implements OnDestroy {
   ngOnDestroy(): void {
     this.store.dispatch(new ClearSelectedPlanInModal);
     this.store.dispatch(new ClearSelectedMateriaInModal);
+    this.store.dispatch(new ClearMateriaAction);
     this.store.dispatch(new ClearSelectedComisionInModal)
     this.store.dispatch(new ClearSelectedPlanFilter);
     this.store.dispatch(new ClearSelectedPlan);

@@ -8,10 +8,16 @@
             <div class="col-span-12 xl:col-span-6 2xl:col-start-4 2xl:col-span-6">
                 <div class="w-full h-full">
                     <label class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl" for="anioCalendario">Año calendario:</label>
-                    <p-inputNumber inputId="integeronly" formControlName="anioCalendario" class="w-full"
+                    <p-inputNumber inputId="integeronly" formControlName="anioCalendario" [min]="2000" [max]="3000" class="w-full"
                         styleClass="w-full text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl" inputStyleClass="h-[50px]" />
-                    @if(form.get('anioCalendario')?.invalid && form.get('anioCalendario')?.dirty){
-                    <small class="p-error block text-red-600">El campo Año Calendario es requerido</small>
+                    @if(form.get('anioCalendario')?.hasError('required') && form.get('anioCalendario')?.dirty){
+                    <small class="p-error block text-red-600">El campo Año calendario es requerido</small>
+                    }
+                    @if(form.get('anioCalendario')?.hasError('min') && form.get('anioCalendario')?.dirty){
+                    <small class="p-error block text-red-600">El año debe ser mínimo 2000</small>
+                    }
+                    @if(form.get('anioCalendario')?.hasError('max') && form.get('anioCalendario')?.dirty){
+                    <small class="p-error block text-red-600">El año no puede exceder 3000</small>
                     }
                 </div>
             </div>
@@ -32,10 +38,13 @@
             <div class="col-span-12 xl:col-span-6 2xl:col-start-4 2xl:col-span-6">
                 <div class="w-full h-full">
                     <label class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl" for="descripcion">Descripcion:</label>
-                    <input id="descripcion" pInputText formControlName="descripcion" type="text"
+                    <input id="descripcion" pInputText formControlName="descripcion" type="text" maxlength="50"
                         class="w-full text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl h-[50px]">
-                    @if(form.get('descripcion')?.invalid && form.get('descripcion')?.dirty){
+                    @if(form.get('descripcion')?.hasError('required') && form.get('descripcion')?.dirty){
                     <small class="p-error block text-red-600">El campo descripcion es requerido</small>
+                    }
+                    @if(form.get('descripcion')?.hasError('maxlength') && form.get('descripcion')?.dirty){
+                    <small class="p-error block text-red-600">La descripcion no puede exceder 50 caracteres</small>
                     }
                 </div>
             </div>
@@ -57,11 +66,17 @@
 
             <div class="col-span-12 xl:col-span-6 2xl:col-start-4 2xl:col-span-6">
                 <div class="w-full h-full">
-                    <label class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl" for="anioCalendario">Cupo:</label>
-                    <p-inputNumber inputId="integeronly" formControlName="cupo" class="w-full"
+                    <label class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl" for="cupo">Cupo:</label>
+                    <p-inputNumber inputId="integeronly" formControlName="cupo" [min]="1" [max]="50" class="w-full"
                         styleClass="w-full text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl" inputStyleClass="h-[50px]" />
-                    @if(form.get('cupo')?.invalid && form.get('cupo')?.dirty){
+                    @if(form.get('cupo')?.hasError('required') && form.get('cupo')?.dirty){
                     <small class="p-error block text-red-600">El campo cupo es requerido</small>
+                    }
+                    @if(form.get('cupo')?.hasError('min') && form.get('cupo')?.dirty){
+                    <small class="p-error block text-red-600">El cupo debe ser mínimo 1</small>
+                    }
+                    @if(form.get('cupo')?.hasError('max') && form.get('cupo')?.dirty){
+                    <small class="p-error block text-red-600">El cupo no puede exceder 50</small>
                     }
                 </div>
             </div>

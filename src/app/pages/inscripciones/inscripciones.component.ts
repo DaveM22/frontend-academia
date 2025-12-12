@@ -39,6 +39,7 @@ import { MobileSortSelectComponent, SortOption } from '../../components/util/mob
 export class InscripcionesComponent implements OnInit, OnDestroy {
   alumno$: Observable<Alumno | null> = this.store.select(PersonaPageState.getAlumnoSelected);
   loading$: Observable<boolean> = this.store.select(AppPageState.getFormLoading);
+  inscripciones$:Observable<AlumnoInscripcion[]> = this.store.select(AlumnoInscripcionState.getInscripciones);
   alumno!: Alumno;
   inscripciones: AlumnoInscripcion[] = []
   sortOptions: SortOption[] = [
@@ -74,39 +75,49 @@ export class InscripcionesComponent implements OnInit, OnDestroy {
   }
   inscripcionSelected!: AlumnoInscripcion
 
+  modalConfirmar(inscripcion: AlumnoInscripcion) {
+    this.inscripcionSelected = inscripcion;
+    this.confirm();
+  }
+
   async ngOnInit(): Promise<void> {
     this.updateRowsPerPage();
     let filterAlumno = new AlumnoFilter();
     filterAlumno.incluirInscripciones = true;
-
     await firstValueFrom(this.store.dispatch(new GetAlumnoByIdAction(this.router.snapshot.params['id'], filterAlumno)));
 
     const alumno = await firstValueFrom(this.alumno$.pipe(filter(a => a !== null)));
     this.alumno = alumno;
     this.inscripciones = this.alumno.inscripciones ? [...this.alumno.inscripciones] : [];
 
-
-
+    this.inscripciones$.subscribe(x => {
+      this.inscripciones = x ? [...x] : [];
+    });
   }
 
 
   confirm() {
     this.confirmationService.confirm({
-      header: 'Borrar curso',
-      message: `¿ Desea eliminar el siguiente curso: ${this!} ?`,
+      header: 'Borrar inscripción',
+      message: `¿Desea eliminar la siguiente inscripción: ${this.inscripcionSelected.curso!.descripcion}?`,
       acceptIcon: 'pi pi-check mr-2',
       rejectIcon: 'pi pi-times mr-2',
       rejectButtonStyleClass: 'p-button-sm',
       acceptButtonStyleClass: 'p-button-outlined p-button-sm',
       accept: () => {
         this.store.dispatch(new DeleteAlumnoInscripcionAction(this.inscripcionSelected._id))
-          .subscribe(() => {
-            this.store.dispatch(new ShowModalConfirmationAction(false))
-            this.messageService.add({ severity: 'success', summary: 'Borrar curso', detail: `Se ha borrado el curso: ${this.inscripcionSelected.curso!.descripcion}` });
+          .subscribe({
+            next: () => {
+              this.messageService.add({ severity: 'success', summary: 'Borrar inscripción', detail: `Se ha borrado la inscripción: ${this.inscripcionSelected.curso!.descripcion}` });
+
+            },
+            error: (error) => {
+   
+            }
           })
       },
       reject: () => {
-        this.store.dispatch(new ShowModalConfirmationAction(false))
+        this.inscripcionSelected = null!;
       }
     });
   }

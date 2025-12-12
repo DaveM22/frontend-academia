@@ -6,25 +6,25 @@
 
 @media (max-width: 640px) {
     :host::ng-deep .p-datatable {
-        height: 60vh !important;
+        height: 75vh !important;
     }
 }
 
 @media (min-width: 640px) {
     :host::ng-deep .p-datatable {
-        height: 60vh !important;
+        height: 75vh !important;
     }
 }
 
 @media (min-width: 768px) {
     :host::ng-deep .p-datatable {
-        height: 60vh !important;
+        height: 75vh !important;
     }
 }
 
 @media (min-width: 1024px) {
     :host::ng-deep .p-datatable {
-        max-height: calc(100vh - 250px) !important;
+        max-height: calc(100vh - 130px) !important;
         height: auto !important;
     }
 }

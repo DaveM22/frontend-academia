@@ -2,7 +2,7 @@
     <h3 class="text-xl text-center font-bold text-white pb-2">{{title}}</h3>
 </div>
 <div class="grid place-items-center">
-    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="grid grid-cols-12 gap-4 w-full max-w-screen-lg">
+    <form [formGroup]="form" class="grid grid-cols-12 gap-4 w-full max-w-screen-lg">
         <div class="col-span-12 lg:col-start-4 lg:col-span-6">
             <label for="nombreUsuario" class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl">Usuario:</label>
             <input id="nombreUsuario" pInputText formControlName="nombreUsuario" type="text" class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl w-full h-[50px]">
@@ -31,18 +31,16 @@
             }
         </div>
 
-        @if(!usuario || !usuario._id) {
         <div class="col-span-12 lg:col-start-4 lg:col-span-6">
-            <label for="role" class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl">Rol:</label>
-            <p-select id="role" name="role" formControlName="role" [options]="roles" optionLabel="name" optionValue="code" appendTo="body"
-                placeholder="Seleccionar rol" styleClass="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl w-full" />
-            @if(form.get('role')?.invalid && form.get('role')?.dirty){
+            <label for="rol" class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl">Rol:</label>
+            <p-select dataKey="code" id="role" name="role" formControlName="role" [options]="roles" optionLabel="name" appendTo="body"
+                placeholder="Seleccionar rol" styleClass="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl w-full"  />
+            @if(form.get('role')?.invalid && form.get('rol')?.dirty){
             <small class="p-error block text-red-600">
                 El campo Rol es requerido
             </small>
             }
         </div>
-        }
 
         <div class="col-span-12 lg:col-start-4 lg:col-span-6">
             <label for="clave" class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl">Clave:</label>
@@ -65,9 +63,9 @@
         </div>
 
         <div class="col-span-12 lg:col-start-4 lg:col-span-6 grid grid-cols-2 gap-2 mt-4">
-            <p-button type="submit" label="Guardar" icon="pi pi-check" severity="success"
+            <p-button type="submit" label="Guardar" icon="pi pi-check" severity="success" [disabled]="form.invalid"
                 [styleClass]="'text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl px-4 py-3 sm:px-5 sm:py-3 md:px-6 md:py-3 lg:px-6 lg:py-3 w-full'"
-                [disabled]="form.invalid" (onClick)="onSubmit()"></p-button>
+               (onClick)="onSubmit()"></p-button>
             <p-button label="Cancelar" icon="pi pi-times" severity="danger"
                 [styleClass]="'text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl px-4 py-3 sm:px-5 sm:py-3 md:px-6 md:py-3 lg:px-6 lg:py-3 w-full'"
                 (onClick)="redirectUsuarios()"></p-button>

@@ -21,11 +21,12 @@ import { RouterModule } from '@angular/router';
 import { PanelModule } from 'primeng/panel';
 import { CardModule } from 'primeng/card';
 import { ClearSelectedMateriaInFilter } from '../../store/actions/pages/app.action';
+import { BlockUiGeneralComponent } from '../../components/util/block-ui-general/block-ui-general.component';
 
 @Component({
   selector: 'app-asignacion-profesor',
   standalone: true,
-  imports: [RouterModule, PanelModule, CardModule],
+  imports: [RouterModule, PanelModule, CardModule, BlockUiGeneralComponent],
   templateUrl: './asignacion-profesor.component.html',
   styleUrl: './asignacion-profesor.component.scss'
 })

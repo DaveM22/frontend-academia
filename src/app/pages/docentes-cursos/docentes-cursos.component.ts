@@ -93,14 +93,12 @@ export class DocentesCursosComponent implements OnInit {
               if (hasError) {
                 this.messageService.add({ 
                   severity: 'error', 
-                  summary: 'Error', 
                   detail: `No se pudo borrar la asignación del profesor` 
                 });
               } else {
                 this.messageService.add({ 
-                  severity: 'success', 
-                  summary: 'Borrar asignación de profesor a curso', 
-                  detail: `Se ha borrado la asignación al curso` 
+                  severity: 'success',  
+                  detail: `Se ha borrado la asignación del docente al curso` 
                 });
               }
             }).unsubscribe();

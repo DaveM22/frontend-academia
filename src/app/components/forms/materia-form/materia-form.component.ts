@@ -33,9 +33,9 @@ export class MateriaFormComponent {
     this.planId = this.activatedRoute.snapshot.params['id'];
     this.form = new FormGroup({
       _id: new FormControl(null),
-      descripcion: new FormControl('', [Validators.required]),
-      hsSemanales: new FormControl(0, [Validators.required]),
-      hsTotales: new FormControl(0, [Validators.required]),
+      descripcion: new FormControl('', [Validators.required, Validators.maxLength(60)]),
+      hsSemanales: new FormControl(0, [Validators.required, Validators.min(1), Validators.max(100)]),
+      hsTotales: new FormControl(0, [Validators.required, Validators.min(1), Validators.max(100)]),
       planId: new FormControl('', [Validators.required]),
     });
     this.form.patchValue(this.store.selectSnapshot(MateriaPageState.getMateriaSelected)!);

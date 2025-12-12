@@ -12,6 +12,7 @@ import { GetByIdPlanAction } from "../../actions/api/planes.action";
 import { PlanFilter } from "../../../entities/filter";
 import { GeneralLoadingAction, LoadingForm } from "../../actions/pages/app.action";
 import { ErrorStateHandler } from "../../../util/ErrorStateHandler";
+import e from "express";
 
 @State<MateriaModelState>({
   name: 'materias',
@@ -68,7 +69,7 @@ export class MateriaState {
       })
     }
     catch (error) {
-      ctx.patchState({ error: true })
+      ErrorStateHandler.handleError(error, ctx);
     }
     finally {
       ctx.patchState({
@@ -108,7 +109,7 @@ export class MateriaState {
       await lastValueFrom(ctx.dispatch(new AsignMateriaAction(response)));
     }
     catch (error) {
-      ctx.patchState({ error: true })
+      ErrorStateHandler.handleError(error, ctx);
     }
     finally {
       ctx.patchState({ loading: false })
@@ -124,7 +125,7 @@ export class MateriaState {
       await lastValueFrom(ctx.dispatch(new AsignMateriaAction(response)));
     }
     catch (error) {
-      ctx.patchState({ error: true })
+      ErrorStateHandler.handleError(error, ctx);
     }
     finally {
       ctx.dispatch(new LoadingForm(false));
@@ -133,6 +134,7 @@ export class MateriaState {
 
   @Action(DeleteMateriaAction)
   async DeleteMateria(ctx: StateContext<MateriaModelState>, action: DeleteMateriaAction) {
+    ctx.dispatch(new LoadingForm(true));
     ctx.patchState({ error: false })
     try {
       await lastValueFrom(this.service.delete(action.materia._id));
@@ -141,7 +143,10 @@ export class MateriaState {
       ctx.dispatch(new GetByIdPlanAction(action.materia.plan, filter))
     }
     catch (error) {
-      ctx.patchState({ error: true })
+      ErrorStateHandler.handleError(error, ctx);
+    }
+    finally{
+      ctx.dispatch(new LoadingForm(false));
     }
   }
 
