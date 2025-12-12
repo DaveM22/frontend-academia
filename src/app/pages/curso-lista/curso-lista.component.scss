@@ -23,7 +23,7 @@
 
 @media (min-width: 1024px) {
     :host::ng-deep .p-datatable {
-        max-height: calc(100vh - 300px) !important;
+        max-height: calc(100dvh - 130px) !important;
         height: auto !important;
     }
 }

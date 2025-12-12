@@ -14,3 +14,7 @@
   ::ng-deep .p-message-text, ::ng-deep .p-message-icon { color: white !important; }
 }
 
+:host::ng-deep  .p-card .p-card-body{
+    overflow-y:auto;
+    padding-top: 0px !important;
+}

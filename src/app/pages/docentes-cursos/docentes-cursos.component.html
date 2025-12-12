@@ -1,9 +1,9 @@
-<p-table #dt2 [value]="(docenteCursos$ | async)!" 
-    styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-md sm:text-base md:text-base lg:text-base xl:text-base" responsiveLayout="stack"
-    [breakpoint]="'960px'" [paginator]="true" [scrollable]="true" [rows]="5" size="small" scrollHeight="flex"
-    [globalFilterFields]="['nombre', 'apellido', 'direccion', 'email', 'legajo']">
+<p-table #dt2 [value]="(docenteCursos$ | async)!"
+    styleClass="p-datatable-gridlines p-datatable-striped h-full pt-0 text-md sm:text-base md:text-base lg:text-base xl:text-base"
+    responsiveLayout="stack" [breakpoint]="'960px'" [paginator]="true" [scrollable]="true" [rows]="5" size="small"
+    scrollHeight="flex" [globalFilterFields]="['nombre', 'apellido', 'direccion', 'email', 'legajo']">
     <ng-template pTemplate="caption">
-        
+
         @if (curso) {
         <div class="mb-4 text-center">
             <h2 class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base font-semibold mb-4">
@@ -16,9 +16,7 @@
             <div class="col-span-12 md:col-span-2 md:col-start-5 flex flex-col md:flex-row gap-2 order-1 md:order-1">
                 <div class="flex-1">
                     <label class="block text-xs sm:text-sm md:text-base font-medium mb-2">&nbsp;</label>
-                    <p-button 
-                        label="Volver hacia atras" 
-                        severity="primary" 
+                    <p-button label="Volver hacia atras" severity="primary"
                         class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base w-full lg:w-auto"
                         styleClass="w-full lg:w-auto px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2"
                         (onClick)="redirectBackToCourses()">
@@ -26,9 +24,7 @@
                 </div>
                 <div class="flex-1">
                     <label class="block text-xs sm:text-sm md:text-base font-medium mb-2">&nbsp;</label>
-                    <p-button 
-                        label="Nueva asignación" 
-                        severity="info" 
+                    <p-button label="Nueva asignación" severity="info"
                         class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base w-full lg:w-auto"
                         styleClass="w-full lg:w-auto px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2"
                         (onClick)="redirectNewDocenteCurso()">
@@ -41,8 +37,8 @@
                     <p-inputIcon>
                         <i class="pi pi-search"></i>
                     </p-inputIcon>
-                    <input pInputText pSize="large" type="text" 
-                        class="text-md sm:text-base md:text-base lg:text-base xl:text-base w-full h-[50px]" 
+                    <input pInputText pSize="large" type="text"
+                        class="text-md sm:text-base md:text-base lg:text-base xl:text-base w-full h-[50px]"
                         (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
                         placeholder="Buscar docente" />
                 </p-iconField>
@@ -51,27 +47,25 @@
     </ng-template>
     <ng-template pTemplate="header">
         <tr>
-            <th class="text-center">Acciones</th>
             <th>Apellido</th>
             <th>Nombre</th>
             <th>Cargo</th>
+            <th class="text-center">Acciones</th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-docenteCurso>
         <tr>
+            <td><span class="p-column-title">Apellido</span>{{docenteCurso.profesor.apellido}}</td>
+            <td><span class="p-column-title">Nombre</span>{{docenteCurso.profesor.nombre}}</td>
+            <td><span class="p-column-title">Cargo</span>{{docenteCurso.cargo}}</td>
             <td><span class="p-column-title">Acciones</span>
                 <div class="flex flex-col gap-2 justify-center lg:flex-row">
-                    <p-button 
-                        label="Quitar" 
-                        severity="danger"
+                    <p-button label="Quitar" severity="danger"
                         styleClass="text-xs sm:text-sm md:text-base lg:text-base xl:text-base px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2"
                         (onClick)="modalConfirmar(docenteCurso)">
                     </p-button>
                 </div>
             </td>
-            <td><span class="p-column-title">Apellido</span>{{docenteCurso.profesor.apellido}}</td>
-            <td><span class="p-column-title">Nombre</span>{{docenteCurso.profesor.nombre}}</td>
-            <td><span class="p-column-title">Cargo</span>{{docenteCurso.cargo}}</td>
         </tr>
     </ng-template>
     <ng-template pTemplate="loadingbody">
@@ -79,7 +73,8 @@
             <td colspan="4">
                 <div class="flex flex-col items-center justify-center py-6">
                     <p-progressSpinner styleClass="mb-3" strokeWidth="4"></p-progressSpinner>
-                    <span class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base font-semibold">Un momento, estamos procesando tu solicitud...</span>
+                    <span class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base font-semibold">Un momento,
+                        estamos procesando tu solicitud...</span>
                 </div>
             </td>
         </tr>

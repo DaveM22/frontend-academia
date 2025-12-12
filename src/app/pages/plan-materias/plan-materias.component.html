@@ -20,23 +20,15 @@
             <h4> Materias del plan: {{header}}</h4>
         </div>
 
-        <div class="grid grid-cols-12 gap-2 w-full">
-            <div class="col-span-12 md:col-span-2 md:col-start-6 flex flex-col md:flex-row gap-2 order-1 md:order-1">
-                <div class="flex-1">
-
-                    <p-button label="Volver a planes" severity="primary"
-                        class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base w-full lg:w-auto"
-                        styleClass="w-full lg:w-auto px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2"
-                        (onClick)="redirectPlanes()"></p-button>
-                </div>
-                <div class="flex-1">
-
-                    <p-button label="Nueva materia" severity="info"
-                        class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base w-full lg:w-auto"
-                        styleClass="w-full lg:w-auto px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2"
-                        (onClick)="redirectMateriaNuevo()"></p-button>
-                </div>
-            </div>
+        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-center gap-4 mb-4 w-full">
+            <p-button label="Nueva materia" severity="info"
+                class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base whitespace-nowrap order-1 lg:order-2"
+                styleClass="px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2 w-full lg:w-auto"
+                (onClick)="redirectMateriaNuevo()"></p-button>
+            <p-button label="Volver a planes" severity="primary"
+                class="text-xs sm:text-sm md:text-base lg:text-base xl:text-base whitespace-nowrap order-2 lg:order-1"
+                styleClass="px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-4 lg:py-2 w-full lg:w-auto"
+                (onClick)="redirectPlanes()"></p-button>
         </div>
 
         <div class="lg:hidden mb-2 order-2">
