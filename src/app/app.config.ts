@@ -39,6 +39,8 @@ import { NotificacionState } from './store/states/api/notificacion.state';
 import { DashboardState } from './store/states/api/dashboard.state';
 import { DashboardProfesorState } from './store/states/api/dashboard-profesor.state';
 
+const loggerPlugin = !environment.production ? [withNgxsLoggerPlugin()] : [];
+
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -60,7 +62,7 @@ export const appConfig: ApplicationConfig = {
             }
         }
     }),
-    withNgxsLoggerPlugin(),
+    ...loggerPlugin,
     provideAuth0({
       domain: environment.auth0Domain,
       clientId: environment.auth0ClientId,
@@ -108,7 +110,7 @@ export const appConfig: ApplicationConfig = {
         NotificacionState,
         DashboardState,
         DashboardProfesorState
-      ], { developmentMode: !environment.production}),
+      ], { developmentMode: false}),
       
 ],
 
