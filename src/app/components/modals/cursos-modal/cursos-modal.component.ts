@@ -46,7 +46,7 @@ export class CursosModalComponent implements OnInit {
     this.persona$.subscribe(x => {
       if(x !== null){
         this.planId = x.plan._id;
-/*        */
+
       }
     })
 

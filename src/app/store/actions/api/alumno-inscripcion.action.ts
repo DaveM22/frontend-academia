@@ -29,3 +29,8 @@ export class DeleteAlumnoInscripcionAction{
     static type = "[AlumnoInscripcion API] Delete alumno inscripcion";
     constructor(public id:string){}
 }
+
+export class GetInscripcionesByAlumnoAction{
+    static type = "[AlumnoInscripcion Api] Get inscripciones by alumno";
+    constructor(public alumnoId:string){}        
+}

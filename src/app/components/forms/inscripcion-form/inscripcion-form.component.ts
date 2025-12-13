@@ -129,22 +129,31 @@ export class InscripcionFormComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    this.alumnoInscripcion = this.form.value
-    if (this.alumnoInscripcion._id === null) {
-      this.alumnoInscripcionDto = this.form.value;
-      this.store.dispatch(new PostAlumnoInscripcionAction(this.alumnoInscripcionDto)).subscribe(() => {
-        this.router.navigate([`/inscripciones/alumnos/${this.alumnoId}`]);
-        this.messageService.add({ severity: 'success',  detail: 'Se ha registrado la inscripción' });
-      });
+
+
+      if (this.alumnoInscripcion._id === null) {
+        this.alumnoInscripcionDto = this.form.value;
+        this.store.dispatch(new PostAlumnoInscripcionAction(this.alumnoInscripcionDto)).subscribe(() => {
+          this.router.navigate([`/inscripciones/alumnos/${this.alumnoId}`]);
+          this.messageService.add({ severity: 'success', detail: 'Se ha registrado la inscripción' });
+        });
+      }
+      else {
+        this.alumnoInscripcionDto = this.form.value;
+
+        this.store.dispatch(new PutAlumnoInscripcionAction(this.alumnoInscripcion._id, this.alumnoInscripcionDto)).subscribe(() => {
+          if (this.role === 'Docente') {
+            this.router.navigate([`docente/cursos-inscripciones/${this.alumnoInscripcion.curso?._id}`]);
+          }
+          else {
+            this.router.navigate([`/inscripciones/alumnos/${this.alumno._id}`]);
+          }
+
+          this.messageService.add({ severity: 'success', detail: 'Se han guardado los cambios de la inscripción' });
+        });
+      }
     }
-    else {
-      this.alumnoInscripcionDto = this.form.value;
-      this.store.dispatch(new PutAlumnoInscripcionAction(this.alumnoInscripcion._id, this.alumnoInscripcionDto)).subscribe(() => {
-        this.router.navigate([`/inscripciones/alumnos/${this.alumno._id}`]);
-        this.messageService.add({ severity: 'success', detail: 'Se han guardado los cambios de la inscripción' });
-      });
-    }
-  }
+  
 
   toggleModalCursos() {
     this.store.dispatch(new ShowCursoModal(true));

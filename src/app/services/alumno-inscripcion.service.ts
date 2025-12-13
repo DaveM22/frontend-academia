@@ -31,4 +31,8 @@ export class AlumnoInscripcionService {
   delete(id:string){
     return this.http.delete(`${environment.apiUrl}/alumnos-inscripciones/${id}`);
   }
+
+  getByAlumno(alumnoId:string){
+    return this.http.get<AlumnoInscripcion[]>(`${environment.apiUrl}/alumnos-inscripciones/alumno/${alumnoId}`);
+  }
 }

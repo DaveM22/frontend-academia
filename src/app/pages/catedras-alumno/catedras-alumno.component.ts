@@ -16,7 +16,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AlumnoFilter } from '../../entities/filter';
 import { GetAlumnoByIdAction } from '../../store/actions/api/persona.action';
 import { AppPageState } from '../../store/states/page/app.state';
-import { firstValueFrom, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Alumno } from '../../entities/alumno';
 import { PersonaPageState } from '../../store/states/page/persona.state';
 import { Persona } from '../../entities/persona';
@@ -77,21 +77,29 @@ export class CatedrasAlumnoComponent implements OnInit {
 
   constructor(private store: Store) { }
 
-  async ngOnInit(): Promise<void> {
+  ngOnInit(): void {
     // Configurar filas responsivas basado en el tamaño de pantalla
     this.updateRowsPerPage();
     window.addEventListener('resize', () => this.updateRowsPerPage());
 
-    const personaId = await firstValueFrom(this.personaid$.pipe(filter(id => id !== '')));
-    let filters = new AlumnoFilter();
-    filters.incluirInscripciones = true;
+    this.personaid$.pipe(
+      filter(id => id !== ''),
+      take(1)
+    ).subscribe(personaId => {
+      let filters = new AlumnoFilter();
+      filters.incluirInscripciones = true;
 
-    this.store.dispatch(new GetAlumnoByIdAction(personaId, filters))
-
-    const persona = await firstValueFrom(this.persona$.pipe(filter(p => p !== null)));
-    this.persona = persona!;
-    this.inscripciones = this.persona.inscripciones;
-    this.inscripcionesFiltradas = this.inscripciones; // Inicialmente mostrar todas
+      this.store.dispatch(new GetAlumnoByIdAction(personaId, filters)).subscribe(() => {
+        this.persona$.pipe(
+          filter(p => p !== null),
+          take(1)
+        ).subscribe(persona => {
+          this.persona = persona!;
+          this.inscripciones = this.persona.inscripciones || [];
+          this.inscripcionesFiltradas = this.inscripciones; // Inicialmente mostrar todas
+        });
+      });
+    });
   }
 
   showResumenModal() {

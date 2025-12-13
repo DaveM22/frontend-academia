@@ -2,7 +2,7 @@
     <h3 class="text-xl text-center font-bold text-white pb-2">{{alumnoInscripcion ? 'Actualizar Inscripción:' : 'Nueva Inscripción:'}}</h3>
   </div>
 <div class="grid place-items-center">
-    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="grid grid-cols-12 gap-4 w-full max-w-screen-lg">
+    <form [formGroup]="form"  (ngSubmit)="onSubmit()" class="grid grid-cols-12 gap-4 w-full max-w-screen-lg">
 
         <div class="col-span-12 lg:col-start-4 lg:col-span-6">
             <label class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl">Alumno:</label>
@@ -12,9 +12,11 @@
             <label class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl">Curso:</label>
             <input type="text" pInputText placeholder="Seleccione un curso" class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl w-full sm:w-full h-[50px]"
                 formControlName="curso" />
+            @if(role !== 'Docente') {
             <p-button label="Seleccionar curso" severity="primary"
                 [styleClass]="'text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl px-4 py-3 sm:px-5 sm:py-3 md:px-6 md:py-3 lg:px-6 lg:py-3 w-full mt-2'"
                 (onClick)="toggleModalCursos()"></p-button>
+            }
         </div>
         <div class="col-span-12 lg:col-start-4 lg:col-span-6 gap-2">
             <label class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl">Condicion:</label>
@@ -35,7 +37,7 @@
             }
         </div>
         <div class="col-span-12 lg:col-start-4 lg:col-span-6 grid grid-cols-2 gap-2 mt-4">
-            <p-button label="Guardar" icon="pi pi-check" [styleClass]="'text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl px-4 py-3 sm:px-5 sm:py-3 md:px-6 md:py-3 lg:px-6 lg:py-3 w-full'" [disabled]="form.invalid" severity="success" (onClick)="onSubmit()"></p-button>
+            <p-button label="Guardar" type="submit" icon="pi pi-check" [styleClass]="'text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl px-4 py-3 sm:px-5 sm:py-3 md:px-6 md:py-3 lg:px-6 lg:py-3 w-full'" [disabled]="form.invalid" severity="success" ></p-button>
             <p-button label="Cancelar" severity="danger" icon="pi pi-times" [styleClass]="'text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl px-4 py-3 sm:px-5 sm:py-3 md:px-6 md:py-3 lg:px-6 lg:py-3 w-full'"
                 (onClick)="redirect()"></p-button>
         </div>

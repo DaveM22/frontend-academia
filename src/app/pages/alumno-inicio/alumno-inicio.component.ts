@@ -56,12 +56,12 @@ export class AlumnoInicioComponent implements OnInit, OnDestroy {
     const alumnoId = this.store.selectSnapshot(AppPageState.getPersonId);
     if (alumnoId) {
       this.loadNotificaciones(alumnoId);
-      // Auto-refresh cada 30 segundos
+
       interval(30000)
         .pipe(
           switchMap(() => {
             this.store.dispatch(new GetNotificacionesAlumnoAction({ alumnoId }));
-            this.store.dispatch(new GetNoLeidasCountAlumnoAction({ alumnoId }));
+
             return [];
           }),
           takeUntil(this.destroy$)
@@ -77,7 +77,7 @@ export class AlumnoInicioComponent implements OnInit, OnDestroy {
 
   loadNotificaciones(alumnoId: string): void {
     this.store.dispatch(new GetNotificacionesAlumnoAction({ alumnoId }));
-    this.store.dispatch(new GetNoLeidasCountAlumnoAction({ alumnoId }));
+
   }
 
   getTipoColor(tipo: string): 'info' | 'success' | 'warn' | 'danger' | 'secondary' | 'contrast' {

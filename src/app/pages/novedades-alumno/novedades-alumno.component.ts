@@ -93,7 +93,7 @@ export class NovedadesAlumnoComponent implements OnInit, OnDestroy {
         .pipe(
           switchMap(() => {
             this.store.dispatch(new GetNotificacionesAlumnoAction({ alumnoId }));
-            this.store.dispatch(new GetNoLeidasCountAlumnoAction({ alumnoId }));
+            
             return [];
           }),
           takeUntil(this.destroy$)
@@ -109,7 +109,7 @@ export class NovedadesAlumnoComponent implements OnInit, OnDestroy {
 
   loadNotificaciones(alumnoId: string): void {
     this.store.dispatch(new GetNotificacionesAlumnoAction({ alumnoId }));
-    this.store.dispatch(new GetNoLeidasCountAlumnoAction({ alumnoId }));
+
   }
 
   get notificacionesFiltradas(): Observable<Notificacion[]> {

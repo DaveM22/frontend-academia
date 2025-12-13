@@ -18,7 +18,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AlumnoFilter } from '../../entities/filter';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { DeleteAlumnoInscripcionAction, GetOneAlumnoInscripcionAction } from '../../store/actions/api/alumno-inscripcion.action';
+import { DeleteAlumnoInscripcionAction, GetOneAlumnoInscripcionAction, GetInscripcionesByAlumnoAction } from '../../store/actions/api/alumno-inscripcion.action';
 import { AppPageState } from '../../store/states/page/app.state';
 import { ShowModalConfirmationAction } from '../../store/actions/pages/app.action';
 import { AlumnoInscripcionState } from '../../store/states/api/alumno-incripcion.state';
@@ -39,7 +39,7 @@ import { MobileSortSelectComponent, SortOption } from '../../components/util/mob
 export class InscripcionesComponent implements OnInit, OnDestroy {
   alumno$: Observable<Alumno | null> = this.store.select(PersonaPageState.getAlumnoSelected);
   loading$: Observable<boolean> = this.store.select(AppPageState.getFormLoading);
-  inscripciones$:Observable<AlumnoInscripcion[]> = this.store.select(AlumnoInscripcionState.getInscripciones);
+  inscripciones$: Observable<AlumnoInscripcion[]> = this.store.select(AlumnoInscripcionState.getInscripciones);
   alumno!: Alumno;
   inscripciones: AlumnoInscripcion[] = []
   sortOptions: SortOption[] = [
@@ -80,20 +80,25 @@ export class InscripcionesComponent implements OnInit, OnDestroy {
     this.confirm();
   }
 
-  async ngOnInit(): Promise<void> {
+  ngOnInit(): void {
     this.updateRowsPerPage();
-    let filterAlumno = new AlumnoFilter();
-    filterAlumno.incluirInscripciones = true;
-    await firstValueFrom(this.store.dispatch(new GetAlumnoByIdAction(this.router.snapshot.params['id'], filterAlumno)));
+    const alumnoId = this.router.snapshot.params['id'];
 
-    const alumno = await firstValueFrom(this.alumno$.pipe(filter(a => a !== null)));
-    this.alumno = alumno;
-    this.inscripciones = this.alumno.inscripciones ? [...this.alumno.inscripciones] : [];
+    this.store.dispatch(new GetAlumnoByIdAction(this.router.snapshot.params['id'], new AlumnoFilter()));
+    this.inscripciones$.subscribe(inscripciones => {
 
-    this.inscripciones$.subscribe(x => {
-      this.inscripciones = x ? [...x] : [];
+      this.inscripciones = inscripciones;
+    });
+
+    this.alumno$.pipe(filter(a => a !== null)).subscribe(alumno => {
+      if (alumno) {
+        this.alumno = alumno;
+        this.store.dispatch(new GetInscripcionesByAlumnoAction(this.alumno._id));
+      }
     });
   }
+
+
 
 
   confirm() {
@@ -112,7 +117,7 @@ export class InscripcionesComponent implements OnInit, OnDestroy {
 
             },
             error: (error) => {
-   
+
             }
           })
       },

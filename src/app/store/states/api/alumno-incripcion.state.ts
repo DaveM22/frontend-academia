@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { AlumnoInscripcionModelState } from "../../modelstate/api/alumno-inscripcion.modelstate";
-import { DeleteAlumnoInscripcionAction, GetInscripcionByCursoAction, GetOneAlumnoInscripcionAction, PostAlumnoInscripcionAction, PutAlumnoInscripcionAction } from "../../actions/api/alumno-inscripcion.action";
+import { DeleteAlumnoInscripcionAction, GetInscripcionByCursoAction, GetOneAlumnoInscripcionAction, PostAlumnoInscripcionAction, PutAlumnoInscripcionAction, GetInscripcionesByAlumnoAction } from "../../actions/api/alumno-inscripcion.action";
 import { AlumnoInscripcionService } from "../../../services/alumno-inscripcion.service";
 import { lastValueFrom } from "rxjs";
 import { AsignAlumnoInscripcionAction } from "../../actions/pages/alumno-inscripcion.action";
@@ -75,7 +75,8 @@ export class AlumnoInscripcionState {
 
   @Action(GetInscripcionByCursoAction)
   async getInscripcionesByCurso(ctx: StateContext<AlumnoInscripcionModelState>, action: GetInscripcionByCursoAction) {
-    ctx.patchState({ loading: true, error: false })
+    ctx.patchState({  error: false })
+    ctx.dispatch(new LoadingForm(true))
     try {
       const response = await lastValueFrom(this.service.getByCurso(action.cursoId));
       ctx.patchState({
@@ -85,7 +86,8 @@ export class AlumnoInscripcionState {
       ErrorStateHandler.handleError(error, ctx);
     }
     finally {
-      ctx.patchState({ loading: false, error: false })
+      ctx.patchState({  error: false })
+      ctx.dispatch(new LoadingForm(false))
     }
   }
 
@@ -128,6 +130,23 @@ async deleteComision(ctx: StateContext<AlumnoInscripcionModelState>, action: Del
     })
   }
   catch (error: any) {
+    ErrorStateHandler.handleError(error, ctx);
+  }
+  finally {
+    ctx.dispatch(new LoadingForm(false));
+  }
+}
+
+@Action(GetInscripcionesByAlumnoAction)
+async getInscripcionesByAlumno(ctx: StateContext<AlumnoInscripcionModelState>, action: GetInscripcionesByAlumnoAction) {
+  ctx.dispatch(new LoadingForm(true));
+  ctx.patchState({ error: false })
+  try {
+    const response = await lastValueFrom(this.service.getByAlumno(action.alumnoId));
+    ctx.patchState({
+      inscripciones: response
+    });
+  } catch (error) {
     ErrorStateHandler.handleError(error, ctx);
   }
   finally {

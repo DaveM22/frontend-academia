@@ -43,7 +43,7 @@ export class CursosDisponiblesComponent implements OnInit, OnDestroy {
   persona$:Observable<Alumno | null> = this.store.select(PersonaPageState.getAlumnoSelected);
   cursos$:Observable<Curso[]> = this.store.select(CursoState.getCursos);
   cursos:Curso[] = []
-  cursoSelected!:string;
+  cursoSelected!:Curso;
   showConfirmation$:Observable<boolean> = this.store.select(AppPageState.showModalConfirmation)
   loading$:boolean = true;
   sortOptions: SortOption[] = [
@@ -53,22 +53,18 @@ export class CursosDisponiblesComponent implements OnInit, OnDestroy {
 
 
 
-  async ngOnInit(): Promise<void> {
+   ngOnInit(): void {
     
-    let materiaId = this.activated.snapshot.params['id'];
+    let materiaId = this.activated.snapshot.params['idMateria'];
     let filterCurso = new CursoFilter();
     filterCurso.materiaId = materiaId;
+    this.store.dispatch(new GetCursoAction(filterCurso))
+
     
-    await firstValueFrom(this.store.dispatch(new GetCursoAction(filterCurso)));
+    this.cursos$.subscribe(x => { this.cursos = x ? [...x] : [] });
+
     
 
-    const cursos = await firstValueFrom(
-      this.cursos$.pipe(
-        filter(x => Array.isArray(x))
-      )
-    );
-    
-    this.cursos = cursos;
     this.loading$ = false;
 
  
@@ -94,14 +90,14 @@ export class CursosDisponiblesComponent implements OnInit, OnDestroy {
           let al = new AlumnoInscripcionDto();
           al.alumnoId = this.store.selectSnapshot(AppPageState.getPersonId);
           al.condicion = Condicion.INSCRIPTO.toString();
-          al.cursoId =  this.cursoSelected;
+          al.cursoId =  this.cursoSelected._id!;
           this.store.dispatch([
             new PostAlumnoInscripcionAction(al),
             new ShowModalConfirmationAction(false)
           ]).subscribe(x => {
-            const personId = this.store.selectSnapshot(AppPageState.getPersonId);
-            this.messageService.add({ severity: 'success', summary: 'Inscripción', detail: `Se ha inscrito al curso: ${this.cursoSelected}` });
-            this.router.navigate([`inscripcion-catedra/materias-disponibles`])
+
+            this.messageService.add({ severity: 'success', summary: 'Inscripción', detail: `Se ha inscrito al curso: ${this.cursoSelected.descripcion} - ${this.cursoSelected.anioCalendario}` });
+            this.router.navigate([`alumno/catedras`])
           })
         },
         reject: () => {
@@ -111,7 +107,7 @@ export class CursosDisponiblesComponent implements OnInit, OnDestroy {
 }
 
 modalConfirmar(curso:Curso){
-  this.cursoSelected = curso._id;
+  this.cursoSelected = curso;
   this.store.dispatch(new ShowModalConfirmationAction(true));
 }
 

@@ -293,7 +293,7 @@ export const routes: Routes = [
                         redirectTo: 'materias-disponibles'
                     },
                     { path: 'materias-disponibles', component: InscripcionMateriaAlumnoMateriasComponent },
-                    { path: 'cursos-disponibles/:idCurso', component: CursosDisponiblesComponent }
+                    { path: 'cursos-disponibles/:idMateria', component: CursosDisponiblesComponent }
                 ],
                 canActivate: [AuthGuard, alumnoGuard],
                 data: {

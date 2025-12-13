@@ -13,7 +13,7 @@ import { Skeleton } from 'primeng/skeleton';
 import { ToolbarModule } from 'primeng/toolbar';
 import { GetInscripcionByCursoAction, GetOneAlumnoInscripcionAction } from '../../store/actions/api/alumno-inscripcion.action';
 import { ActivatedRoute, Router } from '@angular/router';
-import { filter, firstValueFrom, Observable } from 'rxjs';
+import { filter, firstValueFrom, Observable, take } from 'rxjs';
 import { AlumnoInscripcion } from '../../entities/alumno-inscripcion';
 import { AlumnoInscripcionState } from '../../store/states/api/alumno-incripcion.state';
 import { Curso } from '../../entities/curso';
@@ -49,25 +49,32 @@ export class CatedrasDocenteInscripcionesComponent implements OnInit {
   mostrarAviso: boolean = false;
   constructor(private store: Store, private activatedRoute: ActivatedRoute, private router: Router) { }
 
-  async ngOnInit(): Promise<void> {
+  ngOnInit(): void {
     this.loading$ = true;
-    this.cursoId = this.activatedRoute.snapshot.params['idCurso']
-    this.store.dispatch(new GetByNombreParametroAction("HabilitarCargaNotas"));
-    const parametroHabilitado = await firstValueFrom(this.parametro$.pipe(filter(param => param !== null)));
-    this.parametroHabilitado = parametroHabilitado.activo;
-    if (this.cursoId) {
+    this.cursoId = this.activatedRoute.snapshot.params['idCurso'];
+    this.store.dispatch(new GetByIdCursoAction(this.cursoId));
 
-      this.store.dispatch(new GetByIdCursoAction(this.cursoId));
-      const cursoSelected = await firstValueFrom(this.curso$.pipe(filter(curso => curso !== null)));
+    this.store.dispatch(new GetInscripcionByCursoAction(this.cursoId));
+    this.store.dispatch(new GetByNombreParametroAction("HabilitarCargaNotas"));
+
+    this.parametro$.subscribe(parametroHabilitado => {
+      this.parametroHabilitado = parametroHabilitado!.activo;
+    });
+
+    this.curso$.subscribe(cursoSelected => {
+      this.loading$ = false;
       this.materia = cursoSelected!.materia;
       this.comision = cursoSelected!.comision;
-      this.store.dispatch(new GetInscripcionByCursoAction(this.cursoId));
-      const inscripciones = await firstValueFrom(this.inscripciones$.pipe(filter(param => param.length !== 0)));
+    });
+
+
+
+
+
+    this.inscripciones$.subscribe(inscripciones => {
       this.inscripciones = inscripciones;
-    } else {
-      this.inscripciones = [];
-    }
-    this.loading$ = false;
+ 
+    });
   }
 
 
@@ -90,6 +97,10 @@ export class CatedrasDocenteInscripcionesComponent implements OnInit {
       this.mostrarAviso = true;
       this.router.navigate(['docente/aviso-carga-notas'], { queryParams: { cursoId: this.cursoId } });
     }
+  }
+
+  redirectToCursos() {
+    this.router.navigate(['/docente/cursos-asignados']);
   }
 
 }
