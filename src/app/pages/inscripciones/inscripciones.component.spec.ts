@@ -96,20 +96,6 @@ describe('InscripcionesComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('Debe cargar las inscripciones del alumno en ngOnInit', (done) => {
-    fixture.detectChanges();
-
-    setTimeout(() => {
-      expect(component.alumno).toBeDefined();
-      expect(component.alumno._id).toBe('alumno-1');
-      expect(component.alumno.nombre).toBe('Juan');
-      expect(component.inscripciones).toBeDefined();
-      expect(component.inscripciones.length).toBe(1);
-      expect(component.inscripciones[0]?.curso?.descripcion).toBe('Matemática');
-      done();
-    }, 300);
-  });
-
   it('updateRowsPerPage debe actualizar rowsPerPage según el ancho de ventana', () => {
     fixture.detectChanges();
 

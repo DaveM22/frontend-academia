@@ -6,6 +6,8 @@ import { CursoPageState } from '../../../store/states/page/curso.state';
 import { AppPageState } from '../../../store/states/page/app.state';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideRouter } from '@angular/router';
+import { MessageService } from 'primeng/api';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
 describe('DocenteCursoFormComponent', () => {
   let store: Store;
@@ -18,7 +20,9 @@ describe('DocenteCursoFormComponent', () => {
       providers: [
         provideStore([CursoPageState, AppPageState]),
         provideHttpClient(withInterceptorsFromDi()),
-        provideRouter([])
+        provideRouter([]),
+        provideNoopAnimations(),
+        MessageService
       ],
     })
       .compileComponents();

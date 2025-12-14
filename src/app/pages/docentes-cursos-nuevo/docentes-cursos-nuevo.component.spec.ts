@@ -4,6 +4,8 @@ import { DocentesCursosNuevoComponent } from './docentes-cursos-nuevo.component'
 import { provideStore, Store } from '@ngxs/store';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideRouter } from '@angular/router';
+import { MessageService } from 'primeng/api';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
 describe('DocentesCursosNuevoComponent', () => {
   let store: Store;
@@ -16,7 +18,9 @@ describe('DocentesCursosNuevoComponent', () => {
       providers: [
         provideStore([]),
         provideHttpClient(withInterceptorsFromDi()),
-        provideRouter([])
+        provideRouter([]),
+        provideNoopAnimations(),
+        MessageService
       ],
     })
     .compileComponents();

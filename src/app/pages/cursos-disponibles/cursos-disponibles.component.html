@@ -50,7 +50,7 @@
             <td class="text-center text-md sm:text-base md:text-base lg:text-base xl:text-base" colspan="2">Cargando cursos disponibles...</td>
         </tr>
         }
-        @else if ((cursos$ | async)!.length === 0) {
+        @else if ((cursos$ | async)) {
         <tr>
             <td class="text-center" colspan="2">No hay cursos disponibles para esta cátedra</td>
         </tr>
